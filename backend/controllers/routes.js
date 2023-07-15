@@ -11,25 +11,35 @@ const registerUser = async (req, res) => {
 
     // check if any field is missing or not
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      res.status(401).json({ error: "Missing email or password" });
+      throw new Error("Missing email or password");
     }
 
     // check if user have enterd the correct password or not
     if (password !== confirmPassword) {
-      res
-        .status(401)
-        .json({ error: "Password and confirm password does not match" });
+      throw new Error("Password and confirm password does not match");
     }
+
+    // generate hash password with round 10
+    const hashPassword = await bcrypt.hash(password, 10);
+
     const user = new User({
       email: email,
-      password: password,
+      password: hashPassword,
     });
 
+    // before saving the user create the toke
+
+    const token = await User.generateAuthToken();
     // create user
     await user.save();
+    res.status(200).json({ msg: "user created" });
   } catch (error) {
-    console.log(error.message);
-    res.status(401).json({ error: "Email is already Present" });
+    if (error.code === 11000 && error.keyValue && error.keyValue.email) {
+      // Duplicate email error
+      res.status(400).json({ error: "Email is already registered" });
+    } else {
+      res.status(401).json({ error: error.message });
+    }
   }
 };
 
@@ -42,16 +52,19 @@ const loginUser = async (req, res) => {
     if (!isUserAvailable) {
       throw new Error("Invalid login detail");
     }
-
     // check if provided password by user is same as stored in data
     const getPassword = isUserAvailable.password;
-    if (password !== getPassword) {
+
+    // verify password first pass user created password and then pass stored password
+    const verifyPassword = await bcrypt.compare(password, getPassword);
+
+    if (!verifyPassword) {
       throw new Error("Invalid login detail");
     }
 
     // is all okay send user back data
     if (isUserAvailable) {
-      res.status(200).json({ msg: "user logged in" });
+      res.status(201).json({ msg: "user logged in" });
     }
   } catch (error) {
     res.status(401).json({ error: error.message });
