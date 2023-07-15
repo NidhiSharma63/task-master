@@ -1,8 +1,38 @@
+const cookieParser = require("cookie-parser");
+
+const express = require("express");
+const server = express();
+server.use(cookieParser());
 const bcrypt = require("bcrypt");
 const User = require("../models/userSchema");
 
-const getAllUserTodo = (_req, res) => {
+const getAllUserTodo = (req, res) => {
+  console.log(req.cookies.Todo);
   res.send("Your All Todo Is Here");
+};
+
+const getFormPage = (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>Login Form</title>
+      </head>
+      <body>
+        <h1>Login Form</h1>
+        <form action="/api/v1/login" method="POST">
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </body>
+    </html>
+  `);
 };
 
 const registerUser = async (req, res) => {
@@ -28,7 +58,10 @@ const registerUser = async (req, res) => {
     });
 
     // before saving the user create the toke
-    await user.generateAuthToken();
+    const token = await user.generateAuthToken();
+
+    // setting token as a cookie
+    res.cookie("Todo", token, { httpOnly: true, secure: true });
 
     // create user
     await user.save();
@@ -63,11 +96,15 @@ const loginUser = async (req, res) => {
     }
 
     // generate token once user have correct credentials
-    isUserAvailable.generateAuthToken();
+    const token = await isUserAvailable.generateAuthToken();
+
+    // setting token as a cookie
+    res.cookie("Todo", token, { httpOnly: true, secure: true });
 
     // is all okay send user back data
     if (isUserAvailable) {
-      res.status(201).json({ msg: "user logged in" });
+      // res.status(201).json({ msg: "user logged in" });
+      res.redirect("/api/v1");
     }
   } catch (error) {
     res.status(401).json({ error: error.message });
@@ -78,4 +115,5 @@ module.exports = {
   getAllUserTodo,
   registerUser,
   loginUser,
+  getFormPage,
 };
