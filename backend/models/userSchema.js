@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 // creating schema
 const userSchema = new mongoose.Schema({
@@ -25,8 +26,16 @@ const userSchema = new mongoose.Schema({
 // create a token
 userSchema.methods.generateAuthToken = async function () {
   try {
-    const token = await jwt.sign({ id: this._id });
-  } catch (error) {}
+    const genToken = jwt.sign(
+      { id: this._id.toString() },
+      process.env.SECREAT_KEY
+    );
+    this.tokens = this.tokens.concat({ token: genToken });
+    await this.save();
+    return genToken;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 // now we need to create collection

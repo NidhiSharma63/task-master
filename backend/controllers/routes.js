@@ -28,8 +28,8 @@ const registerUser = async (req, res) => {
     });
 
     // before saving the user create the toke
+    await user.generateAuthToken();
 
-    const token = await User.generateAuthToken();
     // create user
     await user.save();
     res.status(200).json({ msg: "user created" });
