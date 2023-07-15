@@ -62,6 +62,9 @@ const loginUser = async (req, res) => {
       throw new Error("Invalid login detail");
     }
 
+    // generate token once user have correct credentials
+    isUserAvailable.generateAuthToken();
+
     // is all okay send user back data
     if (isUserAvailable) {
       res.status(201).json({ msg: "user logged in" });
