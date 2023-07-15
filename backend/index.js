@@ -3,8 +3,10 @@ const express = require("express");
 const server = express();
 const router = require("./routes/router");
 
-// for parsing the req.body
+// for parsing the req.body for postman
 server.use(express.json());
+// for brwoser
+server.use(express.urlencoded({ extended: false }));
 
 // middleware for routes
 server.use("/api/v1", router);
