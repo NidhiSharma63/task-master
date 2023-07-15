@@ -13,14 +13,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  token: {
+    type: String,
+    required: true,
+  },
 });
 
 // create a token
@@ -30,7 +26,7 @@ userSchema.methods.generateAuthToken = async function () {
       { id: this._id.toString() },
       process.env.SECREAT_KEY
     );
-    this.tokens = this.tokens.concat({ token: genToken });
+    this.token = genToken;
     await this.save();
     return genToken;
   } catch (error) {

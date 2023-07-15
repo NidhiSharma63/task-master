@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userSchema");
 
 const getAllUserTodo = (req, res) => {
-  console.log(req.cookies.Todo);
   res.send("Your All Todo Is Here");
 };
 
