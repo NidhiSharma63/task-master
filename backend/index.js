@@ -2,8 +2,11 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const server = express();
+const cors = require("cors");
 const router = require("./routes/router");
 
+// use cors
+app.use(cors());
 // for accessing the cookie that we have saved user site which is token(in form of cookie)
 server.use(cookieParser());
 // for parsing the req.body for postman
