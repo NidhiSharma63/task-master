@@ -1,55 +1,39 @@
-import { useState } from "react";
-import axiosRequest from "./utils/axiosRequest";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import Login from "./components/Login";
 
-function App() {
-  const [userValue, setUserValue] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+const RequiredAuth = ({ children }) => {
+  let location = useLocation();
 
-  const handleChange = (event) => {
-    console.log(event.target.name, event.target.value);
-    setUserValue({
-      ...userValue,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const token = localStorage.getItem("todo_token");
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  return children;
+};
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log(userValue);
-    axiosRequest({ method: "post", url: "/register" });
-  };
+let router = createBrowserRouter([
+  {
+    path: "/login",
+    loader: () => ({ message: "Hello Data Router!" }),
+    element: <Login />,
+  },
+  {
+    path: "/todo",
+    element: (
+      <RequiredAuth>
+        <h1>This is Todo AKA PROTECTED ROUTE</h1>
+      </RequiredAuth>
+    ),
+  },
+]);
 
-  return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          value={userValue.email}
-          onChange={handleChange}
-          required={true}
-        />
-        <input
-          name="password"
-          type="password"
-          value={userValue.password}
-          onChange={handleChange}
-          required={true}
-        />
-        <input
-          name="confirmPassword"
-          type="password"
-          value={userValue.confirmPassword}
-          onChange={handleChange}
-          required={true}
-        />
-        <button type="submit"> submit </button>
-      </form>
-    </div>
-  );
+export function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;
