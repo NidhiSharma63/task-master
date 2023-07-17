@@ -6,7 +6,7 @@ const cors = require("cors");
 const router = require("./routes/router");
 
 // use cors
-app.use(cors());
+server.use(cors());
 // for accessing the cookie that we have saved user site which is token(in form of cookie)
 server.use(cookieParser());
 // for parsing the req.body for postman
