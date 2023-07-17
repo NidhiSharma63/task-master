@@ -6,10 +6,12 @@ server.use(cookieParser());
 const bcrypt = require("bcrypt");
 const User = require("../models/userSchema");
 
-const getAllUserTodo = (req, res) => {
+// protected route
+const getAllUserTodo = (_req, res) => {
   res.send("Your All Todo Is Here");
 };
 
+// login page
 const getFormPage = (req, res) => {
   res.send(`
     <html>
@@ -110,9 +112,28 @@ const loginUser = async (req, res) => {
   }
 };
 
+// logout page
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("Todo");
+    const user = req.user;
+
+    // updating token
+    user.token = {};
+
+    // saving user to database after updatig the token
+    await user.save();
+    res.redirect("/api/v1/login");
+  } catch (error) {
+    console.log("Error occrued");
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllUserTodo,
   registerUser,
   loginUser,
   getFormPage,
+  logout,
 };
