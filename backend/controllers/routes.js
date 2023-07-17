@@ -66,7 +66,7 @@ const registerUser = async (req, res) => {
 
     // create user
     await user.save();
-    res.status(200).json({ msg: "user created" });
+    res.status(200).json({ user, token });
   } catch (error) {
     if (error.code === 11000 && error.keyValue && error.keyValue.email) {
       // Duplicate email error
