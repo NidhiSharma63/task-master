@@ -19,7 +19,10 @@ const RequiredAuth = ({ children }) => {
 let router = createBrowserRouter([
   {
     path: "/login",
-    loader: () => ({ message: "Hello Data Router!" }),
+    element: <Login />,
+  },
+  {
+    path: "/login",
     element: <Login />,
   },
   {
