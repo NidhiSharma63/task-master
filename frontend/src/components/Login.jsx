@@ -29,7 +29,15 @@ const Login = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12}></Grid>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          height: "300px",
+          border: "1px solid red",
+          bgcolor: "primary.main",
+        }}
+      ></Grid>
       <Grid item xs={12}></Grid>
     </Grid>
   );
