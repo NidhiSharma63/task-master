@@ -18,6 +18,9 @@ const theme = createTheme({
       secondary: colors.secondaryTextColor,
     },
   },
+  typography: {
+    fontFamily: " 'Quicksand', sans-serif",
+  },
 });
 
 export default theme;
