@@ -8,11 +8,13 @@ import {
   TextField,
   Button,
   Divider,
+  Stack,
+  Avatar,
 } from "@mui/material";
 import { Logo, LightLogo } from "../assets/assets";
 const Login = () => {
   return (
-    <Grid container>
+    <Grid container sx={{ height: "100vh" }}>
       <Grid
         item
         xs={6}
@@ -195,13 +197,25 @@ const Login = () => {
         xs={6}
         sx={{
           bgcolor: "primary.main",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: "3rem",
+          height: "100%",
         }}
       >
         <IconButton>
           <LightLogo />
         </IconButton>
-        <Box>
-          <Typography>
+        <Box
+          sx={{
+            width: "80%",
+            textAlign: "center",
+            color: (theme) => theme.palette.text.secondary,
+          }}
+        >
+          <Typography sx={{ fontSize: "1.2rem" }}>
             TaskManager is a comprehensive task management solution designed to
             streamline and enhance productivity in your organization. With its
             user-friendly interface and powerful features, TaskManager empowers
@@ -209,21 +223,101 @@ const Login = () => {
             and stay organized.
           </Typography>
         </Box>
-        <Box>
-          <ul>
-            <li>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "1.4rem",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "80%",
+              gap: "1rem",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+              }}
+              variant="circular"
+            />
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.text.secondary,
+                fontSize: ".9rem",
+                width: "100%",
+              }}
+            >
               Task Creation and Assignment: Easily create tasks, assign them to
               team members, and set due dates for timely completion.
-            </li>
-            <li>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "80%",
+              gap: "1rem",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+              }}
+              variant="circular"
+            />
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.text.secondary,
+                fontSize: ".9rem",
+                width: "100%",
+              }}
+            >
               Progress Tracking: Monitor task progress at a glance, ensuring
               transparency and accountability.
-            </li>
-            <li>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "80%",
+              gap: "1rem",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                width: 10,
+                height: 10,
+                borderRadius: "50%",
+              }}
+              variant="circular"
+            />
+            <Typography
+              sx={{
+                color: (theme) => theme.palette.text.secondary,
+                fontSize: ".9rem",
+                width: "100%",
+              }}
+            >
               Task Prioritization: Prioritize tasks based on urgency and
-              importance, helping you focus on what matters most
-            </li>
-          </ul>
+              importance, helping you focus on what matters most.
+            </Typography>
+          </Box>
         </Box>
       </Grid>
     </Grid>
