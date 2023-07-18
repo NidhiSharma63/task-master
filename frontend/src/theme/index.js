@@ -7,6 +7,16 @@ const theme = createTheme({
     primary: {
       main: colors.primaryColor,
     },
+    secondary: {
+      main: colors.secondaryColor,
+    },
+    grey: {
+      50: colors.lightGrey,
+    },
+    text: {
+      primary: colors.primaryTextColor,
+      secondary: colors.secondaryTextColor,
+    },
   },
 });
 
