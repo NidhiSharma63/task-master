@@ -17,6 +17,7 @@ const theme = createTheme({
       primary: colors.primaryTextColor,
       secondary: colors.secondaryTextColor,
     },
+    divider: colors.lightGrey,
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",

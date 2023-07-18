@@ -7,18 +7,29 @@ import {
   Typography,
   TextField,
   Button,
+  Divider,
 } from "@mui/material";
 import { Logo, LightLogo } from "../assets/assets";
 const Login = () => {
   return (
     <Grid container>
       <Grid item xs={6}>
-        <Box>
-          <IconButton>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            ml: 3,
+            height: "2rem",
+            padding: ".5rem 0",
+          }}
+        >
+          <IconButton sx={{ width: "3rem" }}>
             <Logo />
           </IconButton>
-          <Typography>Task Master</Typography>
+          <Typography fontWeight={600}>Task Master</Typography>
         </Box>
+        <Divider />
         <Box>
           <Typography>Login</Typography>
           <Typography>
