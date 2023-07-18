@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axiosRequest from "../utils/axiosRequest";
-import { Grid } from "@mui/material";
+import { Grid, Box, IconButton } from "@mui/material";
+import { Logo } from "../assets";
+// import logo from "../icons/logo.svg";
 
 const Login = () => {
   const [userValue, setUserValue] = useState({
@@ -29,16 +31,22 @@ const Login = () => {
 
   return (
     <Grid container>
+      <Grid item xs={6}>
+        <Box>
+          <IconButton>
+            <Logo />
+          </IconButton>
+        </Box>
+        <Box></Box>
+      </Grid>
       <Grid
         item
-        xs={12}
+        xs={6}
         sx={{
-          height: "300px",
           border: "1px solid red",
           bgcolor: "primary.main",
         }}
       ></Grid>
-      <Grid item xs={12}></Grid>
     </Grid>
   );
 };
