@@ -91,6 +91,7 @@ const Login = () => {
                 sx={{
                   width: "60%",
                   border: "1px solid",
+                  borderRadius: "1rem",
                   borderColor: (theme) => theme.palette.grey[50],
                 }}
               />
@@ -118,6 +119,7 @@ const Login = () => {
                 placeholder="Enter your password here"
                 sx={{
                   width: "60%",
+                  borderRadius: "1rem",
                   border: "1px solid red",
                   borderColor: (theme) => theme.palette.grey[50],
                 }}
@@ -146,7 +148,8 @@ const Login = () => {
                 placeholder="Confirm your password here"
                 sx={{
                   width: "60%",
-                  border: "1px solid red",
+                  border: "1px solid ",
+                  borderRadius: "1rem",
                   color: "text.primary",
                   borderColor: (theme) => theme.palette.grey[50],
                 }}
