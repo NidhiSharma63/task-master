@@ -13,7 +13,14 @@ import { Logo, LightLogo } from "../assets/assets";
 const Login = () => {
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid
+        item
+        xs={6}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -30,78 +37,160 @@ const Login = () => {
           <Typography fontWeight={600}>Task Master</Typography>
         </Box>
         <Divider />
-        <Box>
-          <Typography>Login</Typography>
-          <Typography>
-            Welcome to Task Master. Manage you task with task master and make
-            your life productive
-          </Typography>
-        </Box>
-        <form action="Post">
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "column",
+            // border: "1px solid red",
+            width: "70%",
+            margin: "auto",
+            marginTop: "5rem",
+          }}
+        >
           <Box>
-            <Typography>E-mail</Typography>
-            <TextField
-              id="email"
-              name="email"
-              border="1px solid red"
-              placeholder="Enter your email here"
+            <Typography
               sx={{
-                border: "1px solid",
-                borderColor: (theme) => theme.palette.grey[50],
+                fontWeight: "700",
+                fontSize: "1.7rem",
+              }}
+            >
+              Login
+            </Typography>
+            <Typography
+              sx={{
+                marginTop: 1,
+                fontWeight: "500",
+                color: (theme) => theme.palette.text.primary,
+              }}
+            >
+              Welcome to Task Master. Manage your task with task master and make
+              your life productive.
+            </Typography>
+          </Box>
+          <form action="Post" style={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mt: 5,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "700",
+                }}
+              >
+                E-mail
+              </Typography>
+              <TextField
+                id="email"
+                name="email"
+                placeholder="Enter your email here"
+                sx={{
+                  width: "60%",
+                  border: "1px solid",
+                  borderColor: (theme) => theme.palette.grey[50],
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mt: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "700",
+                }}
+              >
+                Password
+              </Typography>
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                // border="1px solid "
+                placeholder="Enter your password here"
+                sx={{
+                  width: "60%",
+                  border: "1px solid red",
+                  borderColor: (theme) => theme.palette.grey[50],
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mt: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "700",
+                }}
+              >
+                Confirm password
+              </Typography>
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                variant="outlined"
+                placeholder="Confirm your password here"
+                sx={{
+                  width: "60%",
+                  border: "1px solid red",
+                  color: "text.primary",
+                  borderColor: (theme) => theme.palette.grey[50],
+                }}
+              />
+            </Box>
+            <Divider
+              sx={{
+                mt: 3,
+                mb: 3,
               }}
             />
-          </Box>
-          <Box>
-            <Typography>Password</Typography>
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              border="1px solid "
-              placeholder="Enter your password here"
-              sx={{
-                border: "1px solid red",
-                borderColor: (theme) => theme.palette.grey[50],
-              }}
-            />
-          </Box>
-          <Box>
-            <Typography>Confirm password</Typography>
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              border="1px solid"
-              variant="outlined"
-              placeholder="Confirm your password here"
-              sx={{
-                border: "1px solid red",
-                color: "text.primary",
-                borderColor: (theme) => theme.palette.grey[50],
-              }}
-            />
-          </Box>
-          <Button
-            type="submit"
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button
+                type="submit"
+                sx={{
+                  backgroundColor: "primary.main",
+                  color: "text.secondary",
+                }}
+              >
+                login
+              </Button>
+            </Box>
+          </form>
+          <Box
             sx={{
-              backgroundColor: "primary.main",
-              color: "text.secondary",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              mt: 4,
             }}
           >
-            login
-          </Button>
-        </form>
-        <Box>
-          <Typography>
-            Don't have account <a href="/">sign up</a>
-          </Typography>
+            <Typography>
+              Don't have account{" "}
+              <a style={{ fontWeight: "700" }} href="/">
+                sign up
+              </a>
+            </Typography>
+          </Box>
         </Box>
       </Grid>
       <Grid
         item
         xs={6}
         sx={{
-          border: "1px solid red",
           bgcolor: "primary.main",
         }}
       >

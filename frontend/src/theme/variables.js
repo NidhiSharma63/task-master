@@ -6,7 +6,7 @@ const colors = {
   lightGrey: "rgb(189, 189, 189)",
 
   // text color
-  primaryTextColor: "rgb(43, 42, 42)",
+  primaryTextColor: "rgb(92, 90, 90)",
   secondaryTextColor: "rgb(225,250,250)",
 };
 
