@@ -37,7 +37,6 @@ function FormikInput(props) {
               error={meta.error && meta.touched}
               {...rest}
               {...field}
-              placeholder="Enter your email here"
               sx={{
                 width: "60%",
                 border: meta.error && meta.touched ? "" : "1px solid",
