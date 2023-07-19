@@ -12,8 +12,19 @@ import {
 import { Logo } from "src/assets/assets";
 import colors from "src/theme/variables";
 import InfoPart from "src/components/auth/components/InfoPart";
+import FormikControls from "src/common/formik/FormikControls";
+import { Formik, Form } from "formik";
+import { loginSchema } from "src/constant/validation";
 
 const Login = () => {
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
   return (
     <Grid container sx={{ height: "100vh" }}>
       <Grid
@@ -62,7 +73,7 @@ const Login = () => {
             </Typography>
             <Typography
               sx={{
-                marginTop: 1,
+                marginTop: 3,
                 fontWeight: "500",
                 color: (theme) => theme.palette.text.primary,
               }}
@@ -71,85 +82,39 @@ const Login = () => {
               your life productive.
             </Typography>
           </Box>
-          <form action="Post" style={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mt: 5,
-              }}
+          <Box sx={{ width: "100%" }}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={loginSchema}
+              onSubmit={handleSubmit}
             >
-              <Typography
-                sx={{
-                  fontWeight: "700",
-                }}
-              >
-                E-mail
-              </Typography>
-              <TextField
-                id="email"
-                name="email"
-                placeholder="Enter your email here"
-                sx={{
-                  width: "60%",
-                  border: "1px solid",
-                  borderRadius: "1rem",
-                  borderColor: (theme) => theme.palette.grey[50],
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mt: 3,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: "700",
-                }}
-              >
-                Password
-              </Typography>
-              <TextField
-                id="password"
-                name="password"
-                type="password"
-                // border="1px solid "
-                placeholder="Enter your password here"
-                sx={{
-                  width: "60%",
-                  borderRadius: "1rem",
-                  border: "1px solid red",
-                  borderColor: (theme) => theme.palette.grey[50],
-                }}
-              />
-            </Box>
+              <Form>
+                <FormikControls control="formikInput" name="email" />
+                <FormikControls control="formikInput" name="password" />
 
-            <Divider
-              sx={{
-                mt: 3,
-                mb: 3,
-              }}
-            />
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type="submit"
-                sx={{
-                  backgroundColor: "primary.main",
-                  color: "text.secondary",
-                  "&:hover": {
-                    backgroundColor: colors.primaryHoverColor,
-                  },
-                }}
-              >
-                login
-              </Button>
-            </Box>
-          </form>
+                <Divider
+                  sx={{
+                    mt: 4,
+                    mb: 3,
+                  }}
+                />
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button
+                    type="submit"
+                    sx={{
+                      backgroundColor: "primary.main",
+                      color: "text.secondary",
+                      "&:hover": {
+                        backgroundColor: colors.primaryHoverColor,
+                      },
+                    }}
+                  >
+                    login
+                  </Button>
+                </Box>
+              </Form>
+            </Formik>
+          </Box>
           <Box
             sx={{
               display: "flex",
