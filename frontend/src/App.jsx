@@ -4,7 +4,8 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import Login from "./components/Login";
+import Login from "src/components/auth/Login";
+import Register from "src/components/auth/Register";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -21,9 +22,10 @@ let router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+
   {
-    path: "/login",
-    element: <Login />,
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/todo",

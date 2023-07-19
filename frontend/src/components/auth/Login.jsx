@@ -8,11 +8,11 @@ import {
   TextField,
   Button,
   Divider,
-  Stack,
-  Avatar,
 } from "@mui/material";
-import { Logo, LightLogo } from "../assets/assets";
-import colors from "../theme/variables";
+import { Logo } from "src/assets/assets";
+import colors from "src/theme/variables";
+import InfoPart from "src/components/auth/components/InfoPart";
+
 const Login = () => {
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -128,36 +128,7 @@ const Login = () => {
                 }}
               />
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mt: 3,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: "700",
-                }}
-              >
-                Confirm password
-              </Typography>
-              <TextField
-                id="password"
-                name="password"
-                type="password"
-                variant="outlined"
-                placeholder="Confirm your password here"
-                sx={{
-                  width: "60%",
-                  border: "1px solid ",
-                  borderRadius: "1rem",
-                  color: "text.primary",
-                  borderColor: (theme) => theme.palette.grey[50],
-                }}
-              />
-            </Box>
+
             <Divider
               sx={{
                 mt: 3,
@@ -189,141 +160,14 @@ const Login = () => {
           >
             <Typography>
               Don't have account{" "}
-              <a style={{ fontWeight: "700" }} href="/">
+              <a style={{ fontWeight: "700" }} href="/register">
                 sign up
               </a>
             </Typography>
           </Box>
         </Box>
       </Grid>
-      <Grid
-        item
-        xs={6}
-        sx={{
-          bgcolor: "primary.main",
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: "3rem",
-          height: "100%",
-        }}
-      >
-        <IconButton>
-          <LightLogo />
-        </IconButton>
-        <Box
-          sx={{
-            width: "80%",
-            textAlign: "center",
-            color: (theme) => theme.palette.text.secondary,
-          }}
-        >
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            TaskManager is a comprehensive task management solution designed to
-            streamline and enhance productivity in your organization. With its
-            user-friendly interface and powerful features, TaskManager empowers
-            teams to efficiently manage and track tasks, collaborate seamlessly,
-            and stay organized.
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1.4rem",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "80%",
-              gap: "1rem",
-            }}
-          >
-            <Box
-              sx={{
-                bgcolor: "white",
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-              }}
-              variant="circular"
-            />
-            <Typography
-              sx={{
-                color: (theme) => theme.palette.text.secondary,
-                fontSize: ".9rem",
-                width: "100%",
-              }}
-            >
-              Task Creation and Assignment: Easily create tasks, assign them to
-              team members, and set due dates for timely completion.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "80%",
-              gap: "1rem",
-            }}
-          >
-            <Box
-              sx={{
-                bgcolor: "white",
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-              }}
-              variant="circular"
-            />
-            <Typography
-              sx={{
-                color: (theme) => theme.palette.text.secondary,
-                fontSize: ".9rem",
-                width: "100%",
-              }}
-            >
-              Progress Tracking: Monitor task progress at a glance, ensuring
-              transparency and accountability.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "80%",
-              gap: "1rem",
-            }}
-          >
-            <Box
-              sx={{
-                bgcolor: "white",
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-              }}
-              variant="circular"
-            />
-            <Typography
-              sx={{
-                color: (theme) => theme.palette.text.secondary,
-                fontSize: ".9rem",
-                width: "100%",
-              }}
-            >
-              Task Prioritization: Prioritize tasks based on urgency and
-              importance, helping you focus on what matters most.
-            </Typography>
-          </Box>
-        </Box>
-      </Grid>
+      <InfoPart />
     </Grid>
   );
 };
