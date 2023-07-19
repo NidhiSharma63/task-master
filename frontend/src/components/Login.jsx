@@ -12,6 +12,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { Logo, LightLogo } from "../assets/assets";
+import colors from "../theme/variables";
 const Login = () => {
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -169,6 +170,9 @@ const Login = () => {
                 sx={{
                   backgroundColor: "primary.main",
                   color: "text.secondary",
+                  "&:hover": {
+                    backgroundColor: colors.primaryHoverColor,
+                  },
                 }}
               >
                 login

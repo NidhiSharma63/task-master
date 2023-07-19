@@ -8,6 +8,9 @@ const colors = {
   // text color
   primaryTextColor: "rgb(92, 90, 90)",
   secondaryTextColor: "rgb(225,250,250)",
+
+  // hover color
+  primaryHoverColor: "rgb(60, 9, 61)",
 };
 
 export default colors;
