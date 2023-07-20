@@ -14,8 +14,21 @@ import InfoPart from "src/components/auth/components/InfoPart";
 import FormikControls from "src/common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "src/constant/validation";
+import { useEffect } from "react";
+import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+
   const initialValues = {
     email: "",
     password: "",

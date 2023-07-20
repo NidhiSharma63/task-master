@@ -3,10 +3,17 @@ import {
   RouterProvider,
   useLocation,
   Navigate,
+  redirect,
+  Outlet,
 } from "react-router-dom";
 import Login from "src/components/auth/Login";
 import Register from "src/components/auth/Register";
 import { ToastContainer } from "react-toastify";
+import { Layout } from "src/components/Layout/Layout";
+
+const Redirect = (path) => {
+  return redirect(path);
+};
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -35,12 +42,25 @@ let router = createBrowserRouter([
     ),
   },
   {
-    path: "/todo",
-    element: (
-      <RequiredAuth>
-        <h1>This is Todo AKA PROTECTED ROUTE</h1>
-      </RequiredAuth>
-    ),
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "todo", // The root route
+        index: true,
+        element: (
+          <>
+            Here is the child element
+            <Outlet />
+          </>
+        ),
+        // Redirect to /todo
+      },
+      {
+        path: "/todo",
+        element: <>Your All Todo is here</>,
+      },
+    ],
   },
 ]);
 
@@ -49,3 +69,17 @@ export function App() {
 }
 
 export default App;
+
+// children: [
+//   {
+//     path: "/", // The root route
+//     index: true,
+//     element: <Redirect to="/todo" />,
+//     // Redirect to /todo
+//   },
+//   {
+//     path: "/todo",
+//     index: true,
+//     element: <>Your All Todo is here</>,
+//   },
+// ],

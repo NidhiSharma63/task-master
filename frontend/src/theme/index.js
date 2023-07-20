@@ -3,7 +3,7 @@ import colors from "./variables";
 
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
     primary: {
       main: colors.primaryColor,
     },

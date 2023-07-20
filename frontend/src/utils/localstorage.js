@@ -1,6 +1,6 @@
 // get value from local storage
 export const getValueFromLS = (key) => {
-  return localStorage.getItem(key);
+  return JSON.stringify(localStorage.getItem(key));
 };
 
 // set value to ls
