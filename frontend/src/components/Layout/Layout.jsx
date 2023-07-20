@@ -1,5 +1,5 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   CssBaseline,
   Box,
@@ -8,20 +8,23 @@ import {
   Drawer,
   AppBar,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  InboxIcon,
   Divider,
-  MailIcon,
 } from "@mui/material";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
 
 const drawerWidth = 180;
 
 export const Layout = () => {
+  const navigate = useNavigate();
+
+  // navigate the user to /todo directly
+  useEffect(() => {
+    navigate("todo");
+  }, []);
+
   return (
     <>
       <Box sx={{ display: "flex" }}>

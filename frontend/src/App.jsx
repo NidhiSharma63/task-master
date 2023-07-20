@@ -3,17 +3,12 @@ import {
   RouterProvider,
   useLocation,
   Navigate,
-  redirect,
   Outlet,
 } from "react-router-dom";
 import Login from "src/components/auth/Login";
 import Register from "src/components/auth/Register";
 import { ToastContainer } from "react-toastify";
 import { Layout } from "src/components/Layout/Layout";
-
-const Redirect = (path) => {
-  return redirect(path);
-};
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
