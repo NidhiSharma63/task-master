@@ -14,8 +14,10 @@ import InfoPart from "src/components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
 import { registerSchema } from "src/constant/validation";
 import FormikControls from "src/common/formik/FormikControls";
+import userRegisterQuery from "src/hook/useRegsiterQuery";
 
 const Register = () => {
+  const { mutate } = userRegisterQuery();
   const initialValues = {
     email: "",
     password: "",
@@ -24,6 +26,7 @@ const Register = () => {
 
   const handleSubmit = (values) => {
     console.log(values);
+    mutate(values);
   };
 
   return (
@@ -93,7 +96,6 @@ const Register = () => {
                 <FormikControls control="formikInput" name="email" />
                 <FormikControls control="formikInput" name="password" />
                 <FormikControls control="formikInput" name="confirmPassword" />
-
                 <Divider
                   sx={{
                     mt: 4,
@@ -111,7 +113,7 @@ const Register = () => {
                       },
                     }}
                   >
-                    login
+                    register
                   </Button>
                 </Box>
               </Form>

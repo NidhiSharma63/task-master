@@ -16,11 +16,15 @@ async function axiosRequest({ ...options }) {
 
   try {
     const response = await axiosInstance(options);
-    console.log(response, "response");
-    // return Promise.resolve(response.data);
+    return Promise.resolve(response.data);
   } catch (error) {
-    return Promise.reject(error.response.data);
+    // throw new Error("An error occurred. Please try again.");
   }
 }
 
-export default axiosRequest;
+const customAxiosRequest = async (url, method = "post", payload) => {
+  const response = await axiosRequest({ url, method, data: payload });
+  return response;
+};
+
+export default customAxiosRequest;

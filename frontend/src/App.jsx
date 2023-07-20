@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Login from "src/components/auth/Login";
 import Register from "src/components/auth/Register";
+import { ToastContainer } from "react-toastify";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -25,7 +26,13 @@ let router = createBrowserRouter([
 
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <>
+        {" "}
+        <Register />
+        <ToastContainer />
+      </>
+    ),
   },
   {
     path: "/todo",
