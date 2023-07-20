@@ -21,13 +21,14 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+  console.log(token);
 
   useEffect(() => {
-    const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
     if (token) {
       navigate("/");
     }
-  }, []);
+  }, [token]);
 
   const initialValues = {
     email: "",

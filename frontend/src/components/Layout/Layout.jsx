@@ -21,9 +21,9 @@ export const Layout = () => {
   const navigate = useNavigate();
 
   // navigate the user to /todo directly
-  useEffect(() => {
-    navigate("todo");
-  }, []);
+  //   useEffect(() => {
+  //     navigate("todo");
+  //   }, []);
 
   return (
     <>

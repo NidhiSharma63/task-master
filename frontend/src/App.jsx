@@ -9,11 +9,13 @@ import Login from "src/components/auth/Login";
 import Register from "src/components/auth/Register";
 import { ToastContainer } from "react-toastify";
 import { Layout } from "src/components/Layout/Layout";
+import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
 
-  const token = localStorage.getItem("todo_token");
+  const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
@@ -38,7 +40,11 @@ let router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <RequiredAuth>
+        <Layout />
+      </RequiredAuth>
+    ),
     children: [
       {
         path: "todo", // The root route
