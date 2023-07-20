@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Avatar,
 } from "@mui/material";
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
 
@@ -21,9 +22,9 @@ export const Layout = () => {
   const navigate = useNavigate();
 
   // navigate the user to /todo directly
-  //   useEffect(() => {
-  //     navigate("todo");
-  //   }, []);
+  useEffect(() => {
+    navigate("todo");
+  }, []);
 
   return (
     <>
@@ -31,12 +32,31 @@ export const Layout = () => {
         <CssBaseline />
         <AppBar
           position="fixed"
+          display="flex"
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
         >
-          <Toolbar>
+          <Toolbar
+            sx={{
+              display: "flex",
+              width: "100%",
+              border: "1px solid red",
+              justifyContent: "space-between",
+            }}
+          >
             <Typography variant="h6" noWrap component="div">
               Task Manager
             </Typography>
+            <Avatar
+              sx={{
+                bgcolor: "secondary.main",
+                cursor: "pointer",
+                fontWeight: 600,
+                color: (theme) => theme.palette.primary.main,
+              }}
+              variant="circle"
+            >
+              N
+            </Avatar>
           </Toolbar>
         </AppBar>
         <Drawer
