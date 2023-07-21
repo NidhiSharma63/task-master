@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const uniqueValidator = require("mongoose-unique-validator");
 
 // creating schema
 const userSchema = new mongoose.Schema({
@@ -33,6 +34,11 @@ userSchema.methods.generateAuthToken = async function () {
     throw new Error(error);
   }
 };
+
+// Apply the uniqueValidator plugin to the userSchema
+userSchema.plugin(uniqueValidator, {
+  message: "Email already exists. Please use a different email address.",
+});
 
 // now we need to create collection
 

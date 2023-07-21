@@ -11,31 +11,6 @@ const getAllUserTodo = (_req, res) => {
   res.send("Your All Todo Is Here");
 };
 
-// login page
-const getFormPage = (req, res) => {
-  res.send(`
-    <html>
-      <head>
-        <title>Login Form</title>
-      </head>
-      <body>
-        <h1>Login Form</h1>
-        <form action="/api/v1/login" method="POST">
-          <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </body>
-    </html>
-  `);
-};
-
 const registerUser = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body;
@@ -62,18 +37,13 @@ const registerUser = async (req, res) => {
     const token = await user.generateAuthToken();
 
     // setting token as a cookie
-    res.cookie("Todo", token, { httpOnly: true, secure: true });
+    // res.cookie("Todo", token, { httpOnly: true });
 
     // create user
     await user.save();
     res.status(200).json({ user, token });
   } catch (error) {
-    if (error.code === 11000 && error.keyValue && error.keyValue.email) {
-      // Duplicate email error
-      res.status(400).json({ error: "Email is already registered" });
-    } else {
-      res.status(401).json({ error: error.message });
-    }
+    res.status(401).json({ error: error.message });
   }
 };
 
@@ -134,6 +104,5 @@ module.exports = {
   getAllUserTodo,
   registerUser,
   loginUser,
-  getFormPage,
   logout,
 };
