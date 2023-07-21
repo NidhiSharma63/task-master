@@ -1,23 +1,23 @@
-const jwt = require("jsonwebtoken");
 const User = require("../models/userSchema");
 
-const auth = async (req, res, next) => {
-  try {
-    const token = req.cookies.Todo;
+const checkAuthorization = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const userId = req.body.id;
 
-    // first verfiy user
-    const verifyUser = jwt.verify(token, process.env.SECREAT_KEY);
-
-    // get the user from collection
-    const user = await User.findOne({ _id: verifyUser.id });
-
-    // passing value so that we can logout the user
-    req.token = token;
-    req.user = user;
-    next();
-  } catch (error) {
-    res.status(401).json({ error: "User must be authorized" });
+  if (!token) {
+    return res.status(401).json({ error: "Authorization token is missing." });
   }
+
+  const getUserFromDB = await User.findOne({ id: userId });
+
+  if (getUserFromDB?.token !== token) {
+    return res.status(401).json({ error: "Authorization token is invalid." });
+  }
+
+  // Check if the token is present and valid (you can implement your own validation logic here)
+
+  // If the token is valid, you can continue to the next middleware or the main handler
+  next();
 };
 
-module.exports = auth;
+module.exports = checkAuthorization;

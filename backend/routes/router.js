@@ -6,10 +6,10 @@ const {
   loginUser,
   logout,
 } = require("../controllers/routes");
-const auth = require("../middleware/auth");
+const checkAuthorization = require("../middleware/auth");
 
 // defining get route
-router.route("/").get(auth, getAllUserTodo);
+router.route("/alltodos").get(checkAuthorization, getAllUserTodo);
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").post(logout);
