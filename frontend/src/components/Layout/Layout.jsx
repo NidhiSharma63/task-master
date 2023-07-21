@@ -23,6 +23,8 @@ import { getUserFirstName } from "src/utils/getUserFirstName";
 import useLogoutQuery from "src/hook/useLogoutQuery";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
+import useGetAllTodos from "src/hook/useGetAllTodo";
+
 const drawerWidth = 180;
 
 export const Layout = () => {
@@ -31,7 +33,8 @@ export const Layout = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
-
+  const { data } = useGetAllTodos();
+  console.log("data::::", data);
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
