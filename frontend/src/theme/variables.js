@@ -6,7 +6,7 @@ const colors = {
   lightGrey: "rgb(189, 189, 189)",
 
   // text color
-  primaryTextColor: "rgb(92, 90, 90)",
+  primaryTextColor: "rgb(18,17,17)",
   secondaryTextColor: "rgb(225,250,250)",
 
   // hover color

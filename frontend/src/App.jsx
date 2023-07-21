@@ -11,6 +11,7 @@ import { Layout } from "src/components/Layout/Layout";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 import NotFound from "src/pages/error/NotFound";
+import ProjectPage from "src/pages/project/ProjectPage";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -51,12 +52,7 @@ let router = createBrowserRouter([
       {
         path: "todo", // The root route
         index: true,
-        element: (
-          <>
-            Here is the child element
-            <Outlet />
-          </>
-        ),
+        element: <ProjectPage />,
       },
       {
         path: "/todo",

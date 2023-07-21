@@ -17,23 +17,25 @@ import {
   MenuItem,
 } from "@mui/material";
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { usersDataInStore } from "src/redux/auth/userSlice";
 import { getUserFirstName } from "src/utils/getUserFirstName";
 import useLogoutQuery from "src/hook/useLogoutQuery";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
 import useGetAllTodos from "src/hook/useGetAllTodo";
+import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
 
 const drawerWidth = 180;
 
 export const Layout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user_email } = useSelector(usersDataInStore);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
-  const { data } = useGetAllTodos();
+  // const { data } = useGetAllTodos();
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
@@ -58,6 +60,10 @@ export const Layout = () => {
   const handleOpen = (event) => {
     setAnchorEl(event.target);
     setOpen(true);
+  };
+
+  const handleOpenProjectModal = () => {
+    dispatch(isProjectNameModalOpen(true));
   };
 
   return (
@@ -151,7 +157,7 @@ export const Layout = () => {
               {LOWER_PART.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton>
+                    <ListItemButton onClick={handleOpenProjectModal}>
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
@@ -161,9 +167,10 @@ export const Layout = () => {
             </List>
           </Box>
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Outlet />
+        </Box>
       </Box>
-      <Outlet />
     </>
   );
 };
