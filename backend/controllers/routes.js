@@ -84,18 +84,16 @@ const loginUser = async (req, res) => {
 // logout page
 const logout = async (req, res) => {
   try {
-    res.clearCookie("Todo");
-    const user = req.user;
-
+    const email = req?.body?.email;
+    const getUserFromDB = await User.findOne({ email });
     // updating token
-    user.token = {};
+    getUserFromDB.token = "";
 
     // saving user to database after updatig the token
-    await user.save();
-    res.redirect("/api/v1/login");
+    await getUserFromDB.save();
+    res.status(202).json({ message: "successfully logged out" });
   } catch (error) {
-    console.log("Error occrued");
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "An error occured please try again" });
   }
 };
 
