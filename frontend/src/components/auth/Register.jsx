@@ -25,7 +25,6 @@ const Register = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
     mutate(values);
   };
 

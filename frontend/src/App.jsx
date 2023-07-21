@@ -20,7 +20,7 @@ const RequiredAuth = ({ children }) => {
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  if (token > 9) {
+  if (token) {
     return children;
   }
 };

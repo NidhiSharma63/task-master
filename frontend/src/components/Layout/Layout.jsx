@@ -32,10 +32,8 @@ export const Layout = () => {
   }, []);
 
   useEffect(() => {
-    console.log(user_email);
     setUserName(getUserFirstName(user_email));
   }, [user_email]);
-  console.log(user_email);
 
   return (
     <>
@@ -66,7 +64,7 @@ export const Layout = () => {
               }}
               variant="circle"
             >
-              N
+              {userName}
             </Avatar>
           </Toolbar>
         </AppBar>

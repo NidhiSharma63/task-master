@@ -5,11 +5,11 @@ import { getValueFromLS } from "src/utils/localstorage";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user_email: "",
+    user_email: getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?.email ?? "",
   },
   reducers: {
-    userEmail: (state) => {
-      state.user_email = getValueFromLS(KEY_FOR_STORING_USER_DETAILS);
+    userEmail: (state, action) => {
+      state.user_email = action.payload;
     },
   },
 });
