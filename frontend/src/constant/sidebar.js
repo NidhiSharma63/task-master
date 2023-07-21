@@ -10,12 +10,12 @@ import AddIcon from "@mui/icons-material/Add";
 export const UPPER_SIDE_BAR = [
   {
     Home: <HomeIcon />,
-    Insights: <InsightsIcon />,
   },
 ];
 
 export const INSIGHTS = [
   {
+    Insights: <InsightsIcon />,
     "In progress": <HourglassBottomIcon />,
     "In priority": <PriorityHighIcon />,
     Completed: <HourglassFullIcon />,
