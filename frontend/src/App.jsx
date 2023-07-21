@@ -5,9 +5,8 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import Login from "src/components/auth/Login";
-import Register from "src/components/auth/Register";
-import { ToastContainer } from "react-toastify";
+import Login from "src/pages/auth/Login";
+import Register from "src/pages/auth/Register";
 import { Layout } from "src/components/Layout/Layout";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
