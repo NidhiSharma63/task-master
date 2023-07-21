@@ -52,12 +52,12 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // check if user already register or not because only register user can log in
-    const isUserAvailable = await User.findOne({ email });
-    if (!isUserAvailable) {
+    const user = await User.findOne({ email });
+    if (!user) {
       throw new Error("Invalid login detail");
     }
     // check if provided password by user is same as stored in data
-    const getPassword = isUserAvailable.password;
+    const getPassword = user.password;
 
     // verify password first pass user created password and then pass stored password
     const verifyPassword = await bcrypt.compare(password, getPassword);
@@ -67,15 +67,14 @@ const loginUser = async (req, res) => {
     }
 
     // generate token once user have correct credentials
-    const token = await isUserAvailable.generateAuthToken();
+    const token = await user.generateAuthToken();
 
     // setting token as a cookie
-    res.cookie("Todo", token, { httpOnly: true, secure: true });
+    // res.cookie("Todo", token, { httpOnly: true, secure: true });
 
     // is all okay send user back data
-    if (isUserAvailable) {
-      // res.status(201).json({ msg: "user logged in" });
-      res.redirect("/api/v1");
+    if (user) {
+      res.status(201).json({ user, token });
     }
   } catch (error) {
     res.status(401).json({ error: error.message });
