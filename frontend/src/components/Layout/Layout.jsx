@@ -34,7 +34,6 @@ export const Layout = () => {
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
   const { data } = useGetAllTodos();
-  console.log("data::::", data);
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
@@ -74,7 +73,6 @@ export const Layout = () => {
             sx={{
               display: "flex",
               width: "100%",
-              border: "1px solid red",
               justifyContent: "space-between",
             }}
           >
