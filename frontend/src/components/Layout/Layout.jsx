@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   CssBaseline,
@@ -15,16 +15,27 @@ import {
   Avatar,
 } from "@mui/material";
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
-
+import { useSelector } from "react-redux";
+import { usersDataInStore } from "src/redux/auth/userSlice";
+import { getUserFirstName } from "src/utils/getUserFirstName";
 const drawerWidth = 180;
 
 export const Layout = () => {
   const navigate = useNavigate();
+  const { user_email } = useSelector(usersDataInStore);
+
+  const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
   useEffect(() => {
     navigate("todo");
   }, []);
+
+  useEffect(() => {
+    console.log(user_email);
+    setUserName(getUserFirstName(user_email));
+  }, [user_email]);
+  console.log(user_email);
 
   return (
     <>

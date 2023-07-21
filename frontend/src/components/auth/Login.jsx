@@ -22,9 +22,9 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
-  console.log(token);
 
   useEffect(() => {
+    // because we are
     if (token) {
       navigate("/");
     }

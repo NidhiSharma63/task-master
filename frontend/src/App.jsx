@@ -16,10 +16,13 @@ const RequiredAuth = ({ children }) => {
   let location = useLocation();
 
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  return children;
+  if (token > 9) {
+    return children;
+  }
 };
 
 let router = createBrowserRouter([
