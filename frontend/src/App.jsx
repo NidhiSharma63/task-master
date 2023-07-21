@@ -10,6 +10,7 @@ import Register from "src/pages/auth/Register";
 import { Layout } from "src/components/Layout/Layout";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
+import NotFound from "src/pages/error/NotFound";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -56,13 +57,16 @@ let router = createBrowserRouter([
             <Outlet />
           </>
         ),
-        // Redirect to /todo
       },
       {
         path: "/todo",
         element: <>Your All Todo is here</>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
