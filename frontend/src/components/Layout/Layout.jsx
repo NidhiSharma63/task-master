@@ -13,16 +13,24 @@ import {
   ListItemText,
   Divider,
   Avatar,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
 import { useSelector } from "react-redux";
 import { usersDataInStore } from "src/redux/auth/userSlice";
 import { getUserFirstName } from "src/utils/getUserFirstName";
+import useLogoutQuery from "src/hook/useLogoutQuery";
+import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
 const drawerWidth = 180;
 
 export const Layout = () => {
   const navigate = useNavigate();
   const { user_email } = useSelector(usersDataInStore);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const { mutate } = useLogoutQuery();
 
   const [userName, setUserName] = useState("");
 
@@ -34,6 +42,21 @@ export const Layout = () => {
   useEffect(() => {
     setUserName(getUserFirstName(user_email));
   }, [user_email]);
+
+  const handleLogout = () => {
+    const user = getValueFromLS(KEY_FOR_STORING_USER_DETAILS);
+    mutate(user);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.target);
+    setOpen(true);
+  };
 
   return (
     <>
@@ -63,9 +86,25 @@ export const Layout = () => {
                 color: (theme) => theme.palette.primary.main,
               }}
               variant="circle"
+              onClick={handleOpen}
             >
               {userName}
             </Avatar>
+            <Menu
+              id="logout"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem
+                sx={{
+                  color: (theme) => theme.palette.primary.main,
+                }}
+                onClick={handleLogout}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
         <Drawer
