@@ -37,7 +37,6 @@ let router = createBrowserRouter([
       <>
         {" "}
         <Register />
-        <ToastContainer />
       </>
     ),
   },
@@ -73,17 +72,3 @@ export function App() {
 }
 
 export default App;
-
-// children: [
-//   {
-//     path: "/", // The root route
-//     index: true,
-//     element: <Redirect to="/todo" />,
-//     // Redirect to /todo
-//   },
-//   {
-//     path: "/todo",
-//     index: true,
-//     element: <>Your All Todo is here</>,
-//   },
-// ],

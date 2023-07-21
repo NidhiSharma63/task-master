@@ -2,3 +2,7 @@
     margin: 0;
     padding: 0;
 }
+.Toastify__toast-theme--dark.Toastify__toast--success {
+    background-color: rgb(87,17,89) !important;
+    color:white !important;
+}

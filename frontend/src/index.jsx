@@ -7,6 +7,9 @@ import "./styles/index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import store from "src/store";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,6 +18,20 @@ root.render(
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={true}
+            theme="dark"
+            color="pink"
+            closeButton={true}
+            className="toast-container"
+          />
           <App />
         </Provider>
       </QueryClientProvider>
