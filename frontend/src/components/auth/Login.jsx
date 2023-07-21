@@ -18,10 +18,12 @@ import { useEffect } from "react";
 import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 import { useNavigate } from "react-router-dom";
+import useLoginQuery from "src/hook/useLoginQuery";
 
 const Login = () => {
   const navigate = useNavigate();
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+  const { mutate } = useLoginQuery();
 
   useEffect(() => {
     // because we are
@@ -36,7 +38,7 @@ const Login = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
+    mutate(values);
   };
   return (
     <Grid container sx={{ height: "100vh" }}>
