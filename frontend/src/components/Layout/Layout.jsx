@@ -131,7 +131,7 @@ export const Layout = () => {
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton>
+                    <ListItemButton key={value}>
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
@@ -144,7 +144,7 @@ export const Layout = () => {
               {INSIGHTS.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton>
+                    <ListItemButton key={value}>
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
@@ -157,7 +157,10 @@ export const Layout = () => {
               {LOWER_PART.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton onClick={handleOpenProjectModal}>
+                    <ListItemButton
+                      key={value}
+                      onClick={handleOpenProjectModal}
+                    >
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
