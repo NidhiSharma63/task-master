@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import store from "src/store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ root.render(
             className="toast-container"
           />
           <App />
+          <ReactQueryDevtools initialIsOpen={false} />
         </Provider>
       </QueryClientProvider>
     </ThemeProvider>
