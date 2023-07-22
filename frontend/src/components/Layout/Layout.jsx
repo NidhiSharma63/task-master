@@ -36,7 +36,7 @@ export const Layout = () => {
   const { mutate } = useLogoutQuery();
   const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
-  console.log(data, ":::data:::", allProjects);
+
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly

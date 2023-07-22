@@ -35,8 +35,18 @@ const customAxiosRequest = async (url, method = "post", payload) => {
     params = { userId };
   }
 
+  let updatedPayload = {};
+  if (userId) {
+    updatedPayload = { ...payload, userId };
+  }
+
   try {
-    const response = await axiosRequest({ url, method, params, data: payload });
+    const response = await axiosRequest({
+      url,
+      method,
+      params,
+      data: updatedPayload,
+    });
     return response;
   } catch (error) {
     throw error; // Re-throw the error to propagate it to the caller
