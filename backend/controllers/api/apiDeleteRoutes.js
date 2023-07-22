@@ -1,8 +1,6 @@
-const express = require("express");
 const Project = require("../../models/projectsSchema");
 
 const deleteProjectApi = async (req, res) => {
-  console.log("deleteProjectApi");
   try {
     const { id } = req.body;
 
@@ -11,7 +9,6 @@ const deleteProjectApi = async (req, res) => {
     }
     await Project.findOneAndDelete({ _id: id });
     const projects = await Project.find();
-    console.log(projects, "projects");
 
     res.status(204).json({ projects });
   } catch (error) {
