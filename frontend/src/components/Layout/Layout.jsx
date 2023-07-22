@@ -34,13 +34,18 @@ export const Layout = () => {
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
   const { data } = useGetProjectQuery();
-  console.log(data, ":::data:::");
+  const [allProjects, setAllProjects] = useState([]);
+  console.log(data, ":::data:::", allProjects);
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
   useEffect(() => {
     navigate("todo");
   }, []);
+
+  useEffect(() => {
+    setAllProjects(data?.projects);
+  }, [data]);
 
   useEffect(() => {
     setUserName(getUserFirstName(user_email));
@@ -61,6 +66,7 @@ export const Layout = () => {
   };
 
   const handleOpenProjectModal = () => {
+    console.log("handleOpenProjectModal");
     dispatch(isProjectNameModalOpen(true));
   };
 
@@ -161,6 +167,13 @@ export const Layout = () => {
                     </ListItemButton>
                   );
                 });
+              })}
+              {allProjects?.map((item) => {
+                return (
+                  <ListItemButton key={item._id}>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                );
               })}
             </List>
           </Box>
