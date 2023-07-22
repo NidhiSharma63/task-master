@@ -2,7 +2,7 @@ const User = require("../models/userSchema");
 
 const checkAuthorization = async (req, res, next) => {
   const token = req.headers.authorization;
-  const userId = req.body.id;
+  const userId = req.body.userId;
 
   if (!token) {
     return res.status(400).json({ error: "Authorization token is missing." });

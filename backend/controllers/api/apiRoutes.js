@@ -8,19 +8,19 @@ const Project = require("../../models/projectsSchema");
 
 const createProjectApi = async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { userId, name } = req.body;
 
     if (!name.trim()) {
       res.status(400).json({ error: "Project name is required" });
     }
 
     const project = new Project({
-      userId: id,
+      userId,
       name,
     });
 
     await project.save();
-    res.status(201).json({ data: { userId: id, name } });
+    res.status(201).json({ data: { userId, name } });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
