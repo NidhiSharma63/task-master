@@ -17,17 +17,19 @@ const usePostProjectQuery = () => {
   });
 };
 
+const getAllProjects = async () => {
+  const res = await customAxiosRequest("/projects", "get");
+  return res;
+};
+
 const useGetProjectQuery = () => {
   return useQuery({
-    queryKey: ["allTodos"],
-    // queryFn: getAllUserTodo,
+    queryKey: ["projects"],
+    queryFn: getAllProjects,
     onError: (error) => {
-      toast.error(error);
+      toast.error(error?.response?.data?.error);
     },
   });
 };
 
-export default {
-  useGetProjectQuery,
-  usePostProjectQuery,
-};
+export { useGetProjectQuery, usePostProjectQuery };

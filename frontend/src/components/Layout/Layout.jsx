@@ -21,9 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { usersDataInStore } from "src/redux/auth/userSlice";
 import { getUserFirstName } from "src/utils/getUserFirstName";
 import useLogoutQuery from "src/hook/useLogoutQuery";
-import { getValueFromLS } from "src/utils/localstorage";
-import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
-import useGetAllTodos from "src/hook/useGetAllTodo";
+import { useGetProjectQuery } from "src/hook/useProjectQuery";
 import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
 
 const drawerWidth = 180;
@@ -35,7 +33,8 @@ export const Layout = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
-  // const { data } = useGetAllTodos();
+  const { data } = useGetProjectQuery();
+  console.log(data, ":::data:::");
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly

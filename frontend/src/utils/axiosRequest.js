@@ -30,17 +30,13 @@ async function axiosRequest({ ...options }) {
 
 const customAxiosRequest = async (url, method = "post", payload) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
-  let readyPayload = {};
+  let params = {};
   if (userId) {
-    readyPayload = { ...payload, userId: userId };
+    params = { userId };
   }
 
   try {
-    const response = await axiosRequest({
-      url,
-      method,
-      data: userId ? readyPayload : payload,
-    });
+    const response = await axiosRequest({ url, method, params, data: payload });
     return response;
   } catch (error) {
     throw error; // Re-throw the error to propagate it to the caller
