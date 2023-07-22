@@ -9,6 +9,7 @@ const {
 
 const { createProjectApi } = require("./api/apiPostRoutes");
 const { getProjectApi } = require("./api/apiGetRoutes");
+const { deleteProjectApi } = require("./api/apiDeleteRoutes");
 
 module.exports = {
   getAllUserTodo,
@@ -17,4 +18,5 @@ module.exports = {
   logout,
   createProjectApi,
   getProjectApi,
+  deleteProjectApi,
 };

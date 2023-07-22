@@ -7,6 +7,7 @@ const {
   logout,
   createProjectApi,
   getProjectApi,
+  deleteProjectApi,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
@@ -17,5 +18,6 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(logout);
 router.route("/projects").post(checkAuthorization, createProjectApi);
 router.route("/projects").get(checkAuthorization, getProjectApi);
+router.route("/projects").delete(checkAuthorization, getProjectApi);
 
 module.exports = router;

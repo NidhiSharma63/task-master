@@ -1,6 +1,4 @@
 const express = require("express");
-const server = express();
-const bcrypt = require("bcrypt");
 const Project = require("../../models/projectsSchema");
 
 const getProjectApi = async (req, res) => {
