@@ -2,6 +2,7 @@ import axios from "axios";
 import { AxiosInstanceConfig } from "../constant/axiosInstance";
 import { BASE_URL, KEY_FOR_STORING_TOKEN } from "../constant/Misc";
 import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
 
 // defining axios instance
 const axiosInstance = axios.create({
@@ -28,8 +29,18 @@ async function axiosRequest({ ...options }) {
 }
 
 const customAxiosRequest = async (url, method = "post", payload) => {
+  const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
+  let readyPayload = {};
+  if (userId) {
+    readyPayload = { ...payload, userId: userId };
+  }
+
   try {
-    const response = await axiosRequest({ url, method, data: payload });
+    const response = await axiosRequest({
+      url,
+      method,
+      data: userId ? readyPayload : payload,
+    });
     return response;
   } catch (error) {
     throw error; // Re-throw the error to propagate it to the caller

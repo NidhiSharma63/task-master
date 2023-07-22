@@ -33,7 +33,8 @@ const ProjectNameModal = () => {
 
   const handleSave = () => {
     if (projectName.trim()) {
-      mutate(projectName.trim());
+      mutate({ name: projectName.trim() });
+      setOpen(false);
     }
   };
 

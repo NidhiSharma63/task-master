@@ -48,8 +48,7 @@ export const Layout = () => {
   }, [user_email]);
 
   const handleLogout = () => {
-    const user = getValueFromLS(KEY_FOR_STORING_USER_DETAILS);
-    mutate(user);
+    mutate();
   };
 
   const handleClose = () => {

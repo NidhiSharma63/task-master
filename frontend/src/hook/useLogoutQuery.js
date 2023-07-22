@@ -12,8 +12,8 @@ const useLogoutQuery = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (payload) => {
-      return customAxiosRequest("/logout", "post", payload);
+    mutationFn: () => {
+      return customAxiosRequest("/logout", "post");
     },
     onSuccess: () => {
       navigate("/login");
