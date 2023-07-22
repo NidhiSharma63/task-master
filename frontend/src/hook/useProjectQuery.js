@@ -5,6 +5,7 @@ import {
 } from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "src";
 
 // post
 const usePostProjectQuery = () => {
@@ -14,6 +15,7 @@ const usePostProjectQuery = () => {
     },
     onSuccess: () => {
       toast.success("Project created successfully!");
+      queryClient.invalidateQueries("projects");
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -46,6 +48,7 @@ const useDeleteProjectQuery = () => {
     },
     onSuccess: () => {
       toast.success("Project deleted successfully!");
+      queryClient.invalidateQueries("projects");
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
