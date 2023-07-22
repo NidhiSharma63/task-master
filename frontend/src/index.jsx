@@ -21,7 +21,7 @@ root.render(
         <Provider store={store}>
           <ToastContainer
             position="top-center"
-            autoClose={1000}
+            autoClose={2000}
             hideProgressBar
             newestOnTop
             closeOnClick
