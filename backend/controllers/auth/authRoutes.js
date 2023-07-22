@@ -1,8 +1,8 @@
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 
 const express = require("express");
 const server = express();
-server.use(cookieParser());
+// server.use(cookieParser());
 const bcrypt = require("bcrypt");
 const User = require("../../models/userSchema");
 

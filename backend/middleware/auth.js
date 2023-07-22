@@ -5,10 +5,13 @@ const checkAuthorization = async (req, res, next) => {
   const userId = req.body.id;
 
   if (!token) {
-    return res.status(401).json({ error: "Authorization token is missing." });
+    return res.status(400).json({ error: "Authorization token is missing." });
   }
 
-  const getUserFromDB = await User.findOne({ id: userId });
+  if (!userId.trim()) {
+    return res.status(400).json({ error: "Id is missing." });
+  }
+  const getUserFromDB = await User.findOne({ _id: userId });
 
   if (getUserFromDB?.token !== token) {
     return res.status(401).json({ error: "Authorization token is invalid." });
