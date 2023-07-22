@@ -1,4 +1,4 @@
-import customAxiosRequest from "src/utils/axiosRequest";
+import { customAxiosRequestForPost } from "src/utils/axiosRequest";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const useRegisterQuery = () => {
 
   return useMutation({
     mutationFn: (payload) => {
-      return customAxiosRequest("/register", "post", payload);
+      return customAxiosRequestForPost("/register", "post", payload);
     },
     onSuccess: ({ token, user }) => {
       navigate("/"); // Navigate to the home page

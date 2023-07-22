@@ -1,5 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import customAxiosRequest from "src/utils/axiosRequest";
+import {
+  customAxiosRequestForPost,
+  customAxiosRequestForGet,
+} from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 
@@ -7,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 const usePostProjectQuery = () => {
   return useMutation({
     mutationFn: (payload) => {
-      return customAxiosRequest("/projects", "post", payload);
+      return customAxiosRequestForPost("/projects", "post", payload);
     },
     onSuccess: () => {
       toast.success("Project created successfully!");
@@ -19,7 +22,7 @@ const usePostProjectQuery = () => {
 };
 
 const getAllProjects = async () => {
-  const res = await customAxiosRequest("/projects", "get");
+  const res = await customAxiosRequestForGet("/projects", "get");
   return res;
 };
 
@@ -39,7 +42,7 @@ const useGetProjectQuery = () => {
 const useDeleteProjectQuery = () => {
   return useMutation({
     mutationFn: (payload) => {
-      return customAxiosRequest("/projects", "delete", payload);
+      return customAxiosRequestForPost("/projects", "delete", payload);
     },
     onSuccess: () => {
       toast.success("Project deleted successfully!");

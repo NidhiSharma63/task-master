@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import customAxiosRequest from "src/utils/axiosRequest";
+import { customAxiosRequestForPost } from "src/utils/axiosRequest";
 import { useNavigate } from "react-router-dom";
 import { setValueToLs } from "src/utils/localstorage";
 import {
@@ -13,7 +13,7 @@ const useLoginQuery = () => {
 
   return useMutation({
     mutationFn: (payload) => {
-      return customAxiosRequest("/login", "post", payload);
+      return customAxiosRequestForPost("/login", "post", payload);
     },
     onSuccess: ({ token, user }) => {
       navigate("/");

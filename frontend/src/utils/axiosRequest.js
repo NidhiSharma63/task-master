@@ -28,7 +28,26 @@ async function axiosRequest({ ...options }) {
   }
 }
 
-const customAxiosRequest = async (url, method = "post", payload) => {
+const customAxiosRequestForGet = async (url) => {
+  const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
+  let params = {};
+  if (userId) {
+    params = { userId };
+  }
+
+  try {
+    const response = await axiosRequest({
+      url,
+      method: "get",
+      params,
+    });
+    return response;
+  } catch (error) {
+    throw error; // Re-throw the error to propagate it to the caller
+  }
+};
+
+const customAxiosRequestForPost = async (url, method = "post", payload) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
   let params = {};
   if (userId) {
@@ -53,4 +72,5 @@ const customAxiosRequest = async (url, method = "post", payload) => {
   }
 };
 
-export default customAxiosRequest;
+// export default customAxiosRequest;
+export { customAxiosRequestForPost, customAxiosRequestForGet };
