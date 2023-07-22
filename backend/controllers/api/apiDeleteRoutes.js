@@ -13,7 +13,7 @@ const deleteProjectApi = async (req, res) => {
     const projects = await Project.find();
     console.log(projects, "projects");
 
-    res.status(204);
+    res.status(204).json({ projects });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
