@@ -49,10 +49,6 @@ const customAxiosRequestForGet = async (url) => {
 
 const customAxiosRequestForPost = async (url, method = "post", payload) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
-  let params = {};
-  if (userId) {
-    params = { userId };
-  }
 
   let updatedPayload = {};
   if (userId) {
@@ -63,7 +59,6 @@ const customAxiosRequestForPost = async (url, method = "post", payload) => {
     const response = await axiosRequest({
       url,
       method,
-      params,
       data: updatedPayload,
     });
     return response;

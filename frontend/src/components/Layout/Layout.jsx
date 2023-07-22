@@ -40,7 +40,10 @@ export const Layout = () => {
   const { mutate } = useLogoutQuery();
   const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
-  const { mutate: deleteProject } = useDeleteProjectQuery();
+  const { mutate: deleteProject, isLoading: deleteInProgress } =
+    useDeleteProjectQuery();
+
+  console.log(deleteInProgress, "Delete in prgress");
 
   const [userName, setUserName] = useState("");
 
