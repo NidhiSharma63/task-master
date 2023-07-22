@@ -21,9 +21,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { usersDataInStore } from "src/redux/auth/userSlice";
 import { getUserFirstName } from "src/utils/getUserFirstName";
 import useLogoutQuery from "src/hook/useLogoutQuery";
-import { useGetProjectQuery } from "src/hook/useProjectQuery";
+import {
+  useGetProjectQuery,
+  useDeleteProjectQuery,
+} from "src/hook/useProjectQuery";
 import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
 import { ClipLoader } from "react-spinners";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const drawerWidth = 180;
 
@@ -36,6 +40,7 @@ export const Layout = () => {
   const { mutate } = useLogoutQuery();
   const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
+  const { mutate: deleteProject } = useDeleteProjectQuery();
 
   const [userName, setUserName] = useState("");
 
@@ -68,6 +73,10 @@ export const Layout = () => {
 
   const handleOpenProjectModal = () => {
     dispatch(isProjectNameModalOpen(true));
+  };
+
+  const handleDelete = (id) => {
+    deleteProject({ id });
   };
 
   return (
@@ -178,6 +187,9 @@ export const Layout = () => {
                 allProjects?.map((item) => {
                   return (
                     <ListItemButton key={item._id}>
+                      <ListItemIcon>
+                        <DeleteIcon onClick={() => handleDelete(item._id)} />
+                      </ListItemIcon>
                       <ListItemText primary={item.name} />
                     </ListItemButton>
                   );
