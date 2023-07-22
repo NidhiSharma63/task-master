@@ -1,8 +1,5 @@
-// const cookieParser = require("cookie-parser");
-
 const express = require("express");
 const server = express();
-// server.use(cookieParser());
 const bcrypt = require("bcrypt");
 const Project = require("../../models/projectsSchema");
 

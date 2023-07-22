@@ -7,7 +7,8 @@ const {
   logout,
 } = require("./auth/authRoutes");
 
-const { createProjectApi } = require("./api/apiRoutes");
+const { createProjectApi } = require("./api/apiPostRoutes");
+const { getProjectApi } = require("./api/apiGetRoutes");
 
 module.exports = {
   getAllUserTodo,
@@ -15,4 +16,5 @@ module.exports = {
   loginUser,
   logout,
   createProjectApi,
+  getProjectApi,
 };

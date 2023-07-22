@@ -1,0 +1,23 @@
+const express = require("express");
+const server = express();
+const bcrypt = require("bcrypt");
+const Project = require("../../models/projectsSchema");
+
+const getProjectApi = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId.trim()) {
+      res.status(400).json({ error: "User id is required" });
+    }
+    const project = await Project.find({ userId });
+
+    res.status(201).json({ data: { projects: project } });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getProjectApi,
+};
