@@ -5,7 +5,7 @@ const Project = require("../../models/projectsSchema");
 
 const getProjectApi = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query;
 
     if (!userId.trim()) {
       res.status(400).json({ error: "User id is required" });
