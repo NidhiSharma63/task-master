@@ -23,6 +23,7 @@ import { getUserFirstName } from "src/utils/getUserFirstName";
 import useLogoutQuery from "src/hook/useLogoutQuery";
 import { useGetProjectQuery } from "src/hook/useProjectQuery";
 import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
+import { ClipLoader } from "react-spinners";
 
 const drawerWidth = 180;
 
@@ -33,7 +34,7 @@ export const Layout = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
-  const { data } = useGetProjectQuery();
+  const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
   console.log(data, ":::data:::", allProjects);
   const [userName, setUserName] = useState("");
@@ -66,7 +67,6 @@ export const Layout = () => {
   };
 
   const handleOpenProjectModal = () => {
-    console.log("handleOpenProjectModal");
     dispatch(isProjectNameModalOpen(true));
   };
 
@@ -168,13 +168,21 @@ export const Layout = () => {
                   );
                 });
               })}
-              {allProjects?.map((item) => {
-                return (
-                  <ListItemButton key={item._id}>
-                    <ListItemText primary={item.name} />
-                  </ListItemButton>
-                );
-              })}
+              {isLoading || data === undefined ? (
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ClipLoader color="#571159" />
+                  </ListItemIcon>
+                </ListItemButton>
+              ) : (
+                allProjects?.map((item) => {
+                  return (
+                    <ListItemButton key={item._id}>
+                      <ListItemText primary={item.name} />
+                    </ListItemButton>
+                  );
+                })
+              )}
             </List>
           </Box>
         </Drawer>
