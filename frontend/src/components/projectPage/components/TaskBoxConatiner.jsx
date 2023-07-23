@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useRef, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 
 const TaskBoxConatiner = ({ name }) => {
   const textAreaRef = useRef();
@@ -17,20 +18,34 @@ const TaskBoxConatiner = ({ name }) => {
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set the height to the scroll height
   }
 
+  const handleChange = () => {
+    console.log("first");
+  };
+
   const handleClick = (name) => {
     if (refMap[name].current) {
-      const container = document.createElement("div");
-      const textarea = document.createElement("textarea");
-
-      textarea.oninput = autoResize;
-      textarea.cols = "34";
-      textarea.className = "textarea-for-adding-task";
-
-      container.appendChild(textarea);
-      refMap[name].current.prepend(container);
-      textAreaRef.current = textarea;
+      const iconString = ReactDOMServer.renderToString(<AddIcon />);
+      refMap[name].current.insertAdjacentHTML(
+        "afterbegin",
+        `<div>
+        <textarea
+          id="${name}"
+          onChange = {handleChange}
+          cols="34"
+          class="textarea-for-adding-task"
+        ></textarea>
+        ${iconString}
+      </div>`
+      );
+      const textArea = document.getElementById(name);
+      textArea.addEventListener("input", () => {
+        textArea.style.height = "auto";
+        textArea.style.height = `${textArea.scrollHeight}px`;
+      });
     }
   };
+
+  //  onInput={${autoResize}} // ref={${textAreaRef}}
   return (
     <Grid item xs={2.8} sx={{ height: "100%" }}>
       <Box
