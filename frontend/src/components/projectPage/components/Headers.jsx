@@ -7,10 +7,12 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { queryClient } from "src";
+import colors from "src/theme/variables";
 
 const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
@@ -24,14 +26,20 @@ const Headers = () => {
       location.pathname.includes("/Dashboard/activeProject/board")
     ) {
       navigate(`/Dashboard/activeProject/board/${active_project}`);
+      // queryClient.invalidateQueries("projects"); invalidate all the query
     }
   }, [active_project, location.pathname]);
 
+  const activeLinkStyle = {
+    color: "rgb(5, 5, 5)",
+    border: "3px solid red",
+    // Add any other styles you want to apply when the link is active
+  };
   return (
     <Box>
       <Box>
         <Typography
-          variant="h4"
+          variant="h5"
           sx={{
             textTransform: "capitalize",
             fontWeight: "600",
@@ -42,7 +50,20 @@ const Headers = () => {
           {active_project}
         </Typography>
         <Box>
-          <Link to={`activeProject/board/${active_project}`}>Board</Link>
+          <NavLink
+            style={({ isActive }) => ({
+              color: colors.primaryTextColor,
+              fontWeight: isActive ? 600 : 100,
+              textDecoration: "none",
+              marginLeft: "1.2rem",
+              borderBottom: isActive
+                ? `1px solid ${colors.primaryTextColor}`
+                : "",
+            })}
+            to={`activeProject/board/${active_project}`}
+          >
+            Board
+          </NavLink>
         </Box>
       </Box>
       <Divider />
