@@ -4,91 +4,34 @@ import { useEffect, useRef, useState } from "react";
 
 const TaskBoxConatiner = ({ name }) => {
   const textAreaRef = useRef();
-  const [activeBox, setActiveBox] = useState("");
 
-  const currentBoxRef = useRef(null);
-  const todoRef = useRef(null);
-  const progressRef = useRef(null);
-  const priorityRef = useRef(null);
-  const doneRef = useRef(null);
+  const refMap = {
+    Todo: useRef(null),
+    "In progress": useRef(null),
+    "In priority": useRef(null),
+    Done: useRef(null),
+  };
 
   function autoResize() {
     textAreaRef.current.style.height = "auto";
     textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set the height to the scroll height
   }
 
-  useEffect(() => {
-    console.log(currentBoxRef.current);
-    if (currentBoxRef.current) {
-      currentBoxRef.current.innerHTML += `
-         <div>
-            <textarea
-            name=""
-            id=""
-            onInput=${autoResize}
-            cols="34"
-            ref=${textAreaRef}
-            
-            className="textarea-for-adding-task"
-            ></textarea>
-        </div>
-      `;
-    }
-  }, [activeBox]);
-
   const handleClick = (name) => {
-    setActiveBox(name);
-    if (name === "Todo") {
-      todoRef.current.innerHTML += `
-         <div>
-            <textarea
+    if (refMap[name].current) {
+      refMap[name].current.insertAdjacentHTML(
+        "afterbegin",
+        `
+        <div>
+          <textarea
             onInput=${autoResize}
             cols="34"
             ref=${textAreaRef}
-            
             className="textarea-for-adding-task"
-            ></textarea>
+          ></textarea>
         </div>
-      `;
-    }
-    if (name === "In progress") {
-      progressRef.current.innerHTML += `
-      <div>
-         <textarea
-         onInput=${autoResize}
-         cols="34"
-         ref=${textAreaRef}
-         
-         className="textarea-for-adding-task"
-         ></textarea>
-     </div>
-   `;
-    }
-    if (name === "In priority") {
-      priorityRef.current.innerHTML += `
-      <div>
-         <textarea
-         onInput=${autoResize}
-         cols="34"
-         ref=${textAreaRef}
-         
-         className="textarea-for-adding-task"
-         ></textarea>
-     </div>
-   `;
-    }
-    if (name === "Done") {
-      doneRef.current.innerHTML += `
-      <div>
-         <textarea
-         onInput=${autoResize}
-         cols="34"
-         ref=${textAreaRef}
-         
-         className="textarea-for-adding-task"
-         ></textarea>
-     </div>
-   `;
+      `
+      );
     }
   };
 
@@ -127,28 +70,8 @@ const TaskBoxConatiner = ({ name }) => {
           flexDirection: "column",
         }}
         className="box"
-        ref={
-          name === "Todo"
-            ? todoRef
-            : name === "In progress"
-            ? progressRef
-            : name === "In priority"
-            ? priorityRef
-            : doneRef
-        }
-      >
-        {/* <textarea
-          name=""
-          id=""
-          onInput={autoResize}
-          cols="34"
-          ref={textAreaRef}
-          onFocus={() => {
-            setActiveBox(name);
-          }}
-          className="textarea-for-adding-task"
-        ></textarea> */}
-      </Box>
+        ref={refMap[name]}
+      ></Box>
     </Grid>
   );
 };
