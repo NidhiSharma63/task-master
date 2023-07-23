@@ -12,6 +12,7 @@ import { getValueFromLS } from "src/utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 import NotFound from "src/pages/error/NotFound";
 import ProjectPage from "src/pages/project/ProjectPage";
+import Board from "src/components/projectPage/Board";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -50,9 +51,14 @@ let router = createBrowserRouter([
     ),
     children: [
       {
-        path: "todo", // The root route
-        index: true,
+        path: "Dashboard",
         element: <ProjectPage />,
+        children: [
+          {
+            path: "activeProject/board/:active_project",
+            element: <Board />,
+          },
+        ],
       },
       {
         path: "/todo",

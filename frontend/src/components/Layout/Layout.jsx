@@ -28,6 +28,9 @@ import {
 import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { activeProject } from "src/redux/projects/projectSlice";
+import { setValueToLs } from "src/utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
 
 const drawerWidth = 180;
 
@@ -43,14 +46,19 @@ export const Layout = () => {
   const { mutate: deleteProject, isLoading: deleteInProgress } =
     useDeleteProjectQuery();
 
-  console.log(deleteInProgress, "Delete in prgress");
-
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
   useEffect(() => {
-    navigate("todo");
+    navigate("Dashboard");
   }, []);
+
+  // if only single present or first time project is created then make that as active project\
+  useEffect(() => {
+    if (allProjects?.length === 1) {
+      dispatch(activeProject(allProjects[0].name));
+    }
+  }, [allProjects]);
 
   useEffect(() => {
     setAllProjects(data?.projects);
@@ -80,6 +88,11 @@ export const Layout = () => {
 
   const handleDelete = (id) => {
     deleteProject({ id });
+  };
+
+  const handleActiveProject = (name) => {
+    dispatch(activeProject(name));
+    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
   };
 
   return (
@@ -193,7 +206,10 @@ export const Layout = () => {
                       <ListItemIcon>
                         <DeleteIcon onClick={() => handleDelete(item._id)} />
                       </ListItemIcon>
-                      <ListItemText primary={item.name} />
+                      <ListItemText
+                        primary={item.name}
+                        onClick={() => handleActiveProject(item.name)}
+                      />
                     </ListItemButton>
                   );
                 })
@@ -201,7 +217,7 @@ export const Layout = () => {
             </List>
           </Box>
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, mt: 9 }}>
           <Outlet />
         </Box>
       </Box>
