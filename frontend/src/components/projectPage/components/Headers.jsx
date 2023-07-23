@@ -19,8 +19,6 @@ const Headers = () => {
   console.log(location, "Location");
 
   useEffect(() => {
-    console.log("useEffect i ran", active_project);
-    // const
     if (
       location.pathname === "/Dashboard" ||
       location.pathname.includes("/Dashboard/activeProject/board")
