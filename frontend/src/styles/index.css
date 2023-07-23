@@ -7,16 +7,11 @@
   color: white !important;
 }
 
-.header-link {
-  text-decoration: none;
-  margin-left: 1rem;
-  color: rgb(18, 17, 17);
-  width: 2rem;
-  padding: 0.2rem;
-  border-radius: 0.3rem;
-}
-
-.header-link:active {
-  color: rgb(71, 69, 69);
-  border: 3px solid red;
+.box {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.865983893557423) 5%,
+    rgba(208, 208, 208, 0.31976540616246496) 95%
+  );
 }
