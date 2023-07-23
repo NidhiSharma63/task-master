@@ -45,9 +45,9 @@ let router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <RequiredAuth>
-      <Layout />
-      // </RequiredAuth>
+      <RequiredAuth>
+        <Layout />
+      </RequiredAuth>
     ),
     children: [
       {

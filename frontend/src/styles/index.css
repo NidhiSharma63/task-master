@@ -16,14 +16,22 @@
   );
 }
 
-.textarea-for-adding-task {
+.text-area-container {
   border: 1px solid rgba(58, 56, 56, 0.281);
-  resize: none;
+  width: 95%;
+  margin-top: 0.4rem;
   border-radius: 0.7rem;
+  background-color: rgba(255, 255, 255, 0.747);
+}
+.textarea-for-adding-task {
+  resize: none;
+  border: none;
   background-color: rgba(255, 255, 255, 0.747);
   padding: 0.5rem 1rem;
   overflow-y: hidden;
+  margin-top: 0.4rem;
   min-height: 5rem;
+  width: 100%;
 }
 
 .textarea-for-adding-task:focus {

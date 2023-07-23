@@ -19,22 +19,18 @@ const TaskBoxConatiner = ({ name }) => {
 
   const handleClick = (name) => {
     if (refMap[name].current) {
-      refMap[name].current.insertAdjacentHTML(
-        "afterbegin",
-        `
-        <div>
-          <textarea
-            onInput=${autoResize}
-            cols="34"
-            ref=${textAreaRef}
-            className="textarea-for-adding-task"
-          ></textarea>
-        </div>
-      `
-      );
+      const container = document.createElement("div");
+      const textarea = document.createElement("textarea");
+
+      textarea.oninput = autoResize;
+      textarea.cols = "34";
+      textarea.className = "textarea-for-adding-task";
+
+      container.appendChild(textarea);
+      refMap[name].current.prepend(container);
+      textAreaRef.current = textarea;
     }
   };
-
   return (
     <Grid item xs={2.8} sx={{ height: "100%" }}>
       <Box
