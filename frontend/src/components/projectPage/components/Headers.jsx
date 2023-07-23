@@ -36,7 +36,13 @@ const Headers = () => {
     // Add any other styles you want to apply when the link is active
   };
   return (
-    <Box>
+    <Box
+      sx={{
+        position: "fixed",
+        width: "100%",
+        top: "4.5rem",
+      }}
+    >
       <Box>
         <Typography
           variant="h5"
