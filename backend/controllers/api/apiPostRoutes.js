@@ -26,6 +26,15 @@ const createProjectApi = async (req, res) => {
   }
 };
 
+const createTaskApi = async (req, res) => {
+  try {
+    const taskObj = req.body;
+    console.log(taskObj);
+    res.send("Hi");
+  } catch (error) {}
+};
+
 module.exports = {
   createProjectApi,
+  createTaskApi,
 };

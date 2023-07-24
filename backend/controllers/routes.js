@@ -7,7 +7,7 @@ const {
   logout,
 } = require("./auth/authRoutes");
 
-const { createProjectApi } = require("./api/apiPostRoutes");
+const { createProjectApi, createTaskApi } = require("./api/apiPostRoutes");
 const { getProjectApi } = require("./api/apiGetRoutes");
 const { deleteProjectApi } = require("./api/apiDeleteRoutes");
 
@@ -19,4 +19,5 @@ module.exports = {
   createProjectApi,
   getProjectApi,
   deleteProjectApi,
+  createTaskApi,
 };

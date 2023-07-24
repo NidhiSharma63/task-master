@@ -8,16 +8,27 @@ const {
   createProjectApi,
   getProjectApi,
   deleteProjectApi,
+  createTaskApi,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
-// defining get route
-router.route("/alltodos").get(checkAuthorization, getAllUserTodo);
+/**
+ * Auth route
+ */
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").post(logout);
+
+/**
+ * Projects Routes
+ */
 router.route("/projects").post(checkAuthorization, createProjectApi);
 router.route("/projects").get(checkAuthorization, getProjectApi);
 router.route("/projects").delete(checkAuthorization, deleteProjectApi);
+
+/**
+ * Task Route
+ */
+router.route("/task").post(checkAuthorization, createTaskApi);
 
 module.exports = router;
