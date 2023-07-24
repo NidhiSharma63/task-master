@@ -1,10 +1,12 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
+import { useAddTaskQuery } from "src/hook/useTaskQuery";
 
 const TaskBoxContainer = ({ name }) => {
   const [textAreaValues, setTextAreaValues] = useState([]);
 
+  const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
     setTextAreaValues((prevValues) => [...prevValues, ""]);
   };
@@ -23,6 +25,7 @@ const TaskBoxContainer = ({ name }) => {
       task: textAreaValues[index],
       status: name,
     };
+    mutate(payloadForTask);
     console.log(payloadForTask);
   };
 
