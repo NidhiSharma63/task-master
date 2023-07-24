@@ -1,9 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useRef, useState } from "react";
-import ReactDOMServer from "react-dom/server";
-import DoneIcon from "@mui/icons-material/Done";
-import ClearIcon from "@mui/icons-material/Clear";
+import { useState } from "react";
+
 const TaskBoxContainer = ({ name }) => {
   const [textAreaValues, setTextAreaValues] = useState([]);
 
@@ -20,8 +18,12 @@ const TaskBoxContainer = ({ name }) => {
     });
   };
 
-  const handleBlur = () => {
-    console.log(textAreaValues);
+  const handleBlur = (event, index) => {
+    const payloadForTask = {
+      task: textAreaValues[index],
+      status: name,
+    };
+    console.log(payloadForTask);
   };
 
   /**
@@ -74,7 +76,7 @@ const TaskBoxContainer = ({ name }) => {
             value={value}
             data-id={name}
             onChange={(event) => handleChange(event, index, event.target.value)}
-            onBlur={handleBlur}
+            onBlur={(event) => handleBlur(event, index)}
             onInput={handleInput}
             className="textArea"
           />
