@@ -23,8 +23,8 @@ const useAddTaskQuery = () => {
   });
 };
 
-const getAllProjects = async () => {
-  const res = await customAxiosRequestForGet("/projects", "get");
+const getAllTaskInTodo = async () => {
+  const res = await customAxiosRequestForGet("/task", "get");
   return res;
 };
 
@@ -32,8 +32,8 @@ const getAllProjects = async () => {
 
 const useGetProjectQuery = () => {
   return useQuery({
-    queryKey: ["projects"],
-    queryFn: getAllProjects,
+    queryKey: ["Task-In-Todo"],
+    queryFn: getAllTaskInTodo,
     onError: (error) => {
       toast.error(error?.response?.data?.error);
     },

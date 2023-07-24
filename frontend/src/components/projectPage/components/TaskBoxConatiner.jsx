@@ -21,11 +21,21 @@ const TaskBoxContainer = ({ name }) => {
   };
 
   const handleBlur = (event, index) => {
+    if (textAreaValues[index].trim().length === 0) {
+      return;
+    }
     const payloadForTask = {
-      task: textAreaValues[index],
+      task: textAreaValues[index].trim(),
       status: name,
     };
     mutate(payloadForTask);
+    // Remove the textarea from the state after successful mutation
+    setTextAreaValues((prevValues) => {
+      const copyValues = [...prevValues];
+      copyValues.splice(index, 1);
+      return copyValues;
+    });
+
     console.log(payloadForTask);
   };
 
@@ -73,7 +83,7 @@ const TaskBoxContainer = ({ name }) => {
           p: 1,
         }}
       >
-        {textAreaValues.map((value, index) => (
+        {textAreaValues?.map((value, index) => (
           <textarea
             key={index}
             value={value}
