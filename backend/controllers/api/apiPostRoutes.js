@@ -1,4 +1,5 @@
 const Project = require("../../models/projectsSchema");
+const Task = require("../../models/taskSchema");
 
 const createProjectApi = async (req, res) => {
   try {
@@ -28,10 +29,16 @@ const createProjectApi = async (req, res) => {
 
 const createTaskApi = async (req, res) => {
   try {
-    const taskObj = req.body;
-    console.log(taskObj);
-    res.send("Hi");
-  } catch (error) {}
+    const taskBody = req.body;
+    const taskObj = new Task({
+      ...taskBody,
+    });
+
+    await taskObj.save();
+    res.json({ data: taskObj });
+  } catch (error) {
+    res.status(500).json({ msg: "It's me not you" });
+  }
 };
 
 module.exports = {
