@@ -1,4 +1,5 @@
 const Project = require("../../models/projectsSchema");
+const Task = require("../../models/taskSchema");
 
 const deleteProjectApi = async (req, res) => {
   try {
@@ -16,6 +17,17 @@ const deleteProjectApi = async (req, res) => {
   }
 };
 
+const deleteTaskApi = async (req, res) => {
+  const { id } = req.body;
+  try {
+    await Task.findOneAndDelete({ _id: id });
+    res.status(201).json({ msg: "Task deleted" });
+  } catch (error) {
+    res.status(500).json({ error: "It's not you. It's me" });
+  }
+};
+
 module.exports = {
   deleteProjectApi,
+  deleteTaskApi,
 };
