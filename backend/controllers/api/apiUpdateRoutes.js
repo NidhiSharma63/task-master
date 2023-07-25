@@ -7,11 +7,12 @@ const updateTaskApi = async (req, res) => {
     const taskObj = await Task.findOne({ _id, userId });
 
     if (!taskObj) {
-      throw new Error("Task not found");
+      throw new Error("Task not found!");
     }
     taskObj.task = taskBody.task;
     taskObj.status = taskBody.status;
     taskObj.dueDate = taskBody.dueDate;
+    taskObj.description = taskBody.description;
 
     await taskObj.save();
     res.json({ data: taskObj });

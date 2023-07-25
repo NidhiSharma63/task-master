@@ -7,6 +7,9 @@ const taskSchema = new mongoose.Schema({
   dueDate: {
     type: Date, // Change type to Date for storing date values
   },
+  description: {
+    type: String,
+  },
   userId: {
     type: String,
     required: true,
