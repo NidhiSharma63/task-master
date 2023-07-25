@@ -1,11 +1,38 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { Grid, Typography, Box } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import React, { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
+import { useGetTaskAccordingToStatus } from "src/hook/useTaskQuery";
 
 const Board = () => {
-  const { active_project } = useParams();
+  const { data, isLoading } = useGetTaskAccordingToStatus();
+  const [inTodo, setInTodo] = useState([]);
+  const [inProgress, setInProgress] = useState([]);
+  const [inPrority, setInPrority] = useState([]);
+  const [inDone, setInDone] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      data?.map((items) => {
+        // check the state
+        items?.map((item) => {
+          if (item.status === "Todo") {
+            setInTodo(items);
+          }
+          if (item.status === "In progress") {
+            setInProgress(items);
+          }
+
+          if (item.status === "In priority") {
+            setInPrority(items);
+          }
+          if (item.status === "Done") {
+            setInDone(items);
+          }
+        });
+      });
+    }
+  }, [isLoading, data]);
+
   return (
     <Grid
       container
@@ -18,10 +45,10 @@ const Board = () => {
         pl: 3,
       }}
     >
-      <TaskBoxConatiner name={"Todo"} />
-      <TaskBoxConatiner name={"In progress"} />
-      <TaskBoxConatiner name={"In priority"} />
-      <TaskBoxConatiner name={"Done"} />
+      <TaskBoxConatiner name={"Todo"} data={inTodo} />
+      <TaskBoxConatiner name={"In progress"} data={inProgress} />
+      <TaskBoxConatiner name={"In priority"} data={inPrority} />
+      <TaskBoxConatiner name={"Done"} data={inDone} />
     </Grid>
   );
 };

@@ -1,15 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useAddTaskQuery,
   useGetTaskAccordingToStatus,
 } from "src/hook/useTaskQuery";
+import colors from "src/theme/variables";
 
-const TaskBoxContainer = ({ name }) => {
+const TaskBoxContainer = ({ name, data }) => {
   const [textAreaValues, setTextAreaValues] = useState([]);
-  const { data } = useGetTaskAccordingToStatus();
-  console.log(data, ":::data");
+  const { isLoading } = useGetTaskAccordingToStatus();
 
   const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
@@ -27,6 +27,11 @@ const TaskBoxContainer = ({ name }) => {
 
   const handleBlur = (event, index) => {
     if (textAreaValues[index].trim().length === 0) {
+      setTextAreaValues((prevValues) => {
+        const copyValues = [...prevValues];
+        copyValues.splice(index, 1);
+        return copyValues;
+      });
       return;
     }
     const payloadForTask = {
@@ -35,13 +40,13 @@ const TaskBoxContainer = ({ name }) => {
     };
     mutate(payloadForTask);
     // Remove the textarea from the state after successful mutation
-    setTextAreaValues((prevValues) => {
-      const copyValues = [...prevValues];
-      copyValues.splice(index, 1);
-      return copyValues;
-    });
-
-    console.log(payloadForTask);
+    setTimeout(() => {
+      setTextAreaValues((prevValues) => {
+        const copyValues = [...prevValues];
+        copyValues.splice(index, 1);
+        return copyValues;
+      });
+    }, 1000);
   };
 
   /**
@@ -87,6 +92,7 @@ const TaskBoxContainer = ({ name }) => {
           overflowY: "auto",
           p: 1,
         }}
+        className="box"
       >
         {textAreaValues?.map((value, index) => (
           <textarea
@@ -99,6 +105,24 @@ const TaskBoxContainer = ({ name }) => {
             className="textArea"
           />
         ))}
+
+        {data?.map((item) => {
+          return (
+            <Box
+              sx={{
+                border: `1px solid ${colors.lightGrey}`,
+                width: "100%",
+                padding: 2,
+                backgroundColor: "rgba(255, 255, 255, 0.64)",
+                borderRadius: "0.4rem",
+                marginBottom: "1rem",
+                cursor: "pointer",
+              }}
+            >
+              <Typography>{item.task}</Typography>
+            </Box>
+          );
+        })}
       </Box>
     </Grid>
   );

@@ -24,6 +24,14 @@
   overflow-y: hidden;
 }
 
+.box {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.865983893557423) 5%,
+    rgba(208, 208, 208, 0.31976540616246496) 95%
+  );
+}
 .textArea:focus {
   outline: none;
   border: 1px solid rgb(87, 17, 89);
