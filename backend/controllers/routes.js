@@ -13,6 +13,7 @@ const {
   getAllTaskAccordingToStatusApi,
 } = require("./api/apiGetRoutes");
 const { deleteProjectApi } = require("./api/apiDeleteRoutes");
+const { updateTaskApi } = require("./api/apiUpdateRoutes");
 
 module.exports = {
   getAllUserTodo,
@@ -24,4 +25,5 @@ module.exports = {
   deleteProjectApi,
   createTaskApi,
   getAllTaskAccordingToStatusApi,
+  updateTaskApi,
 };
