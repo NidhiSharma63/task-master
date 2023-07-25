@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import { useGetTaskAccordingToStatus } from "src/hook/useTaskQuery";
+import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 
 const Board = () => {
   const { data, isLoading } = useGetTaskAccordingToStatus();
@@ -49,6 +50,7 @@ const Board = () => {
       <TaskBoxConatiner name={"In progress"} data={inProgress} />
       <TaskBoxConatiner name={"In priority"} data={inPrority} />
       <TaskBoxConatiner name={"Done"} data={inDone} />
+      <BoardDrawer />
     </Grid>
   );
 };

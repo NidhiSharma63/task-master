@@ -1,15 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
-import {
-  useAddTaskQuery,
-  useGetTaskAccordingToStatus,
-} from "src/hook/useTaskQuery";
+import { useState } from "react";
+import { useAddTaskQuery } from "src/hook/useTaskQuery";
 import colors from "src/theme/variables";
+import { useDispatch } from "react-redux";
+import { activeTask } from "src/redux/task/taskSlice";
+import { isBoardDrawerOpen } from "src/redux/boolean/booleanSlice";
 
 const TaskBoxContainer = ({ name, data }) => {
+  const dispatch = useDispatch();
   const [textAreaValues, setTextAreaValues] = useState([]);
-  const { isLoading } = useGetTaskAccordingToStatus();
 
   const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
@@ -55,6 +55,11 @@ const TaskBoxContainer = ({ name, data }) => {
   const handleInput = (event) => {
     event.target.style.height = "auto";
     event.target.style.height = `${event.target.scrollHeight}px`;
+  };
+
+  const handleClickOnTask = (task) => {
+    dispatch(activeTask(task));
+    dispatch(isBoardDrawerOpen(true));
   };
 
   return (
@@ -118,6 +123,7 @@ const TaskBoxContainer = ({ name, data }) => {
                 marginBottom: "1rem",
                 cursor: "pointer",
               }}
+              onClick={() => handleClickOnTask(item)}
             >
               <Typography>{item.task}</Typography>
             </Box>
