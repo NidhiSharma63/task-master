@@ -36,3 +36,18 @@
   outline: none;
   border: 1px solid rgb(87, 17, 89);
 }
+.board-drawer-textarea {
+  resize: none;
+  width: 80%;
+  background-color: transparent;
+  text-align: start;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.3rem;
+  height: 3rem;
+}
+
+.board-drawer-textarea:focus {
+  outline: none;
+  border: 1px solid rgb(87, 17, 89);
+}

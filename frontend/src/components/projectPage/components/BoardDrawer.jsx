@@ -6,6 +6,8 @@ import {
   isBoardDrawerOpen,
 } from "src/redux/boolean/booleanSlice";
 import { taskDataInStore } from "src/redux/task/taskSlice";
+import { Form, Formik } from "formik";
+import FormikControls from "src/common/formik/FormikControls";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -20,6 +22,18 @@ const BoardDrawer = () => {
   const handleClose = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
+  };
+
+  const initialValues = {
+    task: active_task.task,
+    _id: active_task._id,
+    createdAt: active_task.task,
+    userId: active_task.userId,
+    status: active_task.status,
+  };
+
+  const handleSubmit = (values) => {
+    console.log(values, ":::values:::");
   };
 
   console.log(active_task);
@@ -46,6 +60,31 @@ const BoardDrawer = () => {
             {active_task.task}
           </Typography>
           <Divider sx={{ mt: 2 }} />
+        </Box>
+        <Box
+          sx={{
+            ml: 2,
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          {/* <textarea
+            className="board-drawer-textarea"
+            value={active_task.task}
+          ></textarea> */}
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Form>
+              <Box
+                sx={{
+                  width: "20rem",
+                }}
+              >
+                <FormikControls control="formikInput" name="task" />
+                <FormikControls control="formikDatePicker" name="due-date" />
+              </Box>
+            </Form>
+          </Formik>
         </Box>
       </Box>
     </Drawer>
