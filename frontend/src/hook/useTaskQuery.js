@@ -83,4 +83,29 @@ const useUpdateTaskQuery = () => {
   });
 };
 
-export { useAddTaskQuery, useGetTaskAccordingToStatus, useUpdateTaskQuery };
+/***
+ *
+ * @returns Delete Task
+ */
+
+const useDeleteTask = () => {
+  return useMutation({
+    mutationFn: (payload) => {
+      return customAxiosRequestForPost("/task", "delete", payload);
+    },
+    onSuccess: () => {
+      toast.success("Task deleted successfully!");
+      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.error);
+    },
+  });
+};
+
+export {
+  useAddTaskQuery,
+  useGetTaskAccordingToStatus,
+  useDeleteTask,
+  useUpdateTaskQuery,
+};

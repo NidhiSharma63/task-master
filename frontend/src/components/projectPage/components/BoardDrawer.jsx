@@ -9,7 +9,7 @@ import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
-import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
+import { useUpdateTaskQuery, useDeleteTask } from "src/hook/useTaskQuery";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -17,6 +17,7 @@ const BoardDrawer = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQuery();
+  const { mutate: deleteTask } = useDeleteTask();
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -39,6 +40,10 @@ const BoardDrawer = () => {
 
   const handleSubmit = (values) => {
     mutate(values);
+  };
+
+  const handleDelete = () => {
+    deleteTask(active_task._id);
   };
 
   return (
@@ -104,6 +109,13 @@ const BoardDrawer = () => {
                 </Box>
                 <Button variant="contained" type="submit" sx={{ mt: 2 }}>
                   Save
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleDelete}
+                  sx={{ mt: 2, ml: 2, backgroundColor: "rgb(168, 13, 13)" }}
+                >
+                  Delete
                 </Button>
               </Box>
             </Form>
