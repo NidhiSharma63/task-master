@@ -16,52 +16,13 @@ const getProjectApi = async (req, res) => {
   }
 };
 
-const getAllTaskInTodoApi = async (req, res) => {
+const getAllTaskAccordingToStatusApi = async (req, res) => {
   try {
-    const { userId } = req.query;
+    const { userId, status } = req.query;
 
     // filter the task based on userID and return all the task
     // that have status Todod
-    const allTask = await Task.find({ userId, status: "Todo" });
-    res.status(200).json({ data: allTask });
-  } catch (error) {
-    res.status(500).json({ msg: "It's not you. It's me!" });
-  }
-};
-
-const getAllTaskInProgressApi = async (req, res) => {
-  try {
-    const { userId } = req.query;
-
-    // filter the task based on userID and return all the task
-    // that have status Todod
-    const allTask = await Task.find({ userId, status: "In progress" });
-    res.status(200).json({ data: allTask });
-  } catch (error) {
-    res.status(500).json({ msg: "It's not you. It's me!" });
-  }
-};
-
-const getAllTaskInPriorityApi = async (req, res) => {
-  try {
-    const { userId } = req.query;
-
-    // filter the task based on userID and return all the task
-    // that have status Todod
-    const allTask = await Task.find({ userId, status: "In priority" });
-    res.status(200).json({ data: allTask });
-  } catch (error) {
-    res.status(500).json({ msg: "It's not you. It's me!" });
-  }
-};
-
-const getAllTaskInDoneApi = async (req, res) => {
-  try {
-    const { userId } = req.query;
-
-    // filter the task based on userID and return all the task
-    // that have status Todod
-    const allTask = await Task.find({ userId, status: "Done" });
+    const allTask = await Task.find({ userId, status: status });
     res.status(200).json({ data: allTask });
   } catch (error) {
     res.status(500).json({ msg: "It's not you. It's me!" });
@@ -70,8 +31,5 @@ const getAllTaskInDoneApi = async (req, res) => {
 
 module.exports = {
   getProjectApi,
-  getAllTaskInTodoApi,
-  getAllTaskInProgressApi,
-  getAllTaskInPriorityApi,
-  getAllTaskInDoneApi,
+  getAllTaskAccordingToStatusApi,
 };
