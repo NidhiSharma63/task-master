@@ -7,11 +7,6 @@ const FormikTextArea = (props) => {
   return (
     <Field name={name}>
       {({ field }) => {
-        console.log(field, "::field input");
-
-        const { value } = field;
-        const { description } = value;
-        console.log(description, "des");
         return (
           <Box
             sx={{

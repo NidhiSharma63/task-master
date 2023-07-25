@@ -1,4 +1,4 @@
-import { ref, object, string } from "yup";
+import { ref, object, string, date } from "yup";
 import { regexToTargetAllBlankSpaces } from "src/constant/regex";
 
 export const loginSchema = object().shape({
@@ -16,4 +16,9 @@ export const registerSchema = object().shape({
   confirmPassword: string()
     .required("Confirm password is required")
     .oneOf([ref("password"), null], "Passwords must match"),
+});
+
+export const validationForUpdatingTask = object().shape({
+  task: string().required("Enter your task").min(1),
+  dueDate: date().required("Date is required").nullable(),
 });

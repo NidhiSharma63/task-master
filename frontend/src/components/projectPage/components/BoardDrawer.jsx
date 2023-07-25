@@ -1,4 +1,4 @@
-import { Drawer, Box, Typography, Divider } from "@mui/material";
+import { Drawer, Box, Typography, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
 import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
+import { validationForUpdatingTask } from "src/constant/validation";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -27,7 +28,7 @@ const BoardDrawer = () => {
   const initialValues = {
     task: active_task.task,
     _id: active_task._id,
-    createdAt: active_task.task,
+    dueDate: active_task?.dueDate ?? null,
     userId: active_task.userId,
     status: active_task.status,
     description: "Only for test",
@@ -37,7 +38,6 @@ const BoardDrawer = () => {
     console.log(values, ":::values:::");
   };
 
-  console.log(active_task);
   return (
     <Drawer
       anchor={"right"}
@@ -71,7 +71,11 @@ const BoardDrawer = () => {
             mt: 1,
           }}
         >
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationForUpdatingTask}
+          >
             <Form>
               <Box
                 sx={{
@@ -80,7 +84,7 @@ const BoardDrawer = () => {
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
-                <FormikControls control="formikDatePicker" name="due-date" />
+                <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
                 <Box sx={{ mt: 11, display: "flex" }}>
                   <Typography sx={{ fontWeight: 600 }}>
@@ -95,6 +99,9 @@ const BoardDrawer = () => {
                     {new Date(active_task.createdAt).toUTCString()}
                   </Typography>
                 </Box>
+                <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+                  Save
+                </Button>
               </Box>
             </Form>
           </Formik>
