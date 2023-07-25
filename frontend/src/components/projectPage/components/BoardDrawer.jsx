@@ -1,4 +1,4 @@
-import { Drawer } from "@mui/material";
+import { Drawer, Box, Typography, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,8 +24,30 @@ const BoardDrawer = () => {
 
   console.log(active_task);
   return (
-    <Drawer anchor={"right"} open={open} onClose={handleClose}>
-      <h1>Hi i'm drawer</h1>
+    <Drawer
+      anchor={"right"}
+      open={open}
+      onClose={handleClose}
+      sx={{
+        "& .MuiDrawer-paper": {
+          backgroundColor: (theme) => theme.palette.secondary.main,
+          width: 600,
+        },
+      }}
+    >
+      <Box
+        sx={{
+          position: "relative",
+          top: "5rem",
+        }}
+      >
+        <Box>
+          <Typography sx={{ pl: 2, textTransform: "capitalize" }} variant="h5">
+            {active_task.task}
+          </Typography>
+          <Divider sx={{ mt: 2 }} />
+        </Box>
+      </Box>
     </Drawer>
   );
 };
