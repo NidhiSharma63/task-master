@@ -15,6 +15,7 @@ function FormikInput(props) {
   return (
     <Field name={name}>
       {({ field, meta }) => {
+        // console.log(field, "::field input");
         return (
           <Box
             sx={{
@@ -42,14 +43,13 @@ function FormikInput(props) {
               {...field}
               sx={{
                 width: "100%",
-                // height: "0rem !important",
                 padding: 0,
-                border: meta.error && meta.touched ? "" : "1px solid",
                 borderColor: (theme) => theme.palette.grey[50],
                 "&:focus": {
                   outline: "none", // Change this to the desired border color on focus.
                   boxShadow: "0 0 2px 2px rgba(0, 0, 255, 0.2)", // Optional: Add a box-shadow for visual emphasis.
                 },
+                borderRadius: ".3rem",
               }}
               outline="none"
               helperText={

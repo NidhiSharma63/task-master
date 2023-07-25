@@ -22,15 +22,6 @@ const theme = createTheme({
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
   },
-  components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          // backgroundColor: "#32a852", // Your desired background color
-        },
-      },
-    },
-  },
 });
 
 export default theme;

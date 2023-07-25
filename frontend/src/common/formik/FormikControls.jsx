@@ -1,6 +1,7 @@
 import React from "react";
 import FormikInput from "src/common/formik/FormikInput";
-import FormikDatePicker from "./FormikDatePicker";
+import FormikDatePicker from "src/common/formik/FormikDatePicker";
+import FormikTextArea from "src/common/formik/FormikTextArea";
 
 const FormikControls = (props) => {
   const { control, ...rest } = props;
@@ -11,6 +12,8 @@ const FormikControls = (props) => {
     case "formikDatePicker":
       return <FormikDatePicker {...rest} />;
 
+    case "formikTextArea":
+      return <FormikTextArea {...rest} />;
     default:
       return null;
   }

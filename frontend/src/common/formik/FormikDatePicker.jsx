@@ -22,6 +22,9 @@ const FormikDatePicker = (props) => {
             <DatePicker
               name={name}
               value={value}
+              sx={{
+                outline: "none",
+              }}
               onChange={(date) => {
                 if (date) {
                   setFieldValue(name, new Date(date));
@@ -34,6 +37,11 @@ const FormikDatePicker = (props) => {
                   error={form.errors[name]}
                   helperText={form.errors[name] ? form.errors[name] : null}
                   {...params}
+                  inputProps={{
+                    style: {
+                      border: "none", // Set the desired color for the outline in error state
+                    },
+                  }}
                 />
               )}
             />

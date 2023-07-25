@@ -1,5 +1,5 @@
 const colors = {
-  primaryColor: "rgb(87,17,89)",
+  primaryColor: "rgb(87,17,89)", // voilet
   secondaryColor: "rgba(255, 255, 255, 0.993)",
 
   // light grey

@@ -30,6 +30,7 @@ const BoardDrawer = () => {
     createdAt: active_task.task,
     userId: active_task.userId,
     status: active_task.status,
+    description: "Only for test",
   };
 
   const handleSubmit = (values) => {
@@ -67,21 +68,19 @@ const BoardDrawer = () => {
             display: "flex",
             flexDirection: "column",
             gap: "1rem",
+            mt: 1,
           }}
         >
-          {/* <textarea
-            className="board-drawer-textarea"
-            value={active_task.task}
-          ></textarea> */}
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             <Form>
               <Box
                 sx={{
-                  width: "20rem",
+                  width: "30rem",
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
                 <FormikControls control="formikDatePicker" name="due-date" />
+                <FormikControls control="formikTextArea" name="description" />
               </Box>
             </Form>
           </Formik>
