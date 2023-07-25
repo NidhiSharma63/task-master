@@ -76,11 +76,25 @@ const BoardDrawer = () => {
               <Box
                 sx={{
                   width: "30rem",
+                  height: "auto",
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
                 <FormikControls control="formikDatePicker" name="due-date" />
                 <FormikControls control="formikTextArea" name="description" />
+                <Box sx={{ mt: 11, display: "flex" }}>
+                  <Typography sx={{ fontWeight: 600 }}>
+                    Created At : &nbsp;
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      color: (theme) => theme.palette.primary.main,
+                    }}
+                  >
+                    {new Date(active_task.createdAt).toUTCString()}
+                  </Typography>
+                </Box>
               </Box>
             </Form>
           </Formik>
