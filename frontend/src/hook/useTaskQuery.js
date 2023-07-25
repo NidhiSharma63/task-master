@@ -40,6 +40,10 @@ const useAddTaskQuery = () => {
   });
 };
 
+/**
+ *
+ * @returns Getting all task
+ */
 const useGetTaskAccordingToStatus = () => {
   const userQueries = useQueries({
     queries: statesOfTaskManager.map((status) => {
@@ -59,4 +63,24 @@ const useGetTaskAccordingToStatus = () => {
   return { data, isLoading };
 };
 
-export { useAddTaskQuery, useGetTaskAccordingToStatus };
+/**
+ *
+ * @returns Update request
+ */
+
+const useUpdateTaskQuery = () => {
+  return useMutation({
+    mutationFn: (payload) => {
+      return customAxiosRequestForPost("/task", "put", payload);
+    },
+    onSuccess: () => {
+      toast.success("Task updated successfully!");
+      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.error);
+    },
+  });
+};
+
+export { useAddTaskQuery, useGetTaskAccordingToStatus, useUpdateTaskQuery };

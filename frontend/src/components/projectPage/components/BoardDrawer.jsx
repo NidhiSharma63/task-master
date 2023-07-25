@@ -9,12 +9,14 @@ import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
+import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
   const { is_board_drawer_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(is_board_drawer_open);
+  const { mutate } = useUpdateTaskQuery();
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -35,7 +37,7 @@ const BoardDrawer = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values, ":::values:::");
+    mutate(values);
   };
 
   return (
