@@ -8,7 +8,13 @@ const {
 } = require("./auth/authRoutes");
 
 const { createProjectApi, createTaskApi } = require("./api/apiPostRoutes");
-const { getProjectApi } = require("./api/apiGetRoutes");
+const {
+  getProjectApi,
+  getAllTaskInTodoApi,
+  getAllTaskInProgressApi,
+  getAllTaskInPriorityApi,
+  getAllTaskInDoneApi,
+} = require("./api/apiGetRoutes");
 const { deleteProjectApi } = require("./api/apiDeleteRoutes");
 
 module.exports = {
@@ -20,4 +26,8 @@ module.exports = {
   getProjectApi,
   deleteProjectApi,
   createTaskApi,
+  getAllTaskInTodoApi,
+  getAllTaskInProgressApi,
+  getAllTaskInPriorityApi,
+  getAllTaskInDoneApi,
 };
