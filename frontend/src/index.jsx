@@ -11,7 +11,15 @@ import { ToastContainer } from "react-toastify";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "react-toastify/dist/ReactToastify.min.css";
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

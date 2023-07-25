@@ -9,6 +9,7 @@ import {
 const TaskBoxContainer = ({ name }) => {
   const [textAreaValues, setTextAreaValues] = useState([]);
   const { data } = useGetTaskAccordingToStatus();
+  console.log(data, ":::data");
 
   const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
