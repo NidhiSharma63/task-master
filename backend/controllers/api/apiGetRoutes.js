@@ -22,8 +22,10 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
 
     // filter the task based on userID and return all the task
     // that have status Todod
-    const allTask = await Task.find({ userId, status: status });
-    res.status(200).json({ data: allTask });
+    const allTask = await Task.find({ userId, status: status }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json({ data: allTask, status: status });
   } catch (error) {
     res.status(500).json({ msg: "It's not you. It's me!" });
   }
