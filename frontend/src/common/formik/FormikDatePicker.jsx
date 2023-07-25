@@ -9,7 +9,7 @@ import { Field } from "formik";
 const FormikDatePicker = (props) => {
   const { name } = props;
   return (
-    <Field>
+    <Field name={name}>
       {({ form, field }) => {
         const { setFieldValue } = form;
         const { value } = field;

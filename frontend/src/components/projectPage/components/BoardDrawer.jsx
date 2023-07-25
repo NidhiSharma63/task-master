@@ -30,11 +30,12 @@ const BoardDrawer = () => {
   const initialValues = {
     task: active_task.task,
     _id: active_task._id,
-    dueDate: active_task?.dueDate ?? null,
+    dueDate: new Date(active_task?.dueDate) ?? null,
     userId: active_task.userId,
     status: active_task.status,
-    description: "Only for test",
+    description: active_task?.description,
   };
+  console.log(active_task);
 
   const handleSubmit = (values) => {
     mutate(values);
