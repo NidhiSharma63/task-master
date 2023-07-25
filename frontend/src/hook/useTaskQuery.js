@@ -4,7 +4,6 @@ import {
   customAxiosRequestForGet,
 } from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
-import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "src";
 import {
   TASK_IN_TODO,
@@ -12,6 +11,15 @@ import {
   TASK_IN_PRIORITY,
   TASK_IN_DONE,
 } from "src/constant/queryKey";
+import { useQueries } from "@tanstack/react-query";
+import { statesOfTaskManager } from "src/constant/Misc";
+
+const queryKeyForTask = [
+  TASK_IN_TODO,
+  TASK_IN_PROGRESS,
+  TASK_IN_PRIORITY,
+  TASK_IN_DONE,
+];
 
 /**
  *
@@ -24,7 +32,7 @@ const useAddTaskQuery = () => {
     },
     onSuccess: () => {
       toast.success("Task created successfully!");
-      queryClient.invalidateQueries("Task");
+      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -32,90 +40,23 @@ const useAddTaskQuery = () => {
   });
 };
 
-/**
- *
- * @returns Task in Todo
- */
-
-const getAllTaskInTodo = async () => {
-  const res = await customAxiosRequestForGet("/task/todo", "get");
-  return res;
-};
-
-const useGetTaskInTodo = () => {
-  return useQuery({
-    queryKey: [TASK_IN_TODO],
-    queryFn: getAllTaskInTodo,
-    onError: (error) => {
-      toast.error(error?.response?.data?.error);
-    },
+const useGetTaskAccordingToStatus = () => {
+  const userQueries = useQueries({
+    queries: statesOfTaskManager.map((status) => {
+      return {
+        queryKey: [status],
+        queryFn: () => customAxiosRequestForGet("/task", { status }),
+        onSuccess: ({ data }) => {
+          return data;
+        },
+      };
+    }),
   });
+
+  const data = userQueries?.map((item) => item?.data?.data);
+  const isLoading = userQueries?.[0]?.isLoading;
+
+  return { data, isLoading };
 };
 
-/**
- *
- * @returns Task in progress
- */
-
-const getAllTaskInProgress = async () => {
-  const res = await customAxiosRequestForGet("/task/inprogress", "get");
-  return res;
-};
-
-const useGetTaskInProgress = () => {
-  return useQuery({
-    queryKey: [TASK_IN_PROGRESS],
-    queryFn: getAllTaskInProgress,
-    onError: (error) => {
-      toast.error(error?.response?.data?.error);
-    },
-  });
-};
-
-/**
- *
- * @returns Task in priority
- */
-
-const getAllTaskInPriority = async () => {
-  const res = await customAxiosRequestForGet("/task/inpriority", "get");
-  return res;
-};
-
-const useGetTaskInPriority = () => {
-  return useQuery({
-    queryKey: [TASK_IN_PRIORITY],
-    queryFn: getAllTaskInPriority,
-    onError: (error) => {
-      toast.error(error?.response?.data?.error);
-    },
-  });
-};
-
-/**
- *
- * @returns Task in done
- */
-
-const getAllTaskInDone = async () => {
-  const res = await customAxiosRequestForGet("/task/done", "get");
-  return res;
-};
-
-const useGetTaskInDone = () => {
-  return useQuery({
-    queryKey: [TASK_IN_DONE],
-    queryFn: getAllTaskInDone,
-    onError: (error) => {
-      toast.error(error?.response?.data?.error);
-    },
-  });
-};
-
-export {
-  useGetTaskInTodo,
-  useAddTaskQuery,
-  useGetTaskInProgress,
-  useGetTaskInDone,
-  useGetTaskInPriority,
-};
+export { useAddTaskQuery, useGetTaskAccordingToStatus };

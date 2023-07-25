@@ -28,18 +28,22 @@ async function axiosRequest({ ...options }) {
   }
 }
 
-const customAxiosRequestForGet = async (url) => {
+const customAxiosRequestForGet = async (url, params) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
-  let params = {};
-  if (userId) {
-    params = { userId };
+  let paramsToPass = {};
+
+  if (!userId) {
+    throw new Error("User id is not present");
   }
 
+  if (userId) {
+    paramsToPass = { ...params, userId };
+  }
   try {
     const response = await axiosRequest({
       url,
       method: "get",
-      params,
+      params: paramsToPass,
     });
     return response;
   } catch (error) {

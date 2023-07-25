@@ -24,7 +24,7 @@ const usePostProjectQuery = () => {
 };
 
 const getAllProjects = async () => {
-  const res = await customAxiosRequestForGet("/projects", "get");
+  const res = await customAxiosRequestForGet("/projects");
   return res;
 };
 

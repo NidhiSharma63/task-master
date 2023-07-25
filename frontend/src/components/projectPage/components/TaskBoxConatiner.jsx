@@ -1,10 +1,14 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import { useAddTaskQuery } from "src/hook/useTaskQuery";
+import {
+  useAddTaskQuery,
+  useGetTaskAccordingToStatus,
+} from "src/hook/useTaskQuery";
 
 const TaskBoxContainer = ({ name }) => {
   const [textAreaValues, setTextAreaValues] = useState([]);
+  const { data } = useGetTaskAccordingToStatus();
 
   const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
