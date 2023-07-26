@@ -32,7 +32,9 @@ const useAddTaskQuery = () => {
     },
     onSuccess: () => {
       toast.success("Task created successfully!");
-      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+      queryKeyForTask.forEach((status) =>
+        queryClient.invalidateQueries(status)
+      );
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -59,8 +61,9 @@ const useGetTaskAccordingToStatus = () => {
 
   const data = userQueries?.map((item) => item?.data?.data);
   const isLoading = userQueries?.[0]?.isLoading;
+  const status = userQueries?.map((item) => item?.data?.status);
 
-  return { data, isLoading };
+  return { data, status, isLoading };
 };
 
 /**
@@ -88,14 +91,14 @@ const useUpdateTaskQuery = () => {
  * @returns Delete Task
  */
 
-const useDeleteTask = () => {
+const useDeleteTask = (status) => {
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/task", "delete", payload);
     },
     onSuccess: () => {
       toast.success("Task deleted successfully!");
-      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+      queryClient.invalidateQueries([status]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

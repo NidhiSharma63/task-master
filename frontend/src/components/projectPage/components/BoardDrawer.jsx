@@ -17,7 +17,7 @@ const BoardDrawer = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQuery();
-  const { mutate: deleteTask } = useDeleteTask();
+  const { mutate: deleteTask } = useDeleteTask(active_task?.status);
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -36,14 +36,15 @@ const BoardDrawer = () => {
     status: active_task.status,
     description: active_task?.description,
   };
-  console.log(active_task);
 
   const handleSubmit = (values) => {
     mutate(values);
   };
 
   const handleDelete = () => {
-    deleteTask(active_task._id);
+    deleteTask({ id: active_task._id });
+    setOpen(false);
+    dispatch(isBoardDrawerOpen(false));
   };
 
   return (
@@ -113,7 +114,17 @@ const BoardDrawer = () => {
                 <Button
                   variant="contained"
                   onClick={handleDelete}
-                  sx={{ mt: 2, ml: 2, backgroundColor: "rgb(168, 13, 13)" }}
+                  sx={{
+                    mt: 2,
+                    ml: 2,
+
+                    backgroundColor: "rgb(168, 13, 13)",
+                    "&:hover": {
+                      background: "white",
+                      borderColor: (theme) => theme.palette.primary.main,
+                      color: (theme) => theme.palette.primary.main,
+                    },
+                  }}
                 >
                   Delete
                 </Button>

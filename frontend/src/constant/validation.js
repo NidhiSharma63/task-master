@@ -20,5 +20,4 @@ export const registerSchema = object().shape({
 
 export const validationForUpdatingTask = object().shape({
   task: string().required("Enter your task").min(1),
-  dueDate: date().required("Date is required").nullable(),
 });
