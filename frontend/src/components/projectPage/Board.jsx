@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import { useGetTaskAccordingToStatus } from "src/hook/useTaskQuery";
 import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
+import { statesOfTaskManager } from "src/constant/Misc";
 
 const Board = () => {
   const { data, isLoading, status } = useGetTaskAccordingToStatus();
@@ -10,40 +11,42 @@ const Board = () => {
   const [inProgress, setInProgress] = useState([]);
   const [inPrority, setInPrority] = useState([]);
   const [inDone, setInDone] = useState([]);
+  const statusStates = {
+    Todo: [inTodo, setInTodo],
+    "In progress": [inProgress, setInProgress],
+    "In priority": [inPrority, setInPrority],
+    Done: [inDone, setInDone],
+  };
+
   useEffect(() => {
     // Only proceed if the data is loaded and not empty.
     if (!isLoading && data && data.length > 0) {
-      // Create an object mapping status names to their respective state setter functions.
-      const setters = {
-        Todo: setInTodo,
-        "In progress": setInProgress,
-        "In priority": setInPrority,
-        Done: setInDone,
-      };
+      // State and respective setters for each status
 
-      // Create an object mapping status names to their current states.
-      const currentStates = {
-        Todo: inTodo,
-        "In progress": inProgress,
-        "In priority": inPrority,
-        Done: inDone,
-      };
+      // Iterate over each task status
+      statesOfTaskManager.forEach((taskStatus) => {
+        // Find the corresponding data items for the current task status
+        const items = data.filter((item, i) => status[i] === taskStatus);
 
-      // Iterate over the loaded data.
-      data.map((items, i) => {
-        // If a setter exists for this status and the current state does not match the new data...
-        if (
-          status[i] &&
-          setters[status[i]] &&
-          JSON.stringify(currentStates[status[i]]) !== JSON.stringify(items)
-        ) {
-          // ...Update the state with the new data.
-          setters[status[i]](items);
+        // Get current state and its setter for the status
+        const [currentState, setter] = statusStates[taskStatus];
+
+        // Convert both old and new data items to JSON for comparison
+        const oldItemsJson = JSON.stringify(currentState);
+        const newItemsJson = JSON.stringify(items);
+
+        // If the data items for the current task status have changed...
+        if (oldItemsJson !== newItemsJson) {
+          // ...Update the state with the new data items.
+          setter(items);
         }
       });
     }
     // If isLoading, data, or any of the states change, the useEffect hook will run again.
-  }, [isLoading, data, inTodo, inProgress, inPrority, inDone]);
+  }, [isLoading, data, inTodo, inProgress, inPrority, inDone, status]);
+
+  // console.log(inDone, inTodo);
+
   return (
     <Grid
       container
@@ -66,31 +69,3 @@ const Board = () => {
 };
 
 export default Board;
-
-// status.map((item) => {
-//   if (item === "Todo") {
-//     console.log(data, "TODO");
-//   }
-//   if (item === "In progress") {
-//     console.log(data, "In progress");
-//   }
-//   if (item === "In priority") {
-//     console.log(data, "In priority");
-//   }
-//   if (item === "Done") {
-//     console.log(data, "Done");
-//   }
-// });
-// console.log("Else Part:::", status);
-// if (status === "Todo") {
-//   console.log(data, "TODO");
-// }
-// if (status === "In progress") {
-//   console.log(data, "In progress");
-// }
-// if (status === "In priority") {
-//   console.log(data, "In priority");
-// }
-// if (status === "Done") {
-//   console.log(data, "Done");
-// }

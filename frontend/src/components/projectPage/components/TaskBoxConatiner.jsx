@@ -111,23 +111,26 @@ const TaskBoxContainer = ({ name, data }) => {
           />
         ))}
 
-        {data?.map((item) => {
-          return (
-            <Box
-              sx={{
-                border: `1px solid ${colors.lightGrey}`,
-                width: "100%",
-                padding: 2,
-                backgroundColor: "rgba(255, 255, 255, 0.64)",
-                borderRadius: "0.4rem",
-                marginBottom: "1rem",
-                cursor: "pointer",
-              }}
-              onClick={() => handleClickOnTask(item)}
-            >
-              <Typography>{item.task}</Typography>
-            </Box>
-          );
+        {data?.map((items) => {
+          return items?.map((item) => {
+            return (
+              <Box
+                key={item._id}
+                sx={{
+                  border: `1px solid ${colors.lightGrey}`,
+                  width: "100%",
+                  padding: 2,
+                  backgroundColor: "rgba(255, 255, 255, 0.64)",
+                  borderRadius: "0.4rem",
+                  marginBottom: "1rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleClickOnTask(item)}
+              >
+                <Typography>{item.task}</Typography>
+              </Box>
+            );
+          });
         })}
       </Box>
     </Grid>
