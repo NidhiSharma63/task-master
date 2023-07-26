@@ -20,8 +20,8 @@ const deleteProjectApi = async (req, res) => {
 const deleteTaskApi = async (req, res) => {
   const { id } = req.body;
   try {
-    await Task.findOneAndDelete({ _id: id });
-    res.status(201).json({ msg: "Task deleted" });
+    const deletedTask = await Task.deleteOne({ _id: id });
+    res.status(201).json({ msg: "Task deleted", task: deletedTask });
   } catch (error) {
     res.status(500).json({ error: "It's not you. It's me" });
   }
