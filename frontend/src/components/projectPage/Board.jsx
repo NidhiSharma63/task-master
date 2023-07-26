@@ -4,7 +4,7 @@ import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import { useGetTaskAccordingToStatus } from "src/hook/useTaskQuery";
 import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { statesOfTaskManager } from "src/constant/Misc";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
 
 const Board = () => {
@@ -61,9 +61,11 @@ const Board = () => {
       statusStates[destination.droppableId];
 
     const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
-    moveAbleTask[0].status = destination.droppableId;
-    setterDestination((prev) => [...prev, ...moveAbleTask]);
-    mutate(moveAbleTask[0]);
+
+    const updateTask = { ...moveAbleTask[0], status: destination.droppableId };
+
+    setterDestination((prev) => [...prev, updateTask]);
+    mutate(updateTask);
 
     setIsUpdating(true);
   };

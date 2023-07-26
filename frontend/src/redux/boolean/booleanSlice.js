@@ -5,6 +5,7 @@ const booleanSlice = createSlice({
   initialState: {
     is_project_name_modal_open: false,
     is_board_drawer_open: false,
+    is_updating_task: false,
   },
   reducers: {
     isProjectNameModalOpen: (state, action) => {
@@ -13,10 +14,13 @@ const booleanSlice = createSlice({
     isBoardDrawerOpen: (state, action) => {
       state.is_board_drawer_open = action.payload;
     },
+    isUpdatingTask: (state, action) => {
+      state.is_updating_task = action.payload;
+    },
   },
 });
 
-export const { isProjectNameModalOpen, isBoardDrawerOpen } =
+export const { isProjectNameModalOpen, isBoardDrawerOpen, isUpdatingTask } =
   booleanSlice.actions;
 export const booleanDataInStore = (state) => state.boolean;
 export default booleanSlice.reducer;
