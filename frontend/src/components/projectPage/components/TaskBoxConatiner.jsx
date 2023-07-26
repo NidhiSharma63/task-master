@@ -6,6 +6,7 @@ import colors from "src/theme/variables";
 import { useDispatch } from "react-redux";
 import { activeTask } from "src/redux/task/taskSlice";
 import { isBoardDrawerOpen } from "src/redux/boolean/booleanSlice";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
@@ -83,56 +84,75 @@ const TaskBoxContainer = ({ name, data }) => {
           }}
         />
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          mt: 1,
-          height: "calc(100% - 30px)",
-          borderRadius: ".6rem",
-          boxShadow: "0px 0px 4px 1px #00000014",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "flex-start",
-          flexDirection: "column",
-          overflowY: "auto",
-          p: 1,
-        }}
-        className="box"
-      >
-        {textAreaValues?.map((value, index) => (
-          <textarea
-            key={index}
-            value={value}
-            data-id={name}
-            onChange={(event) => handleChange(event, index, event.target.value)}
-            onBlur={(event) => handleBlur(event, index)}
-            onInput={handleInput}
-            className="textArea"
-          />
-        ))}
+      <Droppable droppableId={name}>
+        {(provided) => {
+          return (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              sx={{
+                width: "100%",
+                mt: 1,
+                height: "calc(100% - 30px)",
+                borderRadius: ".6rem",
+                boxShadow: "0px 0px 4px 1px #00000014",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+                flexDirection: "column",
+                overflowY: "auto",
+                p: 1,
+              }}
+              className="box"
+            >
+              {textAreaValues?.map((value, index) => (
+                <textarea
+                  key={index}
+                  value={value}
+                  data-id={name}
+                  onChange={(event) =>
+                    handleChange(event, index, event.target.value)
+                  }
+                  onBlur={(event) => handleBlur(event, index)}
+                  onInput={handleInput}
+                  className="textArea"
+                />
+              ))}
 
-        {data?.map((items) => {
-          return items?.map((item) => {
-            return (
-              <Box
-                key={item._id}
-                sx={{
-                  border: `1px solid ${colors.lightGrey}`,
-                  width: "100%",
-                  padding: 2,
-                  backgroundColor: "rgba(255, 255, 255, 0.64)",
-                  borderRadius: "0.4rem",
-                  marginBottom: "1rem",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleClickOnTask(item)}
-              >
-                <Typography>{item.task}</Typography>
-              </Box>
-            );
-          });
-        })}
-      </Box>
+              {data?.map((item, index) => {
+                return (
+                  <Draggable
+                    key={item._id}
+                    draggableId={item._id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        sx={{
+                          border: `1px solid ${colors.lightGrey}`,
+                          width: "100%",
+                          padding: 2,
+                          backgroundColor: "rgba(255, 255, 255, 0.64)",
+                          borderRadius: "0.4rem",
+                          marginBottom: "1rem",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleClickOnTask(item)}
+                      >
+                        <Typography>{item.task}</Typography>
+                      </Box>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </Box>
+          );
+        }}
+      </Droppable>
     </Grid>
   );
 };
