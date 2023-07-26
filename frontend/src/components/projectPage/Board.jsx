@@ -9,7 +9,7 @@ import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
 
 const Board = () => {
   const { data, isLoading, status } = useGetTaskAccordingToStatus();
-  const [one, setOne] = useState("one");
+  const [isUpdating, setIsUpdating] = useState(false);
   const [inTodo, setInTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [inPrority, setInPrority] = useState([]);
@@ -24,14 +24,13 @@ const Board = () => {
   };
 
   useEffect(() => {
-    if (one === "two") return;
+    if (isUpdating) return;
     // Only proceed if the data is loaded and not empty.
     if (!isLoading && data && data.length > 0) {
       // State and respective setters for each status
 
       // Iterate over each task status
       statesOfTaskManager.forEach((taskStatus) => {
-        console.log("SORRY I RUN");
         // Find the corresponding data items for the current task status
         const items = data.filter((item, i) => status[i] === taskStatus).flat();
 
@@ -48,6 +47,7 @@ const Board = () => {
           setter(items);
         }
       });
+      setIsUpdating(false);
     }
     // If isLoading, data, or any of the states change, the useEffect hook will run again.
   }, [isLoading, data]);
@@ -65,10 +65,9 @@ const Board = () => {
     setterDestination((prev) => [...prev, ...moveAbleTask]);
     mutate(moveAbleTask[0]);
 
-    // setOne("two");
+    setIsUpdating(true);
   };
 
-  console.log(inProgress, "::in progress");
   return (
     <Grid
       container
