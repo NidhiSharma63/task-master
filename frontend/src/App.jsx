@@ -3,7 +3,6 @@ import {
   RouterProvider,
   useLocation,
   Navigate,
-  Outlet,
 } from "react-router-dom";
 import Login from "src/pages/auth/Login";
 import Register from "src/pages/auth/Register";
@@ -13,6 +12,7 @@ import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 import NotFound from "src/pages/error/NotFound";
 import ProjectPage from "src/pages/project/ProjectPage";
 import Board from "src/components/projectPage/Board";
+import Insights from "src/pages/insights/Insights";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -61,8 +61,8 @@ let router = createBrowserRouter([
         ],
       },
       {
-        path: "/todo",
-        element: <>Your All Todo is here</>,
+        path: "/insights/:status",
+        element: <Insights />,
       },
     ],
   },

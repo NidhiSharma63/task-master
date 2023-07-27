@@ -13,7 +13,6 @@ import {
   isProjectNameModalOpen,
 } from "src/redux/boolean/booleanSlice";
 import { useGetProjectQuery } from "src/hook/useProjectQuery";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const Board = () => {
         // Convert both old and new data items to JSON for comparison
         const oldItemsJson = JSON.stringify(currentState);
         const newItemsJson = JSON.stringify(items);
-        console.log(oldItemsJson, newItemsJson);
 
         // If the data items for the current task status have changed...
         if (oldItemsJson !== newItemsJson) {

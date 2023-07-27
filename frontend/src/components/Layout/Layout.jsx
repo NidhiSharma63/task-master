@@ -100,6 +100,11 @@ export const Layout = () => {
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
   };
 
+  const handleClickOnInsights = (name) => {
+    console.log(name);
+    navigate(`insights/${name}`);
+  };
+
   const handleActiveProject = (name) => {
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
@@ -188,7 +193,10 @@ export const Layout = () => {
               {INSIGHTS.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton key={key}>
+                    <ListItemButton
+                      key={key}
+                      onClick={() => handleClickOnInsights(key)}
+                    >
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
