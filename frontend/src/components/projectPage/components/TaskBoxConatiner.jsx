@@ -120,7 +120,6 @@ const TaskBoxContainer = ({ name, data }) => {
               ))}
 
               {data?.map((item, index) => {
-                console.log(item._id);
                 return (
                   <Draggable
                     key={item._id}

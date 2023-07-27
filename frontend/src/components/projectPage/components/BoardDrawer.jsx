@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
   isBoardDrawerOpen,
+  isUpdatingTask,
 } from "src/redux/boolean/booleanSlice";
 import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
@@ -45,6 +46,7 @@ const BoardDrawer = () => {
     deleteTask({ id: active_task._id });
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
+    dispatch(isUpdatingTask(false));
   };
 
   return (

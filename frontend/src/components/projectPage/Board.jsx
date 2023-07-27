@@ -6,10 +6,16 @@ import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { statesOfTaskManager } from "src/constant/Misc";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  booleanDataInStore,
+  isUpdatingTask,
+} from "src/redux/boolean/booleanSlice";
 
 const Board = () => {
+  const dispatch = useDispatch();
+  const { is_updating_task } = useSelector(booleanDataInStore);
   const { data, isLoading, status } = useGetTaskAccordingToStatus();
-  const [isUpdating, setIsUpdating] = useState(false);
   const [inTodo, setInTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [inPrority, setInPrority] = useState([]);
@@ -24,7 +30,7 @@ const Board = () => {
   };
 
   useEffect(() => {
-    if (isUpdating) return;
+    if (is_updating_task) return;
     // Only proceed if the data is loaded and not empty.
     if (!isLoading && data && data.length > 0) {
       // State and respective setters for each status
@@ -47,9 +53,8 @@ const Board = () => {
           setter(items);
         }
       });
-      setIsUpdating(false);
+      dispatch(isUpdatingTask(false));
     }
-    // If isLoading, data, or any of the states change, the useEffect hook will run again.
   }, [isLoading, data]);
 
   const hanldeDragEnd = (result) => {
@@ -66,8 +71,7 @@ const Board = () => {
 
     setterDestination((prev) => [...prev, updateTask]);
     mutate(updateTask);
-
-    setIsUpdating(true);
+    dispatch(isUpdatingTask(true));
   };
 
   return (

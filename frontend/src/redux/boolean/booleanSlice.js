@@ -15,6 +15,7 @@ const booleanSlice = createSlice({
       state.is_board_drawer_open = action.payload;
     },
     isUpdatingTask: (state, action) => {
+      console.log("payload", action.payload);
       state.is_updating_task = action.payload;
     },
   },
