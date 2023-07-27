@@ -20,6 +20,12 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
   try {
     const { userId, status, projectName } = req.query;
 
+    if (!userId || !status || !projectName) {
+      throw new Error(
+        "Some thing is missing in params, check userId, status, projectName"
+      );
+    }
+
     // filter the task based on userID and return all the task
     // that have status Todod
     const allTask = await Task.find({
@@ -31,7 +37,7 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
     });
     res.status(200).json({ data: allTask, status: status });
   } catch (error) {
-    res.status(500).json({ msg: "It's not you. It's me!" });
+    res.status(500).json({ msg: error.message });
   }
 };
 
