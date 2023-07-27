@@ -33,7 +33,6 @@ const createTaskApi = async (req, res) => {
     const taskObj = new Task({
       ...taskBody,
     });
-
     await taskObj.save();
     res.json({ data: taskObj });
   } catch (error) {
