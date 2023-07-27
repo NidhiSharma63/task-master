@@ -18,11 +18,15 @@ const getProjectApi = async (req, res) => {
 
 const getAllTaskAccordingToStatusApi = async (req, res) => {
   try {
-    const { userId, status } = req.query;
+    const { userId, status, projectName } = req.query;
 
     // filter the task based on userID and return all the task
     // that have status Todod
-    const allTask = await Task.find({ userId, status: status }).sort({
+    const allTask = await Task.find({
+      userId,
+      status: status,
+      projectName,
+    }).sort({
       createdAt: -1,
     });
     res.status(200).json({ data: allTask, status: status });

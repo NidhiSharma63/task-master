@@ -22,6 +22,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  projectName: {
+    type: String,
+    require: true,
+  },
 });
 
 const Task = new mongoose.model("Task", taskSchema);
