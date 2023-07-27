@@ -12,6 +12,7 @@ const {
   getAllTaskAccordingToStatusApi,
   updateTaskApi,
   deleteTaskApi,
+  getAllTaskFromAllProjectAccordingToStatus,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
@@ -36,5 +37,12 @@ router.route("/task").post(checkAuthorization, createTaskApi);
 router.route("/task").get(checkAuthorization, getAllTaskAccordingToStatusApi);
 router.route("/task").put(checkAuthorization, updateTaskApi);
 router.route("/task").delete(checkAuthorization, deleteTaskApi);
+
+/**
+ * Task routes for charts
+ */
+router
+  .route("/charts/tasks")
+  .get(checkAuthorization, getAllTaskFromAllProjectAccordingToStatus);
 
 module.exports = router;

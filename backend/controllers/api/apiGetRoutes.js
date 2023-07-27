@@ -1,11 +1,14 @@
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 
+/**
+ * Get project Api
+ * */
 const getProjectApi = async (req, res) => {
   try {
     const { userId } = req.query;
 
-    if (!userId.trim()) {
+    if (!userId) {
       res.status(400).json({ error: "User id is required" });
     }
     const project = await Project.find({ userId });
@@ -16,6 +19,9 @@ const getProjectApi = async (req, res) => {
   }
 };
 
+/**
+ * Get all task api
+ */
 const getAllTaskAccordingToStatusApi = async (req, res) => {
   try {
     const { userId, status, projectName } = req.query;
@@ -41,7 +47,28 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
   }
 };
 
+/**
+ * Get api for charts for getting all the tasks from all projects
+ *
+ */
+
+const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
+  try {
+    const { status } = req.query;
+    if (!status) {
+      throw new Error("status is not present");
+    }
+    // select task according to status
+    const tasks = await Task.find({ status });
+    // console.log(tasks);
+    res.status(200).json({ data: tasks });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 module.exports = {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
+  getAllTaskFromAllProjectAccordingToStatus,
 };
