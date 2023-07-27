@@ -54,13 +54,12 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
 
 const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
   try {
-    const { status } = req.query;
+    const { status, userId } = req.query;
     if (!status) {
       throw new Error("status is not present");
     }
     // select task according to status
-    const tasks = await Task.find({ status });
-    // console.log(tasks);
+    const tasks = await Task.find({ status, userId });
     res.status(200).json({ data: tasks });
   } catch (error) {
     res.status(500).json({ msg: error.message });
