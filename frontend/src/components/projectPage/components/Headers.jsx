@@ -18,7 +18,6 @@ const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log(location, "Location");
 
   useEffect(() => {
     if (

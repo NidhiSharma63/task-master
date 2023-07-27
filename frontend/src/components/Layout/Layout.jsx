@@ -88,6 +88,7 @@ export const Layout = () => {
 
   const handleDelete = (id) => {
     deleteProject({ id });
+    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
   };
 
   const handleActiveProject = (name) => {
