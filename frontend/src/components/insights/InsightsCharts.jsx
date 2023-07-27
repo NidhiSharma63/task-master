@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { capitalizeFirstLetter } from "src/utils/TextTransformer";
+import { ClipLoader } from "react-spinners";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,7 +16,7 @@ const generateRandomColor = () => {
   return color;
 };
 
-const InsightsCharts = ({ data }) => {
+const InsightsCharts = ({ data, isLoading }) => {
   const [allProjects, setAllProjects] = useState([]);
   const [allTask, setAllTasks] = useState([]);
 
@@ -57,8 +58,7 @@ const InsightsCharts = ({ data }) => {
     setAllTasks(allTaskOfEachProjects);
   }, [data]);
 
-  //   console.log(allProjects, "::all projects", colors);
-
+  console.log(data);
   const chartData = {
     labels: allProjects,
     datasets: [
@@ -70,10 +70,44 @@ const InsightsCharts = ({ data }) => {
       },
     ],
   };
+
+  if (data?.data.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mr: 5,
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <Typography variant="h4" sx={{ fontWeight: 600 }}>
+          {" "}
+          You have no task!
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mr: 5,
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <ClipLoader color="#571159" />
+      </Box>
+    );
+  }
   return (
     <Box
       sx={{
-        // border: "1px solid red",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
@@ -83,7 +117,6 @@ const InsightsCharts = ({ data }) => {
       <Box
         sx={{
           width: "25rem",
-          //   border: "1px solid red",
           height: "100%",
         }}
       >
@@ -91,7 +124,6 @@ const InsightsCharts = ({ data }) => {
       </Box>
       <Box
         sx={{
-          //   border: "1px solid green",
           display: "flex",
           flexDirection: "column",
           gap: "1.5rem",

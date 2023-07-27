@@ -7,7 +7,7 @@ import useChartsQuery from "src/hook/useChartsQuery";
 const Insights = () => {
   const { status } = useParams();
   const { useGetTaskQuery } = useChartsQuery(status);
-  const { data } = useGetTaskQuery();
+  const { data, isLoading } = useGetTaskQuery();
 
   return (
     <Box
@@ -32,7 +32,7 @@ const Insights = () => {
         </Typography>
         <Divider />
       </Box>
-      <InsightsCharts data={data} />
+      <InsightsCharts data={data} isLoading={isLoading} />
     </Box>
   );
 };

@@ -19,7 +19,7 @@ export const INSIGHTS = [
     Todo: <HourglassBottomIcon />,
     "In progress": <HourglassBottomIcon />,
     "In priority": <PriorityHighIcon />,
-    Completed: <HourglassFullIcon />,
+    Done: <HourglassFullIcon />,
   },
 ];
 
