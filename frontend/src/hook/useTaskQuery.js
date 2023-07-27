@@ -5,25 +5,11 @@ import {
 } from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { queryClient } from "src";
-import {
-  TASK_IN_TODO,
-  TASK_IN_PROGRESS,
-  TASK_IN_PRIORITY,
-  TASK_IN_DONE,
-} from "src/constant/queryKey";
 import { useQueries } from "@tanstack/react-query";
 import { statesOfTaskManager } from "src/constant/Misc";
-import { getValueFromLS } from "src/utils/localstorage";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
-
-const queryKeyForTask = [
-  TASK_IN_TODO,
-  TASK_IN_PROGRESS,
-  TASK_IN_PRIORITY,
-  TASK_IN_DONE,
-];
+import { queryKeyForTask } from "src/constant/queryKey";
 
 /**
  *
@@ -52,11 +38,11 @@ const useAddTaskQuery = () => {
  */
 const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
-  console.log(active_project);
+
   const userQueries = useQueries({
     queries: statesOfTaskManager.map((status) => {
       return {
-        queryKey: [status],
+        queryKey: [status, active_project],
         queryFn: () =>
           customAxiosRequestForGet("/task", {
             status,
@@ -82,13 +68,16 @@ const useGetTaskAccordingToStatus = () => {
  */
 
 const useUpdateTaskQuery = () => {
+  let state;
   return useMutation({
     mutationFn: (payload) => {
+      const { status } = payload;
+      state = status;
       return customAxiosRequestForPost("/task", "put", payload);
     },
     onSuccess: () => {
       toast.success("Task updated successfully!");
-      queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+      queryClient.invalidateQueries(state);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -102,13 +91,14 @@ const useUpdateTaskQuery = () => {
  */
 
 const useDeleteTask = (status) => {
+  const { active_project } = useSelector(projectDataInStore);
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/task", "delete", payload);
     },
     onSuccess: () => {
       toast.success("Task deleted successfully!");
-      queryClient.invalidateQueries([status]);
+      queryClient.invalidateQueries([status, active_project]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

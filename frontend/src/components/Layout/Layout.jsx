@@ -25,12 +25,20 @@ import {
   useGetProjectQuery,
   useDeleteProjectQuery,
 } from "src/hook/useProjectQuery";
-import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
+import {
+  isProjectNameModalOpen,
+  isUpdatingTask,
+} from "src/redux/boolean/booleanSlice";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { activeProject } from "src/redux/projects/projectSlice";
+import {
+  activeProject,
+  projectDataInStore,
+} from "src/redux/projects/projectSlice";
 import { setValueToLs } from "src/utils/localstorage";
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { queryKeyForTask } from "src/constant/queryKey";
+import { queryClient } from "src";
 
 const drawerWidth = 180;
 
@@ -38,6 +46,7 @@ export const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user_email } = useSelector(usersDataInStore);
+  const { active_project } = useSelector(projectDataInStore);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const { mutate } = useLogoutQuery();
@@ -94,7 +103,12 @@ export const Layout = () => {
   const handleActiveProject = (name) => {
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
+    dispatch(isUpdatingTask(false));
   };
+
+  useEffect(() => {
+    queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+  }, [active_project]);
 
   return (
     <>
