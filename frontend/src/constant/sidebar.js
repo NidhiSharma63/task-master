@@ -16,6 +16,7 @@ export const UPPER_SIDE_BAR = [
 export const INSIGHTS = [
   {
     Insights: <InsightsIcon />,
+    Todo: <HourglassBottomIcon />,
     "In progress": <HourglassBottomIcon />,
     "In priority": <PriorityHighIcon />,
     Completed: <HourglassFullIcon />,

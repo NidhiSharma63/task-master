@@ -11,3 +11,11 @@ export function TitleCase(stringToConvert) {
 }
 
 export default TitleCase;
+
+export function capitalizeFirstLetter(stringToConvert) {
+  if (!stringToConvert || typeof stringToConvert !== "string") {
+    return "";
+  }
+
+  return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1);
+}
