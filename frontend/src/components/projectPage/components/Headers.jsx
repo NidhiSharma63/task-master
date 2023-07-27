@@ -1,17 +1,10 @@
-import {
-  Box,
-  Typography,
-  Divider,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { queryClient } from "src";
 import colors from "src/theme/variables";
 
 const Headers = () => {
@@ -29,11 +22,6 @@ const Headers = () => {
     }
   }, [active_project, location.pathname]);
 
-  const activeLinkStyle = {
-    color: "rgb(5, 5, 5)",
-    border: "3px solid red",
-    // Add any other styles you want to apply when the link is active
-  };
   return (
     <Box
       sx={{

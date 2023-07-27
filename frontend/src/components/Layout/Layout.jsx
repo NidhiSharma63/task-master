@@ -194,7 +194,7 @@ export const Layout = () => {
                   );
                 });
               })}
-              {isLoading || data === undefined ? (
+              {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
                     <ClipLoader color="#571159" />

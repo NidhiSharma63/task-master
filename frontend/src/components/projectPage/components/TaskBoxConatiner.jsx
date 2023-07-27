@@ -7,11 +7,13 @@ import { useDispatch } from "react-redux";
 import { activeTask } from "src/redux/task/taskSlice";
 import { isBoardDrawerOpen } from "src/redux/boolean/booleanSlice";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { useSelector } from "react-redux";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
 
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
   const [textAreaValues, setTextAreaValues] = useState([]);
-
+  const { active_project } = useSelector(projectDataInStore);
   const { mutate } = useAddTaskQuery();
   const handleAddTask = () => {
     setTextAreaValues((prevValues) => [...prevValues, ""]);
@@ -38,7 +40,9 @@ const TaskBoxContainer = ({ name, data }) => {
     const payloadForTask = {
       task: textAreaValues[index].trim(),
       status: name,
+      projectName: active_project,
     };
+    console.log(payloadForTask, ":::payload For Task:::");
     mutate(payloadForTask);
     // Remove the textarea from the state after successful mutation
     setTimeout(() => {

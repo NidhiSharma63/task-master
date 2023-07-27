@@ -13,6 +13,10 @@ import {
 } from "src/constant/queryKey";
 import { useQueries } from "@tanstack/react-query";
 import { statesOfTaskManager } from "src/constant/Misc";
+import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { useSelector } from "react-redux";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
 
 const queryKeyForTask = [
   TASK_IN_TODO,
@@ -47,11 +51,17 @@ const useAddTaskQuery = () => {
  * @returns Getting all task
  */
 const useGetTaskAccordingToStatus = () => {
+  const { active_project } = useSelector(projectDataInStore);
+  console.log(active_project);
   const userQueries = useQueries({
     queries: statesOfTaskManager.map((status) => {
       return {
         queryKey: [status],
-        queryFn: () => customAxiosRequestForGet("/task", { status }),
+        queryFn: () =>
+          customAxiosRequestForGet("/task", {
+            status,
+            projectName: active_project,
+          }),
         onSuccess: ({ data }) => {
           return data;
         },
