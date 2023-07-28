@@ -4,12 +4,23 @@ import { useDispatch } from "react-redux";
 import colors from "src/theme/variables";
 import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
 import ProjectNameModal from "src/components/Layout/components/ProjectNameModal";
+import { useNavigate } from "react-router-dom";
+import { activeProject } from "src/redux/projects/projectSlice";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { setValueToLs } from "src/utils/localstorage";
 
 const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClickOnAddProject = () => {
     dispatch(isProjectNameModalOpen(true));
+  };
+
+  const handleNavigationToProject = (name) => {
+    navigate("/Dashboard");
+    dispatch(activeProject(name));
+    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
   };
 
   return (
@@ -71,6 +82,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
                   borderRadius: ".4rem",
                   mb: 1,
                 }}
+                onClick={() => handleNavigationToProject(item.name)}
               >
                 <Box
                   sx={{
