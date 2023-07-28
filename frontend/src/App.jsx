@@ -13,6 +13,7 @@ import NotFound from "src/pages/error/NotFound";
 import ProjectPage from "src/pages/project/ProjectPage";
 import Board from "src/components/projectPage/Board";
 import Insights from "src/pages/insights/Insights";
+import Home from "src/pages/home/Home";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -63,6 +64,10 @@ let router = createBrowserRouter([
       {
         path: "/Charts/:status",
         element: <Insights />,
+      },
+      {
+        path: "/Home",
+        element: <Home />,
       },
     ],
   },

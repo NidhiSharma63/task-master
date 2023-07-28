@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 
 const useChartsQuery = (status) => {
+  console.log(status, ":::status");
   const useGetTaskQuery = () => {
     return useQuery({
       queryKey: ["charts-data", status],

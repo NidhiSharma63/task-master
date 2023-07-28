@@ -4,31 +4,15 @@ import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { capitalizeFirstLetter } from "src/utils/TextTransformer";
 import { ClipLoader } from "react-spinners";
+import { generateBackgroundColors } from "src/utils/generateRandomColor";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-const generateRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
 
 const InsightsCharts = ({ data, isLoading, status }) => {
   const [allProjects, setAllProjects] = useState([]);
   const [allTask, setAllTasks] = useState([]);
 
-  const generateBackgroundColors = () => {
-    const colors = [];
-    for (let i = 0; i < allProjects.length; i++) {
-      colors.push(generateRandomColor());
-    }
-    return colors;
-  };
-
-  const colors = generateBackgroundColors();
+  const colors = generateBackgroundColors(allProjects);
 
   useEffect(() => {
     let tempData = [];

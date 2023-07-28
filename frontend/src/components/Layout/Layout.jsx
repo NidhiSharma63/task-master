@@ -111,6 +111,10 @@ export const Layout = () => {
     navigate("/Dashboard");
   };
 
+  const handleClickOnHome = () => {
+    navigate("/Home");
+  };
+
   useEffect(() => {
     queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
   }, [active_project]);
@@ -180,7 +184,7 @@ export const Layout = () => {
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton key={key}>
+                    <ListItemButton key={key} onClick={handleClickOnHome}>
                       <ListItemIcon>{value}</ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
