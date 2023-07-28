@@ -101,8 +101,7 @@ export const Layout = () => {
   };
 
   const handleClickOnInsights = (name) => {
-    console.log(name);
-    navigate(`insights/${name}`);
+    navigate(`Charts/${name}`);
   };
 
   const handleActiveProject = (name) => {

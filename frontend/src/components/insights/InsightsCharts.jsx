@@ -16,7 +16,7 @@ const generateRandomColor = () => {
   return color;
 };
 
-const InsightsCharts = ({ data, isLoading }) => {
+const InsightsCharts = ({ data, isLoading, status }) => {
   const [allProjects, setAllProjects] = useState([]);
   const [allTask, setAllTasks] = useState([]);
 
@@ -32,19 +32,34 @@ const InsightsCharts = ({ data, isLoading }) => {
 
   useEffect(() => {
     let tempData = [];
-    data?.data.map((item) => {
-      // check if project name is already added or not
-      const isAlreadyAddedProjectName = tempData.find(
-        (val) => val.projectName === item.projectName
-      );
+    if (status === "Insights") {
+      data?.data?.map((item) => {
+        // check if task status is already added or not
+        const isAlreadyAddedProjectName = tempData.find(
+          (val) => val.projectName === item.projectName
+        );
 
-      if (isAlreadyAddedProjectName) {
-        isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
-      }
-      if (!isAlreadyAddedProjectName) {
-        tempData.push({ projectName: item.projectName, task: 1 });
-      }
-    });
+        if (isAlreadyAddedProjectName) {
+          isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
+        } else {
+          tempData.push({ task: 1, projectName: item.projectName });
+        }
+      });
+    } else {
+      data?.data.map((item) => {
+        // check if project name is already added or not
+        const isAlreadyAddedProjectName = tempData.find(
+          (val) => val.projectName === item.projectName
+        );
+
+        if (isAlreadyAddedProjectName) {
+          isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
+        }
+        if (!isAlreadyAddedProjectName) {
+          tempData.push({ projectName: item.projectName, task: 1 });
+        }
+      });
+    }
 
     let allProjects = [];
     let allTaskOfEachProjects = [];
@@ -139,6 +154,7 @@ const InsightsCharts = ({ data, isLoading }) => {
         {allProjects.map((item, i) => {
           return (
             <Box
+              key={i}
               sx={{
                 display: "flex",
                 alignItems: "center",

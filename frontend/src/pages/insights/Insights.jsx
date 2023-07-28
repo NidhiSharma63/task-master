@@ -32,7 +32,7 @@ const Insights = () => {
         </Typography>
         <Divider />
       </Box>
-      <InsightsCharts data={data} isLoading={isLoading} />
+      <InsightsCharts data={data} isLoading={isLoading} status={status} />
     </Box>
   );
 };
