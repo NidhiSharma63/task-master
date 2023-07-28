@@ -109,6 +109,7 @@ export const Layout = () => {
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
     dispatch(isUpdatingTask(false));
+    navigate("/Dashboard");
   };
 
   useEffect(() => {
