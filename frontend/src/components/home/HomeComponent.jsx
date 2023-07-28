@@ -2,8 +2,16 @@ import { getUserFirstName } from "src/utils/getUserFirstName";
 import { getCurrentDate } from "src/utils/getCurrentDate";
 import TaskComponent from "src/components/home/components/TaskComponent";
 import { Box, Typography } from "@mui/material";
+import ProjectComponent from "src/components/home/components/ProjectComponent";
+import { useGetProjectQuery } from "src/hook/useProjectQuery";
+import { generateBackgroundColors } from "src/utils/generateRandomColor";
 
 const HomeComponent = () => {
+  const { data: projectData, isLoading } = useGetProjectQuery();
+  const backgroundColors = generateBackgroundColors(
+    projectData?.projects || []
+  );
+
   return (
     <Box
       sx={{
@@ -30,10 +38,16 @@ const HomeComponent = () => {
       <Box
         sx={{
           width: "90%",
+          display: "flex",
+          gap: 4,
         }}
       >
-        <TaskComponent />
-        <Box></Box>
+        <TaskComponent backgroundColors={backgroundColors} />
+        <ProjectComponent
+          backgroundColors={backgroundColors}
+          projectData={projectData}
+          isLoading={isLoading}
+        />
       </Box>
     </Box>
   );

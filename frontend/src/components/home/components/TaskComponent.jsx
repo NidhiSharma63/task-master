@@ -1,22 +1,15 @@
 import { Box, Typography, Stack, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useGetProjectQuery } from "src/hook/useProjectQuery";
 import colors from "src/theme/variables";
 import useChartsQuery from "src/hook/useChartsQuery";
 import { statesOfTaskManager } from "src/constant/Misc";
-import { generateBackgroundColors } from "src/utils/generateRandomColor";
 import { ClipLoader } from "react-spinners";
 
-const TaskComponent = () => {
-  const { data: projectData } = useGetProjectQuery();
+const TaskComponent = ({ backgroundColors }) => {
   const [activeLink, setActiveLink] = useState(null);
   const [allTask, setAllTask] = useState([]);
-  const backgroundColors = generateBackgroundColors(
-    projectData?.projects || []
-  );
 
   const handleClick = (name) => {
-    console.log(name);
     setActiveLink(name);
   };
 
@@ -111,6 +104,7 @@ const TaskComponent = () => {
                   padding: "0.5rem",
                   borderRadius: ".4rem",
                   mb: 1,
+                  cursor: "pointer",
                 }}
               >
                 <Typography>{item.task}</Typography>
@@ -119,6 +113,7 @@ const TaskComponent = () => {
                     padding: "0 .8rem",
                     backgroundColor: item.color,
                     borderRadius: "0.3rem",
+                    color: "white",
                   }}
                 >
                   {item.projectName}
