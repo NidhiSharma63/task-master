@@ -32,31 +32,31 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         borderRadius: "0.3rem",
       }}
     >
-      <Box sx={{ padding: " 0.8rem" }}>
+      <Box
+        sx={{
+          padding: " 0.8rem",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography variant="h5" sx={{ fontWeight: 700 }}>
           Projects
         </Typography>
-      </Box>
-      <Divider />
-      <Box sx={{ padding: "0.4rem" }}>
         <Button
           sx={{
             backgroundColor: (theme) => theme.palette.primary.main,
             color: "white",
-            width: "100%",
-            textAlign: "start",
-            border: "1px solid",
-            display: "flex",
-            justifyContent: "flex-start",
-            borderColor: (theme) => theme.palette.grey[400],
             "&:hover": {
               backgroundColor: colors.primaryHoverColor,
             },
           }}
           onClick={handleClickOnAddProject}
         >
-          Add
+          Add Project
         </Button>
+      </Box>
+      <Divider />
+      <Box sx={{ padding: "0.4rem" }}>
         {isLoading ? (
           <Box
             sx={{

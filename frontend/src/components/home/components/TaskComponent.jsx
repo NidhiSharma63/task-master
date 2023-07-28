@@ -1,16 +1,17 @@
-import { Box, Typography, Stack, Divider } from "@mui/material";
+import { Box, Typography, Stack, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import colors from "src/theme/variables";
 import useChartsQuery from "src/hook/useChartsQuery";
-import {
-  KEY_FOR_STORING_ACTIVE_PROJECT,
-  statesOfTaskManager,
-} from "src/constant/Misc";
+import { statesOfTaskManager } from "src/constant/Misc";
 import { ClipLoader } from "react-spinners";
+import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
+import { useDispatch } from "react-redux";
+import { isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
 
 const TaskComponent = ({ backgroundColors }) => {
   const [activeLink, setActiveLink] = useState(null);
   const [allTask, setAllTask] = useState([]);
+  const dispatch = useDispatch();
 
   const handleClick = (name) => {
     setActiveLink(name);
@@ -40,7 +41,12 @@ const TaskComponent = ({ backgroundColors }) => {
     });
 
     setAllTask(tempData);
+    setActiveLink("Todo");
   }, [allTaskProjectWideAccordingToStatus, backgroundColors]);
+
+  const handleClickOnAddTask = () => {
+    dispatch(isCreateTaskModalOpen(true));
+  };
 
   return (
     <Box
@@ -52,9 +58,18 @@ const TaskComponent = ({ backgroundColors }) => {
       }}
     >
       <Box sx={{ padding: " 0.8rem" }}>
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          My Tasks
-        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            My Tasks
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{ mb: 1, display: "flex" }}
+            onClick={handleClickOnAddTask}
+          >
+            Add Task
+          </Button>
+        </Box>
         <Stack direction="row" spacing={2} mt={1}>
           {statesOfTaskManager?.map((item, i) => {
             return (
@@ -126,6 +141,7 @@ const TaskComponent = ({ backgroundColors }) => {
           })
         )}
       </Box>
+      <CreateTaskPopup status={activeLink} />
     </Box>
   );
 };
