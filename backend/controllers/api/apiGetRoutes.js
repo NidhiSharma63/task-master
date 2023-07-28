@@ -58,6 +58,11 @@ const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
     if (!status) {
       throw new Error("status is not present");
     }
+
+    if (status === "Insights") {
+      const tasks = await Task.find({ userId });
+      return res.status(200).json({ data: tasks });
+    }
     // select task according to status
     const tasks = await Task.find({ status, userId });
     res.status(200).json({ data: tasks });
