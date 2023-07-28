@@ -33,7 +33,7 @@ const InsightsCharts = ({ data, isLoading, status }) => {
   useEffect(() => {
     let tempData = [];
     if (status === "Insights") {
-      data?.data?.map((item) => {
+      data?.data?.forEach((item) => {
         // check if task status is already added or not
         const isAlreadyAddedProjectName = tempData.find(
           (val) => val.projectName === item.projectName
@@ -46,7 +46,7 @@ const InsightsCharts = ({ data, isLoading, status }) => {
         }
       });
     } else {
-      data?.data.map((item) => {
+      data?.data.forEach((item) => {
         // check if project name is already added or not
         const isAlreadyAddedProjectName = tempData.find(
           (val) => val.projectName === item.projectName
@@ -64,16 +64,15 @@ const InsightsCharts = ({ data, isLoading, status }) => {
     let allProjects = [];
     let allTaskOfEachProjects = [];
 
-    tempData?.map((item) => {
+    tempData?.forEach((item) => {
       allProjects.push(item.projectName);
       allTaskOfEachProjects.push(item.task);
     });
 
     setAllProjects(allProjects);
     setAllTasks(allTaskOfEachProjects);
-  }, [data]);
+  }, [data, status]);
 
-  console.log(data);
   const chartData = {
     labels: allProjects,
     datasets: [
