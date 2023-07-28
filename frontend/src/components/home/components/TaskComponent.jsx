@@ -37,7 +37,7 @@ const TaskComponent = ({ backgroundColors }) => {
     });
 
     setAllTask(tempData);
-  }, [allTaskProjectWideAccordingToStatus]);
+  }, [allTaskProjectWideAccordingToStatus, backgroundColors]);
 
   return (
     <Box

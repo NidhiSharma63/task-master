@@ -1,8 +1,17 @@
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { ClipLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
 import colors from "src/theme/variables";
+import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
+import ProjectNameModal from "src/components/Layout/components/ProjectNameModal";
 
 const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
+  const dispatch = useDispatch();
+
+  const handleClickOnAddProject = () => {
+    dispatch(isProjectNameModalOpen(true));
+  };
+
   return (
     <Box
       sx={{
@@ -33,6 +42,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
               backgroundColor: colors.primaryHoverColor,
             },
           }}
+          onClick={handleClickOnAddProject}
         >
           Add
         </Button>
@@ -80,6 +90,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           })
         )}
       </Box>
+      <ProjectNameModal />
     </Box>
   );
 };

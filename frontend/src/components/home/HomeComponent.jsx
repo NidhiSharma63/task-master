@@ -5,11 +5,13 @@ import { Box, Typography } from "@mui/material";
 import ProjectComponent from "src/components/home/components/ProjectComponent";
 import { useGetProjectQuery } from "src/hook/useProjectQuery";
 import { generateBackgroundColors } from "src/utils/generateRandomColor";
+import { useMemo } from "react";
 
 const HomeComponent = () => {
   const { data: projectData, isLoading } = useGetProjectQuery();
-  const backgroundColors = generateBackgroundColors(
-    projectData?.projects || []
+  const backgroundColors = useMemo(
+    () => generateBackgroundColors(projectData?.projects || []),
+    [projectData?.projects]
   );
 
   return (
