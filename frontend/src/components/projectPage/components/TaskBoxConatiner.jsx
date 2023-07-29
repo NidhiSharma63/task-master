@@ -1,11 +1,14 @@
 import { Box, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddTaskQuery } from "src/hook/useTaskQuery";
 import colors from "src/theme/variables";
 import { useDispatch } from "react-redux";
 import { activeTask } from "src/redux/task/taskSlice";
-import { isBoardDrawerOpen } from "src/redux/boolean/booleanSlice";
+import {
+  booleanDataInStore,
+  isBoardDrawerOpen,
+} from "src/redux/boolean/booleanSlice";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
@@ -14,7 +17,15 @@ const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
   const [textAreaValues, setTextAreaValues] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
-  const { mutate, isLoading: isTaskAddLoading } = useAddTaskQuery();
+  const { is_task_displayed } = useSelector(booleanDataInStore);
+  const {
+    mutate,
+    // isLoading: isTaskAddLoading,
+    // mutateAsync,
+    isSuccess,
+  } = useAddTaskQuery();
+  const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
+    useState(null);
   const handleAddTask = () => {
     setTextAreaValues((prevValues) => [...prevValues, ""]);
   };
@@ -28,7 +39,7 @@ const TaskBoxContainer = ({ name, data }) => {
     });
   };
 
-  const handleBlur = (event, index) => {
+  const handleBlur = async (event, index) => {
     if (textAreaValues[index].trim().length === 0) {
       setTextAreaValues((prevValues) => {
         const copyValues = [...prevValues];
@@ -43,17 +54,23 @@ const TaskBoxContainer = ({ name, data }) => {
       projectName: active_project,
     };
     mutate(payloadForTask);
-    // Remove the textarea from the state after successful mutation
-    setTimeout(() => {
-      setTextAreaValues((prevValues) => {
-        const copyValues = [...prevValues];
-        copyValues.splice(index, 1);
-        return copyValues;
-      });
-    }, 1000);
+    setCurrentWorkingTestAreaIndex(index);
   };
 
-  console.log(isTaskAddLoading, ":::isTaskAddLoading:::");
+  useEffect(() => {
+    if (
+      currentWorkingTestAreaIndex !== null &&
+      is_task_displayed &&
+      isSuccess
+    ) {
+      setTextAreaValues((prevValues) => {
+        const copyValues = [...prevValues];
+        copyValues.splice(currentWorkingTestAreaIndex, 1);
+        return copyValues;
+      });
+      setCurrentWorkingTestAreaIndex(null);
+    }
+  }, [is_task_displayed, currentWorkingTestAreaIndex, isSuccess]);
 
   /**
    * for managing style of textarea
@@ -162,3 +179,12 @@ const TaskBoxContainer = ({ name, data }) => {
   );
 };
 export default TaskBoxContainer;
+
+// Remove the textarea from the state after successful mutation
+// setTimeout(() => {
+// setTextAreaValues((prevValues) => {
+//   const copyValues = [...prevValues];
+//   copyValues.splice(index, 1);
+//   return copyValues;
+// });
+// }, 1000);

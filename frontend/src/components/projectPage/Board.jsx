@@ -10,10 +10,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
   isUpdatingTask,
-  isProjectNameModalOpen,
 } from "src/redux/boolean/booleanSlice";
 import { useGetProjectQuery } from "src/hook/useProjectQuery";
 import { useNavigate } from "react-router-dom";
+import { isTaskDisplayed } from "src/redux/boolean/booleanSlice";
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -63,6 +63,7 @@ const Board = () => {
           setter(items);
         }
       });
+      dispatch(isTaskDisplayed(true));
       dispatch(isUpdatingTask(false));
     }
   }, [isLoading, data]);
