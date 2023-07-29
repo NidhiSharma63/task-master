@@ -21,11 +21,13 @@ import { validationForUpdatingTask } from "src/constant/validation";
 import colors from "src/theme/variables";
 import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
 import { useEffect } from "react";
+import { taskDataInStore } from "src/redux/task/taskSlice";
 
 const CreateTaskPopup = ({ status, projectData }) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const projectName = projectData?.projects?.map((item) => item.name);
+  const { active_task } = useSelector(taskDataInStore);
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
@@ -35,7 +37,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const { mutate: updateTask, isLoading: isTaskUpdating } =
     useUpdateTaskQuery();
 
-  let active_task = {};
+  console.log(active_task);
 
   const initialValues = {
     task: active_task.task ?? "",
@@ -52,18 +54,13 @@ const CreateTaskPopup = ({ status, projectData }) => {
   }
   const handleSubmit = (values) => {
     if (active_task.task) {
-      console.log("if part");
-      // updateTask(values);
+      updateTask(values);
+      dispatch(isCreateTaskModalOpen(true));
     } else {
       mutate(values);
-    }
-  };
-
-  useEffect(() => {
-    if (!isTaskAdding && !isTaskUpdating && is_create_task_modal_open) {
       dispatch(isCreateTaskModalOpen(true));
     }
-  }, [isTaskAdding, isTaskUpdating]);
+  };
 
   return (
     <Dialog open={is_create_task_modal_open} onClose={handleClose}>
@@ -112,11 +109,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
             {active_task.task ? (
               <Button
                 variant="contained"
-                // onClick={handleDelete}
                 sx={{
-                  mt: 2,
-                  ml: 2,
-
                   backgroundColor: "rgb(168, 13, 13)",
                   "&:hover": {
                     background: "white",

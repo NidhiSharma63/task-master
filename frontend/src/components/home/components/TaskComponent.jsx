@@ -7,6 +7,7 @@ import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
 import { useDispatch } from "react-redux";
 import { isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
+import { activeTask } from "src/redux/task/taskSlice";
 
 const TaskComponent = ({ backgroundColors, projectData }) => {
   const [activeLink, setActiveLink] = useState(null);
@@ -45,6 +46,11 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
   }, [allTaskProjectWideAccordingToStatus, backgroundColors]);
 
   const handleClickOnAddTask = () => {
+    dispatch(isCreateTaskModalOpen(true));
+  };
+
+  const handleClickOnTask = (item) => {
+    dispatch(activeTask(item));
     dispatch(isCreateTaskModalOpen(true));
   };
 
@@ -124,6 +130,7 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
                   mb: 1,
                   cursor: "pointer",
                 }}
+                onClick={() => handleClickOnTask(item)}
               >
                 <Typography>{item.task}</Typography>
                 <Box
