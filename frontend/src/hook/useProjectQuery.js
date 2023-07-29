@@ -6,6 +6,7 @@ import {
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "src";
+import { queryKeyForTask } from "src/constant/queryKey";
 
 // post
 const usePostProjectQuery = () => {
@@ -16,6 +17,10 @@ const usePostProjectQuery = () => {
     onSuccess: () => {
       toast.success("Project created successfully!");
       queryClient.invalidateQueries("projects");
+      queryKeyForTask.forEach((status) =>
+        queryClient.invalidateQueries(status)
+      );
+      queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -49,6 +54,7 @@ const useDeleteProjectQuery = () => {
     onSuccess: () => {
       toast.success("Project deleted successfully!");
       queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

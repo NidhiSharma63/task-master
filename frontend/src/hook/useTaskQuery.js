@@ -25,6 +25,7 @@ const useAddTaskQuery = () => {
       queryKeyForTask.forEach((status) =>
         queryClient.invalidateQueries(status)
       );
+      queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

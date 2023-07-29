@@ -21,6 +21,7 @@ import colors from "src/theme/variables";
 import { useUpdateTaskQuery, useDeleteTask } from "src/hook/useTaskQuery";
 
 import { taskDataInStore } from "src/redux/task/taskSlice";
+import { useEffect } from "react";
 
 const CreateTaskPopup = ({ status, projectData }) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
@@ -29,8 +30,9 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const { active_task } = useSelector(taskDataInStore);
 
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
-  const { mutate } = useAddTaskQuery();
-  const { mutate: updateTask } = useUpdateTaskQuery();
+  const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
+  const { mutate: updateTask, isLoading: isUpdatingTask } =
+    useUpdateTaskQuery();
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
@@ -59,6 +61,11 @@ const CreateTaskPopup = ({ status, projectData }) => {
     }
   };
 
+  useEffect(() => {
+    if ((!isUpdatingTask, !isLoadingTask && is_create_task_modal_open)) {
+      dispatch(isCreateTaskModalOpen(false));
+    }
+  }, [isUpdatingTask, isLoadingTask]);
   const handleDelete = () => {
     deleteTask({ id: active_task._id });
     dispatch(isCreateTaskModalOpen(false));
@@ -90,7 +97,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
                 values={projectName ?? []}
                 mt={11}
               />
-              <Box sx={{ mt: 11, display: "flex" }}>
+              <Box sx={{ mt: 2, display: "flex" }}>
                 <Typography sx={{ fontWeight: 600 }}>
                   Created At : &nbsp;
                 </Typography>
