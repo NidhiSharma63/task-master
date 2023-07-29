@@ -8,8 +8,9 @@ const deleteProjectApi = async (req, res) => {
     if (!id.trim()) {
       res.status(400).json({ error: "Id is required" });
     }
-    await Project.findOneAndDelete({ _id: id });
+    const project = await Project.findOneAndDelete({ _id: id });
     const projects = await Project.find();
+    await Task.deleteMany({ projectName: project.name });
 
     res.status(204).json({ projects });
   } catch (error) {
