@@ -93,6 +93,7 @@ export const Layout = () => {
 
   const handleOpenProjectModal = () => {
     dispatch(isProjectNameModalOpen(true));
+    navigate("/Dashboard");
   };
 
   const handleDelete = (id) => {

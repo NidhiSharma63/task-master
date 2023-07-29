@@ -61,6 +61,7 @@ let router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "/Charts/:status",
         element: <Insights />,

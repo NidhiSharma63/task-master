@@ -13,6 +13,7 @@ import {
   isProjectNameModalOpen,
 } from "src/redux/boolean/booleanSlice";
 import { useGetProjectQuery } from "src/hook/useProjectQuery";
+import { useNavigate } from "react-router-dom";
 
 const Board = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,13 @@ const Board = () => {
   const [inDone, setInDone] = useState([]);
   const { mutate } = useUpdateTaskQuery();
   const { data: projectData } = useGetProjectQuery();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (projectData?.projects?.length === 0) {
+      navigate("/Dashboard");
+    }
+  }, [projectData]);
   const statusStates = {
     Todo: [inTodo, setInTodo],
     "In progress": [inProgress, setInProgress],
@@ -77,10 +84,6 @@ const Board = () => {
     dispatch(isUpdatingTask(true));
   };
 
-  const handleOpenProjectModal = () => {
-    dispatch(isProjectNameModalOpen(true));
-  };
-
   return (
     <Grid
       container
@@ -92,38 +95,13 @@ const Board = () => {
         pl: 3,
       }}
     >
-      {projectData?.projects?.length > 0 ? (
-        <DragDropContext onDragEnd={hanldeDragEnd}>
-          <TaskBoxConatiner name={"Todo"} data={inTodo} />
-          <TaskBoxConatiner name={"In progress"} data={inProgress} />
-          <TaskBoxConatiner name={"In priority"} data={inPrority} />
-          <TaskBoxConatiner name={"Done"} data={inDone} />
-          <BoardDrawer />
-        </DragDropContext>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            // border: "1px solid red",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            gap: "1rem",
-            mb: 4,
-            mr: 8,
-          }}
-        >
-          <Typography variant="h5">
-            You have no project. <br />
-            Create projects to manage your tasks
-          </Typography>
-          <Button variant="contained" onClick={handleOpenProjectModal}>
-            Add Task
-          </Button>
-        </Box>
-      )}
+      <DragDropContext onDragEnd={hanldeDragEnd}>
+        <TaskBoxConatiner name={"Todo"} data={inTodo} />
+        <TaskBoxConatiner name={"In progress"} data={inProgress} />
+        <TaskBoxConatiner name={"In priority"} data={inPrority} />
+        <TaskBoxConatiner name={"Done"} data={inDone} />
+        <BoardDrawer />
+      </DragDropContext>
     </Grid>
   );
 };

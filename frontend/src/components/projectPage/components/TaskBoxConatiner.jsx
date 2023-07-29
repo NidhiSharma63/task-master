@@ -14,7 +14,7 @@ const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
   const [textAreaValues, setTextAreaValues] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
-  const { mutate } = useAddTaskQuery();
+  const { mutate, isLoading: isTaskAddLoading } = useAddTaskQuery();
   const handleAddTask = () => {
     setTextAreaValues((prevValues) => [...prevValues, ""]);
   };
@@ -42,7 +42,6 @@ const TaskBoxContainer = ({ name, data }) => {
       status: name,
       projectName: active_project,
     };
-    console.log(payloadForTask, ":::payload For Task:::");
     mutate(payloadForTask);
     // Remove the textarea from the state after successful mutation
     setTimeout(() => {
@@ -53,6 +52,8 @@ const TaskBoxContainer = ({ name, data }) => {
       });
     }, 1000);
   };
+
+  console.log(isTaskAddLoading, ":::isTaskAddLoading:::");
 
   /**
    * for managing style of textarea
