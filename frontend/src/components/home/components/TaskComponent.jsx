@@ -8,7 +8,7 @@ import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
 import { useDispatch } from "react-redux";
 import { isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
 
-const TaskComponent = ({ backgroundColors }) => {
+const TaskComponent = ({ backgroundColors, projectData }) => {
   const [activeLink, setActiveLink] = useState(null);
   const [allTask, setAllTask] = useState([]);
   const dispatch = useDispatch();
@@ -141,7 +141,7 @@ const TaskComponent = ({ backgroundColors }) => {
           })
         )}
       </Box>
-      <CreateTaskPopup status={activeLink} />
+      <CreateTaskPopup status={activeLink} projectData={projectData} />
     </Box>
   );
 };

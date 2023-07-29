@@ -44,7 +44,10 @@ const HomeComponent = () => {
           gap: 4,
         }}
       >
-        <TaskComponent backgroundColors={backgroundColors} />
+        <TaskComponent
+          backgroundColors={backgroundColors}
+          projectData={projectData}
+        />
         <ProjectComponent
           backgroundColors={backgroundColors}
           projectData={projectData}

@@ -19,24 +19,30 @@ import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
 import colors from "src/theme/variables";
+import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
+import { useEffect } from "react";
 
-const CreateTaskPopup = ({ status }) => {
+const CreateTaskPopup = ({ status, projectData }) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
+  const projectName = projectData?.projects?.map((item) => item.name);
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
   };
 
-  const { mutate } = useAddTaskQuery();
+  const { mutate, isLoading: isTaskAdding } = useAddTaskQuery();
+  const { mutate: updateTask, isLoading: isTaskUpdating } =
+    useUpdateTaskQuery();
 
   let active_task = {};
 
   const initialValues = {
     task: active_task.task ?? "",
-    dueDate: new Date(active_task?.dueDate) ?? " ",
+    dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
     description: active_task?.description ?? "",
+    projectName: active_task?.projectName ?? projectName?.[0],
   };
 
   // active task is present
@@ -45,9 +51,19 @@ const CreateTaskPopup = ({ status }) => {
     initialValues.userId = active_task.userId ?? "";
   }
   const handleSubmit = (values) => {
-    console.log(values);
-    // mutate(values);
+    if (active_task.task) {
+      console.log("if part");
+      // updateTask(values);
+    } else {
+      mutate(values);
+    }
   };
+
+  useEffect(() => {
+    if (!isTaskAdding && !isTaskUpdating && is_create_task_modal_open) {
+      dispatch(isCreateTaskModalOpen(true));
+    }
+  }, [isTaskAdding, isTaskUpdating]);
 
   return (
     <Dialog open={is_create_task_modal_open} onClose={handleClose}>
@@ -69,6 +85,12 @@ const CreateTaskPopup = ({ status }) => {
               <FormikControls control="formikInput" name="task" />
               <FormikControls control="formikDatePicker" name="dueDate" />
               <FormikControls control="formikTextArea" name="description" />
+              <FormikControls
+                control="formikSelect"
+                name="projectName"
+                values={projectName ?? []}
+                mt={11}
+              />
               <Box sx={{ mt: 11, display: "flex" }}>
                 <Typography sx={{ fontWeight: 600 }}>
                   Created At : &nbsp;
