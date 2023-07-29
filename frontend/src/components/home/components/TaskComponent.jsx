@@ -42,7 +42,9 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
     });
 
     setAllTask(tempData);
-    setActiveLink("Todo");
+    if (!activeLink) {
+      setActiveLink("Todo");
+    }
   }, [allTaskProjectWideAccordingToStatus, backgroundColors]);
 
   const handleClickOnAddTask = () => {
