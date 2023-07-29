@@ -78,6 +78,7 @@ const useUpdateTaskQuery = () => {
     onSuccess: () => {
       toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
+      queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -99,6 +100,7 @@ const useDeleteTask = (status) => {
     onSuccess: () => {
       toast.success("Task deleted successfully!");
       queryClient.invalidateQueries([status, active_project]);
+      queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

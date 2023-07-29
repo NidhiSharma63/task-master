@@ -14,13 +14,12 @@ import {
   isCreateTaskModalOpen,
 } from "src/redux/boolean/booleanSlice";
 import { useAddTaskQuery } from "src/hook/useTaskQuery";
-
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
 import colors from "src/theme/variables";
-import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
-import { useEffect } from "react";
+import { useUpdateTaskQuery, useDeleteTask } from "src/hook/useTaskQuery";
+
 import { taskDataInStore } from "src/redux/task/taskSlice";
 
 const CreateTaskPopup = ({ status, projectData }) => {
@@ -29,15 +28,13 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const projectName = projectData?.projects?.map((item) => item.name);
   const { active_task } = useSelector(taskDataInStore);
 
+  const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const { mutate } = useAddTaskQuery();
+  const { mutate: updateTask } = useUpdateTaskQuery();
+
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
   };
-
-  const { mutate, isLoading: isTaskAdding } = useAddTaskQuery();
-  const { mutate: updateTask, isLoading: isTaskUpdating } =
-    useUpdateTaskQuery();
-
-  console.log(active_task);
 
   const initialValues = {
     task: active_task.task ?? "",
@@ -60,6 +57,11 @@ const CreateTaskPopup = ({ status, projectData }) => {
       mutate(values);
       dispatch(isCreateTaskModalOpen(true));
     }
+  };
+
+  const handleDelete = () => {
+    deleteTask({ id: active_task._id });
+    dispatch(isCreateTaskModalOpen(false));
   };
 
   return (
@@ -117,6 +119,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
                     color: (theme) => theme.palette.primary.main,
                   },
                 }}
+                onClick={handleDelete}
               >
                 Delete
               </Button>
