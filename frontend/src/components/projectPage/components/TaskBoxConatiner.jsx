@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAddTaskQuery } from "src/hook/useTaskQuery";
 import colors from "src/theme/variables";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import {
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
+import { lastIndexOfTask } from "src/redux/task/taskSlice";
 
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
@@ -26,8 +27,12 @@ const TaskBoxContainer = ({ name, data }) => {
   } = useAddTaskQuery();
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
     useState(null);
+
+  const isTaskAddedFromBottom = useRef(null);
+
   const handleAddTask = () => {
     setTextAreaValues((prevValues) => [...prevValues, ""]);
+    isTaskAddedFromBottom.current = false;
   };
 
   const handleChange = (event, index, newValue) => {
@@ -39,6 +44,11 @@ const TaskBoxContainer = ({ name, data }) => {
     });
   };
 
+  const handleClickForAddingTaskFromBottom = () => {
+    isTaskAddedFromBottom.current = true;
+    setTextAreaValues((prevValues) => [...prevValues, ""]);
+  };
+
   const handleBlur = async (event, index) => {
     if (textAreaValues[index].trim().length === 0) {
       setTextAreaValues((prevValues) => {
@@ -48,13 +58,25 @@ const TaskBoxContainer = ({ name, data }) => {
       });
       return;
     }
+
+    let lastIndexOfCurrentTask = data?.[data.length - 1]?.index;
+
     const payloadForTask = {
       task: textAreaValues[index].trim(),
       status: name,
       projectName: active_project,
+      index: data.length > 0 ? lastIndexOfCurrentTask + 1 : 0,
     };
-    mutate(payloadForTask);
-    setCurrentWorkingTestAreaIndex(index);
+
+    // mutate(payloadForTask);
+    // setCurrentWorkingTestAreaIndex(index);
+    // console.log(
+    //   lastIndexOfCurrentTask,
+    //   ":::last index",
+    //   data,
+    //   ":::payload",
+    //   payloadForTask
+    // );
   };
 
   useEffect(() => {
@@ -172,7 +194,12 @@ const TaskBoxContainer = ({ name, data }) => {
               })}
               {provided.placeholder}
               {data?.length > 0 ? (
-                <Button variant="contained">Add Task</Button>
+                <Button
+                  variant="contained"
+                  onClick={handleClickForAddingTaskFromBottom}
+                >
+                  Add Task
+                </Button>
               ) : null}
             </Box>
           );
