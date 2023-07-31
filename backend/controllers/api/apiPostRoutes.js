@@ -26,20 +26,36 @@ const createProjectApi = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 const createTaskApi = async (req, res) => {
   try {
     const taskBody = req.body;
+
+    const { index } = taskBody;
+    // Save the new task
     const taskObj = new Task({
       ...taskBody,
     });
     await taskObj.save();
+
+    // Find all tasks next to the current posted task
+    const allTaskNextToCurrentTask = await Task.find({
+      index: { $gt: index },
+      status: taskBody.status,
+      userId: taskBody.userId,
+    });
+
+    // Update the index of the found tasks and save them
+    const updateTasksPromises = allTaskNextToCurrentTask?.map(async (item) => {
+      item.index = item.index + 1;
+      await item.save();
+    });
+    await Promise.all(updateTasksPromises);
+
     res.json({ data: taskObj });
   } catch (error) {
     res.status(500).json({ msg: "It's me not you" });
   }
 };
-
 module.exports = {
   createProjectApi,
   createTaskApi,

@@ -39,8 +39,9 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
       status: status,
       projectName,
     }).sort({
-      createdAt: -1,
+      index: 1,
     });
+
     res.status(200).json({ data: allTask, status: status });
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -69,6 +70,7 @@ const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
       userId,
       projectName: { $exists: true },
     });
+
     res.status(200).json({ data: tasks });
   } catch (error) {
     res.status(500).json({ msg: error.message });
