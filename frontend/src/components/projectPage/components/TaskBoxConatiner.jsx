@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import { useAddTaskQuery } from "src/hook/useTaskQuery";
@@ -171,6 +171,9 @@ const TaskBoxContainer = ({ name, data }) => {
                 );
               })}
               {provided.placeholder}
+              {data?.length > 0 ? (
+                <Button variant="contained">Add Task</Button>
+              ) : null}
             </Box>
           );
         }}
@@ -179,12 +182,3 @@ const TaskBoxContainer = ({ name, data }) => {
   );
 };
 export default TaskBoxContainer;
-
-// Remove the textarea from the state after successful mutation
-// setTimeout(() => {
-// setTextAreaValues((prevValues) => {
-//   const copyValues = [...prevValues];
-//   copyValues.splice(index, 1);
-//   return copyValues;
-// });
-// }, 1000);
