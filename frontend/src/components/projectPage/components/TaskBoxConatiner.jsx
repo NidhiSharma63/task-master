@@ -16,7 +16,8 @@ import { lastIndexOfTask } from "src/redux/task/taskSlice";
 
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
-  const [textAreaValues, setTextAreaValues] = useState([]);
+  const [textAreaValuesTop, setTextAreaValuesTop] = useState([]);
+  const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
   const {
@@ -31,52 +32,69 @@ const TaskBoxContainer = ({ name, data }) => {
   const isTaskAddedFromBottom = useRef(null);
 
   const handleAddTask = () => {
-    setTextAreaValues((prevValues) => [...prevValues, ""]);
+    setTextAreaValuesTop((prevValues) => ["", ...prevValues]);
     isTaskAddedFromBottom.current = false;
-  };
-
-  const handleChange = (event, index, newValue) => {
-    // console.log(event.target.dataset);
-    setTextAreaValues((prevValues) => {
-      const copyValues = [...prevValues];
-      copyValues[index] = newValue;
-      return copyValues;
-    });
   };
 
   const handleClickForAddingTaskFromBottom = () => {
     isTaskAddedFromBottom.current = true;
-    setTextAreaValues((prevValues) => [...prevValues, ""]);
+    setTextAreaValuesBottom((prevValues) => [...prevValues, ""]);
+  };
+
+  const handleChange = (event, index, newValue) => {
+    if (!isTaskAddedFromBottom.current) {
+      setTextAreaValuesTop((prevValues) => {
+        const copyValues = [...prevValues];
+        copyValues[index] = newValue;
+        return copyValues;
+      });
+    } else {
+      setTextAreaValuesBottom((prevValues) => {
+        const copyValues = [...prevValues];
+        copyValues[index] = newValue;
+        return copyValues;
+      });
+    }
   };
 
   const handleBlur = async (event, index) => {
-    if (textAreaValues[index].trim().length === 0) {
-      setTextAreaValues((prevValues) => {
-        const copyValues = [...prevValues];
-        copyValues.splice(index, 1);
-        return copyValues;
-      });
-      return;
-    }
-
+    let valueOfTextField = "";
     let lastIndexOfCurrentTask = data?.[data.length - 1]?.index;
 
+    if (!isTaskAddedFromBottom.current) {
+      if (textAreaValuesTop[index].trim().length === 0) {
+        setTextAreaValuesTop((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues.splice(index, 1);
+          return copyValues;
+        });
+      } else {
+        valueOfTextField = textAreaValuesTop[index].trim();
+      }
+    } else {
+      if (textAreaValuesBottom[index].trim().length === 0) {
+        console.log("i shopuld rin");
+        setTextAreaValuesBottom((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues.splice(index, 1);
+          return copyValues;
+        });
+      } else {
+        valueOfTextField = textAreaValuesBottom[index].trim();
+      }
+    }
+
+    if (!valueOfTextField) return;
+
     const payloadForTask = {
-      task: textAreaValues[index].trim(),
+      task: valueOfTextField,
       status: name,
       projectName: active_project,
-      index: data.length > 0 ? lastIndexOfCurrentTask + 1 : 0,
+      index: isTaskAddedFromBottom.current ? lastIndexOfCurrentTask + 1 : 0,
     };
 
-    // mutate(payloadForTask);
-    // setCurrentWorkingTestAreaIndex(index);
-    // console.log(
-    //   lastIndexOfCurrentTask,
-    //   ":::last index",
-    //   data,
-    //   ":::payload",
-    //   payloadForTask
-    // );
+    mutate(payloadForTask);
+    setCurrentWorkingTestAreaIndex(index);
   };
 
   useEffect(() => {
@@ -85,11 +103,19 @@ const TaskBoxContainer = ({ name, data }) => {
       is_task_displayed &&
       isSuccess
     ) {
-      setTextAreaValues((prevValues) => {
-        const copyValues = [...prevValues];
-        copyValues.splice(currentWorkingTestAreaIndex, 1);
-        return copyValues;
-      });
+      if (!isTaskAddedFromBottom.current) {
+        setTextAreaValuesTop((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues.splice(currentWorkingTestAreaIndex, 1);
+          return copyValues;
+        });
+      } else {
+        setTextAreaValuesBottom((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues.splice(currentWorkingTestAreaIndex, 1);
+          return copyValues;
+        });
+      }
       setCurrentWorkingTestAreaIndex(null);
     }
   }, [is_task_displayed, currentWorkingTestAreaIndex, isSuccess]);
@@ -149,7 +175,7 @@ const TaskBoxContainer = ({ name, data }) => {
               }}
               className="box"
             >
-              {textAreaValues?.map((value, index) => (
+              {textAreaValuesTop?.map((value, index) => (
                 <textarea
                   key={index}
                   value={value}
@@ -162,7 +188,6 @@ const TaskBoxContainer = ({ name, data }) => {
                   className="textArea"
                 />
               ))}
-
               {data?.map((item, index) => {
                 return (
                   <Draggable
@@ -193,6 +218,19 @@ const TaskBoxContainer = ({ name, data }) => {
                 );
               })}
               {provided.placeholder}
+              {textAreaValuesBottom?.map((value, index) => (
+                <textarea
+                  key={index}
+                  value={value}
+                  data-id={name}
+                  onChange={(event) =>
+                    handleChange(event, index, event.target.value)
+                  }
+                  onBlur={(event) => handleBlur(event, index)}
+                  onInput={handleInput}
+                  className="textArea"
+                />
+              ))}
               {data?.length > 0 ? (
                 <Button
                   variant="contained"
