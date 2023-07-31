@@ -35,15 +35,15 @@ const createTaskApi = async (req, res) => {
     const taskObj = new Task({
       ...taskBody,
     });
-    await taskObj.save();
 
     // Find all tasks next to the current posted task
     const allTaskNextToCurrentTask = await Task.find({
-      index: { $gt: index },
+      index: { $gte: index },
       status: taskBody.status,
       userId: taskBody.userId,
     });
 
+    console.log(allTaskNextToCurrentTask, "::all task that have greater index");
     // Update the index of the found tasks and save them
     const updateTasksPromises = allTaskNextToCurrentTask?.map(async (item) => {
       item.index = item.index + 1;
@@ -51,6 +51,7 @@ const createTaskApi = async (req, res) => {
     });
     await Promise.all(updateTasksPromises);
 
+    await taskObj.save();
     res.json({ data: taskObj });
   } catch (error) {
     res.status(500).json({ msg: "It's me not you" });
