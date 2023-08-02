@@ -1,3 +1,0 @@
-[build]
-  command = "cd .Todo/frontend && npm install && npm run build"
-  publish = "frontend/build"
