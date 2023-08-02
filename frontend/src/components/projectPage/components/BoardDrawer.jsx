@@ -10,14 +10,17 @@ import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
-import { useUpdateTaskQuery, useDeleteTask } from "src/hook/useTaskQuery";
+import {
+  useUpdateTaskQueryWithDetails,
+  useDeleteTask,
+} from "src/hook/useTaskQuery";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
   const { is_board_drawer_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(is_board_drawer_open);
-  const { mutate } = useUpdateTaskQuery();
+  const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
 
   useEffect(() => {

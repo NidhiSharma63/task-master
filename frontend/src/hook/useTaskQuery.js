@@ -65,7 +65,7 @@ const useGetTaskAccordingToStatus = () => {
 
 /**
  *
- * @returns Update request
+ * @returns Update request drag and drop
  */
 
 const useUpdateTaskQuery = () => {
@@ -111,6 +111,30 @@ const useUpdateTaskQueryWithStatus = () => {
   });
 };
 
+/**
+ *
+ * @returns Update request with details
+ */
+
+const useUpdateTaskQueryWithDetails = () => {
+  let state;
+  return useMutation({
+    mutationFn: (payload) => {
+      const { status } = payload;
+      state = status;
+      return customAxiosRequestForPost("/task/details", "put", payload);
+    },
+    onSuccess: () => {
+      toast.success("Task updated successfully!");
+      queryClient.invalidateQueries(state);
+      queryClient.invalidateQueries(["charts-data"]);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.error);
+    },
+  });
+};
+
 /***
  *
  * @returns Delete Task
@@ -139,4 +163,5 @@ export {
   useDeleteTask,
   useUpdateTaskQuery,
   useUpdateTaskQueryWithStatus,
+  useUpdateTaskQueryWithDetails,
 };
