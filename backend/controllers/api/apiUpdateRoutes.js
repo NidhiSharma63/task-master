@@ -93,7 +93,7 @@ const updateTaskWithStatus = async (req, res) => {
   }
 };
 
-const updateTaskWithDetail = async (res, req) => {
+const updateTaskWithDetail = async (req, res) => {
   try {
     const taskBody = req.body;
     const { _id, userId } = taskBody;
