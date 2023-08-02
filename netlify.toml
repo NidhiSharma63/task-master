@@ -1,0 +1,3 @@
+[build]
+  command = "cd frotend && npm install && npm run build"
+  publish = "frotend/build"
