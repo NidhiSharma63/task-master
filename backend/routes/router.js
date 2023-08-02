@@ -38,6 +38,7 @@ router.route("/task").post(checkAuthorization, createTaskApi);
 router.route("/task").get(checkAuthorization, getAllTaskAccordingToStatusApi);
 router.route("/task").put(checkAuthorization, updateTaskApi);
 router.route("/task/status").put(checkAuthorization, updateTaskWithStatus);
+router.route("/task/details").put(checkAuthorization, updateTaskWithDetail);
 router.route("/task").delete(checkAuthorization, deleteTaskApi);
 
 /**
