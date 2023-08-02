@@ -57,6 +57,43 @@ const updateTaskApi = async (req, res) => {
   }
 };
 
+const updateTaskWithStatus = async (req, res) => {
+  try {
+    const { status, currentIndex, projectName, userId, _id } = req.body;
+    if (currentIndex === undefined || status === undefined) {
+      throw new Error("Something is missing currentIndex or previousIndex");
+    }
+    // find all related to project of that user according to status
+    const allProjectRelatedToStatus = await Task.find({
+      status,
+      userId,
+      projectName,
+      index: { $gte: currentIndex },
+    });
+    if (allProjectRelatedToStatus.length > 0) {
+      const updateTasksPromises = allProjectRelatedToStatus?.map(
+        async (item) => {
+          item.index = item.index + 1;
+          await item.save();
+        }
+      );
+
+      await Promise.all(updateTasksPromises);
+    }
+
+    // find the updated task
+    const taskObj = await Task.findOne({ _id });
+    taskObj.status = status;
+    taskObj.index = currentIndex;
+    await taskObj.save();
+
+    res.json({ data: taskObj });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
 module.exports = {
   updateTaskApi,
+  updateTaskWithStatus,
 };
