@@ -43,7 +43,6 @@ const createTaskApi = async (req, res) => {
       userId: taskBody.userId,
     });
 
-    console.log(allTaskNextToCurrentTask, "::all task that have greater index");
     // Update the index of the found tasks and save them
     const updateTasksPromises = allTaskNextToCurrentTask?.map(async (item) => {
       item.index = item.index + 1;
