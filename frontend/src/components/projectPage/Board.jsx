@@ -5,7 +5,10 @@ import { useGetTaskAccordingToStatus } from "src/hook/useTaskQuery";
 import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { statesOfTaskManager } from "src/constant/Misc";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useUpdateTaskQuery } from "src/hook/useTaskQuery";
+import {
+  useUpdateTaskQuery,
+  useUpdateTaskQueryWithStatus,
+} from "src/hook/useTaskQuery";
 import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
@@ -25,6 +28,7 @@ const Board = () => {
   const [inDone, setInDone] = useState([]);
   const { mutate } = useUpdateTaskQuery();
   const { data: projectData } = useGetProjectQuery();
+  const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,16 +76,51 @@ const Board = () => {
     const { source, destination } = result;
     if (!destination) return;
 
-    const [activeState, settersActiveState] = statusStates[source.droppableId];
-    const [destinationState, setterDestination] =
-      statusStates[destination.droppableId];
+    if (destination.droppableId === source.droppableId) {
+      // find in which row task is drag and dropped
+      // Get current state and its setter for the status
+      const [currentState, setter] = statusStates[destination.droppableId];
 
-    const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
+      // find th updated task
+      const moveAbleTask = currentState.splice(source.index, 1);
+      // update the status
 
-    const updateTask = { ...moveAbleTask[0], status: destination.droppableId };
+      const updatedTask = {
+        ...moveAbleTask[0],
+        currentIndex: destination.index,
+      };
 
-    setterDestination((prev) => [...prev, updateTask]);
-    mutate(updateTask);
+      mutate(updatedTask);
+      return;
+    }
+    if (destination.droppableId !== source.droppableId) {
+      const [activeState, settersActiveState] =
+        statusStates[source.droppableId];
+      const [destinationState, setterDestination] =
+        statusStates[destination.droppableId];
+
+      const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
+
+      const updateTask = {
+        ...moveAbleTask[0],
+        status: destination.droppableId,
+        currentIndex: destination.index,
+      };
+      updateTaskWithStatus(updateTask);
+      console.log(updateTask, ":::Updated", moveAbleTask[0], ":::moveable");
+      return;
+    }
+
+    // const [activeState, settersActiveState] = statusStates[source.droppableId];
+    // const [destinationState, setterDestination] =
+    //   statusStates[destination.droppableId];
+
+    // const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
+
+    // const updateTask = { ...moveAbleTask[0], status: destination.droppableId };
+
+    // setterDestination((prev) => [...prev, updateTask]);
+    // mutate(updateTask);
     dispatch(isUpdatingTask(true));
   };
 

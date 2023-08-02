@@ -87,6 +87,30 @@ const useUpdateTaskQuery = () => {
   });
 };
 
+/**
+ *
+ * @returns Update request drag and drop
+ */
+
+const useUpdateTaskQueryWithStatus = () => {
+  let state;
+  return useMutation({
+    mutationFn: (payload) => {
+      const { status } = payload;
+      state = status;
+      return customAxiosRequestForPost("/task/status", "put", payload);
+    },
+    onSuccess: () => {
+      toast.success("Task updated successfully!");
+      queryClient.invalidateQueries(state);
+      queryClient.invalidateQueries(["charts-data"]);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.error);
+    },
+  });
+};
+
 /***
  *
  * @returns Delete Task
@@ -114,4 +138,5 @@ export {
   useGetTaskAccordingToStatus,
   useDeleteTask,
   useUpdateTaskQuery,
+  useUpdateTaskQueryWithStatus,
 };

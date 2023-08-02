@@ -188,12 +188,12 @@ const TaskBoxContainer = ({ name, data }) => {
                   className="textArea"
                 />
               ))}
-              {data?.map((item, index) => {
+              {data?.map((item) => {
                 return (
                   <Draggable
                     key={item._id}
                     draggableId={item._id}
-                    index={index}
+                    index={item.index}
                   >
                     {(provided) => (
                       <Box
