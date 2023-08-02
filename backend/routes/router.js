@@ -14,6 +14,7 @@ const {
   deleteTaskApi,
   getAllTaskFromAllProjectAccordingToStatus,
   updateTaskWithStatus,
+  updateTaskWithDetail,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
