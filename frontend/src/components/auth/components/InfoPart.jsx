@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box, Typography, IconButton } from "@mui/material";
-import { LightLogo } from "assets/assets";
+import { LightLogo } from "../../../assets/assets";
 
 const InfoPart = () => {
   return (

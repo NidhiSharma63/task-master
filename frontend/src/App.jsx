@@ -7,6 +7,7 @@ import {
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import { Layout } from "./components/Layout/Layout";
+
 import { getValueFromLS } from "./utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "./constant/Misc";
 import NotFound from "./pages/error/NotFound";

@@ -1,13 +1,13 @@
 import { Box, Typography, Stack, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import colors from "theme/variables";
-import useChartsQuery from "hook/useChartsQuery";
-import { statesOfTaskManager } from "constant/Misc";
+import colors from "../../../theme/variables";
+import useChartsQuery from "../../../hook/useChartsQuery";
+import { statesOfTaskManager } from "../../../constant/Misc";
 import { ClipLoader } from "react-spinners";
-import CreateTaskPopup from "components/home/components/CreateTaskPopup";
+import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
 import { useDispatch } from "react-redux";
-import { isCreateTaskModalOpen } from "redux/boolean/booleanSlice";
-import { activeTask } from "redux/task/taskSlice";
+import { isCreateTaskModalOpen } from "../../../redux/boolean/booleanSlice";
+import { activeTask } from "../../../redux/task/taskSlice";
 
 const TaskComponent = ({ backgroundColors, projectData }) => {
   const [activeLink, setActiveLink] = useState(null);

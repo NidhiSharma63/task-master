@@ -1,13 +1,13 @@
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import colors from "theme/variables";
-import { isProjectNameModalOpen } from "redux/boolean/booleanSlice";
-import ProjectNameModal from "components/Layout/components/ProjectNameModal";
+import colors from "../../../theme/variables";
+import { isProjectNameModalOpen } from "../../../redux/boolean/booleanSlice";
+import ProjectNameModal from "../../../components/Layout/components/ProjectNameModal";
 import { useNavigate } from "react-router-dom";
-import { activeProject } from "redux/projects/projectSlice";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "constant/Misc";
-import { setValueToLs } from "utils/localstorage";
+import { activeProject } from "../../../redux/projects/projectSlice";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../../constant/Misc";
+import { setValueToLs } from "../../../utils/localstorage";
 
 const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   const navigate = useNavigate();

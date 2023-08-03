@@ -16,27 +16,30 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "constant/sidebar";
+import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "../../constant/sidebar";
 import { useSelector, useDispatch } from "react-redux";
-import { usersDataInStore } from "redux/auth/userSlice";
-import { getUserFirstName } from "utils/getUserFirstName";
-import useLogoutQuery from "hook/useLogoutQuery";
+import { usersDataInStore } from "../../redux/auth/userSlice";
+import { getUserFirstName } from "../../utils/getUserFirstName";
+import useLogoutQuery from "../../hook/useLogoutQuery";
 import {
   useGetProjectQuery,
   useDeleteProjectQuery,
-} from "hook/useProjectQuery";
+} from "../../hook/useProjectQuery";
 import {
   isProjectNameModalOpen,
   isUpdatingTask,
-} from "redux/boolean/booleanSlice";
+} from "../../redux/boolean/booleanSlice";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { activeProject, projectDataInStore } from "redux/projects/projectSlice";
-import { setValueToLs } from "utils/localstorage";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "constant/Misc";
-import { queryKeyForTask } from "constant/queryKey";
+import {
+  activeProject,
+  projectDataInStore,
+} from "../../redux/projects/projectSlice";
+import { setValueToLs } from "../../utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../constant/Misc";
+import { queryKeyForTask } from "../../constant/queryKey";
 
-import { queryClient } from "index";
+import { queryClient } from "../../index";
 
 const drawerWidth = 180;
 

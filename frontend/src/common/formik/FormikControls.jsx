@@ -1,8 +1,8 @@
 import React from "react";
-import FormikInput from "common/formik/FormikInput";
-import FormikDatePicker from "common/formik/FormikDatePicker";
-import FormikTextArea from "common/formik/FormikTextArea";
-import FormikSelect from "common/formik/FormikSelect";
+import FormikInput from "./FormikInput";
+import FormikDatePicker from "./FormikDatePicker";
+import FormikTextArea from "./FormikTextArea";
+import FormikSelect from "./FormikSelect";
 
 const FormikControls = (props) => {
   const { control, ...rest } = props;

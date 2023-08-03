@@ -6,17 +6,17 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import { Logo } from "assets/assets";
-import colors from "theme/variables";
-import InfoPart from "components/auth/components/InfoPart";
-import FormikControls from "common/formik/FormikControls";
+import { Logo } from "../../assets/assets";
+import colors from "../../theme/variables";
+import InfoPart from "../../components/auth/components/InfoPart";
+import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
-import { loginSchema } from "constant/validation";
+import { loginSchema } from "../../constant/validation";
 import { useEffect } from "react";
-import { getValueFromLS } from "utils/localstorage";
-import { KEY_FOR_STORING_TOKEN } from "constant/Misc";
+import { getValueFromLS } from "../../utils/localstorage";
+import { KEY_FOR_STORING_TOKEN } from "../../constant/Misc";
 import { useNavigate } from "react-router-dom";
-import useLoginQuery from "hook/useLoginQuery";
+import useLoginQuery from "../../hook/useLoginQuery";
 
 const Login = () => {
   const navigate = useNavigate();

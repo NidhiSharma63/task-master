@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
-import { useGetTaskAccordingToStatus } from "hook/useTaskQuery";
-import BoardDrawer from "components/projectPage/components/BoardDrawer";
-import { statesOfTaskManager } from "constant/Misc";
+import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
+import BoardDrawer from "../../components/projectPage/components/BoardDrawer";
+import { statesOfTaskManager } from "../../constant/Misc";
 import { DragDropContext } from "react-beautiful-dnd";
 import {
   useUpdateTaskQuery,
   useUpdateTaskQueryWithStatus,
-} from "hook/useTaskQuery";
+} from "../../hook/useTaskQuery";
 import { useSelector, useDispatch } from "react-redux";
-import { booleanDataInStore, isUpdatingTask } from "redux/boolean/booleanSlice";
-import { useGetProjectQuery } from "hook/useProjectQuery";
+import {
+  booleanDataInStore,
+  isUpdatingTask,
+} from "../../redux/boolean/booleanSlice";
+import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useNavigate } from "react-router-dom";
-import { isTaskDisplayed } from "redux/boolean/booleanSlice";
+import { isTaskDisplayed } from "../../redux/boolean/booleanSlice";
 
 const Board = () => {
   const dispatch = useDispatch();

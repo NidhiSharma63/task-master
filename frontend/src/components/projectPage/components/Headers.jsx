@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
-import { projectDataInStore } from "redux/projects/projectSlice";
+import { projectDataInStore } from "../../../redux/projects/projectSlice";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import colors from "theme/variables";
+import colors from "../../../theme/variables";
 
 const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
