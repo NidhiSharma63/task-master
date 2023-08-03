@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { KEY_FOR_STORING_USER_DETAILS } from "constant/Misc";
-import { KEY_FOR_STORING_USER_DETAILS } from "../../constant/Misc";
+import { KEY_FOR_STORING_USER_DETAILS } from "constant/Misc";
 import { getValueFromLS } from "utils/localstorage";
 
 const userSlice = createSlice({
