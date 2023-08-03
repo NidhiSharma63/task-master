@@ -33,6 +33,7 @@ const Board = () => {
       navigate("/Dashboard");
     }
   }, [projectData]);
+
   const statusStates = {
     Todo: [inTodo, setInTodo],
     "In progress": [inProgress, setInProgress],
