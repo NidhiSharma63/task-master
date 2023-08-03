@@ -35,6 +35,11 @@ router.route("/projects").delete(checkAuthorization, deleteProjectApi);
 /**
  * Task Route
  */
+
+const testing = (_req, res) => {
+  res.json({ msg: "Working fine" });
+};
+router.route("/abc").post(testing);
 router.route("/task").post(checkAuthorization, createTaskApi);
 router.route("/task").get(checkAuthorization, getAllTaskAccordingToStatusApi);
 router.route("/task").put(checkAuthorization, updateTaskApi);
