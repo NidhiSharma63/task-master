@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./theme/index";
 import "./styles/index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import store from "src/store";
+import store from "./store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
