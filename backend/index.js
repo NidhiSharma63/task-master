@@ -25,7 +25,7 @@ const start = async () => {
   try {
     await connectDB(process.env.MONGOOSE_URI);
     server.listen(
-      process.env.PORT,
+      process.env.PORT || 3000,
       console.log("running at port", process.env.PORT)
     );
   } catch (error) {
