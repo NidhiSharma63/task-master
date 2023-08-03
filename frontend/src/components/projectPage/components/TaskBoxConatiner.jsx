@@ -1,18 +1,18 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useRef, useState } from "react";
-import { useAddTaskQuery } from "src/hook/useTaskQuery";
-import colors from "src/theme/variables";
+import { useAddTaskQuery } from "./hook/useTaskQuery";
+import colors from "./theme/variables";
 import { useDispatch } from "react-redux";
-import { activeTask } from "src/redux/task/taskSlice";
+import { activeTask } from "./redux/task/taskSlice";
 import {
   booleanDataInStore,
   isBoardDrawerOpen,
-} from "src/redux/boolean/booleanSlice";
+} from "./redux/boolean/booleanSlice";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { lastIndexOfTask } from "src/redux/task/taskSlice";
+import { projectDataInStore } from "./redux/projects/projectSlice";
+import { lastIndexOfTask } from "./redux/task/taskSlice";
 
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();

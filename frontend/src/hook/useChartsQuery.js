@@ -1,4 +1,4 @@
-import { customAxiosRequestForGet } from "src/utils/axiosRequest";
+import { customAxiosRequestForGet } from "./utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 

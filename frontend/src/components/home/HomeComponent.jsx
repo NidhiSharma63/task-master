@@ -1,10 +1,10 @@
-import { getUserFirstName } from "src/utils/getUserFirstName";
-import { getCurrentDate } from "src/utils/getCurrentDate";
-import TaskComponent from "src/components/home/components/TaskComponent";
+import { getUserFirstName } from "./utils/getUserFirstName";
+import { getCurrentDate } from "./utils/getCurrentDate";
+import TaskComponent from "./components/home/components/TaskComponent";
 import { Box, Typography } from "@mui/material";
-import ProjectComponent from "src/components/home/components/ProjectComponent";
-import { useGetProjectQuery } from "src/hook/useProjectQuery";
-import { generateBackgroundColors } from "src/utils/generateRandomColor";
+import ProjectComponent from "./components/home/components/ProjectComponent";
+import { useGetProjectQuery } from "./hook/useProjectQuery";
+import { generateBackgroundColors } from "./utils/generateRandomColor";
 import { useMemo } from "react";
 
 const HomeComponent = () => {

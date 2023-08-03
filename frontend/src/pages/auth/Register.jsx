@@ -6,13 +6,13 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import { Logo } from "src/assets/assets";
-import colors from "src/theme/variables";
-import InfoPart from "src/components/auth/components/InfoPart";
+import { Logo } from "./assets/assets";
+import colors from "./theme/variables";
+import InfoPart from "./components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
-import { registerSchema } from "src/constant/validation";
-import FormikControls from "src/common/formik/FormikControls";
-import userRegisterQuery from "src/hook/useRegsiterQuery";
+import { registerSchema } from "./constant/validation";
+import FormikControls from "./common/formik/FormikControls";
+import userRegisterQuery from "./hook/useRegsiterQuery";
 
 const Register = () => {
   const { mutate } = userRegisterQuery();

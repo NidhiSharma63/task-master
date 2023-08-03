@@ -1,6 +1,6 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { Field } from "formik";
-import TitleCase from "src/utils/TextTransformer";
+import TitleCase from "./utils/TextTransformer";
 
 const FormikTextArea = (props) => {
   const { name, ...rest } = props;

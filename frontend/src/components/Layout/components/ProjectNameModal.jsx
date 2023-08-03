@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { booleanDataInStore } from "src/redux/boolean/booleanSlice";
-import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
-import colors from "src/theme/variables";
-import { usePostProjectQuery } from "src/hook/useProjectQuery";
+import { booleanDataInStore } from "./redux/boolean/booleanSlice";
+import { isProjectNameModalOpen } from "./redux/boolean/booleanSlice";
+import colors from "./theme/variables";
+import { usePostProjectQuery } from "./hook/useProjectQuery";
 import DotLoader from "react-spinners/DotLoader";
 
 const ProjectNameModal = () => {

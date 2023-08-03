@@ -1,8 +1,8 @@
 import axios from "axios";
 import { AxiosInstanceConfig } from "../constant/axiosInstance";
 import { BASE_URL, KEY_FOR_STORING_TOKEN } from "../constant/Misc";
-import { getValueFromLS } from "src/utils/localstorage";
-import { KEY_FOR_STORING_USER_DETAILS } from "src/constant/Misc";
+import { getValueFromLS } from "./utils/localstorage";
+import { KEY_FOR_STORING_USER_DETAILS } from "./constant/Misc";
 
 // defining axios instance
 const axiosInstance = axios.create({

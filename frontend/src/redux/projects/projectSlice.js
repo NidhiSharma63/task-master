@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
-import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "./constant/Misc";
+import { getValueFromLS } from "./utils/localstorage";
 
 const projectSlice = createSlice({
   name: "project",

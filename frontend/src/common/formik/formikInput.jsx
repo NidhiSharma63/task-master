@@ -1,7 +1,7 @@
 import { Field } from "formik";
 import React from "react";
 import { TextField, Typography, Box } from "@mui/material";
-import { TitleCase } from "src/utils/TextTransformer";
+import { TitleCase } from "./utils/TextTransformer";
 
 /**
  * Function that returns custom input component

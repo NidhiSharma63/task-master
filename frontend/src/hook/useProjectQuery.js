@@ -2,11 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import {
   customAxiosRequestForPost,
   customAxiosRequestForGet,
-} from "src/utils/axiosRequest";
+} from "./utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "src";
-import { queryKeyForTask } from "src/constant/queryKey";
+import { queryClient } from ".";
+import { queryKeyForTask } from "./constant/queryKey";
 
 // post
 const usePostProjectQuery = () => {

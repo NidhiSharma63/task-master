@@ -2,14 +2,14 @@ import { useMutation } from "@tanstack/react-query";
 import {
   customAxiosRequestForPost,
   customAxiosRequestForGet,
-} from "src/utils/axiosRequest";
+} from "./utils/axiosRequest";
 import { toast } from "react-toastify";
-import { queryClient } from "src";
+import { queryClient } from ".";
 import { useQueries } from "@tanstack/react-query";
-import { statesOfTaskManager } from "src/constant/Misc";
+import { statesOfTaskManager } from "./constant/Misc";
 import { useSelector } from "react-redux";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { queryKeyForTask } from "src/constant/queryKey";
+import { projectDataInStore } from "./redux/projects/projectSlice";
+import { queryKeyForTask } from "./constant/queryKey";
 
 /**
  *

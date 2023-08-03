@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Box, Divider, Typography } from "@mui/material";
-import TitleCase from "src/utils/TextTransformer";
-import InsightsCharts from "src/components/insights/InsightsCharts";
-import useChartsQuery from "src/hook/useChartsQuery";
+import TitleCase from "./utils/TextTransformer";
+import InsightsCharts from "./components/insights/InsightsCharts";
+import useChartsQuery from "./hook/useChartsQuery";
 
 const Insights = () => {
   const { status } = useParams();
