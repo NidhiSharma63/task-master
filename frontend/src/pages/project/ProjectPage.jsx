@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import ProjectNameModal from "./components/Layout/components/ProjectNameModal";
+import ProjectNameModal from "components/Layout/components/ProjectNameModal";
 import { Box, Typography, Button } from "@mui/material";
-import Headers from "./components/projectPage/components/Headers";
+import Headers from "components/projectPage/components/Headers";
 import { Outlet } from "react-router-dom";
-import { useGetProjectQuery } from "./hook/useProjectQuery";
+import { useGetProjectQuery } from "hook/useProjectQuery";
 import { useDispatch } from "react-redux";
-import { isProjectNameModalOpen } from "./redux/boolean/booleanSlice";
+import { isProjectNameModalOpen } from "redux/boolean/booleanSlice";
 
 const ProjectPage = () => {
   const { data } = useGetProjectQuery();

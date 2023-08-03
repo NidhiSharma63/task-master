@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { customAxiosRequestForPost } from "./utils/axiosRequest";
+import { customAxiosRequestForPost } from "utils/axiosRequest";
 import { useNavigate } from "react-router-dom";
-import { setValueToLs } from "./utils/localstorage";
+import { setValueToLs } from "utils/localstorage";
 import {
   KEY_FOR_STORING_TOKEN,
   KEY_FOR_STORING_USER_DETAILS,
-} from "./constant/Misc";
+} from "constant/Misc";
 import { toast } from "react-toastify";
 
 const useLoginQuery = () => {

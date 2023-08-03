@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { capitalizeFirstLetter } from "./utils/TextTransformer";
+import { capitalizeFirstLetter } from "utils/TextTransformer";
 import { ClipLoader } from "react-spinners";
-import { generateBackgroundColors } from "./utils/generateRandomColor";
+import { generateBackgroundColors } from "utils/generateRandomColor";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

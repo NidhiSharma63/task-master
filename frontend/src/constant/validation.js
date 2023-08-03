@@ -1,5 +1,5 @@
-import { ref, object, string, date } from "yup";
-import { regexToTargetAllBlankSpaces } from "./constant/regex";
+import { ref, object, string } from "yup";
+import { regexToTargetAllBlankSpaces } from "constant/regex";
 
 export const loginSchema = object().shape({
   email: string().required("Enter your email").email("Invalid email format"),
