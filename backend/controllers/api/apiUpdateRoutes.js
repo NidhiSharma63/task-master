@@ -1,6 +1,6 @@
 const Task = require("../../models/taskSchema");
 
-const updateTaskApi = async (req, res) => {
+const updateTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
     const {
@@ -53,11 +53,11 @@ const updateTaskApi = async (req, res) => {
     await taskObj.save();
     res.json({ data: taskObj });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    next(error);
   }
 };
 
-const updateTaskWithStatus = async (req, res) => {
+const updateTaskWithStatus = async (req, res, next) => {
   try {
     const { status, currentIndex, projectName, userId, _id } = req.body;
     if (currentIndex === undefined || status === undefined) {
@@ -89,11 +89,11 @@ const updateTaskWithStatus = async (req, res) => {
 
     res.json({ data: taskObj });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    next(error);
   }
 };
 
-const updateTaskWithDetail = async (req, res) => {
+const updateTaskWithDetail = async (req, res, next) => {
   try {
     const taskBody = req.body;
     const { _id, userId } = taskBody;
@@ -110,7 +110,7 @@ const updateTaskWithDetail = async (req, res) => {
     await taskObj.save();
     res.json({ data: taskObj });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    next(error);
   }
 };
 
