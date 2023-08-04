@@ -30,7 +30,8 @@ const Register = () => {
     <Grid container sx={{ height: "100vh" }}>
       <Grid
         item
-        xs={6}
+        xs={12}
+        sm={6}
         sx={{
           display: "flex",
           flexDirection: "column",
