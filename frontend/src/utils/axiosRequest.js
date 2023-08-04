@@ -43,6 +43,7 @@ const customAxiosRequestForGet = async (url, params) => {
       url,
       method: "get",
       params: paramsToPass,
+      timeout: 10000,
     });
     return response;
   } catch (error) {
@@ -63,6 +64,7 @@ const customAxiosRequestForPost = async (url, method = "post", payload) => {
       url,
       method,
       data: updatedPayload,
+      timeout: 10000,
     });
     return response;
   } catch (error) {
