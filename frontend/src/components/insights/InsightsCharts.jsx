@@ -5,6 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import { capitalizeFirstLetter } from "../../utils/TextTransformer";
 import { ClipLoader } from "react-spinners";
 import { generateBackgroundColors } from "../../utils/generateRandomColor";
+import colors from "../../theme/variables";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,7 +13,7 @@ const InsightsCharts = ({ data, isLoading, status }) => {
   const [allProjects, setAllProjects] = useState([]);
   const [allTask, setAllTasks] = useState([]);
 
-  const colors = generateBackgroundColors(allProjects);
+  const backGroundColors = generateBackgroundColors(allProjects);
 
   useEffect(() => {
     let tempData = [];
@@ -63,7 +64,7 @@ const InsightsCharts = ({ data, isLoading, status }) => {
       {
         label: "# Tasks",
         data: allTask,
-        backgroundColor: colors,
+        backgroundColor: backGroundColors,
         borderWidth: 1,
       },
     ],
@@ -126,61 +127,91 @@ const InsightsCharts = ({ data, isLoading, status }) => {
           display: "flex",
           flexDirection: "column",
           gap: "1.5rem",
-          padding: "2rem 3rem",
+          position: "relative",
+          padding: "2rem",
           borderRadius: ".3rem",
           backgroundColor: (theme) => theme.palette.primary.main,
           boxShadow: "0px 0px 32px -4px #00000054",
           height: { md: "calc(100vh - 200px)", xs: "200px" },
-          overflowY: "scroll",
+          // overflowY: "scroll",
+          maxWidth: "40rem",
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            // border: "1px solid red",
+            position: "fixed",
+            maxWidth: "40rem",
+          }}
+        >
           <Typography sx={{ color: "white" }} variant="h5">
             Tasks List
           </Typography>
         </Box>
-        {allProjects.map((item, i) => {
-          return (
-            <Box
-              key={i}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                gap: ".7rem",
-                // border: "1px solid red",
-                minWidth: "15rem",
-                padding: "0.5rem",
-                borderRadius: ".3rem",
-                backgroundColor: "white",
-              }}
-            >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            height: "100%",
+            // border: "1px solid green",
+            mt: 7,
+            overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+              width: "4px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: `${colors.primaryColor}`,
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: `${colors.primaryColor}`,
+              borderRadius: "4px",
+            },
+          }}
+        >
+          {allProjects.map((item, i) => {
+            return (
               <Box
-                sx={{
-                  backgroundColor: colors[i],
-                  width: "2rem",
-                  height: "1.7rem",
-                  borderRadius: "50%",
-                  boxShadow: "0px 0px 32px -4px #00000054",
-                }}
-              ></Box>
-              <Box
+                key={i}
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
                   alignItems: "center",
-                  padding: "0rem .4rem",
+                  justifyContent: "flex-start",
+                  gap: ".7rem",
+                  // border: "1px solid red",
+                  minWidth: "15rem",
+                  padding: "0.5rem",
+                  borderRadius: ".3rem",
+                  backgroundColor: "white",
                 }}
               >
-                <Typography sx={{ fontWeight: 600 }}>
-                  {capitalizeFirstLetter(item)}
-                </Typography>
-                <Typography sx={{ fontWeight: 600 }}>{allTask[i]}</Typography>
+                <Box
+                  sx={{
+                    backgroundColor: colors[i],
+                    width: "2rem",
+                    height: "1.7rem",
+                    borderRadius: "50%",
+                    boxShadow: "0px 0px 32px -4px #00000054",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    alignItems: "center",
+                    padding: "0rem .4rem",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 600 }}>
+                    {capitalizeFirstLetter(item)}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 600 }}>{allTask[i]}</Typography>
+                </Box>
               </Box>
-            </Box>
-          );
-        })}
+            );
+          })}
+        </Box>
       </Box>
     </Box>
   );
