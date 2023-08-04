@@ -9,3 +9,9 @@ export const getUserFirstName = (email) => {
     getValueFromLS(KEY_FOR_STORING_USER_DETAILS).email.split("@")[0]
   );
 };
+
+export const getUserFirstNameFirstLetter = (email) => {
+  return capitalizeFirstLetter(
+    getValueFromLS(KEY_FOR_STORING_USER_DETAILS).email.split("@")[0][0]
+  );
+};

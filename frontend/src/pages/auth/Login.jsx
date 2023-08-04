@@ -42,7 +42,8 @@ const Login = () => {
     <Grid container sx={{ height: "100vh" }}>
       <Grid
         item
-        xs={6}
+        xs={12}
+        sm={6}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -116,7 +117,7 @@ const Login = () => {
                     type="submit"
                     sx={{
                       backgroundColor: "primary.main",
-                      color: "text.secondary",
+                      color: "white",
                       "&:hover": {
                         backgroundColor: colors.primaryHoverColor,
                       },

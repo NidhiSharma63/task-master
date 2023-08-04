@@ -19,7 +19,7 @@ import {
 import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "../../constant/sidebar";
 import { useSelector, useDispatch } from "react-redux";
 import { usersDataInStore } from "../../redux/auth/userSlice";
-import { getUserFirstName } from "../../utils/getUserFirstName";
+import { getUserFirstNameFirstLetter } from "../../utils/getUserFirstName";
 import useLogoutQuery from "../../hook/useLogoutQuery";
 import {
   useGetProjectQuery,
@@ -75,7 +75,7 @@ export const Layout = () => {
   }, [data]);
 
   useEffect(() => {
-    setUserName(getUserFirstName(user_email));
+    setUserName(getUserFirstNameFirstLetter(user_email));
   }, [user_email]);
 
   const handleLogout = () => {

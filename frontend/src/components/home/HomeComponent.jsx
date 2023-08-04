@@ -21,13 +21,15 @@ const HomeComponent = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        mt: 5,
+        // mt: 5,
         gap: 5,
+        height: "calc(100vh - 80px)",
       }}
     >
       <Box
         sx={{
           textAlign: "center",
+          // mt: 1,
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: 600 }}>
@@ -40,6 +42,7 @@ const HomeComponent = () => {
       <Box
         sx={{
           width: "90%",
+          height: "calc(100% - 130px)",
           display: "flex",
           gap: 4,
         }}

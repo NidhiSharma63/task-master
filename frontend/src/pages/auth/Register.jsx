@@ -12,10 +12,10 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
-import userRegisterQuery from "../../hook/useRegsiterQuery";
+import useRegisterQuery from "../../hook/useRegsiterQuery";
 
 const Register = () => {
-  const { mutate } = userRegisterQuery();
+  const { mutate } = useRegisterQuery();
   const initialValues = {
     email: "",
     password: "",
@@ -30,7 +30,8 @@ const Register = () => {
     <Grid container sx={{ height: "100vh" }}>
       <Grid
         item
-        xs={6}
+        xs={12}
+        sm={6}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -60,7 +61,7 @@ const Register = () => {
             // border: "1px solid red",
             width: "70%",
             margin: "auto",
-            marginTop: "5rem",
+            marginTop: "2rem",
           }}
         >
           <Box>
@@ -104,7 +105,7 @@ const Register = () => {
                     type="submit"
                     sx={{
                       backgroundColor: "primary.main",
-                      color: "text.secondary",
+                      color: "white",
                       "&:hover": {
                         backgroundColor: colors.primaryHoverColor,
                       },
@@ -121,7 +122,7 @@ const Register = () => {
               display: "flex",
               justifyContent: "center",
               width: "100%",
-              mt: 4,
+              mt: 2,
             }}
           >
             <Typography>

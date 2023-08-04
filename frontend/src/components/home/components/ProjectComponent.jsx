@@ -30,6 +30,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         border: "1px solid",
         borderColor: (theme) => theme.palette.grey[400],
         borderRadius: "0.3rem",
+        height: "100%",
       }}
     >
       <Box
@@ -56,7 +57,13 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         </Button>
       </Box>
       <Divider />
-      <Box sx={{ padding: "0.4rem" }}>
+      <Box
+        sx={{
+          padding: "0.4rem",
+          height: "calc(100% - 60px)",
+          overflowY: "scroll",
+        }}
+      >
         {isLoading ? (
           <Box
             sx={{

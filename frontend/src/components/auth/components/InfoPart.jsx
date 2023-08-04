@@ -6,28 +6,30 @@ const InfoPart = () => {
   return (
     <Grid
       item
-      xs={6}
+      sm={6}
       sx={{
         bgcolor: "primary.main",
-        display: "flex",
+        display: { xs: "none", sm: "flex" },
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
-        gap: "3rem",
+        gap: { sm: "2rem", md: "3rem" },
         height: "100%",
       }}
     >
-      <IconButton>
+      <IconButton sx={{ width: { sm: "5rem", md: "10rem" } }}>
         <LightLogo />
       </IconButton>
       <Box
         sx={{
           width: "80%",
           textAlign: "center",
-          color: (theme) => theme.palette.text.secondary,
+          color: "white",
         }}
       >
-        <Typography sx={{ fontSize: "1.2rem" }}>
+        <Typography
+          sx={{ fontSize: { sm: "1rem", md: "1.2rem" }, color: "white" }}
+        >
           TaskManager is a comprehensive task management solution designed to
           streamline and enhance productivity in your organization. With its
           user-friendly interface and powerful features, TaskManager empowers
@@ -63,8 +65,8 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
-              fontSize: ".9rem",
+              color: "white",
+              fontSize: { sm: ".8rem", md: ".9rem" },
               width: "100%",
             }}
           >
@@ -92,8 +94,8 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
-              fontSize: ".9rem",
+              color: "white",
+              fontSize: { sm: ".8rem", md: ".9rem" },
               width: "100%",
             }}
           >
@@ -121,8 +123,8 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
-              fontSize: ".9rem",
+              color: "white",
+              fontSize: { sm: ".8rem", md: ".9rem" },
               width: "100%",
             }}
           >
