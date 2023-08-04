@@ -133,6 +133,7 @@ const Board = () => {
         position: "relative",
         height: "calc(100vh - 140px)",
         marginTop: 8,
+        width: "1115px",
         pl: 3,
       }}
     >
