@@ -187,7 +187,7 @@ const InsightsCharts = ({ data, isLoading, status }) => {
               >
                 <Box
                   sx={{
-                    backgroundColor: colors[i],
+                    backgroundColor: backGroundColors[i],
                     width: "2rem",
                     height: "1.7rem",
                     borderRadius: "50%",
