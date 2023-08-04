@@ -60,7 +60,7 @@ const Register = () => {
             // border: "1px solid red",
             width: "70%",
             margin: "auto",
-            marginTop: "5rem",
+            marginTop: "2rem",
           }}
         >
           <Box>
@@ -121,7 +121,7 @@ const Register = () => {
               display: "flex",
               justifyContent: "center",
               width: "100%",
-              mt: 4,
+              mt: 2,
             }}
           >
             <Typography>
