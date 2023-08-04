@@ -49,7 +49,7 @@ const getAllTaskAccordingToStatusApi = async (req, res, next) => {
  *
  */
 
-const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
+const getAllTaskFromAllProjectAccordingToStatus = async (req, res, next) => {
   try {
     const { status, userId } = req.query;
     if (!status) {
