@@ -4,6 +4,7 @@ const express = require("express");
 const server = express();
 const cors = require("cors");
 const router = require("./routes/router");
+const errorHandle = require("./middleware/errorHanlde");
 
 // use cors
 server.use(cors());
@@ -20,13 +21,16 @@ server.use("/api/v1", router);
 // require connectDB from db/connect
 const connectDB = require("./db/connect");
 
+// handle error
+server.use(errorHandle);
+
 // creating a start function that will connect to database and run the server
 const start = async () => {
   try {
     await connectDB(process.env.MONGOOSE_URI);
     server.listen(
-      process.env.PORT || 3000,
-      console.log("running at port", process.env.PORT)
+      process.env.PORT ?? 3000,
+      console.log("running at port", process.env.PORT ?? 3000)
     );
   } catch (error) {
     console.log("::error::", error);
