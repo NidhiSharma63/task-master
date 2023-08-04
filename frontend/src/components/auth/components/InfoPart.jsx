@@ -24,10 +24,10 @@ const InfoPart = () => {
         sx={{
           width: "80%",
           textAlign: "center",
-          color: (theme) => theme.palette.text.secondary,
+          color: "white",
         }}
       >
-        <Typography sx={{ fontSize: "1.2rem" }}>
+        <Typography sx={{ fontSize: "1.2rem", color: "white" }}>
           TaskManager is a comprehensive task management solution designed to
           streamline and enhance productivity in your organization. With its
           user-friendly interface and powerful features, TaskManager empowers
@@ -63,7 +63,7 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
+              color: "white",
               fontSize: ".9rem",
               width: "100%",
             }}
@@ -92,7 +92,7 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
+              color: "white",
               fontSize: ".9rem",
               width: "100%",
             }}
@@ -121,7 +121,7 @@ const InfoPart = () => {
           />
           <Typography
             sx={{
-              color: (theme) => theme.palette.text.secondary,
+              color: "white",
               fontSize: ".9rem",
               width: "100%",
             }}
