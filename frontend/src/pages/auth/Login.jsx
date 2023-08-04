@@ -117,7 +117,7 @@ const Login = () => {
                     type="submit"
                     sx={{
                       backgroundColor: "primary.main",
-                      color: "text.secondary",
+                      color: "white",
                       "&:hover": {
                         backgroundColor: colors.primaryHoverColor,
                       },
