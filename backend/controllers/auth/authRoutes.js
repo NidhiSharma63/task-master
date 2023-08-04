@@ -6,13 +6,8 @@ const server = express();
 const bcrypt = require("bcrypt");
 const User = require("../../models/userSchema");
 
-// protected route
-const getAllUserTodo = (_req, res) => {
-  res.send("Your All Todo Is Here");
-};
-
 // register
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
   try {
     const { email, password, confirmPassword } = req.body;
 
@@ -44,12 +39,12 @@ const registerUser = async (req, res) => {
     await user.save();
     res.status(200).json({ user, token });
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    next(error);
   }
 };
 
 // login user
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -79,12 +74,12 @@ const loginUser = async (req, res) => {
       res.status(201).json({ user, token });
     }
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    next(error);
   }
 };
 
 // logout page
-const logout = async (req, res) => {
+const logout = async (req, res, next) => {
   try {
     const email = req?.body?.email;
     const getUserFromDB = await User.findOne({ email });
@@ -95,12 +90,11 @@ const logout = async (req, res) => {
     await getUserFromDB.save();
     res.status(202).json({ message: "successfully logged out" });
   } catch (error) {
-    res.status(500).json({ error: "An error occured please try again" });
+    next(error);
   }
 };
 
 module.exports = {
-  getAllUserTodo,
   registerUser,
   loginUser,
   logout,

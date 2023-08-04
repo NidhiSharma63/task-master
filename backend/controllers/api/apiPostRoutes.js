@@ -1,12 +1,12 @@
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 
-const createProjectApi = async (req, res) => {
+const createProjectApi = async (req, res, next) => {
   try {
     const { userId, name } = req.body;
 
-    if (!name.trim()) {
-      res.status(400).json({ error: "Project name is required" });
+    if (!name) {
+      throw new Error("Project name is required");
     }
 
     // check if user added the project already or not
@@ -23,14 +23,17 @@ const createProjectApi = async (req, res) => {
     await project.save();
     res.status(201).json({ data: { userId, name } });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
-const createTaskApi = async (req, res) => {
+const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
 
     const { index } = taskBody;
+    if (!index) {
+      throw new Error("Index is not present");
+    }
     // Save the new task
     const taskObj = new Task({
       ...taskBody,
@@ -53,7 +56,7 @@ const createTaskApi = async (req, res) => {
     await taskObj.save();
     res.json({ data: taskObj });
   } catch (error) {
-    res.status(500).json({ msg: "It's me not you" });
+    next(error);
   }
 };
 module.exports = {

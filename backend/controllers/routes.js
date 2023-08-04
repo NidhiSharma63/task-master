@@ -1,11 +1,6 @@
 // Exporting all routes here
 
-const {
-  getAllUserTodo,
-  registerUser,
-  loginUser,
-  logout,
-} = require("./auth/authRoutes");
+const { registerUser, loginUser, logout } = require("./auth/authRoutes");
 
 const { createProjectApi, createTaskApi } = require("./api/apiPostRoutes");
 const {
@@ -21,7 +16,6 @@ const {
 } = require("./api/apiUpdateRoutes");
 
 module.exports = {
-  getAllUserTodo,
   registerUser,
   loginUser,
   logout,

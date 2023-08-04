@@ -4,25 +4,21 @@ const Task = require("../../models/taskSchema");
 /**
  * Get project Api
  * */
-const getProjectApi = async (req, res) => {
+const getProjectApi = async (req, res, next) => {
   try {
     const { userId } = req.query;
 
-    if (!userId) {
-      res.status(400).json({ error: "User id is required" });
-    }
     const project = await Project.find({ userId });
-
     res.status(201).json({ projects: project });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 
 /**
  * Get all task api
  */
-const getAllTaskAccordingToStatusApi = async (req, res) => {
+const getAllTaskAccordingToStatusApi = async (req, res, next) => {
   try {
     const { userId, status, projectName } = req.query;
 
@@ -44,7 +40,7 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
 
     res.status(200).json({ data: allTask, status: status });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    next(error);
   }
 };
 
@@ -53,7 +49,7 @@ const getAllTaskAccordingToStatusApi = async (req, res) => {
  *
  */
 
-const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
+const getAllTaskFromAllProjectAccordingToStatus = async (req, res, next) => {
   try {
     const { status, userId } = req.query;
     if (!status) {
@@ -73,7 +69,7 @@ const getAllTaskFromAllProjectAccordingToStatus = async (req, res) => {
 
     res.status(200).json({ data: tasks });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    next(error);
   }
 };
 
