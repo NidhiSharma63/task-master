@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import { Box, Divider, Typography } from "@mui/material";
 import TitleCase from "../../utils/TextTransformer";
 import InsightsCharts from "../../components/insights/InsightsCharts";
-import useChartsQuery from "../../hook/useChartsQuery";
+import useAllTaskAccordingToSatusQuery from "../../hook/useAllTaskAccordingToSatusQuery";
 
 const Insights = () => {
   const { status } = useParams();
-  const { useGetTaskQuery } = useChartsQuery(status);
+  const { useGetTaskQuery } = useAllTaskAccordingToSatusQuery(status);
   const { data, isLoading } = useGetTaskQuery();
 
   return (

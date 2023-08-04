@@ -2,11 +2,12 @@ import { customAxiosRequestForGet } from "../utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 
-const useChartsQuery = (status) => {
+const useAllTaskAccordingToSatusQuery = (status) => {
   const useGetTaskQuery = () => {
     return useQuery({
       queryKey: ["charts-data", status],
-      queryFn: () => customAxiosRequestForGet("/charts/tasks", { status }),
+      queryFn: () =>
+        customAxiosRequestForGet("/project/status/alltasks", { status }),
       onError: (error) => {
         toast.error(error?.response?.data?.error);
       },
@@ -16,4 +17,4 @@ const useChartsQuery = (status) => {
   return { useGetTaskQuery };
 };
 
-export default useChartsQuery;
+export default useAllTaskAccordingToSatusQuery;

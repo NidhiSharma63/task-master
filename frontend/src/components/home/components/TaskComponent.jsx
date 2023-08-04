@@ -1,7 +1,7 @@
 import { Box, Typography, Stack, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import colors from "../../../theme/variables";
-import useChartsQuery from "../../../hook/useChartsQuery";
+import useAllTaskAccordingToSatusQuery from "../../../hook/useAllTaskAccordingToSatusQuery";
 import { statesOfTaskManager } from "../../../constant/Misc";
 import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
@@ -18,7 +18,9 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
     setActiveLink(name);
   };
 
-  const { useGetTaskQuery } = useChartsQuery(activeLink ?? "Todo");
+  const { useGetTaskQuery } = useAllTaskAccordingToSatusQuery(
+    activeLink ?? "Todo"
+  );
   const {
     data: allTaskProjectWideAccordingToStatus,
     isLoading: isTaskLoading,
