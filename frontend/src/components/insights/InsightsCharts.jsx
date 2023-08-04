@@ -110,12 +110,13 @@ const InsightsCharts = ({ data, isLoading, status }) => {
         alignItems: "center",
         justifyContent: "space-around",
         height: "100%",
+        flexDirection: { xs: "column", md: "row" },
       }}
     >
       <Box
         sx={{
-          width: "25rem",
-          height: "100%",
+          width: { xs: "18rem", md: "25rem" },
+          height: { md: "100%", xs: "auto" },
         }}
       >
         <Doughnut data={chartData} />
@@ -129,11 +130,15 @@ const InsightsCharts = ({ data, isLoading, status }) => {
           borderRadius: ".3rem",
           backgroundColor: (theme) => theme.palette.primary.main,
           boxShadow: "0px 0px 32px -4px #00000054",
+          height: { md: "calc(100vh - 200px)", xs: "200px" },
+          overflowY: "scroll",
         }}
       >
-        <Typography sx={{ color: "white" }} variant="h5">
-          Tasks List
-        </Typography>
+        <Box>
+          <Typography sx={{ color: "white" }} variant="h5">
+            Tasks List
+          </Typography>
+        </Box>
         {allProjects.map((item, i) => {
           return (
             <Box
