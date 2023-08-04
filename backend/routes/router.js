@@ -50,7 +50,7 @@ router.route("/task").delete(checkAuthorization, deleteTaskApi);
  * Task routes for charts
  */
 router
-  .route("/charts/tasks")
+  .route("/project/status/alltasks")
   .get(checkAuthorization, getAllTaskFromAllProjectAccordingToStatus);
 
 module.exports = router;
