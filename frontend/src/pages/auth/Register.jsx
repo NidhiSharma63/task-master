@@ -12,10 +12,10 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
-import userRegisterQuery from "../../hook/useRegsiterQuery";
+import useRegisterQuery from "../../hook/useRegsiterQuery";
 
 const Register = () => {
-  const { mutate } = userRegisterQuery();
+  const { mutate } = useRegisterQuery();
   const initialValues = {
     email: "",
     password: "",

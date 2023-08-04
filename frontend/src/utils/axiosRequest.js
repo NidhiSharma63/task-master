@@ -51,9 +51,9 @@ const customAxiosRequestForGet = async (url, params) => {
 };
 
 const customAxiosRequestForPost = async (url, method = "post", payload) => {
-  const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
+  const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?._id;
 
-  let updatedPayload = {};
+  let updatedPayload = { ...payload };
   if (userId) {
     updatedPayload = { ...payload, userId };
   }
