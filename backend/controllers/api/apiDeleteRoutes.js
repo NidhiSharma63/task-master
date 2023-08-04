@@ -24,7 +24,7 @@ const deleteProjectApi = async (req, res, next) => {
   }
 };
 
-const deleteTaskApi = async (req, res) => {
+const deleteTaskApi = async (req, res, next) => {
   try {
     const { id } = req.body;
     if (!id) {
