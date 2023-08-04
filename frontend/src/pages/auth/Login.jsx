@@ -23,12 +23,12 @@ const Login = () => {
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   const { mutate } = useLoginQuery();
 
-  useEffect(() => {
-    // because we are
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   // because we are
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // }, [token]);
 
   const initialValues = {
     email: "",
@@ -42,7 +42,8 @@ const Login = () => {
     <Grid container sx={{ height: "100vh" }}>
       <Grid
         item
-        xs={6}
+        xs={12}
+        sm={6}
         sx={{
           display: "flex",
           flexDirection: "column",
