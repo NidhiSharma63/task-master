@@ -48,6 +48,7 @@ const Board = () => {
     if (is_updating_task) return;
     // Only proceed if the data is loaded and not empty.
     if (!isLoading && data && data.length > 0) {
+      console.log("i run");
       // State and respective setters for each status
 
       // Iterate over each task status
@@ -99,34 +100,98 @@ const Board = () => {
       return;
     }
     if (destination.droppableId !== source.droppableId) {
-      if (is_updating_task) return;
+      // if (is_updating_task) return;
       const [activeState, settersActiveState] =
         statusStates[source.droppableId];
       const [destinationState, setterDestination] =
         statusStates[destination.droppableId];
-      console.log(activeState, "::source state");
 
       const moveAbleTask = activeState[source.index];
 
-      console.log(source, ":::source", moveAbleTask);
-
+      // for payload
       const updateTask = {
         ...moveAbleTask,
         status: destination.droppableId,
         currentIndex: destination.index,
+        prevStatus: source.droppableId,
+        prevIndex: source.index,
       };
       updateTaskWithStatus(updateTask);
 
-      settersActiveState((prev) =>
-        prev.filter((_item, index) => index !== source.index)
+      // for local
+      const updateTaskInDestination = {
+        ...moveAbleTask,
+        index: destination.index,
+        status: destination.droppableId,
+      };
+
+      // remove the task from Active state and update the index
+
+      const updatedIndexOfTaskInRangeOfSource = activeState
+        ?.map((item) => {
+          if (item.index === source.index) {
+            // Skip the item with the same index as the source index
+            return null; // Or return any unique value that won't be present in the actual data
+          } else if (item.index > source.index) {
+            return { ...item, index: item.index - 1 };
+          } else {
+            return item;
+          }
+        })
+        .filter((item) => item !== null) // Filter out the skipped items directly
+        .sort((a, b) => a.index - b.index);
+
+      const taskInRangeOfDestination = destinationState.filter(
+        (item) => item.index >= destination.index
       );
-      setterDestination((prev) => [...prev, updateTask]);
+
+      // update index of all task that have greater then index
+      const updatedTaskInRangeOfDestination = taskInRangeOfDestination.map(
+        (item) => ({
+          ...item,
+          index: item.index + 1,
+        })
+      );
+
+      // get remaining task that have less then index value
+      const lessIndexValueTaskForDestination = destinationState.filter(
+        (item) => item.index < destination.index
+      );
+
+      const finalUpdateTaskoFDestination = [
+        updateTaskInDestination,
+        ...updatedTaskInRangeOfDestination,
+        ...lessIndexValueTaskForDestination,
+      ].sort((a, b) => a.index - b.index);
+
+      const updatedIndexOfTaskInRangeOfDestination = destinationState?.map(
+        (item) => {
+          if (item.index >= source.index) {
+            return { ...item, index: item.index + 1 };
+          } else {
+            return item;
+          }
+        }
+      );
+
+      const finalArrayWithDroppedTask = [
+        ...updatedIndexOfTaskInRangeOfDestination,
+        updateTaskInDestination,
+      ].sort((a, b) => a.index - b.index);
+
+      console.log(
+        updatedIndexOfTaskInRangeOfSource,
+        "::updatedIndexOfTaskInRangeOfSource"
+      );
+
+      settersActiveState(updatedIndexOfTaskInRangeOfSource);
+      setterDestination(finalArrayWithDroppedTask);
       dispatch(isUpdatingTask(true));
       return;
     }
   };
 
-  console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
+  // console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
 
   return (
     <Grid
