@@ -22,7 +22,6 @@ const createProjectApi = async (req, res, next) => {
 
     await project.save();
     res.status(201).json({ data: { userId, name } });
-    await Project.deleteMany({});
   } catch (error) {
     next(error);
   }

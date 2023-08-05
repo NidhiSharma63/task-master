@@ -26,9 +26,11 @@ const deleteProjectApi = async (req, res, next) => {
 
 const deleteTaskApi = async (req, res, next) => {
   try {
-    const { _id, index, userId, status } = req.body;
-    if (!_id) {
-      throw new Error("Task Id is not present");
+    const { _id, index, userId, status, projectName } = req.body;
+    if (!_id || index === undefined || !userId || !status || !projectName) {
+      throw new Error(
+        "Something is missing _id, index, userId, status, projectName"
+      );
     }
     const deletedTask = await Task.deleteOne({ _id });
 
@@ -36,6 +38,7 @@ const deleteTaskApi = async (req, res, next) => {
     const tasks = await Task.find({
       index: { $gt: index },
       status,
+      projectName,
       userId,
     });
 
