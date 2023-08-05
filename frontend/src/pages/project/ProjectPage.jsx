@@ -38,7 +38,7 @@ const ProjectPage = () => {
             Create projects to manage your tasks
           </Typography>
           <Button variant="contained" onClick={handleOpenProjectModal}>
-            Add Task
+            Add Project
           </Button>
         </Box>
       )}
