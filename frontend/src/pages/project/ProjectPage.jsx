@@ -9,7 +9,6 @@ import { isProjectNameModalOpen } from "../../redux/boolean/booleanSlice";
 const ProjectPage = () => {
   const { data } = useGetProjectQuery();
   const dispatch = useDispatch();
-  console.log(data, "::::DATA::::::");
 
   const handleOpenProjectModal = () => {
     dispatch(isProjectNameModalOpen(true));

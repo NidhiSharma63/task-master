@@ -80,10 +80,12 @@ const Board = () => {
     if (destination.droppableId === source.droppableId) {
       // find in which row task is drag and dropped
       // Get current state and its setter for the status
-      const [currentState, setter] = statusStates[destination.droppableId];
+      const [destinationState, destinationSetter] =
+        statusStates[destination.droppableId];
+      const [sourceState, sourceSetter] = statusStates[source.droppableId];
 
       // find th updated task
-      const moveAbleTask = currentState.splice(source.index, 1);
+      const moveAbleTask = destinationState.splice(source.index, 1);
       // update the status
 
       const updatedTask = {
@@ -91,39 +93,46 @@ const Board = () => {
         currentIndex: destination.index,
       };
 
+      // After updating task remove it from source task array
+
       mutate(updatedTask);
       return;
     }
     if (destination.droppableId !== source.droppableId) {
+      if (is_updating_task) return;
       const [activeState, settersActiveState] =
         statusStates[source.droppableId];
       const [destinationState, setterDestination] =
         statusStates[destination.droppableId];
+      console.log(activeState, "::source state");
 
       const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
+      console.log(moveAbleTask);
+
+      console.log(source, ":::source");
 
       const updateTask = {
-        ...moveAbleTask[0],
+        ...activeState.splice(source.index, 1),
         status: destination.droppableId,
         currentIndex: destination.index,
       };
       updateTaskWithStatus(updateTask);
-      console.log(updateTask, ":::Updated", moveAbleTask[0], ":::moveable");
+
+      settersActiveState((prev) => {
+        prev.filter((item) => {
+          console.log(item.index, source.index);
+          return item.index !== source.index;
+        });
+      });
+      setterDestination((prev) => [...prev, updateTask]);
+      // console.log("i run", updateTask, moveAbleTask[0]);
+      // console.log(updateTask, ":::Updated", moveAbleTask[0], ":::moveable");
+      dispatch(isUpdatingTask(true));
       return;
     }
-
-    // const [activeState, settersActiveState] = statusStates[source.droppableId];
-    // const [destinationState, setterDestination] =
-    //   statusStates[destination.droppableId];
-
-    // const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
-
-    // const updateTask = { ...moveAbleTask[0], status: destination.droppableId };
-
-    // setterDestination((prev) => [...prev, updateTask]);
-    // mutate(updateTask);
-    dispatch(isUpdatingTask(true));
   };
+
+  // console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
 
   return (
     <Grid
