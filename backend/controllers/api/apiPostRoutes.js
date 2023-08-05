@@ -29,9 +29,10 @@ const createProjectApi = async (req, res, next) => {
 const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
+    console.log(taskBody, "task body");
 
     const { index } = taskBody;
-    if (!index) {
+    if (index === undefined) {
       throw new Error("Index is not present");
     }
     // Save the new task
@@ -54,6 +55,7 @@ const createTaskApi = async (req, res, next) => {
     await Promise.all(updateTasksPromises);
 
     await taskObj.save();
+
     res.json({ data: taskObj });
   } catch (error) {
     next(error);

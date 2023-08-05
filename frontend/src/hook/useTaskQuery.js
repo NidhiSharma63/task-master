@@ -7,9 +7,10 @@ import { toast } from "react-toastify";
 import { queryClient } from "../index";
 import { useQueries } from "@tanstack/react-query";
 import { statesOfTaskManager } from "../constant/Misc";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
 import { queryKeyForTask } from "../constant/queryKey";
+import { isUpdatingTask } from "../redux/boolean/booleanSlice";
 
 /**
  *
@@ -69,6 +70,7 @@ const useGetTaskAccordingToStatus = () => {
  */
 
 const useUpdateTaskQuery = () => {
+  const dispatch = useDispatch();
   let state;
   return useMutation({
     mutationFn: (payload) => {
@@ -80,6 +82,9 @@ const useUpdateTaskQuery = () => {
       toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
+      setTimeout(() => {
+        dispatch(isUpdatingTask(false));
+      }, 1500);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -93,6 +98,7 @@ const useUpdateTaskQuery = () => {
  */
 
 const useUpdateTaskQueryWithStatus = () => {
+  const dispatch = useDispatch();
   let state;
   return useMutation({
     mutationFn: (payload) => {
@@ -104,6 +110,9 @@ const useUpdateTaskQueryWithStatus = () => {
       toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
+      setTimeout(() => {
+        dispatch(isUpdatingTask(false));
+      }, 1500);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

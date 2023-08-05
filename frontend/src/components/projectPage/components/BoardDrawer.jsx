@@ -46,7 +46,13 @@ const BoardDrawer = () => {
   };
 
   const handleDelete = () => {
-    deleteTask({ id: active_task._id });
+    deleteTask({
+      _id: active_task._id,
+      status: active_task.status,
+      userId: active_task.userId,
+      index: active_task.index,
+      projectName: active_task.projectName,
+    });
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
     dispatch(isUpdatingTask(false));

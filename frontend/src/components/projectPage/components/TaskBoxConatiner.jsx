@@ -13,10 +13,6 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "../../../redux/projects/projectSlice";
 
-const fecth = async () => {
-  const res = await fecth("http://localhost:3000/api/v1/abc");
-  console.log(res.json());
-};
 const TaskBoxContainer = ({ name, data }) => {
   const dispatch = useDispatch();
   const [textAreaValuesTop, setTextAreaValuesTop] = useState([]);
@@ -79,7 +75,6 @@ const TaskBoxContainer = ({ name, data }) => {
       }
     } else {
       if (textAreaValuesBottom[index].trim().length === 0) {
-        console.log("i shopuld rin");
         setTextAreaValuesBottom((prevValues) => {
           const copyValues = [...prevValues];
           copyValues.splice(index, 1);

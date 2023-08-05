@@ -59,21 +59,54 @@ const updateTaskApi = async (req, res, next) => {
 
 const updateTaskWithStatus = async (req, res, next) => {
   try {
-    const { status, currentIndex, projectName, userId, _id } = req.body;
-    if (currentIndex === undefined || status === undefined) {
-      throw new Error("Something is missing currentIndex or previousIndex");
+    const {
+      status,
+      currentIndex,
+      projectName,
+      userId,
+      _id,
+      prevStatus,
+      prevIndex,
+    } = req.body;
+    if (
+      currentIndex === undefined ||
+      !status ||
+      !prevStatus ||
+      !projectName ||
+      prevIndex === undefined
+    ) {
+      throw new Error(
+        "Something is missing currentIndex, previousIndex,projectName, prevStatus or status"
+      );
     }
     // find all related to project of that user according to status
-    const allProjectRelatedToStatus = await Task.find({
+    const allProjectRelatedTaskToStatus = await Task.find({
       status,
       userId,
       projectName,
       index: { $gte: currentIndex },
     });
-    if (allProjectRelatedToStatus.length > 0) {
-      const updateTasksPromises = allProjectRelatedToStatus?.map(
+    if (allProjectRelatedTaskToStatus.length > 0) {
+      const updateTasksPromises = allProjectRelatedTaskToStatus?.map(
         async (item) => {
           item.index = item.index + 1;
+          await item.save();
+        }
+      );
+
+      await Promise.all(updateTasksPromises);
+    }
+    // find all the task of previous status
+    const allProjectRelatedTaskToPrevStatus = await Task.find({
+      status: prevStatus,
+      userId,
+      projectName,
+      index: { $gt: prevIndex },
+    });
+    if (allProjectRelatedTaskToPrevStatus.length > 0) {
+      const updateTasksPromises = allProjectRelatedTaskToPrevStatus?.map(
+        async (item) => {
+          item.index = item.index - 1;
           await item.save();
         }
       );
