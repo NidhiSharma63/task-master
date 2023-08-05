@@ -48,7 +48,6 @@ const Board = () => {
     if (is_updating_task) return;
     // Only proceed if the data is loaded and not empty.
     if (!isLoading && data && data.length > 0) {
-      console.log("i run");
       // State and respective setters for each status
 
       // Iterate over each task status
@@ -81,22 +80,76 @@ const Board = () => {
     if (destination.droppableId === source.droppableId) {
       // find in which row task is drag and dropped
       // Get current state and its setter for the status
-      const [destinationState, destinationSetter] =
+      const [activeState, acitveStateSetter] =
         statusStates[destination.droppableId];
-      const [sourceState, sourceSetter] = statusStates[source.droppableId];
 
       // find th updated task
-      const moveAbleTask = destinationState.splice(source.index, 1);
-      // update the status
+      const moveAbleTask = activeState[source.index];
 
+      // for updated
       const updatedTask = {
-        ...moveAbleTask[0],
+        ...moveAbleTask,
         currentIndex: destination.index,
       };
+      // for local
+      const updateTaskForLocal = {
+        ...moveAbleTask,
+        index: destination.index,
+      };
 
-      // After updating task remove it from source task array
+      let finalStateOfTask = [];
+      // now update the index ass well
 
+      if (destination.index > source.index) {
+        const allTheTaskThatHavelessIndexValueOfDestinationIndex = activeState
+          .filter(
+            (item) =>
+              item.index <= destination.index && item.index !== source.index
+          )
+          .map((item) => ({ ...item, index: item.index - 1 }));
+
+        // other remaining tasks
+        const remainingTask = activeState.filter(
+          (item) =>
+            item.index > destination.index && item.index !== source.index
+        );
+        finalStateOfTask = [
+          ...allTheTaskThatHavelessIndexValueOfDestinationIndex,
+          ...remainingTask,
+          updateTaskForLocal,
+        ].sort((a, b) => a.index - b.index);
+        acitveStateSetter(finalStateOfTask);
+        finalStateOfTask = [];
+      } else {
+        // step - 1 find all task that are >= destination and < then source
+        const allTaskToUpdate = activeState
+          .filter(
+            (item) =>
+              item.index >= destination.index && item.index < source.index
+          )
+          .map((item) => ({ ...item, index: item.index + 1 }));
+
+        // step - 2 find all task that have greater then index of destination
+        const remaningTaskHavingIndexGreaterThanDestination =
+          activeState.filter((item) => item.index < destination.index);
+        // step - 3 find all task that have less then index of source
+        const remaningTaskHavingIndexLessThanDestination = activeState.filter(
+          (item) => item.index > source.index
+        );
+
+        finalStateOfTask = [
+          ...remaningTaskHavingIndexGreaterThanDestination,
+          ...remaningTaskHavingIndexLessThanDestination,
+          ...allTaskToUpdate,
+          updateTaskForLocal,
+        ].sort((a, b) => a.index - b.index);
+
+        acitveStateSetter(finalStateOfTask);
+        finalStateOfTask = [];
+      }
       mutate(updatedTask);
+      dispatch(isUpdatingTask(true));
+
       return;
     }
     if (destination.droppableId !== source.droppableId) {
@@ -141,29 +194,6 @@ const Board = () => {
         .filter((item) => item !== null) // Filter out the skipped items directly
         .sort((a, b) => a.index - b.index);
 
-      const taskInRangeOfDestination = destinationState.filter(
-        (item) => item.index >= destination.index
-      );
-
-      // update index of all task that have greater then index
-      const updatedTaskInRangeOfDestination = taskInRangeOfDestination.map(
-        (item) => ({
-          ...item,
-          index: item.index + 1,
-        })
-      );
-
-      // get remaining task that have less then index value
-      const lessIndexValueTaskForDestination = destinationState.filter(
-        (item) => item.index < destination.index
-      );
-
-      const finalUpdateTaskoFDestination = [
-        updateTaskInDestination,
-        ...updatedTaskInRangeOfDestination,
-        ...lessIndexValueTaskForDestination,
-      ].sort((a, b) => a.index - b.index);
-
       const updatedIndexOfTaskInRangeOfDestination = destinationState?.map(
         (item) => {
           if (item.index >= source.index) {
@@ -179,19 +209,12 @@ const Board = () => {
         updateTaskInDestination,
       ].sort((a, b) => a.index - b.index);
 
-      console.log(
-        updatedIndexOfTaskInRangeOfSource,
-        "::updatedIndexOfTaskInRangeOfSource"
-      );
-
       settersActiveState(updatedIndexOfTaskInRangeOfSource);
       setterDestination(finalArrayWithDroppedTask);
       dispatch(isUpdatingTask(true));
       return;
     }
   };
-
-  // console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
 
   return (
     <Grid

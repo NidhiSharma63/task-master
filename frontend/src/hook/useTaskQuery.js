@@ -82,7 +82,9 @@ const useUpdateTaskQuery = () => {
       toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
-      dispatch(isUpdatingTask(false));
+      setTimeout(() => {
+        dispatch(isUpdatingTask(false));
+      }, 1500);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
