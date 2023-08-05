@@ -5,6 +5,7 @@ const server = express();
 // server.use(cookieParser());
 const bcrypt = require("bcrypt");
 const User = require("../../models/userSchema");
+const { sendEmailToVerify } = require("../../utils/emailVerification");
 
 // register
 const registerUser = async (req, res, next) => {
@@ -35,9 +36,11 @@ const registerUser = async (req, res, next) => {
     // setting token as a cookie
     // res.cookie("Todo", token, { httpOnly: true });
 
+    console.log("running");
     // create user
     await user.save();
-    res.status(200).json({ user, token });
+    sendEmailToVerify(email);
+    // res.status(200).json({ user, token });
   } catch (error) {
     next(error);
   }
