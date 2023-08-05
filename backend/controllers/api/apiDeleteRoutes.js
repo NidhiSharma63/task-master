@@ -26,11 +26,26 @@ const deleteProjectApi = async (req, res, next) => {
 
 const deleteTaskApi = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    if (!id) {
+    const { _id, index, userId, status } = req.body;
+    if (!_id) {
       throw new Error("Task Id is not present");
     }
-    const deletedTask = await Task.deleteOne({ _id: id });
+    const deletedTask = await Task.deleteOne({ _id });
+
+    // update all the index of the task
+    const tasks = await Task.find({
+      index: { $gt: index },
+      status,
+      userId,
+    });
+
+    // Update the index of the found tasks and save them
+    const updateTasksPromises = tasks?.map(async (item) => {
+      item.index = item.index - 1;
+      await item.save();
+    });
+    await Promise.all(updateTasksPromises);
+
     res.status(201).json({ msg: "Task deleted", task: deletedTask });
   } catch (error) {
     next(error);
