@@ -106,33 +106,27 @@ const Board = () => {
         statusStates[destination.droppableId];
       console.log(activeState, "::source state");
 
-      const moveAbleTask = activeState.splice(source.index, 1); // Use splice instead of slice
-      console.log(moveAbleTask);
+      const moveAbleTask = activeState[source.index];
 
-      console.log(source, ":::source");
+      console.log(source, ":::source", moveAbleTask);
 
       const updateTask = {
-        ...activeState.splice(source.index, 1),
+        ...moveAbleTask,
         status: destination.droppableId,
         currentIndex: destination.index,
       };
       updateTaskWithStatus(updateTask);
 
-      settersActiveState((prev) => {
-        prev.filter((item) => {
-          console.log(item.index, source.index);
-          return item.index !== source.index;
-        });
-      });
+      settersActiveState((prev) =>
+        prev.filter((_item, index) => index !== source.index)
+      );
       setterDestination((prev) => [...prev, updateTask]);
-      // console.log("i run", updateTask, moveAbleTask[0]);
-      // console.log(updateTask, ":::Updated", moveAbleTask[0], ":::moveable");
       dispatch(isUpdatingTask(true));
       return;
     }
   };
 
-  // console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
+  console.log(inTodo, ":::inTodo:::", inProgress, "::in progress");
 
   return (
     <Grid
