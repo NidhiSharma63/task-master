@@ -170,6 +170,33 @@ const useDeleteTask = (status) => {
   });
 };
 
+/**
+ *
+ * @returns Getting all task for home component
+ */
+const useGetAllTaskAccordingToStatusForEachProject = () => {
+  const userQueries = useQueries({
+    queries: statesOfTaskManager.map((status) => {
+      return {
+        queryKey: [status, "All-task"],
+        queryFn: () =>
+          customAxiosRequestForGet("/project/status/alltasks", {
+            status,
+          }),
+        onSuccess: ({ data }) => {
+          return data;
+        },
+      };
+    }),
+  });
+
+  const data = userQueries?.map((item) => item?.data?.data);
+  const isLoading = userQueries?.[0]?.isLoading;
+  const status = userQueries?.map((item) => item?.data?.status);
+
+  return { data, status, isLoading };
+};
+
 export {
   useAddTaskQuery,
   useGetTaskAccordingToStatus,
@@ -177,4 +204,5 @@ export {
   useUpdateTaskQuery,
   useUpdateTaskQueryWithStatus,
   useUpdateTaskQueryWithDetails,
+  useGetAllTaskAccordingToStatusForEachProject,
 };

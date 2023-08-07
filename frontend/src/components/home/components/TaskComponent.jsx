@@ -1,62 +1,31 @@
 import { Box, Typography, Stack, Divider, Button } from "@mui/material";
-import { useEffect, useState } from "react";
 import colors from "../../../theme/variables";
-import useAllTaskAccordingToSatusQuery from "../../../hook/useAllTaskAccordingToSatusQuery";
 import { statesOfTaskManager } from "../../../constant/Misc";
 import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
-import { useDispatch } from "react-redux";
-import { isCreateTaskModalOpen } from "../../../redux/boolean/booleanSlice";
-import { activeTask } from "../../../redux/task/taskSlice";
+import { activeLink } from "../../../redux/task/taskSlice";
+import useTaskComponent from "../../../hook/home/useTaskComponent";
 
-const TaskComponent = ({ backgroundColors, projectData }) => {
-  const [activeLink, setActiveLink] = useState(null);
-  const [allTask, setAllTask] = useState([]);
-  const dispatch = useDispatch();
-
-  const handleClick = (name) => {
-    setActiveLink(name);
-  };
-
-  const { useGetTaskQuery } = useAllTaskAccordingToSatusQuery(
-    activeLink ?? "Todo"
-  );
+const TaskComponent = ({
+  backgroundColors,
+  projectData,
+  taskData,
+  isLoading,
+}) => {
   const {
-    data: allTaskProjectWideAccordingToStatus,
-    isLoading: isTaskLoading,
-  } = useGetTaskQuery();
+    allTask,
+    handleClickOnAddTask,
+    handleClickOnLink,
+    handleClickOnTask,
+    totalTask,
+    getTaskToDisplay,
+  } = useTaskComponent({
+    backgroundColors,
+    projectData,
+    taskData,
+  });
 
-  // adding colors property as well
-  useEffect(() => {
-    const tempData = [];
-    let index = 0;
-    allTaskProjectWideAccordingToStatus?.data?.forEach((task, i) => {
-      const isAlreadyAddedProjectName = tempData.find(
-        (val) => val.projectName === task.projectName
-      );
-      if (isAlreadyAddedProjectName) {
-        isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
-        tempData.push({ ...task, color: isAlreadyAddedProjectName.color });
-      } else {
-        tempData.push({ ...task, color: backgroundColors[index] });
-        index += 1;
-      }
-    });
-
-    setAllTask(tempData);
-    if (!activeLink) {
-      setActiveLink("Todo");
-    }
-  }, [allTaskProjectWideAccordingToStatus, backgroundColors]);
-
-  const handleClickOnAddTask = () => {
-    dispatch(isCreateTaskModalOpen(true));
-  };
-
-  const handleClickOnTask = (item) => {
-    dispatch(activeTask(item));
-    dispatch(isCreateTaskModalOpen(true));
-  };
+  const data = getTaskToDisplay();
 
   return (
     <Box
@@ -83,13 +52,17 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
         </Box>
         <Stack direction="row" spacing={2} mt={1}>
           {statesOfTaskManager?.map((item, i) => {
+            console.log(totalTask);
             return (
               <Box
                 key={i}
                 sx={{
                   cursor: "pointer",
                   fontWeight: 500,
-
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
                   borderBottom:
                     activeLink === item
                       ? `1px solid  ${colors.primaryColor}`
@@ -99,9 +72,19 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
                   },
                   transition: "border 0.3s ease",
                 }}
-                onClick={() => handleClick(item)}
+                onClick={() => handleClickOnLink(item)}
               >
-                {item}
+                <Typography>{item}</Typography>
+                <Box
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.primary.main,
+                    borderRadius: "50%",
+                    padding: "0rem .5rem",
+                    color: "white",
+                  }}
+                >
+                  {totalTask?.[i] ? totalTask?.[i]?.count : 0}
+                </Box>
               </Box>
             );
           })}
@@ -115,7 +98,7 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
           overflowY: "auto",
         }}
       >
-        {isTaskLoading ? (
+        {isLoading ? (
           <Box
             sx={{
               display: "flex",
@@ -126,7 +109,7 @@ const TaskComponent = ({ backgroundColors, projectData }) => {
             <ClipLoader color="#571159" />
           </Box>
         ) : (
-          allTask?.map((item, i) => {
+          data?.map((item, i) => {
             return (
               <Box
                 key={i}
