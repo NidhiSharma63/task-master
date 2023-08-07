@@ -34,6 +34,7 @@ export const Layout = () => {
     handleLogout,
     handleClose,
     handleOpen,
+    handleCloseOfProjectsIcons,
     handleOpenProjectModal,
     anchorEl,
     open,
@@ -165,7 +166,7 @@ export const Layout = () => {
                           id="logout"
                           anchorEl={anchorElForProjectIcons}
                           open={openPorjectsIcons}
-                          onClose={handleClose}
+                          onClose={handleCloseOfProjectsIcons}
                         >
                           <MenuItem
                             sx={{

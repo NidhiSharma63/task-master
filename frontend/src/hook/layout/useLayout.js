@@ -106,6 +106,10 @@ const useLayout = () => {
     setAnchorElForProjectIcons(event.target);
   };
 
+  const handleCloseOfProjectsIcons = () => {
+    setOpenPorjectsIcons(false);
+  };
+
   const handleClickOnRename = () => {};
   return {
     handleClickOnRename,
@@ -118,6 +122,7 @@ const useLayout = () => {
     handleClose,
     handleOpen,
     handleOpenProjectModal,
+    handleCloseOfProjectsIcons,
     anchorEl,
     open,
     isLoading,
