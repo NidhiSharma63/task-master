@@ -34,6 +34,7 @@ const Register = () => {
       handleSubmit(valuesOfForm);
     }
   });
+
   const handleSubmit = (values) => {
     mutate(values);
   };

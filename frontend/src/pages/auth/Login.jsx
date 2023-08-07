@@ -12,7 +12,7 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getValueFromLS } from "../../utils/localstorage";
 import { KEY_FOR_STORING_TOKEN } from "../../constant/Misc";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   const { mutate } = useLoginQuery();
+  const [formValues, setFormValues] = useState({});
 
   useEffect(() => {
     // because we are
@@ -34,6 +35,20 @@ const Login = () => {
     email: "",
     password: "",
   };
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form default submission behavior
+
+      // Validate the values using the schema
+      try {
+        loginSchema.validateSync(formValues);
+        handleSubmit(formValues);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
 
   const handleSubmit = (values) => {
     mutate(values);
@@ -102,31 +117,37 @@ const Login = () => {
               validationSchema={loginSchema}
               onSubmit={handleSubmit}
             >
-              <Form>
-                <FormikControls control="formikInput" name="email" />
-                <FormikControls control="formikInput" name="password" />
-
-                <Divider
-                  sx={{
-                    mt: 4,
-                    mb: 3,
+              {({ values }) => (
+                <Form
+                  onChange={() => {
+                    setFormValues(values);
                   }}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
-                    type="submit"
+                >
+                  <FormikControls control="formikInput" name="email" />
+                  <FormikControls control="formikInput" name="password" />
+
+                  <Divider
                     sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: colors.primaryHoverColor,
-                      },
+                      mt: 4,
+                      mb: 3,
                     }}
-                  >
-                    login
-                  </Button>
-                </Box>
-              </Form>
+                  />
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      type="submit"
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: colors.primaryHoverColor,
+                        },
+                      }}
+                    >
+                      login
+                    </Button>
+                  </Box>
+                </Form>
+              )}
             </Formik>
           </Box>
           <Box

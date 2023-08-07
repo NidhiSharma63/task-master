@@ -21,7 +21,7 @@ const useLoginQuery = () => {
       setValueToLs(KEY_FOR_STORING_USER_DETAILS, user);
     },
     onError: (error) => {
-      toast.error(error?.response?.data?.error);
+      toast.error(error?.response?.data);
     },
   });
 };
