@@ -179,6 +179,17 @@ const updateProjectApi = async (req, res, next) => {
     project.name = name;
     project.save();
 
+    const allTaskRelatedToProject = await Task.findMany({
+      projectName: name,
+      userId: _id,
+    });
+    // Update the project of the found tasks and save them
+    const updateTasksPromises = allTaskRelatedToProject?.map(async (item) => {
+      item.projectName = name;
+      await item.save();
+    });
+    await Promise.all(updateTasksPromises);
+
     res.status(201).json({ msg: "project name updated" });
   } catch (error) {
     next(error);
