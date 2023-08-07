@@ -8,6 +8,7 @@ import { activeTask } from "../../../redux/task/taskSlice";
 import {
   booleanDataInStore,
   isBoardDrawerOpen,
+  isTaskDisplayed,
 } from "../../../redux/boolean/booleanSlice";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
@@ -19,28 +20,22 @@ const TaskBoxContainer = ({ name, data }) => {
   const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
-  const {
-    mutate,
-    // isLoading: isTaskAddLoading,
-    // mutateAsync,
-    isSuccess,
-  } = useAddTaskQuery();
+  const { mutate } = useAddTaskQuery();
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
     useState(null);
 
-  // useEffect(() => {
-  // fecth();
-  // }, []);
   const isTaskAddedFromBottom = useRef(null);
 
   const handleAddTask = () => {
     setTextAreaValuesTop((prevValues) => ["", ...prevValues]);
     isTaskAddedFromBottom.current = false;
+    dispatch(isTaskDisplayed(false));
   };
 
   const handleClickForAddingTaskFromBottom = () => {
     isTaskAddedFromBottom.current = true;
     setTextAreaValuesBottom((prevValues) => [...prevValues, ""]);
+    dispatch(isTaskDisplayed(false));
   };
 
   const handleChange = (event, index, newValue) => {
@@ -99,11 +94,8 @@ const TaskBoxContainer = ({ name, data }) => {
   };
 
   useEffect(() => {
-    if (
-      currentWorkingTestAreaIndex !== null &&
-      is_task_displayed &&
-      isSuccess
-    ) {
+    if (is_task_displayed === true) {
+      console.log("i run each time");
       if (!isTaskAddedFromBottom.current) {
         setTextAreaValuesTop((prevValues) => {
           const copyValues = [...prevValues];
@@ -119,7 +111,7 @@ const TaskBoxContainer = ({ name, data }) => {
       }
       setCurrentWorkingTestAreaIndex(null);
     }
-  }, [is_task_displayed, currentWorkingTestAreaIndex, isSuccess]);
+  }, [is_task_displayed, currentWorkingTestAreaIndex]);
 
   /**
    * for managing style of textarea

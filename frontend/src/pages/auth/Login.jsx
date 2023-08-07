@@ -12,32 +12,12 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
-import { useEffect } from "react";
-import { getValueFromLS } from "../../utils/localstorage";
-import { KEY_FOR_STORING_TOKEN } from "../../constant/Misc";
-import { useNavigate } from "react-router-dom";
-import useLoginQuery from "../../hook/useLoginQuery";
+
+import useLogin from "../../hook/auth/useLogin";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
-  const { mutate } = useLoginQuery();
+  const { handleSubmit, initialValues, setFormValues } = useLogin();
 
-  useEffect(() => {
-    // because we are
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
-
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-
-  const handleSubmit = (values) => {
-    mutate(values);
-  };
   return (
     <Grid container sx={{ height: "100vh" }}>
       <Grid
@@ -102,31 +82,37 @@ const Login = () => {
               validationSchema={loginSchema}
               onSubmit={handleSubmit}
             >
-              <Form>
-                <FormikControls control="formikInput" name="email" />
-                <FormikControls control="formikInput" name="password" />
-
-                <Divider
-                  sx={{
-                    mt: 4,
-                    mb: 3,
+              {({ values }) => (
+                <Form
+                  onBlur={() => {
+                    setFormValues(values);
                   }}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
-                    type="submit"
+                >
+                  <FormikControls control="formikInput" name="email" />
+                  <FormikControls control="formikInput" name="password" />
+
+                  <Divider
                     sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: colors.primaryHoverColor,
-                      },
+                      mt: 4,
+                      mb: 3,
                     }}
-                  >
-                    login
-                  </Button>
-                </Box>
-              </Form>
+                  />
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      type="submit"
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: colors.primaryHoverColor,
+                        },
+                      }}
+                    >
+                      login
+                    </Button>
+                  </Box>
+                </Form>
+              )}
             </Formik>
           </Box>
           <Box

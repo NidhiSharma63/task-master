@@ -25,7 +25,7 @@ const useRegisterQuery = () => {
       dispatch(userEmail(user.email));
     },
     onError: (error) => {
-      toast.error(error?.response?.data?.error);
+      toast.error(error?.response?.data);
     },
   });
 };

@@ -68,7 +68,7 @@ const Board = () => {
           setter(items);
         }
       });
-      dispatch(isTaskDisplayed(true));
+      dispatch(isTaskDisplayed(false));
       dispatch(isUpdatingTask(false));
     }
   }, [isLoading, data]);

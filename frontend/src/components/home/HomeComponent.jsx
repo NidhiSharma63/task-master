@@ -3,16 +3,16 @@ import { getCurrentDate } from "../../utils/getCurrentDate";
 import TaskComponent from "../../components/home/components/TaskComponent";
 import { Box, Typography } from "@mui/material";
 import ProjectComponent from "../../components/home/components/ProjectComponent";
-import { useGetProjectQuery } from "../../hook/useProjectQuery";
-import { generateBackgroundColors } from "../../utils/generateRandomColor";
-import { useMemo } from "react";
+import useHome from "../../hook/home/useHome";
 
 const HomeComponent = () => {
-  const { data: projectData, isLoading } = useGetProjectQuery();
-  const backgroundColors = useMemo(
-    () => generateBackgroundColors(projectData?.projects || []),
-    [projectData?.projects]
-  );
+  const {
+    projectData,
+    projectIsLoading,
+    backgroundColors,
+    taskData,
+    isTaskLoading,
+  } = useHome();
 
   return (
     <Box
@@ -50,11 +50,13 @@ const HomeComponent = () => {
         <TaskComponent
           backgroundColors={backgroundColors}
           projectData={projectData}
+          taskData={taskData}
+          isLoading={isTaskLoading}
         />
         <ProjectComponent
           backgroundColors={backgroundColors}
           projectData={projectData}
-          isLoading={isLoading}
+          isLoading={projectIsLoading}
         />
       </Box>
     </Box>

@@ -12,19 +12,10 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
-import useRegisterQuery from "../../hook/useRegsiterQuery";
+import useRegister from "../../hook/auth/useRegister";
 
 const Register = () => {
-  const { mutate } = useRegisterQuery();
-  const initialValues = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
-
-  const handleSubmit = (values) => {
-    mutate(values);
-  };
+  const { handleSubmit, initialValues, setValuesOfForm } = useRegister();
 
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -90,31 +81,42 @@ const Register = () => {
               validationSchema={registerSchema}
               onSubmit={handleSubmit}
             >
-              <Form>
-                <FormikControls control="formikInput" name="email" />
-                <FormikControls control="formikInput" name="password" />
-                <FormikControls control="formikInput" name="confirmPassword" />
-                <Divider
-                  sx={{
-                    mt: 4,
-                    mb: 3,
+              {({ values, handleSubmit }) => (
+                <Form
+                  onBlur={() => {
+                    setValuesOfForm(values);
                   }}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
-                    type="submit"
+                >
+                  <FormikControls control="formikInput" name="email" />
+                  <Typography color={"red"}>{}</Typography>
+                  <FormikControls control="formikInput" name="password" />
+                  <FormikControls
+                    control="formikInput"
+                    name="confirmPassword"
+                  />
+                  <Divider
                     sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: colors.primaryHoverColor,
-                      },
+                      mt: 4,
+                      mb: 3,
                     }}
-                  >
-                    register
-                  </Button>
-                </Box>
-              </Form>
+                  />
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      type="submit"
+                      onClick={handleSubmit}
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: colors.primaryHoverColor,
+                        },
+                      }}
+                    >
+                      register
+                    </Button>
+                  </Box>
+                </Form>
+              )}
             </Formik>
           </Box>
           <Box
