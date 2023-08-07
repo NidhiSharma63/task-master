@@ -10,13 +10,14 @@ import { statesOfTaskManager } from "../constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
 import { queryKeyForTask } from "../constant/queryKey";
-import { isUpdatingTask } from "../redux/boolean/booleanSlice";
+import { isTaskDisplayed, isUpdatingTask } from "../redux/boolean/booleanSlice";
 
 /**
  *
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/task", "post", payload);
@@ -27,6 +28,9 @@ const useAddTaskQuery = () => {
         queryClient.invalidateQueries(status)
       );
       queryClient.invalidateQueries(["charts-data"]);
+      setTimeout(() => {
+        dispatch(isTaskDisplayed(true));
+      }, 1000);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -84,7 +88,7 @@ const useUpdateTaskQuery = () => {
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
-      }, 1500);
+      }, 1000);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -112,7 +116,7 @@ const useUpdateTaskQueryWithStatus = () => {
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
-      }, 1500);
+      }, 1000);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
