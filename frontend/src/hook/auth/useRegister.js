@@ -19,6 +19,8 @@ const useRegister = () => {
 
         // Validate the values using the schema
         try {
+          registerSchema.validateSync(valuesOfForm);
+
           handleSubmit(valuesOfForm);
         } catch (error) {
           console.log(error.errors);
