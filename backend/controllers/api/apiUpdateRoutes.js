@@ -1,4 +1,8 @@
 const Task = require("../../models/taskSchema");
+const Project = require("../../models/projectsSchema");
+/**
+ * update task with index
+ */
 
 const updateTaskApi = async (req, res, next) => {
   try {
@@ -56,6 +60,10 @@ const updateTaskApi = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * update task with status
+ */
 
 const updateTaskWithStatus = async (req, res, next) => {
   try {
@@ -126,6 +134,10 @@ const updateTaskWithStatus = async (req, res, next) => {
   }
 };
 
+/**
+ * update task with details
+ */
+
 const updateTaskWithDetail = async (req, res, next) => {
   try {
     const taskBody = req.body;
@@ -147,8 +159,35 @@ const updateTaskWithDetail = async (req, res, next) => {
   }
 };
 
+/**
+ * update project name
+ */
+
+const updateProjectApi = async (req, res, next) => {
+  try {
+    const { _id, name } = req.body;
+
+    if (!id) {
+      throw new Error("Project id is required");
+    }
+    const project = await Project.findOne({ _id });
+
+    if (!project) {
+      throw new Error("Invalid project id");
+    }
+
+    project.name = name;
+    project.save();
+
+    res.status(201).json({ msg: "project name updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   updateTaskApi,
   updateTaskWithStatus,
   updateTaskWithDetail,
+  updateProjectApi,
 };
