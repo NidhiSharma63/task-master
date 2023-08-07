@@ -13,6 +13,7 @@ import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
 import useRegisterQuery from "../../hook/useRegsiterQuery";
+import { useState } from "react";
 
 const Register = () => {
   const { mutate } = useRegisterQuery();
@@ -22,6 +23,17 @@ const Register = () => {
     confirmPassword: "",
   };
 
+  const [valuesOfForm, setValuesOfForm] = useState({});
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form default submission behavior
+
+      // Validate the values using the schema
+      registerSchema.validateSync(valuesOfForm, { abortEarly: false });
+      handleSubmit(valuesOfForm);
+    }
+  });
   const handleSubmit = (values) => {
     mutate(values);
   };
@@ -90,31 +102,41 @@ const Register = () => {
               validationSchema={registerSchema}
               onSubmit={handleSubmit}
             >
-              <Form>
-                <FormikControls control="formikInput" name="email" />
-                <FormikControls control="formikInput" name="password" />
-                <FormikControls control="formikInput" name="confirmPassword" />
-                <Divider
-                  sx={{
-                    mt: 4,
-                    mb: 3,
+              {({ values, handleSubmit }) => (
+                <Form
+                  onChange={() => {
+                    setValuesOfForm(values);
                   }}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button
-                    type="submit"
+                >
+                  <FormikControls control="formikInput" name="email" />
+                  <FormikControls control="formikInput" name="password" />
+                  <FormikControls
+                    control="formikInput"
+                    name="confirmPassword"
+                  />
+                  <Divider
                     sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: colors.primaryHoverColor,
-                      },
+                      mt: 4,
+                      mb: 3,
                     }}
-                  >
-                    register
-                  </Button>
-                </Box>
-              </Form>
+                  />
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      type="submit"
+                      onClick={handleSubmit}
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: colors.primaryHoverColor,
+                        },
+                      }}
+                    >
+                      register
+                    </Button>
+                  </Box>
+                </Form>
+              )}
             </Formik>
           </Box>
           <Box
