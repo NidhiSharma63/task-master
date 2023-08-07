@@ -12,47 +12,12 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
-import { useEffect, useState } from "react";
-import { getValueFromLS } from "../../utils/localstorage";
-import { KEY_FOR_STORING_TOKEN } from "../../constant/Misc";
-import { useNavigate } from "react-router-dom";
-import useLoginQuery from "../../hook/useLoginQuery";
+
+import useLogin from "../../hook/auth/useLogin";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
-  const { mutate } = useLoginQuery();
-  const [formValues, setFormValues] = useState({});
+  const { handleSubmit, initialValues, setFormValues } = useLogin();
 
-  useEffect(() => {
-    // because we are
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
-
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); // Prevent form default submission behavior
-
-      // Validate the values using the schema
-      try {
-        loginSchema.validateSync(formValues);
-        handleSubmit(formValues);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  });
-
-  const handleSubmit = (values) => {
-    mutate(values);
-  };
   return (
     <Grid container sx={{ height: "100vh" }}>
       <Grid
@@ -119,7 +84,7 @@ const Login = () => {
             >
               {({ values }) => (
                 <Form
-                  onChange={() => {
+                  onBlur={() => {
                     setFormValues(values);
                   }}
                 >
