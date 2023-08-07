@@ -62,4 +62,8 @@ const useDeleteProjectQuery = () => {
   });
 };
 
+/**
+ * query to update project name
+ */
+
 export { useGetProjectQuery, usePostProjectQuery, useDeleteProjectQuery };
