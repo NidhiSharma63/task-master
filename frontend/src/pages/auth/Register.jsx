@@ -12,32 +12,10 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
-import useRegisterQuery from "../../hook/useRegsiterQuery";
-import { useState } from "react";
+import useRegister from "../../hook/auth/useRegister";
 
 const Register = () => {
-  const { mutate } = useRegisterQuery();
-  const initialValues = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
-
-  const [valuesOfForm, setValuesOfForm] = useState({});
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); // Prevent form default submission behavior
-
-      // Validate the values using the schema
-      registerSchema.validateSync(valuesOfForm, { abortEarly: false });
-      handleSubmit(valuesOfForm);
-    }
-  });
-
-  const handleSubmit = (values) => {
-    mutate(values);
-  };
+  const { handleSubmit, initialValues, setValuesOfForm } = useRegister();
 
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -105,11 +83,12 @@ const Register = () => {
             >
               {({ values, handleSubmit }) => (
                 <Form
-                  onChange={() => {
+                  onBlur={() => {
                     setValuesOfForm(values);
                   }}
                 >
                   <FormikControls control="formikInput" name="email" />
+                  <Typography color={"red"}>{}</Typography>
                   <FormikControls control="formikInput" name="password" />
                   <FormikControls
                     control="formikInput"
