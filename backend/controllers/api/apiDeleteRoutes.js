@@ -1,6 +1,10 @@
+const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 
+/**
+ * Project delete
+ */
 const deleteProjectApi = async (req, res, next) => {
   try {
     const { id } = req.body;
@@ -24,6 +28,9 @@ const deleteProjectApi = async (req, res, next) => {
   }
 };
 
+/**
+ * Task delete
+ */
 const deleteTaskApi = async (req, res, next) => {
   try {
     const { _id, index, userId, status, projectName } = req.body;
@@ -55,7 +62,22 @@ const deleteTaskApi = async (req, res, next) => {
   }
 };
 
+/**
+ * Column delete
+ */
+
+const deleteColumn = async (req, res, next) => {
+  try {
+    const { _id } = req.body;
+    await Column.deleteOne({ _id });
+    res.status(200).json({ msg: "Deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   deleteProjectApi,
   deleteTaskApi,
+  deleteColumn,
 };
