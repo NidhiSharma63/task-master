@@ -23,6 +23,7 @@ const {
   updateTaskWithStatus,
   updateTaskWithDetail,
   updateProjectApi,
+  updateColumnName,
 } = require("./api/apiUpdateRoutes");
 
 module.exports = {
@@ -43,4 +44,5 @@ module.exports = {
   createColumnsApi,
   getColumns,
   deleteColumn,
+  updateColumnName,
 };

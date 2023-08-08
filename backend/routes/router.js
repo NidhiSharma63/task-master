@@ -18,6 +18,7 @@ const {
   createColumnsApi,
   getColumns,
   deleteColumn,
+  updateColumnName,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
@@ -60,4 +61,5 @@ router
 router.route("/column").post(checkAuthorization, createColumnsApi);
 router.route("/column").get(checkAuthorization, getColumns);
 router.route("/column").delete(checkAuthorization, deleteColumn);
+router.route("/column").put(checkAuthorization, updateColumnName);
 module.exports = router;

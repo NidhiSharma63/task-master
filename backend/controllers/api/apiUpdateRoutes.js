@@ -1,5 +1,6 @@
 const Task = require("../../models/taskSchema");
 const Project = require("../../models/projectsSchema");
+const Column = require("../../models/columnsSchema");
 /**
  * update task with index
  */
@@ -190,9 +191,29 @@ const updateProjectApi = async (req, res, next) => {
   }
 };
 
+/**
+ * update column name
+ */
+
+const updateColumnName = async (req, res, next) => {
+  try {
+    const { _id, name } = req.body;
+    console.log(req.body);
+    const updatedColumn = await Column.findOneAndUpdate(
+      { _id },
+      { $set: { name } },
+      { new: true }
+    );
+    res.status(200).json({ data: updatedColumn });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   updateTaskApi,
   updateTaskWithStatus,
   updateTaskWithDetail,
   updateProjectApi,
+  updateColumnName,
 };
