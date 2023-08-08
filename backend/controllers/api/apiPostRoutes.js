@@ -44,13 +44,18 @@ const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
 
-    const { index } = taskBody;
+    const { index, projectName } = taskBody;
+
     if (index === undefined) {
       throw new Error("Index is not present");
     }
+    // get the project and it's color
+    const project = await Project.findOne({ name: projectName });
+
     // Save the new task
     const taskObj = new Task({
       ...taskBody,
+      color: project.color,
     });
 
     // Find all tasks next to the current posted task

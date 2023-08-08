@@ -30,6 +30,9 @@ const taskSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  color: {
+    type: String,
+  },
 });
 
 const Task = new mongoose.model("Task", taskSchema);
