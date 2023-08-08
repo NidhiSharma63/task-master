@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../index";
 import { queryKeyForTask } from "../constant/queryKey";
+import { useSelector } from "react-redux";
+import { projectDataInStore } from "../redux/projects/projectSlice";
 
 /**
  * use post column query
@@ -30,21 +32,23 @@ const usePostColumnQuery = () => {
   });
 };
 
-/* get request
- */
-const getAllColumns = async () => {
-  const res = await customAxiosRequestForGet("/column");
-  return res;
-};
-
 /**
  * get column
  */
 
 const useGetColumnQuery = () => {
+  const { active_project } = useSelector(projectDataInStore);
+
   return useQuery({
-    queryKey: ["column"],
-    queryFn: getAllColumns,
+    queryKey: ["column", active_project],
+    queryFn: () => {
+      return customAxiosRequestForGet("/column", {
+        projectName: active_project,
+      });
+    },
+    onSuccess: ({ data }) => {
+      return data;
+    },
     onError: (error) => {
       toast.error(error?.response?.data);
     },

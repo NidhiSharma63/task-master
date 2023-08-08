@@ -13,6 +13,7 @@ import {
 import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useNavigate } from "react-router-dom";
 import { isTaskDisplayed } from "../../redux/boolean/booleanSlice";
+import { useGetColumnQuery } from "../useColumnQuery";
 
 const useBoard = () => {
   const dispatch = useDispatch();
@@ -27,8 +28,12 @@ const useBoard = () => {
   const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
   const navigate = useNavigate();
 
+  const { data: columnData } = useGetColumnQuery();
+  console.log(columnData, "::column data:::");
+
   useEffect(() => {
     if (projectData?.projects?.length === 0) {
+      console.log("navigated to /Dashboard");
       navigate("/Dashboard");
     }
   }, [projectData]);
