@@ -2,7 +2,11 @@
 
 const { registerUser, loginUser, logout } = require("./auth/authRoutes");
 
-const { createProjectApi, createTaskApi } = require("./api/apiPostRoutes");
+const {
+  createProjectApi,
+  createTaskApi,
+  createColumnsApi,
+} = require("./api/apiPostRoutes");
 const {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
@@ -31,4 +35,5 @@ module.exports = {
   updateTaskWithStatus,
   updateTaskWithDetail,
   updateProjectApi,
+  createColumnsApi,
 };

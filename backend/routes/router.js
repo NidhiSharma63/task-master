@@ -15,6 +15,7 @@ const {
   updateTaskWithStatus,
   updateProjectApi,
   updateTaskWithDetail,
+  createColumnsApi,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
@@ -37,10 +38,6 @@ router.route("/projects").put(checkAuthorization, updateProjectApi);
  * Task Route
  */
 
-const testing = (_req, res) => {
-  res.json({ msg: "Working fine" });
-};
-router.route("/abc").post(testing);
 router.route("/task").post(checkAuthorization, createTaskApi);
 router.route("/task").get(checkAuthorization, getAllTaskAccordingToStatusApi);
 router.route("/task").put(checkAuthorization, updateTaskApi);
@@ -55,4 +52,8 @@ router
   .route("/project/status/alltasks")
   .get(checkAuthorization, getAllTaskFromAllProjectAccordingToStatus);
 
+/**
+ * Columns
+ */
+router.route("/column").post(checkAuthorization, createColumnsApi);
 module.exports = router;

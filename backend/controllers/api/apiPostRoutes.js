@@ -106,7 +106,29 @@ const createTaskApi = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Create columns
+ */
+
+const createColumnsApi = async (req, res, next) => {
+  try {
+    const { userId, projectName, name } = req.body;
+    const column = new Column({
+      userId,
+      projectName,
+      name,
+    });
+    await column.save();
+
+    res.status(201).json({ data: column });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createProjectApi,
   createTaskApi,
+  createColumnsApi,
 };

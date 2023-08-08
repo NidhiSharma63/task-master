@@ -1,3 +1,4 @@
+const uniqueValidator = require("mongoose-unique-validator");
 const mongoose = require("mongoose");
 const columnsSchema = new mongoose.Schema({
   name: {
@@ -14,6 +15,9 @@ const columnsSchema = new mongoose.Schema({
   },
 });
 
+columnsSchema.plugin(uniqueValidator, {
+  message: "{VALUE} for {PATH} already exists.",
+});
 const Column = new mongoose.model("Column", columnsSchema);
 
 module.exports = Column;
