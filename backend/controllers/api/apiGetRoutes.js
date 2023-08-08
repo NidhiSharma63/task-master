@@ -9,7 +9,7 @@ const getProjectApi = async (req, res, next) => {
     const { userId } = req.query;
 
     const project = await Project.find({ userId });
-    res.status(201).json({ projects: project });
+    res.status(200).json({ projects: project });
   } catch (error) {
     next(error);
   }

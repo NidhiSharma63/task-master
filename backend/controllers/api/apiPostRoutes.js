@@ -1,6 +1,10 @@
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
+const generateRandomColor = require("../../utils/getRandomColor");
 
+/**
+ * Create Project
+ */
 const createProjectApi = async (req, res, next) => {
   try {
     const { userId, name } = req.body;
@@ -15,9 +19,11 @@ const createProjectApi = async (req, res, next) => {
     if (isProjectAlreadyPresent) {
       throw new Error("Project is already present");
     }
+
     const project = new Project({
       userId,
       name,
+      color: generateRandomColor(),
     });
 
     await project.save();
@@ -29,6 +35,11 @@ const createProjectApi = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Create task
+ */
+
 const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
