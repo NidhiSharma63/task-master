@@ -13,7 +13,6 @@ const TaskComponent = ({
   isLoading,
 }) => {
   const {
-    allTask,
     handleClickOnAddTask,
     handleClickOnLink,
     handleClickOnTask,
@@ -52,7 +51,6 @@ const TaskComponent = ({
         </Box>
         <Stack direction="row" spacing={2} mt={1}>
           {statesOfTaskManager?.map((item, i) => {
-            console.log(totalTask);
             return (
               <Box
                 key={i}

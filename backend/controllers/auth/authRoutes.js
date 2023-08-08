@@ -81,8 +81,8 @@ const loginUser = async (req, res, next) => {
 // logout page
 const logout = async (req, res, next) => {
   try {
-    const email = req?.body?.email;
-    const getUserFromDB = await User.findOne({ email });
+    const userId = req?.body?.userId;
+    const getUserFromDB = await User.findOne({ _id: userId });
     // updating token
     getUserFromDB.token = "";
 

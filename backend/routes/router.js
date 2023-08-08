@@ -13,6 +13,7 @@ const {
   deleteTaskApi,
   getAllTaskFromAllProjectAccordingToStatus,
   updateTaskWithStatus,
+  updateProjectApi,
   updateTaskWithDetail,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
@@ -30,6 +31,7 @@ router.route("/logout").post(logout);
 router.route("/projects").post(checkAuthorization, createProjectApi);
 router.route("/projects").get(checkAuthorization, getProjectApi);
 router.route("/projects").delete(checkAuthorization, deleteProjectApi);
+router.route("/projects").put(checkAuthorization, updateProjectApi);
 
 /**
  * Task Route

@@ -13,6 +13,7 @@ const {
   updateTaskApi,
   updateTaskWithStatus,
   updateTaskWithDetail,
+  updateProjectApi,
 } = require("./api/apiUpdateRoutes");
 
 module.exports = {
@@ -29,4 +30,5 @@ module.exports = {
   getAllTaskFromAllProjectAccordingToStatus,
   updateTaskWithStatus,
   updateTaskWithDetail,
+  updateProjectApi,
 };

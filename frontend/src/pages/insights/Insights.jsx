@@ -6,9 +6,6 @@ import useAllTaskAccordingToSatusQuery from "../../hook/useAllTaskAccordingToSat
 
 const Insights = () => {
   const { status } = useParams();
-  const { useGetTaskQuery } = useAllTaskAccordingToSatusQuery(status);
-  const { data, isLoading } = useGetTaskQuery();
-
   return (
     <Box
       sx={{
@@ -32,7 +29,7 @@ const Insights = () => {
         </Typography>
         <Divider />
       </Box>
-      <InsightsCharts data={data} isLoading={isLoading} status={status} />
+      <InsightsCharts status={status} />
     </Box>
   );
 };

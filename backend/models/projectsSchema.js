@@ -8,6 +8,9 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+  },
 });
 
 const Project = new mongoose.model("Project", projectSchema);

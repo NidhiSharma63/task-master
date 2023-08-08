@@ -95,7 +95,6 @@ const TaskBoxContainer = ({ name, data }) => {
 
   useEffect(() => {
     if (is_task_displayed === true) {
-      console.log("i run each time");
       if (!isTaskAddedFromBottom.current) {
         setTextAreaValuesTop((prevValues) => {
           const copyValues = [...prevValues];

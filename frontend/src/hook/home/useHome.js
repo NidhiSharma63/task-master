@@ -1,16 +1,23 @@
 import { useGetProjectQuery } from "../useProjectQuery";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { generateBackgroundColors } from "../../utils/generateRandomColor";
 import { useGetAllTaskAccordingToStatusForEachProject } from "../useTaskQuery";
 
 const useHome = () => {
   const { data: projectData, isLoading: projectIsLoading } =
     useGetProjectQuery();
+  const [backgroundColors, setBackgroundColors] = useState([]);
 
-  const backgroundColors = useMemo(
-    () => generateBackgroundColors(projectData?.projects || []),
-    [projectData?.projects]
-  );
+  /**
+   * bg colors
+   */
+  useEffect(() => {
+    let bgColors = [];
+    projectData?.projects?.map((item) => {
+      bgColors.push(item.color);
+    });
+    setBackgroundColors(bgColors);
+  }, [projectData]);
 
   /**
    * task data

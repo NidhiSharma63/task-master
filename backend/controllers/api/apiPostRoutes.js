@@ -1,6 +1,10 @@
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
+const generateRandomColor = require("../../utils/getRandomColor");
 
+/**
+ * Create Project
+ */
 const createProjectApi = async (req, res, next) => {
   try {
     const { userId, name } = req.body;
@@ -15,29 +19,43 @@ const createProjectApi = async (req, res, next) => {
     if (isProjectAlreadyPresent) {
       throw new Error("Project is already present");
     }
+
     const project = new Project({
       userId,
       name,
+      color: generateRandomColor(),
     });
 
     await project.save();
-    res.status(201).json({ data: { userId, name } });
+    res.status(201).json({ data: { id: project._id, name } });
+    // await Task.deleteMany({
+    //   projectName: { $exists: true },
+    // });
   } catch (error) {
     next(error);
   }
 };
+
+/**
+ * Create task
+ */
+
 const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
-    console.log(taskBody, "task body");
 
-    const { index } = taskBody;
+    const { index, projectName } = taskBody;
+
     if (index === undefined) {
       throw new Error("Index is not present");
     }
+    // get the project and it's color
+    const project = await Project.findOne({ name: projectName });
+
     // Save the new task
     const taskObj = new Task({
       ...taskBody,
+      color: project.color,
     });
 
     // Find all tasks next to the current posted task
