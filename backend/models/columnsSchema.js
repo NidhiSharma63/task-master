@@ -8,12 +8,12 @@ const columnsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ProjectName: {
+  projectName: {
     type: String,
     required: true,
   },
 });
 
-const column = new mongoose.model("Column", columnsSchema);
+const Column = new mongoose.model("Column", columnsSchema);
 
 module.exports = Column;

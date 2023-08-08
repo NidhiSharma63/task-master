@@ -30,17 +30,34 @@ const createProjectApi = async (req, res, next) => {
     /**
      * create four basic columns
      */
-    const columns = new Column({
-      projectName: name,
-      userId,
-      name: "Todo",
-    });
+    await Column.create([
+      {
+        name: "Todo",
+        projectName: name,
+        userId,
+      },
+      {
+        name: "In priority",
+        projectName: name,
+        userId,
+      },
+      {
+        name: "In progress",
+        projectName: name,
+        userId,
+      },
+      {
+        name: "Done",
+        projectName: name,
+        userId,
+      },
+    ]);
 
     await project.save();
     res.status(201).json({ data: { id: project._id, name } });
-    // await Task.deleteMany({
-    //   projectName: { $exists: true },
-    // });
+    await Task.deleteMany({
+      projectName: { $exists: true },
+    });
   } catch (error) {
     next(error);
   }
