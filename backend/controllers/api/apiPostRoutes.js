@@ -21,7 +21,10 @@ const createProjectApi = async (req, res, next) => {
     });
 
     await project.save();
-    res.status(201).json({ data: { userId, name } });
+    res.status(201).json({ data: { id: project._id, name } });
+    // await Task.deleteMany({
+    //   projectName: { $exists: true },
+    // });
   } catch (error) {
     next(error);
   }
@@ -29,7 +32,6 @@ const createProjectApi = async (req, res, next) => {
 const createTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
-    console.log(taskBody, "task body");
 
     const { index } = taskBody;
     if (index === undefined) {

@@ -165,30 +165,24 @@ const updateTaskWithDetail = async (req, res, next) => {
 
 const updateProjectApi = async (req, res, next) => {
   try {
-    const { _id, name } = req.body;
+    const { _id, name: newProjectName, previousName, userId } = req.body;
 
-    if (!id) {
+    if (!_id) {
       throw new Error("Project id is required");
     }
-    const project = await Project.findOne({ _id });
 
-    if (!project) {
-      throw new Error("Invalid project id");
-    }
+    const findOnep = Project.findOne({ name: previousName, _id });
 
-    project.name = name;
-    project.save();
+    await Project.findOneAndUpdate(
+      { name: previousName, _id },
+      { $set: { name: newProjectName } }
+    );
 
-    const allTaskRelatedToProject = await Task.findMany({
-      projectName: name,
-      userId: _id,
-    });
     // Update the project of the found tasks and save them
-    const updateTasksPromises = allTaskRelatedToProject?.map(async (item) => {
-      item.projectName = name;
-      await item.save();
-    });
-    await Promise.all(updateTasksPromises);
+    const taskToUpdate = await Task.updateMany(
+      { projectName: previousName, userId },
+      { $set: { projectName: newProjectName } }
+    );
 
     res.status(201).json({ msg: "project name updated" });
   } catch (error) {
