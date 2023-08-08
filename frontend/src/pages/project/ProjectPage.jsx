@@ -5,14 +5,30 @@ import { Outlet } from "react-router-dom";
 import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useDispatch } from "react-redux";
 import { isProjectNameModalOpen } from "../../redux/boolean/booleanSlice";
+import { ClipLoader } from "react-spinners";
 
 const ProjectPage = () => {
-  const { data } = useGetProjectQuery();
+  const { data, isLoading } = useGetProjectQuery();
   const dispatch = useDispatch();
 
   const handleOpenProjectModal = () => {
     dispatch(isProjectNameModalOpen(true));
   };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mt: 3,
+        }}
+      >
+        <ClipLoader color="#571159" />
+      </Box>
+    );
+  }
 
   return (
     <Box>
