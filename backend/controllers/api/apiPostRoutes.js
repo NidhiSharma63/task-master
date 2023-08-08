@@ -35,21 +35,25 @@ const createProjectApi = async (req, res, next) => {
         name: "Todo",
         projectName: name,
         userId,
+        index: 0,
       },
       {
         name: "In priority",
         projectName: name,
         userId,
+        index: 1,
       },
       {
         name: "In progress",
         projectName: name,
         userId,
+        index: 2,
       },
       {
         name: "Done",
         projectName: name,
         userId,
+        index: 3,
       },
     ]);
 
@@ -114,10 +118,18 @@ const createTaskApi = async (req, res, next) => {
 const createColumnsApi = async (req, res, next) => {
   try {
     const { userId, projectName, name } = req.body;
+
+    // get all columns count
+    const totalColumns = await Column.countDocuments();
+
+    /**
+     * create column
+     */
     const column = new Column({
       userId,
       projectName,
       name,
+      index: totalColumns,
     });
     await column.save();
 

@@ -13,6 +13,10 @@ const columnsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  index: {
+    type: Number,
+    required: true,
+  },
 });
 
 columnsSchema.plugin(uniqueValidator, {

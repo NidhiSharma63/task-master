@@ -11,6 +11,7 @@ const {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
   getAllTaskFromAllProjectAccordingToStatus,
+  getColumns,
 } = require("./api/apiGetRoutes");
 const { deleteProjectApi, deleteTaskApi } = require("./api/apiDeleteRoutes");
 const {
@@ -36,4 +37,5 @@ module.exports = {
   updateTaskWithDetail,
   updateProjectApi,
   createColumnsApi,
+  getColumns,
 };

@@ -1,3 +1,4 @@
+const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 
@@ -72,9 +73,32 @@ const getAllTaskFromAllProjectAccordingToStatus = async (req, res, next) => {
     next(error);
   }
 };
+/**
+ * get columns
+ */
+
+const getColumns = async (req, res, next) => {
+  try {
+    const { userId, projectName } = req.query;
+    if (!projectName) {
+      throw new Error(" projectName is not present");
+    }
+
+    // select task according to status
+    const columns = await Column.find({
+      userId,
+      projectName,
+    }).sort({ index: 1 });
+
+    res.status(200).json({ data: columns });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
   getAllTaskFromAllProjectAccordingToStatus,
+  getColumns,
 };
