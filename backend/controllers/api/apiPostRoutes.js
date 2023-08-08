@@ -1,3 +1,4 @@
+const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 const generateRandomColor = require("../../utils/getRandomColor");
@@ -24,6 +25,15 @@ const createProjectApi = async (req, res, next) => {
       userId,
       name,
       color: generateRandomColor(),
+    });
+
+    /**
+     * create four basic columns
+     */
+    const columns = new Column({
+      projectName: name,
+      userId,
+      name: "Todo",
     });
 
     await project.save();
