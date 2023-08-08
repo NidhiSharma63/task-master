@@ -13,6 +13,7 @@ import {
 import {
   activeProject,
   projectDataInStore,
+  projectRename,
 } from "../../redux/projects/projectSlice";
 import { setValueToLs } from "../../utils/localstorage";
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../constant/Misc";
@@ -110,7 +111,15 @@ const useLayout = () => {
     setOpenPorjectsIcons(false);
   };
 
-  const handleClickOnRename = () => {};
+  const handleClickOnRename = (projectName, projectId) => {
+    dispatch(
+      projectRename({
+        projectName,
+        projectId,
+      })
+    );
+    dispatch(isProjectNameModalOpen(true));
+  };
   return {
     handleClickOnRename,
     handleClickOnThreeDots,

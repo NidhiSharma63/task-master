@@ -65,5 +65,25 @@ const useDeleteProjectQuery = () => {
 /**
  * query to update project name
  */
+const useUpdateProjectQuery = () => {
+  return useMutation({
+    mutationFn: (payload) => {
+      return customAxiosRequestForPost("/projects", "put", payload);
+    },
+    onSuccess: () => {
+      toast.success("Project name updated successfully!");
+      queryClient.invalidateQueries(["projects"]);
+      queryClient.invalidateQueries(["charts-data"]);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data);
+    },
+  });
+};
 
-export { useGetProjectQuery, usePostProjectQuery, useDeleteProjectQuery };
+export {
+  useGetProjectQuery,
+  useUpdateProjectQuery,
+  usePostProjectQuery,
+  useDeleteProjectQuery,
+};

@@ -24,7 +24,6 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
    * adding colors property and categorising the task and total task
    */
   useEffect(() => {
-    console.log("RUUNING");
     if (!taskData) return;
     const tempData = [];
     const taskWithStatus = [];

@@ -172,21 +172,19 @@ export const Layout = () => {
                             sx={{
                               color: (theme) => theme.palette.primary.main,
                             }}
-                            onClick={handleLogout}
+                            onClick={() =>
+                              handleClickOnRename(item.name, item._id)
+                            }
                           >
-                            <DriveFileRenameOutlineIcon
-                              onClick={handleClickOnRename}
-                            />
+                            <DriveFileRenameOutlineIcon />
                           </MenuItem>
                           <MenuItem
                             sx={{
                               color: (theme) => theme.palette.primary.main,
                             }}
-                            onClick={handleLogout}
+                            onClick={() => handleDelete(item._id)}
                           >
-                            <DeleteIcon
-                              onClick={() => handleDelete(item._id)}
-                            />
+                            <DeleteIcon />
                           </MenuItem>
                         </Menu>
                       </ListItemIcon>
