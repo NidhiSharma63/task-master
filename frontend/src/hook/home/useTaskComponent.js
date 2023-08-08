@@ -25,24 +25,10 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
    */
   useEffect(() => {
     if (!taskData) return;
-    const tempData = [];
     const taskWithStatus = [];
     taskData?.forEach((task, i) => {
-      let index = 0;
       let indexForTask = 0;
-      if (task.length > 0) {
-        task.forEach((task) => {
-          const isAlreadyAddedProjectName = tempData.find(
-            (val) => val.projectName === task.projectName
-          );
-          if (isAlreadyAddedProjectName) {
-            isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
-            tempData.push({ ...task, color: isAlreadyAddedProjectName.color });
-          } else {
-            tempData.push({ ...task, color: backgroundColors[index] });
-            index += 1;
-          }
-        });
+      if (task?.length > 0) {
         task.forEach((task) => {
           const isAlreadyAddedTask = taskWithStatus.find(
             (val) => val.taskName === task.status
@@ -57,7 +43,7 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
       }
     });
 
-    setAllTask(tempData);
+    setAllTask(taskData.flat());
     setTotalTask(taskWithStatus);
   }, [taskData, backgroundColors]);
 
@@ -91,7 +77,7 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
     handleClickOnTask,
     handleClickOnLink,
     getTaskToDisplay,
-    allTask,
+
     totalTask,
   };
 };

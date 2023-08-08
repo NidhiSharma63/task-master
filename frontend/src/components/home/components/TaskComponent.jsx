@@ -13,7 +13,6 @@ const TaskComponent = ({
   isLoading,
 }) => {
   const {
-    allTask,
     handleClickOnAddTask,
     handleClickOnLink,
     handleClickOnTask,
