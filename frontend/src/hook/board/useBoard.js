@@ -29,11 +29,10 @@ const useBoard = () => {
   const navigate = useNavigate();
 
   const { data: columnData } = useGetColumnQuery();
-  console.log(columnData, "::column data:::");
+  const [finalDataWithColumn, setFinalDataWithColumn] = useState([]);
 
   useEffect(() => {
     if (projectData?.projects?.length === 0) {
-      console.log("navigated to /Dashboard");
       navigate("/Dashboard");
     }
   }, [projectData]);
@@ -46,33 +45,50 @@ const useBoard = () => {
   };
 
   useEffect(() => {
-    if (is_updating_task) return;
-    // Only proceed if the data is loaded and not empty.
-    if (!isLoading && data && data.length > 0) {
-      // State and respective setters for each status
+    const allColumns = columnData?.data?.map((item) => ({
+      name: item.name,
+      _id: item._id,
+      tasks: [],
+    }));
 
-      // Iterate over each task status
-      statesOfTaskManager.forEach((taskStatus) => {
-        // Find the corresponding data items for the current task status
-        const items = data.filter((item, i) => status[i] === taskStatus).flat();
-
-        // Get current state and its setter for the status
-        const [currentState, setter] = statusStates[taskStatus];
-
-        // Convert both old and new data items to JSON for comparison
-        const oldItemsJson = JSON.stringify(currentState);
-        const newItemsJson = JSON.stringify(items);
-
-        // If the data items for the current task status have changed...
-        if (oldItemsJson !== newItemsJson) {
-          // ...Update the state with the new data items.
-          setter(items);
+    data?.flat()?.forEach((task) => {
+      allColumns?.forEach((item) => {
+        if (item.name === task.status) {
+          item?.tasks?.push(task);
         }
       });
-      dispatch(isTaskDisplayed(false));
-      dispatch(isUpdatingTask(false));
-    }
-  }, [isLoading, data]);
+    });
+    setFinalDataWithColumn(allColumns);
+  }, [columnData]);
+
+  //   useEffect(() => {
+  //     if (is_updating_task) return;
+  //     // Only proceed if the data is loaded and not empty.
+  //     if (!isLoading && data && data.length > 0) {
+  //       // State and respective setters for each status
+
+  //       // Iterate over each task status
+  //       statesOfTaskManager.forEach((taskStatus) => {
+  //         // Find the corresponding data items for the current task status
+  //         const items = data.filter((item, i) => status[i] === taskStatus).flat();
+
+  //         // Get current state and its setter for the status
+  //         const [currentState, setter] = statusStates[taskStatus];
+
+  //         // Convert both old and new data items to JSON for comparison
+  //         const oldItemsJson = JSON.stringify(currentState);
+  //         const newItemsJson = JSON.stringify(items);
+
+  //         // If the data items for the current task status have changed...
+  //         if (oldItemsJson !== newItemsJson) {
+  //           // ...Update the state with the new data items.
+  //           setter(items);
+  //         }
+  //       });
+  //       dispatch(isTaskDisplayed(false));
+  //       dispatch(isUpdatingTask(false));
+  //     }
+  //   }, [isLoading, data]);
 
   const hanldeDragEnd = (result) => {
     const { source, destination } = result;
@@ -222,6 +238,8 @@ const useBoard = () => {
     inProgress,
     inPrority,
     inDone,
+    columnData,
+    finalDataWithColumn,
   };
 };
 

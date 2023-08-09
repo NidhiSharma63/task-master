@@ -6,7 +6,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "../../hook/board/useBoard";
 
 const Board = () => {
-  const { hanldeDragEnd, inTodo, inProgress, inPrority, inDone } = useBoard();
+  const { hanldeDragEnd, finalDataWithColumn } = useBoard();
 
   return (
     <Grid
@@ -21,10 +21,15 @@ const Board = () => {
       }}
     >
       <DragDropContext onDragEnd={hanldeDragEnd}>
-        <TaskBoxConatiner name={"Todo"} data={inTodo} />
-        <TaskBoxConatiner name={"In progress"} data={inProgress} />
-        <TaskBoxConatiner name={"In priority"} data={inPrority} />
-        <TaskBoxConatiner name={"Done"} data={inDone} />
+        {finalDataWithColumn?.map((item) => {
+          return (
+            <TaskBoxConatiner
+              key={item._id}
+              name={item.name}
+              data={item.tasks}
+            />
+          );
+        })}
         <BoardDrawer />
       </DragDropContext>
     </Grid>
