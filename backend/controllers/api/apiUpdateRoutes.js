@@ -151,6 +151,7 @@ const updateTaskWithDetail = async (req, res, next) => {
     taskObj.status = taskBody.status;
     taskObj.dueDate = taskBody.dueDate;
     taskObj.description = taskBody.description;
+    taskObj.subTasks = taskBody.subTasks;
 
     await taskObj.save();
     res.json({ data: taskObj });
