@@ -1,42 +1,11 @@
-import { Field, FieldArray, useFormikContext } from "formik";
+import { Field, FieldArray } from "formik";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useCallback, useEffect } from "react";
+import useFormikInput from "../../hook/boardDrawer/useFormikInput";
 
 const FormikInputArray = (props) => {
   const { name } = props;
-  const { values, setFieldValue } = useFormikContext();
-
-  const removeAllEmptyField = useCallback(() => {
-    if (name) {
-      const allValuesOfSubtasks = values?.[name] ?? [];
-      if (allValuesOfSubtasks?.length > 0) {
-        // filterOut All the values that are no empty
-        const allNonEmptyValues = allValuesOfSubtasks?.filter(
-          (val) => val.trim() !== ""
-        );
-        setFieldValue(name, allNonEmptyValues);
-      }
-    }
-  }, [values, setFieldValue, name]);
-
-  useEffect(() => {
-    const windowEvent = (e) => {
-      if (
-        e.target?.classList?.contains("not-remove-input") ||
-        e.target?.child?.classList?.contains("not-remove-input") ||
-        e.target.tagName === "INPUT" ||
-        e.target.tagName === ""
-      ) {
-        return;
-      }
-      removeAllEmptyField();
-    };
-    window.addEventListener("click", windowEvent);
-    return () => {
-      window.removeEventListener("click", windowEvent);
-    };
-  }, [removeAllEmptyField]);
+  const { values } = useFormikInput(name);
 
   return (
     <Box
