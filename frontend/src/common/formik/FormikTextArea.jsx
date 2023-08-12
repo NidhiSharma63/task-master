@@ -20,9 +20,8 @@ const FormikTextArea = (props) => {
               {...field}
               multiline
               {...rest}
-              rows={8}
+              rows={5}
               sx={{
-                height: "9rem",
                 width: "100%",
               }}
             />
