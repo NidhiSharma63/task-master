@@ -3,6 +3,7 @@ import FormikInput from "./FormikInput";
 import FormikDatePicker from "./FormikDatePicker";
 import FormikTextArea from "./FormikTextArea";
 import FormikSelect from "./FormikSelect";
+import FormikInputArray from "./FormikInputArray";
 
 const FormikControls = (props) => {
   const { control, ...rest } = props;
@@ -17,6 +18,8 @@ const FormikControls = (props) => {
       return <FormikTextArea {...rest} />;
     case "formikSelect":
       return <FormikSelect {...rest} />;
+    case "formikInputArray":
+      return <FormikInputArray {...rest} />;
     default:
       return null;
   }

@@ -38,7 +38,8 @@ const BoardDrawer = () => {
     dueDate: new Date(active_task?.dueDate) ?? null,
     userId: active_task.userId,
     status: active_task.status,
-    description: active_task?.description,
+    description: active_task?.description ?? "",
+    subTasks: active_task?.subTasks ?? "",
   };
 
   const handleSubmit = (values) => {
@@ -106,7 +107,9 @@ const BoardDrawer = () => {
                 <FormikControls control="formikInput" name="task" />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
-                <Box sx={{ mt: 11, display: "flex" }}>
+                <FormikControls control="formikInputArray" name="subTasks" />
+
+                <Box sx={{ mt: 2, display: "flex" }}>
                   <Typography sx={{ fontWeight: 600 }}>
                     Created At : &nbsp;
                   </Typography>
