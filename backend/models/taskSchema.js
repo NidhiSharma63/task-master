@@ -33,6 +33,7 @@ const taskSchema = new mongoose.Schema({
   color: {
     type: String,
   },
+  subTasks: [],
 });
 
 const Task = new mongoose.model("Task", taskSchema);
