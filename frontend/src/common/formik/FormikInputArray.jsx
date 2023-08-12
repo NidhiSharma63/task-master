@@ -1,5 +1,6 @@
 import { Field, FieldArray, useFormikContext } from "formik";
 import { Box, Button, TextField } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const FormikInputArray = (props) => {
   const { name } = props;
@@ -25,11 +26,29 @@ const FormikInputArray = (props) => {
                   <Field name={`${name}.${index}`} key={index}>
                     {({ field }) => {
                       return (
-                        <TextField
-                          sx={{ width: "100%" }}
-                          {...field}
-                          value={val}
-                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            // border: "1px solid red",
+                            width: "100%",
+                            gap: 2,
+                          }}
+                        >
+                          <TextField
+                            sx={{ width: "100%" }}
+                            {...field}
+                            value={val}
+                          />
+                          <DeleteOutlineIcon
+                            sx={{
+                              cursor: "pointer",
+                              color: (theme) => theme.palette.primary.main,
+                            }}
+                            onClick={() => arrayHelpers.remove(index)}
+                          />
+                        </Box>
                       );
                     }}
                   </Field>
@@ -40,7 +59,7 @@ const FormikInputArray = (props) => {
               variant="outlined"
               onClick={() => arrayHelpers.push("")}
             >
-              Add a friend
+              Sub task
             </Button>
           </>
         )}
