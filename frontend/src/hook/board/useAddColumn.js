@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { usePostColumnQuery } from "../useColumnQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
 import { useSelector } from "react-redux";
-import useBoard from "./useBoard";
-import { toast } from "react-toastify";
 
 const useAddColumn = ({ setIsAddColBtnClicked }) => {
   const [colsValue, setColsValue] = useState("");
-  const { mutate: submitCols, mutateAsync } = usePostColumnQuery();
+  const { mutateAsync } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
 
   const handleColsValue = (event) => {
@@ -37,7 +35,7 @@ const useAddColumn = ({ setIsAddColBtnClicked }) => {
     return () => {
       window.removeEventListener("click", handleColsSubmit);
     };
-  }, [active_project, colsValue, submitCols]);
+  }, [active_project, colsValue, mutateAsync, setIsAddColBtnClicked]);
 
   return {
     colsValue,
