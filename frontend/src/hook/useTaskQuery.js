@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
 import { queryKeyForTask } from "../constant/queryKey";
 import { isTaskDisplayed, isUpdatingTask } from "../redux/boolean/booleanSlice";
-
+import { useMemo } from "react";
 /**
  *
  * @returns Post request for adding task with status
@@ -61,11 +61,14 @@ const useGetTaskAccordingToStatus = () => {
     }),
   });
 
-  const data = userQueries?.map((item) => item?.data?.data);
-  const isLoading = userQueries?.[0]?.isLoading;
-  const status = userQueries?.map((item) => item?.data?.status);
+  const data = useMemo(
+    () => userQueries?.map((item) => item?.data?.data),
+    [userQueries]
+  );
+  // const isLoading = userQueries?.[0]?.isLoading;
+  // const status = userQueries?.map((item) => item?.data?.status);
 
-  return { data, status, isLoading };
+  return { data };
 };
 
 /**

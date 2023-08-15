@@ -2,12 +2,13 @@ import { Grid } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import BoardDrawer from "../../components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
-
 import useBoard from "../../hook/board/useBoard";
 
 const Board = () => {
-  const { hanldeDragEnd, finalDataWithColumn } = useBoard();
+  const { finalState } = useBoard();
 
+  console.log(finalState, ":::columnDataWithTaskProperty");
+  const hanldeDragEnd = () => {};
   return (
     <Grid
       container
@@ -21,7 +22,7 @@ const Board = () => {
       }}
     >
       <DragDropContext onDragEnd={hanldeDragEnd}>
-        {finalDataWithColumn?.map((item) => {
+        {finalState?.map((item) => {
           return (
             <TaskBoxConatiner
               key={item._id}
