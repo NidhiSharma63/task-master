@@ -1,11 +1,21 @@
-import { Grid, Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import BoardDrawer from "../../components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "../../hook/board/useBoard";
+import useAddColumn from "../../hook/board/useAddColumn";
 
 const Board = () => {
-  const { finalState } = useBoard();
+  const {
+    finalState,
+    isAddColBtnClicked,
+    handleClickOnAddColsBtn,
+    setIsAddColBtnClicked,
+  } = useBoard();
+
+  const { colsValue, handleColsValue } = useAddColumn({
+    setIsAddColBtnClicked,
+  });
 
   const hanldeDragEnd = () => {};
   return (
@@ -14,7 +24,7 @@ const Board = () => {
       gap={2}
       sx={{
         position: "relative",
-        height: "calc(100vh - 160px)",
+        height: "calc(100vh - 180px)",
         marginTop: 8,
         width: "1115px",
         pl: 3,
@@ -37,9 +47,22 @@ const Board = () => {
       </DragDropContext>
 
       <Box item sx={{ height: "100%", minWidth: "250px" }}>
-        <Button sx={{ ml: 1 }} variant="contained">
-          Add Column
-        </Button>
+        {isAddColBtnClicked ? (
+          <textarea
+            value={colsValue}
+            className="textarea-col"
+            onChange={handleColsValue}
+          ></textarea>
+        ) : (
+          <Button
+            sx={{ ml: 1 }}
+            variant="contained"
+            onClick={handleClickOnAddColsBtn}
+          >
+            Add Section
+          </Button>
+        )}
+
         <Box
           sx={{
             // border: "1px solid red",

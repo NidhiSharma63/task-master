@@ -53,3 +53,8 @@
   outline: none;
   border: 2px solid rgb(87, 17, 89);
 }
+
+.textarea-col {
+  resize: none;
+  padding: 0.1rem;
+}

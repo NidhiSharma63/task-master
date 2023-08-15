@@ -19,7 +19,7 @@ const usePostColumnQuery = () => {
       return customAxiosRequestForPost("/column", "post", payload);
     },
     onSuccess: () => {
-      toast.success("Column created successfully!");
+      toast.success("Section created successfully!");
       queryClient.invalidateQueries("projects");
       queryKeyForTask.forEach((status) =>
         queryClient.invalidateQueries(status)
@@ -27,7 +27,7 @@ const usePostColumnQuery = () => {
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
-      toast.error(error?.response?.data?.error);
+      toast.error(error?.response?.data);
     },
   });
 };

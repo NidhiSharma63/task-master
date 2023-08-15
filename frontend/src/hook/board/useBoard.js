@@ -18,6 +18,7 @@ import { useGetColumnQuery } from "../useColumnQuery";
 const useBoard = () => {
   const { data: columnData } = useGetColumnQuery();
   const { data } = useGetTaskAccordingToStatus();
+  const [isAddColBtnClicked, setIsAddColBtnClicked] = useState(false);
 
   const columnDataWithTaskProperty = useMemo(() => {
     return columnData?.data?.map((item) => ({
@@ -34,8 +35,15 @@ const useBoard = () => {
     }));
   }, [columnDataWithTaskProperty, data]);
 
+  const handleClickOnAddColsBtn = () => {
+    setIsAddColBtnClicked(true);
+  };
+
   return {
     finalState,
+    isAddColBtnClicked,
+    handleClickOnAddColsBtn,
+    setIsAddColBtnClicked,
   };
 };
 
