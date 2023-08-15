@@ -126,7 +126,7 @@ const TaskBoxContainer = ({ name, data }) => {
   };
 
   return (
-    <Grid item xs={2.8} sx={{ height: "100%" }}>
+    <Box sx={{ height: "100%", minWidth: "250px" }}>
       <Box
         sx={{
           padding: "0 .7rem",
@@ -235,7 +235,7 @@ const TaskBoxContainer = ({ name, data }) => {
           );
         }}
       </Droppable>
-    </Grid>
+    </Box>
   );
 };
 export default TaskBoxContainer;
