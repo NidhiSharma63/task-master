@@ -4,7 +4,12 @@ import { projectDataInStore } from "../../redux/projects/projectSlice";
 import { useSelector } from "react-redux";
 import { useUpdateColumnName } from "../useColumnQuery";
 
-const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId }) => {
+const useAddColumn = ({
+  setIsAddColBtnClicked,
+  isColsRename,
+  colId,
+  prevColName,
+}) => {
   const [colsValue, setColsValue] = useState("");
   const { mutateAsync } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
@@ -15,7 +20,7 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId }) => {
   };
 
   useEffect(() => {
-    if (colsValue?.trim()?.length <= 0 && !isColsRename) return;
+    if (colsValue?.trim()?.length <= 0) return;
 
     const handleColsSubmit = (event) => {
       /** click on outside of texarea */
@@ -38,7 +43,11 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId }) => {
          * update cols value
          */
         if (isColsRename) {
-          updateColsname({ name: colsValue, _id: colId })
+          updateColsname({
+            name: colsValue,
+            _id: colId,
+            previousColName: prevColName,
+          })
             .then(() => {
               setIsAddColBtnClicked(false);
               setColsValue("");
@@ -61,6 +70,7 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId }) => {
     colId,
     updateColsname,
     isColsRename,
+    prevColName,
   ]);
 
   return {

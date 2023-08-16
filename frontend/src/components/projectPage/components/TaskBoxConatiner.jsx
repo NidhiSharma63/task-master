@@ -32,6 +32,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     setIsAddColBtnClicked: setIsColsRename,
     isColsRename,
     colId,
+    prevColName: name,
   });
 
   const { deleteColumn } = useDeleteColumn({ colId });
