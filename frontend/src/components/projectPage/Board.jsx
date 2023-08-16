@@ -11,13 +11,13 @@ const Board = () => {
     isAddColBtnClicked,
     handleClickOnAddColsBtn,
     setIsAddColBtnClicked,
+    handleDragEnd,
   } = useBoard();
 
   const { colsValue, handleColsValue } = useAddColumn({
     setIsAddColBtnClicked,
   });
 
-  const hanldeDragEnd = () => {};
   return (
     <Box
       container
@@ -33,7 +33,7 @@ const Board = () => {
         alignItems: "center",
       }}
     >
-      <DragDropContext onDragEnd={hanldeDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         {finalState?.map((item) => {
           return (
             <TaskBoxConatiner

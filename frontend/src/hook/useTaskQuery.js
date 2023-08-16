@@ -47,7 +47,6 @@ const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
   const { total_status } = useSelector(statusDataInStore);
 
-  console.log(total_status, "::::total_status::::");
   const userQueries = useQueries({
     queries: total_status?.map((status) => {
       return {
