@@ -193,6 +193,91 @@ const useBoard = () => {
       // setShowRerender(true);
       dispatch(isUpdatingTask(true));
       updateTaskWithIndex(updateTaskForBE);
+    } else {
+      // find in which row task is drag and dropped
+      // Get current state and its setter for the status
+      const columnWhereTaskIsDragAndDrop = finalState.filter(
+        (item) => item.name === destination.droppableId
+      );
+
+      /**
+       * source tasks
+       */
+      const sourceOfTask = finalState.filter(
+        (item) => item.name === source.droppableId
+      );
+
+      // find which task is moved
+      const movedTask = sourceOfTask[0]?.tasks[source.index];
+
+      // for payload
+      const updateTask = {
+        ...movedTask,
+        status: destination.droppableId,
+        currentIndex: destination.index,
+        prevStatus: source.droppableId,
+        prevIndex: source.index,
+      };
+      updateTaskWithStatus(updateTask);
+
+      // for local
+      const updateTaskInDestination = {
+        ...movedTask,
+        index: destination.index,
+        status: destination.droppableId,
+      };
+
+      // remove the task from Active state and update the index
+
+      const updatedIndexOfTaskInRangeOfSource = sourceOfTask[0]?.tasks
+        ?.map((item) => {
+          if (item.index === source.index) {
+            // Skip the item with the same index as the source index
+            return null; // Or return any unique value that won't be present in the actual data
+          } else if (item.index > source.index) {
+            return { ...item, index: item.index - 1 };
+          } else {
+            return item;
+          }
+        })
+        .filter((item) => item !== null) // Filter out the skipped items directly
+        .sort((a, b) => a.index - b.index);
+
+      // add the task into destination state and update the index
+      const updatedIndexOfTaskInRangeOfDestination =
+        columnWhereTaskIsDragAndDrop[0]?.tasks?.map((item) => {
+          if (item.index >= source.index) {
+            return { ...item, index: item.index + 1 };
+          } else {
+            return item;
+          }
+        });
+
+      const finalArrayWithDroppedTask = [
+        ...updatedIndexOfTaskInRangeOfDestination,
+        updateTaskInDestination,
+      ].sort((a, b) => a.index - b.index);
+
+      console.log(
+        finalArrayWithDroppedTask,
+        ":::final array with dropped task"
+      );
+      /**
+       * final update
+       */
+
+      const updatedValues = allTasksWithColumns.map((item) => {
+        if (item.name === destination.droppableId) {
+          return { ...item, tasks: finalArrayWithDroppedTask };
+        }
+        if (item.name === source.droppableId) {
+          return { ...item, tasks: updatedIndexOfTaskInRangeOfSource };
+        }
+        return item; // Return unchanged item for other columns
+      });
+      setFff(updatedValues);
+      dispatch(isUpdatingTask(true));
+      console.log(updatedValues, "::::updatedValues:::");
     }
   };
 
