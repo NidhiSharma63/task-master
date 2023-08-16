@@ -14,19 +14,34 @@
 import { useEffect, useState, useMemo } from "react";
 import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
 import { useGetColumnQuery } from "../useColumnQuery";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { totalStatus } from "../../redux/status/statusSlice";
+import {
+  booleanDataInStore,
+  isUpdatingTask,
+} from "../../redux/boolean/booleanSlice";
+import {
+  useUpdateTaskQueryWithStatus,
+  useUpdateTaskQuery,
+} from "../../hook/useTaskQuery";
 
 const useBoard = () => {
   const { data: columnData } = useGetColumnQuery();
+  const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
   const { data } = useGetTaskAccordingToStatus();
   const [isAddColBtnClicked, setIsAddColBtnClicked] = useState(false);
   const dispatch = useDispatch();
+  const { is_updating_task } = useSelector(booleanDataInStore);
+  const [fff, setFff] = useState([]);
+  const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
+  /**
+   * when ever value get's true set it to false
+   */
 
   /**
    * return colum data with adding tasks property
    */
-  const columnDataWithTaskProperty = useMemo(() => {
+  let columnDataWithTaskProperty = useMemo(() => {
     return columnData?.data?.map((item) => ({
       name: item.name,
       _id: item._id,
@@ -47,12 +62,15 @@ const useBoard = () => {
   /**
    * add the task in each columns or status
    */
-  const finalState = useMemo(() => {
+  let finalState = useMemo(() => {
+    if (is_updating_task) {
+      return fff;
+    }
     return columnDataWithTaskProperty?.map((column) => ({
       ...column,
       tasks: data.flat().filter((task) => task?.status === column.name),
     }));
-  }, [columnDataWithTaskProperty, data]);
+  }, [columnDataWithTaskProperty, data, is_updating_task, fff]);
 
   /**
    * handle dispaly column button
@@ -66,6 +84,8 @@ const useBoard = () => {
    */
   const handleDragEnd = (result) => {
     const { source, destination } = result;
+    const allTasksWithColumns = finalState;
+    let finalStateOfTask = [];
     if (!destination) return;
 
     /**
@@ -95,7 +115,6 @@ const useBoard = () => {
       };
 
       // now update the local state as well
-      let finalStateOfTask = [];
 
       /**
        * get all the task ( task is moving from top to bottom )
@@ -121,7 +140,17 @@ const useBoard = () => {
           updateTaskForLocal,
         ].sort((a, b) => a.index - b.index);
 
-        console.log(finalStateOfTask);
+        /**
+         * update the task in array as well
+         */
+        const updatedValues = allTasksWithColumns.map((item) => {
+          if (item.name === destination.droppableId) {
+            return { ...item, tasks: finalStateOfTask };
+          }
+          return item; // Return unchanged item for other columns
+        });
+        console.log(updatedValues, "::::::allTaskWithColumns");
+        setFff(updatedValues);
       } else {
         /**
          * if task is moving from bottom to top
@@ -152,14 +181,22 @@ const useBoard = () => {
           ...allTaskToUpdate,
           updateTaskForLocal,
         ].sort((a, b) => a.index - b.index);
-        console.log(finalStateOfTask, "from bottom to top");
-      }
 
-      // const movedTask = finalState[destination.droppableId];
-      // console.log(movedTask);
+        const updatedValues = allTasksWithColumns.map((item) => {
+          if (item.name === destination.droppableId) {
+            return { ...item, tasks: finalStateOfTask };
+          }
+          return item; // Return unchanged item for other columns
+        });
+        setFff(updatedValues);
+      }
+      // setShowRerender(true);
+      dispatch(isUpdatingTask(true));
+      updateTaskWithIndex(updateTaskForBE);
     }
   };
 
+  // console.log(finalState, ":::::::::column Data::::::::::");
   return {
     finalState,
     isAddColBtnClicked,
