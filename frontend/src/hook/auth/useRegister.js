@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { registerSchema } from "../../constant/validation";
 
 const useRegister = () => {
-  const { mutate } = useRegisterQuery();
+  const { mutate, isLoading } = useRegisterQuery();
   const initialValues = {
     email: "",
     password: "",
@@ -43,6 +43,7 @@ const useRegister = () => {
     handleSubmit,
     initialValues,
     setValuesOfForm,
+    isLoading,
   };
 };
 

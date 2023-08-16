@@ -12,11 +12,32 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
-
+import { ClipLoader } from "react-spinners";
 import useLogin from "../../hook/auth/useLogin";
 
 const Login = () => {
-  const { handleSubmit, initialValues, setFormValues } = useLogin();
+  const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          variant="h5"
+          sx={{ color: (theme) => theme.palette.primary.main }}
+        >
+          Redirecting...
+        </Typography>
+        <ClipLoader />
+      </Box>
+    );
+  }
 
   return (
     <Grid container sx={{ height: "100vh" }}>

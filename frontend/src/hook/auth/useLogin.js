@@ -8,7 +8,7 @@ import { loginSchema } from "../../constant/validation";
 const useLogin = () => {
   const navigate = useNavigate();
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
-  const { mutate } = useLoginQuery();
+  const { mutate, isLoading } = useLoginQuery();
   const [formValues, setFormValues] = useState({});
 
   useEffect(() => {
@@ -56,6 +56,7 @@ const useLogin = () => {
     handleSubmit,
     setFormValues,
     initialValues,
+    isLoading,
   };
 };
 

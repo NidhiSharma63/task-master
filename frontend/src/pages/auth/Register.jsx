@@ -13,9 +13,32 @@ import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
 import useRegister from "../../hook/auth/useRegister";
+import { ClipLoader } from "react-spinners";
 
 const Register = () => {
-  const { handleSubmit, initialValues, setValuesOfForm } = useRegister();
+  const { handleSubmit, initialValues, isLoading, setValuesOfForm } =
+    useRegister();
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          variant="h5"
+          sx={{ color: (theme) => theme.palette.primary.main }}
+        >
+          Redirecting...
+        </Typography>
+        <ClipLoader />
+      </Box>
+    );
+  }
 
   return (
     <Grid container sx={{ height: "100vh" }}>
