@@ -7,6 +7,7 @@ import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAddColumn from "../../../hook/board/useAddColumn";
+import useDeleteColumn from "../../../hook/board/useDeleteColumn";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -24,7 +25,6 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     textAreaValuesTop,
     anchorElForColumnIcons,
     openColsIcons,
-    handleDelete,
     isColsRename,
   } = useTaskBoxContainer({ data, name });
 
@@ -33,6 +33,8 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     isColsRename,
     colId,
   });
+
+  const { deleteColumn } = useDeleteColumn({ colId });
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -77,7 +79,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               sx={{
                 color: (theme) => theme.palette.primary.main,
               }}
-              onClick={() => handleClickOnRename(colId)}
+              onClick={handleClickOnRename}
             >
               <DriveFileRenameOutlineIcon />
             </MenuItem>
@@ -85,7 +87,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               sx={{
                 color: (theme) => theme.palette.primary.main,
               }}
-              onClick={() => handleDelete()}
+              onClick={deleteColumn}
             >
               <DeleteIcon />
             </MenuItem>

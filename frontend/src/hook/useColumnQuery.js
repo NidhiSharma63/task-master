@@ -79,4 +79,33 @@ const useUpdateColumnName = () => {
   });
 };
 
-export { usePostColumnQuery, useGetColumnQuery, useUpdateColumnName };
+/**
+ * delete col name
+ */
+
+const useDeleteColumnName = () => {
+  return useMutation({
+    mutationFn: (payload) => {
+      return customAxiosRequestForPost("/column", "delete", payload);
+    },
+    onSuccess: () => {
+      toast.success("Section deleted successfully!");
+      queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries("column");
+      queryKeyForTask.forEach((status) =>
+        queryClient.invalidateQueries(status)
+      );
+      queryClient.invalidateQueries(["charts-data"]);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data);
+    },
+  });
+};
+
+export {
+  usePostColumnQuery,
+  useGetColumnQuery,
+  useUpdateColumnName,
+  useDeleteColumnName,
+};
