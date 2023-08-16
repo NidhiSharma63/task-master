@@ -12,21 +12,22 @@ import { projectDataInStore } from "../redux/projects/projectSlice";
 import { queryKeyForTask } from "../constant/queryKey";
 import { isTaskDisplayed, isUpdatingTask } from "../redux/boolean/booleanSlice";
 import { useMemo } from "react";
+import { statusDataInStore } from "../redux/status/statusSlice";
 /**
  *
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
   const dispatch = useDispatch();
+  const { total_status } = useSelector(statusDataInStore);
+
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/task", "post", payload);
     },
     onSuccess: () => {
       toast.success("Task created successfully!");
-      queryKeyForTask.forEach((status) =>
-        queryClient.invalidateQueries(status)
-      );
+      total_status.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {
         dispatch(isTaskDisplayed(true));
@@ -44,9 +45,11 @@ const useAddTaskQuery = () => {
  */
 const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
+  const { total_status } = useSelector(statusDataInStore);
 
+  console.log(total_status, "::::total_status::::");
   const userQueries = useQueries({
-    queries: statesOfTaskManager.map((status) => {
+    queries: total_status?.map((status) => {
       return {
         queryKey: [status, active_project],
         queryFn: () =>
@@ -78,6 +81,7 @@ const useGetTaskAccordingToStatus = () => {
 
 const useUpdateTaskQuery = () => {
   const dispatch = useDispatch();
+
   let state;
   return useMutation({
     mutationFn: (payload) => {

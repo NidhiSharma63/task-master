@@ -7,7 +7,7 @@ const statusSlice = createSlice({
   },
   reducers: {
     totalStatus: (state, action) => {
-      state.active_project = action.payload;
+      state.total_status = action.payload;
     },
   },
 });

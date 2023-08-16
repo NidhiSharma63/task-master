@@ -6,14 +6,15 @@ import {
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../index";
-import { queryKeyForTask } from "../constant/queryKey";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
+import { statusDataInStore } from "../redux/status/statusSlice";
 
 /**
  * use post column query
  */
 const usePostColumnQuery = () => {
+  const { total_status } = useSelector(statusDataInStore);
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "post", payload);
@@ -21,9 +22,7 @@ const usePostColumnQuery = () => {
     onSuccess: () => {
       toast.success("Section created successfully!");
       queryClient.invalidateQueries("projects");
-      queryKeyForTask.forEach((status) =>
-        queryClient.invalidateQueries(status)
-      );
+      total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
@@ -60,6 +59,8 @@ const useGetColumnQuery = () => {
  */
 
 const useUpdateColumnName = () => {
+  const { total_status } = useSelector(statusDataInStore);
+
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "put", payload);
@@ -68,9 +69,7 @@ const useUpdateColumnName = () => {
       toast.success("Section updated successfully!");
       queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries("column");
-      queryKeyForTask.forEach((status) =>
-        queryClient.invalidateQueries(status)
-      );
+      total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
@@ -84,6 +83,8 @@ const useUpdateColumnName = () => {
  */
 
 const useDeleteColumnName = () => {
+  const { total_status } = useSelector(statusDataInStore);
+
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "delete", payload);
@@ -92,9 +93,7 @@ const useDeleteColumnName = () => {
       toast.success("Section deleted successfully!");
       queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries("column");
-      queryKeyForTask.forEach((status) =>
-        queryClient.invalidateQueries(status)
-      );
+      total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {

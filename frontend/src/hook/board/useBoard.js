@@ -14,11 +14,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
 import { useGetColumnQuery } from "../useColumnQuery";
+import { useDispatch } from "react-redux";
+import { totalStatus } from "../../redux/status/statusSlice";
 
 const useBoard = () => {
   const { data: columnData } = useGetColumnQuery();
   const { data } = useGetTaskAccordingToStatus();
   const [isAddColBtnClicked, setIsAddColBtnClicked] = useState(false);
+  const dispatch = useDispatch();
 
   const columnDataWithTaskProperty = useMemo(() => {
     return columnData?.data?.map((item) => ({
@@ -27,6 +30,13 @@ const useBoard = () => {
       tasks: [],
     }));
   }, [columnData]);
+
+  useEffect(() => {
+    const onlyColumns = columnData?.data?.map((item) => item.name);
+    if (onlyColumns) {
+      dispatch(totalStatus(onlyColumns));
+    }
+  }, [columnData, dispatch]);
 
   const finalState = useMemo(() => {
     return columnDataWithTaskProperty?.map((column) => ({
