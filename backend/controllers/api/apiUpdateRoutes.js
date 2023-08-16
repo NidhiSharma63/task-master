@@ -197,8 +197,9 @@ const updateProjectApi = async (req, res, next) => {
 
 const updateColumnName = async (req, res, next) => {
   try {
-    const { _id, name } = req.body;
+    const { _id, name, previousColName, userId } = req.body;
 
+    console.log(name, previousColName, userId);
     /**
      * update the column
      */
@@ -211,8 +212,8 @@ const updateColumnName = async (req, res, next) => {
     /**
      * update the tasks as well
      */
-    await Task.updateMany(
-      { status: previousColsName, userId },
+    const task = await Task.updateMany(
+      { status: previousColName, userId },
       { $set: { status: name } }
     );
 
