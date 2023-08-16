@@ -1,4 +1,11 @@
-import { Box, Button, Typography, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import colors from "../../../theme/variables";
 import { Draggable, Droppable } from "react-beautiful-dnd";
@@ -26,6 +33,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     anchorElForColumnIcons,
     openColsIcons,
     isColsRename,
+    isLoading,
   } = useTaskBoxContainer({ data, name });
 
   const { colsValue, handleColsValue } = useAddColumn({
@@ -58,14 +66,17 @@ const TaskBoxContainer = ({ name, data, colId }) => {
             {name}
           </Typography>
         )}
-        <Box>
-          <AddIcon
-            onClick={handleAddTask}
-            sx={{
-              cursor: "pointer",
-              color: (theme) => theme.palette.primary.main,
-            }}
-          />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <IconButton disabled={isLoading}>
+            {" "}
+            <AddIcon
+              onClick={handleAddTask}
+              sx={{
+                cursor: "pointer",
+                color: (theme) => theme.palette.primary.main,
+              }}
+            />
+          </IconButton>
           <MoreVertIcon
             sx={{ cursor: "pointer" }}
             onClick={handleClickOnThreeDots}
@@ -175,6 +186,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               {data?.length > 0 ? (
                 <Button
                   variant="contained"
+                  disabled={isLoading}
                   onClick={handleClickForAddingTaskFromBottom}
                 >
                   Add Task

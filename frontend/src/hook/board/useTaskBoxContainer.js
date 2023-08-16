@@ -22,7 +22,7 @@ const useTaskBoxContainer = ({ data, name }) => {
   const isTaskAddedFromBottom = useRef(null);
   const [isColsRename, setIsColsRename] = useState(false);
 
-  const { mutate } = useAddTaskQuery();
+  const { mutate, isLoading } = useAddTaskQuery();
 
   /**
    * add task to top
@@ -182,6 +182,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     anchorElForColumnIcons,
     openColsIcons,
     isColsRename,
+    isLoading,
   };
 };
 
