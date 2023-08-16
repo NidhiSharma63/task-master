@@ -40,7 +40,7 @@ const useGetProjectQuery = () => {
     queryKey: ["projects"],
     queryFn: getAllProjects,
     onError: (error) => {
-      toast.error(error?.response?.data?.error);
+      toast.error(error?.response?.data);
     },
   });
 };

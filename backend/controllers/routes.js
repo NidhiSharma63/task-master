@@ -2,18 +2,28 @@
 
 const { registerUser, loginUser, logout } = require("./auth/authRoutes");
 
-const { createProjectApi, createTaskApi } = require("./api/apiPostRoutes");
+const {
+  createProjectApi,
+  createTaskApi,
+  createColumnsApi,
+} = require("./api/apiPostRoutes");
 const {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
   getAllTaskFromAllProjectAccordingToStatus,
+  getColumns,
 } = require("./api/apiGetRoutes");
-const { deleteProjectApi, deleteTaskApi } = require("./api/apiDeleteRoutes");
+const {
+  deleteProjectApi,
+  deleteTaskApi,
+  deleteColumn,
+} = require("./api/apiDeleteRoutes");
 const {
   updateTaskApi,
   updateTaskWithStatus,
   updateTaskWithDetail,
   updateProjectApi,
+  updateColumnName,
 } = require("./api/apiUpdateRoutes");
 
 module.exports = {
@@ -31,4 +41,8 @@ module.exports = {
   updateTaskWithStatus,
   updateTaskWithDetail,
   updateProjectApi,
+  createColumnsApi,
+  getColumns,
+  deleteColumn,
+  updateColumnName,
 };

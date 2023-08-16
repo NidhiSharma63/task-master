@@ -1,3 +1,4 @@
+const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 const generateRandomColor = require("../../utils/getRandomColor");
@@ -26,11 +27,41 @@ const createProjectApi = async (req, res, next) => {
       color: generateRandomColor(),
     });
 
+    /**
+     * create four basic columns
+     */
+    await Column.create([
+      {
+        name: "Todo",
+        projectName: name,
+        userId,
+        index: 0,
+      },
+      {
+        name: "In priority",
+        projectName: name,
+        userId,
+        index: 1,
+      },
+      {
+        name: "In progress",
+        projectName: name,
+        userId,
+        index: 2,
+      },
+      {
+        name: "Done",
+        projectName: name,
+        userId,
+        index: 3,
+      },
+    ]);
+
     await project.save();
     res.status(201).json({ data: { id: project._id, name } });
-    // await Task.deleteMany({
-    //   projectName: { $exists: true },
-    // });
+    await Task.deleteMany({
+      projectName: { $exists: true },
+    });
   } catch (error) {
     next(error);
   }
@@ -79,7 +110,37 @@ const createTaskApi = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Create columns
+ */
+
+const createColumnsApi = async (req, res, next) => {
+  try {
+    const { userId, projectName, name } = req.body;
+
+    // get all columns count
+    const totalColumns = await Column.countDocuments();
+
+    /**
+     * create column
+     */
+    const column = new Column({
+      userId,
+      projectName,
+      name,
+      index: totalColumns,
+    });
+    await column.save();
+
+    res.status(201).json({ data: column });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createProjectApi,
   createTaskApi,
+  createColumnsApi,
 };

@@ -11,22 +11,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
 import { queryKeyForTask } from "../constant/queryKey";
 import { isTaskDisplayed, isUpdatingTask } from "../redux/boolean/booleanSlice";
-
+import { useMemo } from "react";
+import { statusDataInStore } from "../redux/status/statusSlice";
 /**
  *
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
   const dispatch = useDispatch();
+  const { total_status } = useSelector(statusDataInStore);
+
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/task", "post", payload);
     },
     onSuccess: () => {
       toast.success("Task created successfully!");
-      queryKeyForTask.forEach((status) =>
-        queryClient.invalidateQueries(status)
-      );
+      total_status.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {
         dispatch(isTaskDisplayed(true));
@@ -44,9 +45,10 @@ const useAddTaskQuery = () => {
  */
 const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
+  const { total_status } = useSelector(statusDataInStore);
 
   const userQueries = useQueries({
-    queries: statesOfTaskManager.map((status) => {
+    queries: total_status?.map((status) => {
       return {
         queryKey: [status, active_project],
         queryFn: () =>
@@ -61,11 +63,14 @@ const useGetTaskAccordingToStatus = () => {
     }),
   });
 
-  const data = userQueries?.map((item) => item?.data?.data);
-  const isLoading = userQueries?.[0]?.isLoading;
-  const status = userQueries?.map((item) => item?.data?.status);
+  const data = useMemo(
+    () => userQueries?.map((item) => item?.data?.data),
+    [userQueries]
+  );
+  // const isLoading = userQueries?.[0]?.isLoading;
+  // const status = userQueries?.map((item) => item?.data?.status);
 
-  return { data, status, isLoading };
+  return { data };
 };
 
 /**
@@ -75,6 +80,7 @@ const useGetTaskAccordingToStatus = () => {
 
 const useUpdateTaskQuery = () => {
   const dispatch = useDispatch();
+
   let state;
   return useMutation({
     mutationFn: (payload) => {
@@ -88,7 +94,7 @@ const useUpdateTaskQuery = () => {
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
-      }, 1000);
+      }, 500);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
