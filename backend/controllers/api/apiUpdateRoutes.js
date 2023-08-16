@@ -199,7 +199,6 @@ const updateColumnName = async (req, res, next) => {
   try {
     const { _id, name, previousColName, userId } = req.body;
 
-    console.log(name, previousColName, userId);
     /**
      * update the column
      */
