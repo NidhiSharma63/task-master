@@ -55,4 +55,28 @@ const useGetColumnQuery = () => {
   });
 };
 
-export { usePostColumnQuery, useGetColumnQuery };
+/**
+ * update col name
+ */
+
+const useUpdateColumnName = () => {
+  return useMutation({
+    mutationFn: (payload) => {
+      return customAxiosRequestForPost("/column", "put", payload);
+    },
+    onSuccess: () => {
+      toast.success("Section updated successfully!");
+      queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries("column");
+      queryKeyForTask.forEach((status) =>
+        queryClient.invalidateQueries(status)
+      );
+      queryClient.invalidateQueries(["charts-data"]);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data);
+    },
+  });
+};
+
+export { usePostColumnQuery, useGetColumnQuery, useUpdateColumnName };

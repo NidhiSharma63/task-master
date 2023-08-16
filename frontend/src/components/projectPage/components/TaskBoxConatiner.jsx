@@ -1,11 +1,14 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Menu, MenuItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import colors from "../../../theme/variables";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
+import useAddColumn from "../../../hook/board/useAddColumn";
 
-const TaskBoxContainer = ({ name, data }) => {
+const TaskBoxContainer = ({ name, data, colId }) => {
   const {
     handleClickOnTask,
     handleInput,
@@ -14,9 +17,22 @@ const TaskBoxContainer = ({ name, data }) => {
     handleAddTask,
     handleClickForAddingTaskFromBottom,
     handleClickOnThreeDots,
+    handleCloseOfColsIcons,
+    handleClickOnRename,
+    setIsColsRename,
     textAreaValuesBottom,
     textAreaValuesTop,
+    anchorElForColumnIcons,
+    openColsIcons,
+    handleDelete,
+    isColsRename,
   } = useTaskBoxContainer({ data, name });
+
+  const { colsValue, handleColsValue } = useAddColumn({
+    setIsAddColBtnClicked: setIsColsRename,
+    isColsRename,
+    colId,
+  });
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -28,9 +44,17 @@ const TaskBoxContainer = ({ name, data }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography sx={{ fontWeight: 600 }} variant="subtitle1">
-          {name}
-        </Typography>
+        {isColsRename ? (
+          <textarea
+            value={colsValue.length > 0 ? colsValue : name}
+            className="textarea-col"
+            onChange={handleColsValue}
+          ></textarea>
+        ) : (
+          <Typography sx={{ fontWeight: 600 }} variant="subtitle1">
+            {name}
+          </Typography>
+        )}
         <Box>
           <AddIcon
             onClick={handleAddTask}
@@ -39,7 +63,33 @@ const TaskBoxContainer = ({ name, data }) => {
               color: (theme) => theme.palette.primary.main,
             }}
           />
-          <MoreVertIcon onClick={handleClickOnThreeDots} />
+          <MoreVertIcon
+            sx={{ cursor: "pointer" }}
+            onClick={handleClickOnThreeDots}
+          />
+          <Menu
+            id="logout"
+            anchorEl={anchorElForColumnIcons}
+            open={openColsIcons}
+            onClose={handleCloseOfColsIcons}
+          >
+            <MenuItem
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+              }}
+              onClick={() => handleClickOnRename(colId)}
+            >
+              <DriveFileRenameOutlineIcon />
+            </MenuItem>
+            <MenuItem
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+              }}
+              onClick={() => handleDelete()}
+            >
+              <DeleteIcon />
+            </MenuItem>
+          </Menu>
         </Box>
       </Box>
       <Droppable droppableId={name}>

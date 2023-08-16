@@ -15,24 +15,36 @@ const useTaskBoxContainer = ({ data, name }) => {
   const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
-  const { mutate } = useAddTaskQuery();
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
     useState(null);
-
+  const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState(null);
+  const [openColsIcons, setOpenColsIcons] = useState(false);
   const isTaskAddedFromBottom = useRef(null);
+  const [isColsRename, setIsColsRename] = useState(false);
 
+  const { mutate } = useAddTaskQuery();
+
+  /**
+   * add task to top
+   */
   const handleAddTask = () => {
     setTextAreaValuesTop((prevValues) => ["", ...prevValues]);
     isTaskAddedFromBottom.current = false;
     dispatch(isTaskDisplayed(false));
   };
 
+  /*
+   * add task from bottom
+   */
   const handleClickForAddingTaskFromBottom = () => {
     isTaskAddedFromBottom.current = true;
     setTextAreaValuesBottom((prevValues) => [...prevValues, ""]);
     dispatch(isTaskDisplayed(false));
   };
 
+  /**
+   * handle change task
+   */
   const handleChange = (event, index, newValue) => {
     if (!isTaskAddedFromBottom.current) {
       setTextAreaValuesTop((prevValues) => {
@@ -48,6 +60,10 @@ const useTaskBoxContainer = ({ data, name }) => {
       });
     }
   };
+
+  /**
+   * handle saving task
+   */
 
   const handleBlur = async (event, index) => {
     let valueOfTextField = "";
@@ -88,6 +104,9 @@ const useTaskBoxContainer = ({ data, name }) => {
     setCurrentWorkingTestAreaIndex(index);
   };
 
+  /**
+   * remove textarea
+   */
   useEffect(() => {
     if (is_task_displayed === true) {
       if (!isTaskAddedFromBottom.current) {
@@ -123,17 +142,46 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * handleClickOnThreeDots
    */
+  const handleClickOnThreeDots = (event) => {
+    setAnchorElForColumnIcons(event.target);
+    setOpenColsIcons(true);
+  };
 
-  const handleClickOnThreeDots = () => {};
+  /**
+   * close three dots icons
+   */
+  const handleCloseOfColsIcons = () => {
+    setAnchorElForColumnIcons(null);
+    setOpenColsIcons(false);
+  };
+
+  /**
+   * hanlde column rename
+   */
+  const handleClickOnRename = (colId) => {
+    setIsColsRename(true);
+  };
+
+  /**
+   * saving cols name
+   */
+
   return {
+    setIsColsRename,
     handleClickOnTask,
     handleInput,
     handleBlur,
     handleChange,
     handleAddTask,
     handleClickForAddingTaskFromBottom,
+    handleCloseOfColsIcons,
+    handleClickOnThreeDots,
+    handleClickOnRename,
     textAreaValuesBottom,
     textAreaValuesTop,
+    anchorElForColumnIcons,
+    openColsIcons,
+    isColsRename,
   };
 };
 

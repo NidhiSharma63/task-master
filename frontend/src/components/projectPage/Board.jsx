@@ -38,6 +38,7 @@ const Board = () => {
           return (
             <TaskBoxConatiner
               key={item._id}
+              colId={item._id}
               name={item.name}
               data={item.tasks}
             />
