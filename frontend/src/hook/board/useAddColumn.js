@@ -53,7 +53,15 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId }) => {
     return () => {
       window.removeEventListener("click", handleColsSubmit);
     };
-  }, [active_project, colsValue, mutateAsync, setIsAddColBtnClicked]);
+  }, [
+    active_project,
+    colsValue,
+    mutateAsync,
+    setIsAddColBtnClicked,
+    colId,
+    updateColsname,
+    isColsRename,
+  ]);
 
   return {
     colsValue,
