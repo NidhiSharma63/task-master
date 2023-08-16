@@ -198,12 +198,24 @@ const updateProjectApi = async (req, res, next) => {
 const updateColumnName = async (req, res, next) => {
   try {
     const { _id, name } = req.body;
-    console.log(req.body);
+
+    /**
+     * update the column
+     */
     const updatedColumn = await Column.findOneAndUpdate(
       { _id },
       { $set: { name } },
       { new: true }
     );
+
+    /**
+     * update the tasks as well
+     */
+    await Task.updateMany(
+      { status: previousColsName, userId },
+      { $set: { status: name } }
+    );
+
     res.status(200).json({ data: updatedColumn });
   } catch (error) {
     next(error);
