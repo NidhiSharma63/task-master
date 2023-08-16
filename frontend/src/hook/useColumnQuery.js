@@ -26,7 +26,7 @@ const usePostColumnQuery = () => {
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
@@ -49,7 +49,7 @@ const useGetColumnQuery = () => {
       return data;
     },
     onError: (error) => {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
@@ -73,7 +73,7 @@ const useUpdateColumnName = () => {
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
@@ -97,7 +97,7 @@ const useDeleteColumnName = () => {
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {
-      toast.error(error?.response?.data);
+      toast.error(error?.response?.data?.message);
     },
   });
 };
