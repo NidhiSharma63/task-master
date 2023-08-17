@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import colors from "../../../theme/variables";
 import DotLoader from "react-spinners/DotLoader";
-import useProject from "../../../hook/project/useProject";
+import useProject from "../../../hook/project/useProjectNameModal";
 
 const ProjectNameModal = () => {
   const {
