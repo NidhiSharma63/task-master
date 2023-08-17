@@ -18,6 +18,7 @@ import useAddColumn from "../../../hook/board/useAddColumn";
 import useDeleteColumn from "../../../hook/board/useDeleteColumn";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import useLayout from "../../../hook/layout/useLayout";
+import UserName from "../../../common/UserName";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -47,7 +48,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
   });
 
   const { deleteColumn } = useDeleteColumn({ colId });
-  const { userName } = useLayout();
+  // const { userName } = useLayout();
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -177,21 +178,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <Avatar
-                            sx={{
-                              bgcolor: "primary.main",
-                              cursor: "pointer",
-                              fontWeight: 600,
-                              color: "white",
-                              fontSize: ".8rem",
-                              padding: 0,
-                              width: "31px",
-                              height: "31px",
-                            }}
-                            variant="circle"
-                          >
-                            {userName}
-                          </Avatar>
+                          <UserName formTaskComponent={true} />
                           {item.subTasks.length > 0 && (
                             <Box
                               sx={{

@@ -27,7 +27,7 @@ import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
 const useLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user_email } = useSelector(usersDataInStore);
+  // const { user_email } = useSelector(usersDataInStore);
   const { active_project } = useSelector(projectDataInStore);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -43,9 +43,9 @@ const useLayout = () => {
   const [userName, setUserName] = useState("");
 
   // // navigate the user to /todo directly
-  // useEffect(() => {
-  //   navigate("Dashboard");
-  // }, []);
+  useEffect(() => {
+    navigate("Dashboard");
+  }, []);
 
   // if only single present or first time project is created then make that as active project\
   useEffect(() => {
@@ -58,9 +58,9 @@ const useLayout = () => {
     setAllProjects(data?.projects);
   }, [data]);
 
-  useEffect(() => {
-    setUserName(getUserFirstNameFirstLetter(user_email));
-  }, [user_email]);
+  // useEffect(() => {
+  // setUserName(getUserFirstNameFirstLetter(user_email));
+  // }, [user_email]);
 
   const handleLogout = () => {
     mutate();
@@ -158,7 +158,7 @@ const useLayout = () => {
     openPorjectsIcons,
     deleteInProgress,
     allProjects,
-    userName,
+    // userName,
   };
 };
 

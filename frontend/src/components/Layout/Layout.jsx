@@ -22,6 +22,7 @@ import useLayout from "../../hook/layout/useLayout";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
+import UserName from "../../common/UserName";
 const drawerWidth = 180;
 
 export const Layout = () => {
@@ -43,7 +44,7 @@ export const Layout = () => {
     anchorElForProjectIcons,
     openPorjectsIcons,
     allProjects,
-    userName,
+    // userName,
   } = useLayout();
 
   return (
@@ -65,18 +66,7 @@ export const Layout = () => {
             <Typography variant="h6" noWrap component="div">
               Task Manager
             </Typography>
-            <Avatar
-              sx={{
-                bgcolor: "secondary.main",
-                cursor: "pointer",
-                fontWeight: 600,
-                color: (theme) => theme.palette.primary.main,
-              }}
-              variant="circle"
-              onClick={handleOpen}
-            >
-              {userName}
-            </Avatar>
+            <UserName handleOpen={handleOpen} />
             <Menu
               id="logout"
               anchorEl={anchorEl}
