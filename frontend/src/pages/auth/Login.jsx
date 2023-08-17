@@ -14,29 +14,13 @@ import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
 import { ClipLoader } from "react-spinners";
 import useLogin from "../../hook/auth/useLogin";
+import CommonLoader from "../../common/loader/CommonLoader";
 
 const Login = () => {
   const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{ color: (theme) => theme.palette.primary.main }}
-        >
-          Redirecting...
-        </Typography>
-        <ClipLoader />
-      </Box>
-    );
+    return <CommonLoader value={"Redirecting..."} />;
   }
 
   return (
