@@ -18,7 +18,8 @@ const useProjectNameModal = () => {
   const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch();
   const { mutate, isLoading } = usePostProjectQuery();
-  const { mutate: updateProject } = useUpdateProjectQuery();
+  const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
+    useUpdateProjectQuery();
   const { setValue } = useBackDropLoaderContext();
 
   useEffect(() => {
@@ -43,6 +44,17 @@ const useProjectNameModal = () => {
   }, [isLoading]);
 
   useEffect(() => {
+    if (projectUpdateIsLoading === false) {
+      dispatch(isBackDropLoaderDisplayed(false));
+      setValue("");
+    }
+    if (projectUpdateIsLoading) {
+      dispatch(isBackDropLoaderDisplayed(true));
+      setValue("Updating project");
+    }
+  }, [projectUpdateIsLoading]);
+
+  useEffect(() => {
     if (project_rename) {
       setProjectName(project_rename.projectName);
     }
@@ -62,6 +74,7 @@ const useProjectNameModal = () => {
         mutate({ name: projectName.trim() });
         setProjectName("");
       }
+      handleClose();
     }
   };
 

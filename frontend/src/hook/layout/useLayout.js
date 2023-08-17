@@ -119,6 +119,7 @@ const useLayout = () => {
       })
     );
     dispatch(isProjectNameModalOpen(true));
+    handleCloseOfProjectsIcons();
   };
   return {
     handleClickOnRename,
