@@ -59,9 +59,13 @@ const createProjectApi = async (req, res, next) => {
 
     await project.save();
     res.status(201).json({ data: { id: project._id, name } });
-    await Task.deleteMany({
-      projectName: { $exists: true },
-    });
+    // await Task.deleteMany({
+    //   projectName: { $exists: true },
+    // });
+
+    // await Column.deleteMany({
+    //   projectName: { $exists: true },
+    // });
   } catch (error) {
     next(error);
   }
