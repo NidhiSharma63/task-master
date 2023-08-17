@@ -7,7 +7,7 @@ const Task = require("../../models/taskSchema");
  */
 const deleteProjectApi = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { id, userId } = req.body;
 
     if (!id) {
       throw new Error("Project id is required");
@@ -20,7 +20,11 @@ const deleteProjectApi = async (req, res, next) => {
     const projects = await Project.find();
 
     // delete task related to that project
-    await Task.deleteMany({ projectName: project.name });
+    await Task.deleteMany({ projectName: project.name, userId });
+
+    // delete columns as well
+
+    await Column.deleteMany({ projectName: project.name, userId });
 
     res.status(204).json({ projects });
   } catch (error) {
