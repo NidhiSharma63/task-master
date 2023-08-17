@@ -21,6 +21,16 @@ const registerUser = async (req, res, next) => {
       throw new Error("Password and confirm password does not match");
     }
 
+    /**
+     * check if email is already present to not
+     */
+
+    const isAlreadyPresentEmail = await User.find({ email });
+    if (isAlreadyPresentEmail.email) {
+      throw new Error("Email is already exists");
+    }
+    console.log(isAlreadyPresentEmail, "isAlreadyPresentEmail");
+
     // generate hash password with round 10
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -39,6 +49,10 @@ const registerUser = async (req, res, next) => {
     await user.save();
     res.status(200).json({ user, token });
   } catch (error) {
+    if (error.message.includes("email already exists.")) {
+      error.message = "Email already exists";
+    }
+
     next(error);
   }
 };

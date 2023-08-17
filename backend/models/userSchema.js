@@ -36,7 +36,7 @@ userSchema.methods.generateAuthToken = async function () {
 
 // Apply the uniqueValidator plugin to the userSchema
 userSchema.plugin(uniqueValidator, {
-  message: "Email already exists.",
+  message: "{PATH} already exists.", // {PATH} will be replaced with the field name, i.e., "Email"
 });
 
 // now we need to create collection
