@@ -5,7 +5,9 @@ import { Outlet } from "react-router-dom";
 import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useDispatch } from "react-redux";
 import { isProjectNameModalOpen } from "../../redux/boolean/booleanSlice";
-import CommonLoader from "../../common/loader/CommonLoader";
+import CommonLoader, {
+  CommonLoaderWithBackDrop,
+} from "../../common/loader/CommonLoader";
 
 const ProjectPage = () => {
   const { data, isLoading } = useGetProjectQuery();
@@ -49,6 +51,7 @@ const ProjectPage = () => {
       )}
       <Outlet />
       <ProjectNameModal />
+      <CommonLoaderWithBackDrop />
     </Box>
   );
 };
