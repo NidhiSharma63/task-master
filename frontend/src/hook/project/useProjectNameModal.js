@@ -6,6 +6,7 @@ import {
   isProjectNameModalOpen,
 } from "../../redux/boolean/booleanSlice";
 
+import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
 import { usePostProjectQuery, useUpdateProjectQuery } from "../useProjectQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
 import { projectRename } from "../../redux/projects/projectSlice";
@@ -18,6 +19,7 @@ const useProjectNameModal = () => {
   const dispatch = useDispatch();
   const { mutate, isLoading } = usePostProjectQuery();
   const { mutate: updateProject } = useUpdateProjectQuery();
+  const { setValue } = useBackDropLoaderContext();
 
   useEffect(() => {
     setOpen(is_project_name_modal_open);
@@ -32,9 +34,11 @@ const useProjectNameModal = () => {
     if (isLoading === false) {
       handleClose();
       dispatch(isBackDropLoaderDisplayed(false));
+      setValue("");
     }
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
+      setValue("Creating project");
     }
   }, [isLoading]);
 

@@ -83,7 +83,7 @@ const Board = () => {
           className="box"
         ></Box>
       </Box>
-      <CommonLoaderWithBackDrop value={"Project creating"} />
+      <CommonLoaderWithBackDrop />
       {/*  */}
     </Box>
   );
