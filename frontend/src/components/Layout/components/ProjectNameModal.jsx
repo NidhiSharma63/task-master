@@ -7,10 +7,12 @@ import {
   Box,
   Divider,
   TextField,
+  Typography,
 } from "@mui/material";
 import colors from "../../../theme/variables";
 import DotLoader from "react-spinners/DotLoader";
 import useProjectNameModal from "../../../hook/project/useProjectNameModal";
+import { COLORS_FOR_PROJECTS } from "../../../constant/colors";
 
 const ProjectNameModal = () => {
   const {
@@ -20,8 +22,11 @@ const ProjectNameModal = () => {
     isLoading,
     projectName,
     open,
+    setColorName,
+    colorName,
   } = useProjectNameModal();
 
+  console.log(colorName, "::color name");
   return (
     <Box>
       {isLoading ? (
@@ -45,15 +50,61 @@ const ProjectNameModal = () => {
               color: (theme) => theme.palette.primary.main,
             }}
           >
-            Project name
+            Create your project
           </DialogTitle>
           <Divider />
           <DialogContent>
-            <TextField
-              value={projectName}
-              onChange={handleChangeInput}
-              sx={{ width: "100%" }}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                flexDirection: "column",
+                width: "100%",
+                gap: 2,
+              }}
+            >
+              <Typography sx={{ fontSize: "1.2rem" }}>Project Name</Typography>
+              <TextField
+                value={projectName}
+                onChange={handleChangeInput}
+                sx={{ width: "100%" }}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                flexDirection: "column",
+                width: "100%",
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <Typography sx={{ fontSize: "1.2rem" }}>Select colors</Typography>
+              <Box sx={{ display: "flex", width: "100%", gap: 2 }}>
+                {COLORS_FOR_PROJECTS.map((color) => {
+                  return (
+                    <Box
+                      sx={{
+                        width: "2rem",
+                        height: "2rem",
+                        borderRadius: "50%",
+                        backgroundColor: color,
+                        cursor: "pointer",
+                        border: `${
+                          color === colorName ? "3px solid black" : "none"
+                        }`,
+                      }}
+                      onClick={() => {
+                        setColorName(color);
+                      }}
+                    ></Box>
+                  );
+                })}
+              </Box>
+            </Box>
           </DialogContent>
           <DialogActions>
             <Button

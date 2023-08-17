@@ -164,7 +164,11 @@ export const Layout = () => {
                               color: (theme) => theme.palette.primary.main,
                             }}
                             onClick={() =>
-                              handleClickOnRename(item.name, item._id)
+                              handleClickOnRename(
+                                item.name,
+                                item._id,
+                                item.color
+                              )
                             }
                           >
                             <DriveFileRenameOutlineIcon />

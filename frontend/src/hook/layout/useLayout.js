@@ -129,11 +129,12 @@ const useLayout = () => {
     setOpenPorjectsIcons(false);
   };
 
-  const handleClickOnRename = (projectName, projectId) => {
+  const handleClickOnRename = (projectName, projectId, color) => {
     dispatch(
       projectRename({
         projectName,
         projectId,
+        color,
       })
     );
     dispatch(isProjectNameModalOpen(true));
