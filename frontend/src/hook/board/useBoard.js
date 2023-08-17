@@ -9,8 +9,8 @@
 //   isUpdatingTask,
 // } from "../../redux/boolean/booleanSlice";
 // import { isTaskDisplayed } from "../../redux/boolean/booleanSlice";
-// import { useGetProjectQuery } from "../../hook/useProjectQuery";
-// import { useNavigate } from "react-router-dom";
+import { useGetProjectQuery } from "../../hook/useProjectQuery";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
 import { useGetColumnQuery } from "../useColumnQuery";
@@ -27,16 +27,22 @@ import {
 
 const useBoard = () => {
   const { data: columnData } = useGetColumnQuery();
-  const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
   const { data } = useGetTaskAccordingToStatus();
+  const { data: projectData } = useGetProjectQuery();
+  const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
   const [isAddColBtnClicked, setIsAddColBtnClicked] = useState(false);
   const dispatch = useDispatch();
   const { is_updating_task } = useSelector(booleanDataInStore);
   const [finalTaskUpdate, setFinalTaskUpdate] = useState([]);
   const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
+  const navigate = useNavigate();
   /**
-   * when ever value get's true set it to false
+   * navigate the use to /Dashboard when user do not have any project
    */
+
+  useEffect(() => {
+    if (projectData?.projects?.length === 0) navigate("/Dashboard");
+  }, [projectData]);
 
   /**
    * return colum data with adding tasks property

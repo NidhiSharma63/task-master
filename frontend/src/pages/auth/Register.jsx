@@ -13,31 +13,14 @@ import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
 import useRegister from "../../hook/auth/useRegister";
-import { ClipLoader } from "react-spinners";
+import CommonLoader from "../../common/loader/CommonLoader";
 
 const Register = () => {
   const { handleSubmit, initialValues, isLoading, setValuesOfForm } =
     useRegister();
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{ color: (theme) => theme.palette.primary.main }}
-        >
-          Redirecting...
-        </Typography>
-        <ClipLoader />
-      </Box>
-    );
+    return <CommonLoader value={"Redirecting..."} />;
   }
 
   return (
