@@ -52,7 +52,7 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
    */
 
   const getTaskToDisplay = () => {
-    return allTask.filter((task) => task.status === active_link);
+    return allTask.filter((task) => task?.status === active_link);
   };
 
   /**
