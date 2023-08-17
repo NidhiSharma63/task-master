@@ -88,6 +88,19 @@ const useLayout = () => {
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
   };
 
+  /**
+   * Show backdrop
+   */
+  useEffect(() => {
+    if (deleteInProgress) {
+      dispatch(isBackDropLoaderDisplayed(true));
+      setValue("Deleting project");
+    } else {
+      dispatch(isBackDropLoaderDisplayed(false));
+      setValue("");
+    }
+  }, [deleteInProgress]);
+
   const handleClickOnInsights = (name) => {
     navigate(`Charts/${name}`);
   };
