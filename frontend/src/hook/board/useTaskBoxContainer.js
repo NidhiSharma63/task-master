@@ -160,6 +160,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    */
   const handleClickOnRename = (colId) => {
     setIsColsRename(true);
+    handleCloseOfColsIcons();
   };
 
   /**

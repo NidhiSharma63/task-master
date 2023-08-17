@@ -63,7 +63,10 @@ const useAddColumn = ({
   }, [isColumnCreating, setValue, dispatch, setIsAddColBtnClicked]);
 
   useEffect(() => {
-    if (colsValue?.trim()?.length <= 0) return;
+    if (colsValue?.trim()?.length <= 0) {
+      // console.log("i run");
+      return;
+    }
 
     const handleColsSubmit = (event) => {
       /** click on outside of texarea */
@@ -106,6 +109,19 @@ const useAddColumn = ({
     prevColName,
     mutate,
   ]);
+
+  useEffect(() => {
+    const removeTextArea = (event) => {
+      if (event.target.tagName === "DIV" && colsValue?.trim()?.length === 0) {
+        setIsAddColBtnClicked(false);
+      }
+    };
+
+    window.addEventListener("click", removeTextArea);
+    return () => {
+      window.removeEventListener("click", removeTextArea);
+    };
+  }, []);
 
   return {
     colsValue,
