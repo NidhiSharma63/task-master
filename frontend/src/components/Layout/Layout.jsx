@@ -21,6 +21,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import useLayout from "../../hook/layout/useLayout";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
 const drawerWidth = 180;
 
 export const Layout = () => {
@@ -199,6 +200,7 @@ export const Layout = () => {
           <Outlet />
         </Box>
       </Box>
+      <CommonLoaderWithBackDrop />
     </>
   );
 };

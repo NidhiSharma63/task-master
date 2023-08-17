@@ -7,6 +7,7 @@ import {
   useDeleteProjectQuery,
 } from "../../hook/useProjectQuery";
 import {
+  isBackDropLoaderDisplayed,
   isProjectNameModalOpen,
   isUpdatingTask,
 } from "../../redux/boolean/booleanSlice";
@@ -21,6 +22,7 @@ import { queryKeyForTask } from "../../constant/queryKey";
 import { queryClient } from "../../index";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const useLayout = () => {
   const { mutate: deleteProject, isLoading: deleteInProgress } =
     useDeleteProjectQuery();
 
+  const { setValue } = useBackDropLoaderContext();
   const [userName, setUserName] = useState("");
 
   // navigate the user to /todo directly
@@ -61,6 +64,8 @@ const useLayout = () => {
 
   const handleLogout = () => {
     mutate();
+    dispatch(isBackDropLoaderDisplayed(true));
+    setValue("Please wait");
   };
 
   const handleClose = () => {
