@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
+  isBackDropLoaderDisplayed,
   isProjectNameModalOpen,
 } from "../../redux/boolean/booleanSlice";
 
@@ -9,7 +10,7 @@ import { usePostProjectQuery, useUpdateProjectQuery } from "../useProjectQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
 import { projectRename } from "../../redux/projects/projectSlice";
 
-const useProject = () => {
+const useProjectNameModal = () => {
   const { is_project_name_modal_open } = useSelector(booleanDataInStore);
   const { project_rename } = useSelector(projectDataInStore);
   const [open, setOpen] = useState(is_project_name_modal_open);
@@ -30,6 +31,10 @@ const useProject = () => {
   useEffect(() => {
     if (isLoading === false) {
       handleClose();
+      dispatch(isBackDropLoaderDisplayed(false));
+    }
+    if (isLoading) {
+      dispatch(isBackDropLoaderDisplayed(true));
     }
   }, [isLoading]);
 
@@ -70,4 +75,4 @@ const useProject = () => {
   };
 };
 
-export default useProject;
+export default useProjectNameModal;

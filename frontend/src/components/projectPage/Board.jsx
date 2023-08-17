@@ -4,6 +4,7 @@ import BoardDrawer from "../../components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "../../hook/board/useBoard";
 import useAddColumn from "../../hook/board/useAddColumn";
+import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
 
 const Board = () => {
   const {
@@ -82,7 +83,7 @@ const Board = () => {
           className="box"
         ></Box>
       </Box>
-
+      <CommonLoaderWithBackDrop value={"Project creating"} />
       {/*  */}
     </Box>
   );

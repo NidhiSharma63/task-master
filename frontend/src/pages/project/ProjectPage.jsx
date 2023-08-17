@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useDispatch } from "react-redux";
 import { isProjectNameModalOpen } from "../../redux/boolean/booleanSlice";
-import { ClipLoader } from "react-spinners";
+import CommonLoader from "../../common/loader/CommonLoader";
 
 const ProjectPage = () => {
   const { data, isLoading } = useGetProjectQuery();
@@ -16,18 +16,7 @@ const ProjectPage = () => {
   };
 
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          mt: 3,
-        }}
-      >
-        <ClipLoader color="#571159" />
-      </Box>
-    );
+    return <CommonLoader value={"Loading..."} />;
   }
 
   return (

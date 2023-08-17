@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import colors from "../../../theme/variables";
 import DotLoader from "react-spinners/DotLoader";
-import useProject from "../../../hook/project/useProjectNameModal";
+import useProjectNameModal from "../../../hook/project/useProjectNameModal";
 
 const ProjectNameModal = () => {
   const {
@@ -20,7 +20,8 @@ const ProjectNameModal = () => {
     isLoading,
     projectName,
     open,
-  } = useProject();
+  } = useProjectNameModal();
+
   return (
     <Box>
       {isLoading ? (
