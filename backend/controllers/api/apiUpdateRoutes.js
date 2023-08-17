@@ -167,7 +167,7 @@ const updateTaskWithDetail = async (req, res, next) => {
 
 const updateProjectApi = async (req, res, next) => {
   try {
-    const { _id, name: newProjectName, previousName, userId } = req.body;
+    const { _id, name: newProjectName, previousName, userId, color } = req.body;
 
     if (!_id) {
       throw new Error("Project id is required");
@@ -175,13 +175,13 @@ const updateProjectApi = async (req, res, next) => {
 
     await Project.findOneAndUpdate(
       { name: previousName, _id },
-      { $set: { name: newProjectName } }
+      { $set: { name: newProjectName, color: color } }
     );
 
     // Update the project of the found tasks and save them
-    const taskToUpdate = await Task.updateMany(
+    await Task.updateMany(
       { projectName: previousName, userId },
-      { $set: { projectName: newProjectName } }
+      { $set: { projectName: newProjectName, color: color } }
     );
 
     /**
