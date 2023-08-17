@@ -5,6 +5,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Avatar,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import colors from "../../../theme/variables";
@@ -15,7 +16,8 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAddColumn from "../../../hook/board/useAddColumn";
 import useDeleteColumn from "../../../hook/board/useDeleteColumn";
-import { CommonLoaderWithBackDrop } from "../../../common/loader/CommonLoader";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import useLayout from "../../../hook/layout/useLayout";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -45,6 +47,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
   });
 
   const { deleteColumn } = useDeleteColumn({ colId });
+  const { userName } = useLayout();
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -142,6 +145,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                 />
               ))}
               {data?.map((item) => {
+                console.log(item, "item");
                 return (
                   <Draggable
                     key={item._id}
@@ -165,6 +169,50 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                         onClick={() => handleClickOnTask(item)}
                       >
                         <Typography>{item.task}</Typography>
+                        <Box
+                          sx={{
+                            mt: 2,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Avatar
+                            sx={{
+                              bgcolor: "primary.main",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              color: "white",
+                              fontSize: ".8rem",
+                              padding: 0,
+                              width: "31px",
+                              height: "31px",
+                            }}
+                            variant="circle"
+                          >
+                            {userName}
+                          </Avatar>
+                          {item.subTasks.length > 0 && (
+                            <Box
+                              sx={{
+                                display: "flex",
+                                gap: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <FormatListBulletedIcon
+                                sx={{
+                                  color: (theme) => theme.palette.primary.main,
+                                  fontSize: ".9rem",
+                                }}
+                              />
+                              <Typography sx={{ fontSize: ".9rem" }}>
+                                {item.subTasks.length}
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
                       </Box>
                     )}
                   </Draggable>

@@ -42,10 +42,10 @@ const useLayout = () => {
   const { setValue } = useBackDropLoaderContext();
   const [userName, setUserName] = useState("");
 
-  // navigate the user to /todo directly
-  useEffect(() => {
-    navigate("Dashboard");
-  }, []);
+  // // navigate the user to /todo directly
+  // useEffect(() => {
+  //   navigate("Dashboard");
+  // }, []);
 
   // if only single present or first time project is created then make that as active project\
   useEffect(() => {
