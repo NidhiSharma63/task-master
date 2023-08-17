@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { usePostColumnQuery } from "../useColumnQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useUpdateColumnName } from "../useColumnQuery";
+import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { isBackDropLoaderDisplayed } from "../../redux/boolean/booleanSlice";
 
 const useAddColumn = ({
   setIsAddColBtnClicked,
@@ -11,13 +13,54 @@ const useAddColumn = ({
   prevColName,
 }) => {
   const [colsValue, setColsValue] = useState("");
-  const { mutateAsync } = usePostColumnQuery();
+  const {
+    mutateAsync,
+    isLoading: isColumnCreating,
+    mutate,
+  } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
-  const { mutateAsync: updateColsname } = useUpdateColumnName();
+  const {
+    mutate: updateColsname,
+
+    isLoading: isColumnUpdating,
+  } = useUpdateColumnName();
+  const { setValue } = useBackDropLoaderContext();
+  const dispatch = useDispatch();
 
   const handleColsValue = (event) => {
     setColsValue(event.target.value);
   };
+
+  /**
+   * show back drop loader when column name is updating
+   */
+  useEffect(() => {
+    if (isColumnUpdating) {
+      setValue("Column updating");
+      dispatch(isBackDropLoaderDisplayed(true));
+    } else {
+      setValue("");
+      dispatch(isBackDropLoaderDisplayed(false));
+      setColsValue("");
+      setIsAddColBtnClicked(false);
+    }
+  }, [isColumnUpdating, setValue, dispatch, setIsAddColBtnClicked]);
+
+  /**
+   * show back drop loader when column name is adding
+   */
+  useEffect(() => {
+    if (isColumnCreating) {
+      console.log(isColumnCreating, "::::is column creating");
+      setValue("Column creating");
+      dispatch(isBackDropLoaderDisplayed(true));
+    } else {
+      setValue("");
+      dispatch(isBackDropLoaderDisplayed(false));
+      setColsValue("");
+      setIsAddColBtnClicked(false);
+    }
+  }, [isColumnCreating, setValue, dispatch, setIsAddColBtnClicked]);
 
   useEffect(() => {
     if (colsValue?.trim()?.length <= 0) return;
@@ -29,15 +72,10 @@ const useAddColumn = ({
          * add column
          */
         if (colsValue?.trim()?.length > 0 && !isColsRename) {
-          mutateAsync({
+          mutate({
             name: colsValue,
             projectName: active_project,
-          })
-            .then(() => {
-              setColsValue("");
-              setIsAddColBtnClicked(false);
-            })
-            .catch((_error) => {});
+          });
         }
         /**
          * update cols value
@@ -47,12 +85,7 @@ const useAddColumn = ({
             name: colsValue,
             _id: colId,
             previousColName: prevColName,
-          })
-            .then(() => {
-              setIsAddColBtnClicked(false);
-              setColsValue("");
-            })
-            .catch((_error) => {});
+          });
         }
       }
     };
@@ -71,6 +104,7 @@ const useAddColumn = ({
     updateColsname,
     isColsRename,
     prevColName,
+    mutate,
   ]);
 
   return {
