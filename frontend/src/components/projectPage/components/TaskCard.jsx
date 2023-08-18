@@ -32,7 +32,22 @@ const TaskCard = ({ item, handleClickOnTask }) => {
             }}
           >
             <Typography>{item?.task}</Typography>
-            {item?.label && <Typography>{item.label}</Typography>}
+            {item?.label && (
+              <Typography
+                sx={{
+                  backgroundColor: item?.labelColor,
+                  width: "fit-content",
+                  padding: ".2rem .6rem",
+                  borderRadius: "1rem",
+                  color: "white",
+                  mt: 2,
+                  ml: -1,
+                  fontSize: ".8rem",
+                }}
+              >
+                {item.label}
+              </Typography>
+            )}
           </Box>
           <Box
             sx={{
