@@ -45,7 +45,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
                   fontSize: ".8rem",
                 }}
               >
-                {item.label}
+                {item?.label}
               </Typography>
             )}
           </Box>
@@ -58,7 +58,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
             }}
           >
             <UserName formTaskComponent={true} />
-            {item?.subTasks.length > 0 && (
+            {item?.subTasks?.length > 0 && (
               <Box
                 sx={{
                   display: "flex",
@@ -74,7 +74,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
                   }}
                 />
                 <Typography sx={{ fontSize: ".9rem" }}>
-                  {item?.subTasks.length}
+                  {item?.subTasks?.length}
                 </Typography>
               </Box>
             )}

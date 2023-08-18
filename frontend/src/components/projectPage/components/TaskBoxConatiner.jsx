@@ -34,7 +34,6 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     anchorElForColumnIcons,
     openColsIcons,
     isColsRename,
-    isLoading,
     show_loader_for_task,
   } = useTaskBoxContainer({ data, name });
 
@@ -160,7 +159,11 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               ))}
               {data?.map((item) => {
                 return (
-                  <TaskCard item={item} handleClickOnTask={handleClickOnTask} />
+                  <TaskCard
+                    key={item._id}
+                    item={item}
+                    handleClickOnTask={handleClickOnTask}
+                  />
                 );
               })}
               {provided.placeholder}

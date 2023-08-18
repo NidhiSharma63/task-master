@@ -10,6 +10,7 @@ import { statesOfTaskManager } from "../constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
 import {
+  isBackDropLoaderDisplayed,
   isTaskDisplayed,
   isUpdatingTask,
   showLoaderForTask,
@@ -60,6 +61,7 @@ const useGetTaskAccordingToStatus = () => {
           setTimeout(() => {
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
+            dispatch(isBackDropLoaderDisplayed(false));
           }, 100);
           return data;
         },
@@ -96,9 +98,9 @@ const useUpdateTaskQuery = () => {
       toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
-      setTimeout(() => {
-        dispatch(isUpdatingTask(false));
-      }, 500);
+      // setTimeout(() => {
+      //   dispatch(isUpdatingTask(false));
+      // }, 500);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);

@@ -21,7 +21,7 @@ const useProjectNameModal = () => {
   const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
     useUpdateProjectQuery();
   const { setValue } = useBackDropLoaderContext();
-  const [colorName, setColorName] = useState();
+  const [colorName, setColorName] = useState("");
 
   useEffect(() => {
     setOpen(is_project_name_modal_open);

@@ -26,7 +26,6 @@ const ProjectNameModal = () => {
     colorName,
   } = useProjectNameModal();
 
-  console.log(colorName, "::color name");
   return (
     <Box>
       {isLoading ? (
@@ -87,6 +86,7 @@ const ProjectNameModal = () => {
                 {COLORS_FOR_PROJECTS.map((color) => {
                   return (
                     <Box
+                      key={color}
                       sx={{
                         width: "2rem",
                         height: "2rem",
