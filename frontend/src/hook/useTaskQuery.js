@@ -9,8 +9,11 @@ import { useQueries } from "@tanstack/react-query";
 import { statesOfTaskManager } from "../constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "../redux/projects/projectSlice";
-import { queryKeyForTask } from "../constant/queryKey";
-import { isTaskDisplayed, isUpdatingTask } from "../redux/boolean/booleanSlice";
+import {
+  isTaskDisplayed,
+  isUpdatingTask,
+  showLoaderForTask,
+} from "../redux/boolean/booleanSlice";
 import { useMemo } from "react";
 import { statusDataInStore } from "../redux/status/statusSlice";
 /**
@@ -18,7 +21,6 @@ import { statusDataInStore } from "../redux/status/statusSlice";
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
-  const dispatch = useDispatch();
   const { total_status } = useSelector(statusDataInStore);
 
   return useMutation({
@@ -26,12 +28,9 @@ const useAddTaskQuery = () => {
       return customAxiosRequestForPost("/task", "post", payload);
     },
     onSuccess: () => {
-      toast.success("Task created successfully!");
+      // toast.success("Task created successfully!");
       total_status.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
-      setTimeout(() => {
-        dispatch(isTaskDisplayed(true));
-      }, 1000);
     },
     onError: (error) => {
       toast.error(error?.response?.data?.error);
@@ -46,6 +45,7 @@ const useAddTaskQuery = () => {
 const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
   const { total_status } = useSelector(statusDataInStore);
+  const dispatch = useDispatch();
 
   const userQueries = useQueries({
     queries: total_status?.map((status) => {
@@ -57,6 +57,10 @@ const useGetTaskAccordingToStatus = () => {
             projectName: active_project,
           }),
         onSuccess: ({ data }) => {
+          setTimeout(() => {
+            dispatch(isTaskDisplayed(true));
+            dispatch(showLoaderForTask(false));
+          }, 100);
           return data;
         },
       };

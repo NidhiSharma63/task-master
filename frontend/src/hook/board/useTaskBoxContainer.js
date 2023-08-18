@@ -2,7 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAddTaskQuery } from "../useTaskQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
-import { booleanDataInStore } from "../../redux/boolean/booleanSlice";
+import {
+  booleanDataInStore,
+  showLoaderForTask,
+} from "../../redux/boolean/booleanSlice";
 import { activeTask } from "../../redux/task/taskSlice";
 import {
   isBoardDrawerOpen,
@@ -21,7 +24,7 @@ const useTaskBoxContainer = ({ data, name }) => {
   const [openColsIcons, setOpenColsIcons] = useState(false);
   const isTaskAddedFromBottom = useRef(null);
   const [isColsRename, setIsColsRename] = useState(false);
-
+  const { show_loader_for_task } = useSelector(booleanDataInStore);
   const { mutate, isLoading } = useAddTaskQuery();
 
   /**
@@ -101,6 +104,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     };
 
     mutate(payloadForTask);
+    dispatch(showLoaderForTask(true));
     setCurrentWorkingTestAreaIndex(index);
   };
 
@@ -184,6 +188,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     openColsIcons,
     isColsRename,
     isLoading,
+    show_loader_for_task,
   };
 };
 

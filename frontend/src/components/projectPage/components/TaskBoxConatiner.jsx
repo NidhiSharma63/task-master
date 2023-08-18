@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useAddColumn from "../../../hook/board/useAddColumn";
 import useDeleteColumn from "../../../hook/board/useDeleteColumn";
 import TaskCard from "./TaskCard";
+import { ClipLoader } from "react-spinners";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -34,6 +35,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     openColsIcons,
     isColsRename,
     isLoading,
+    show_loader_for_task,
   } = useTaskBoxContainer({ data, name });
 
   const { colsValue, handleColsValue } = useAddColumn({
@@ -68,7 +70,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           </Typography>
         )}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton disabled={isLoading}>
+          <IconButton disabled={show_loader_for_task}>
             {" "}
             <AddIcon
               onClick={handleAddTask}
@@ -129,17 +131,32 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               className="box"
             >
               {textAreaValuesTop?.map((value, index) => (
-                <textarea
-                  key={index}
-                  value={value}
-                  data-id={name}
-                  onChange={(event) =>
-                    handleChange(event, index, event.target.value)
-                  }
-                  onBlur={(event) => handleBlur(event, index)}
-                  onInput={handleInput}
-                  className="textArea"
-                />
+                <>
+                  <textarea
+                    key={index}
+                    value={value}
+                    data-id={name}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
+                    onBlur={(event) => handleBlur(event, index)}
+                    onInput={handleInput}
+                    className="textArea"
+                  />
+                  {show_loader_for_task && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        mt: -1,
+                      }}
+                    >
+                      <ClipLoader sx={{ mt: -2 }} />
+                    </Box>
+                  )}
+                </>
               ))}
               {data?.map((item) => {
                 return (
@@ -148,22 +165,37 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               })}
               {provided.placeholder}
               {textAreaValuesBottom?.map((value, index) => (
-                <textarea
-                  key={index}
-                  value={value}
-                  data-id={name}
-                  onChange={(event) =>
-                    handleChange(event, index, event.target.value)
-                  }
-                  onBlur={(event) => handleBlur(event, index)}
-                  onInput={handleInput}
-                  className="textArea"
-                />
+                <>
+                  <textarea
+                    key={index}
+                    value={value}
+                    data-id={name}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
+                    onBlur={(event) => handleBlur(event, index)}
+                    onInput={handleInput}
+                    className="textArea"
+                  />
+                  {show_loader_for_task && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        mt: -1,
+                      }}
+                    >
+                      <ClipLoader sx={{ mt: -2 }} />
+                    </Box>
+                  )}
+                </>
               ))}
               {data?.length > 0 ? (
                 <Button
                   variant="contained"
-                  disabled={isLoading}
+                  disabled={show_loader_for_task}
                   onClick={handleClickForAddingTaskFromBottom}
                 >
                   Add Task

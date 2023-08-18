@@ -9,6 +9,7 @@ const booleanSlice = createSlice({
     is_create_task_modal_open: false,
     is_task_displayed: false,
     is_back_Drop_loader_displayed: false,
+    show_loader_for_task: false,
   },
   reducers: {
     isProjectNameModalOpen: (state, action) => {
@@ -29,6 +30,9 @@ const booleanSlice = createSlice({
     isBackDropLoaderDisplayed: (state, action) => {
       state.is_back_Drop_loader_displayed = action.payload;
     },
+    showLoaderForTask: (state, action) => {
+      state.show_loader_for_task = action.payload;
+    },
   },
 });
 
@@ -39,6 +43,7 @@ export const {
   isCreateTaskModalOpen,
   isTaskDisplayed,
   isBackDropLoaderDisplayed,
+  showLoaderForTask,
 } = booleanSlice.actions;
 export const booleanDataInStore = (state) => state.boolean;
 export default booleanSlice.reducer;
