@@ -153,6 +153,8 @@ const updateTaskWithDetail = async (req, res, next) => {
     taskObj.dueDate = taskBody.dueDate;
     taskObj.description = taskBody.description;
     taskObj.subTasks = taskBody.subTasks;
+    taskObj.label = taskBody.label;
+    taskObj.labelColor = taskBody.labelColor;
 
     await taskObj.save();
     res.json({ data: taskObj });
