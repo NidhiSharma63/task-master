@@ -45,7 +45,6 @@ const BoardDrawer = () => {
   };
 
   const handleSubmit = (values) => {
-    // console.log(values, "::::::::values:::::::");
     mutate(values);
   };
 

@@ -8,9 +8,10 @@ const useFormikInput = (name) => {
     if (name) {
       const allValuesOfSubtasks = values?.[name] ?? [];
       if (allValuesOfSubtasks?.length > 0) {
+        console.log(allValuesOfSubtasks, ":::all balues");
         // filterOut All the values that are no empty
         const allNonEmptyValues = allValuesOfSubtasks?.filter(
-          (val) => val.trim() !== ""
+          (item) => item.value?.trim() !== ""
         );
         setFieldValue(name, allNonEmptyValues);
       }
@@ -34,7 +35,7 @@ const useFormikInput = (name) => {
     };
   }, [removeAllEmptyField]);
 
-  return { values };
+  return { values, setFieldValue };
 };
 
 export default useFormikInput;
