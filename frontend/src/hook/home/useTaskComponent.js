@@ -81,6 +81,7 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
     getTaskToDisplay,
     total_status,
     totalTask,
+    active_link,
   };
 };
 

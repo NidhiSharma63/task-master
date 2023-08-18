@@ -1,6 +1,5 @@
-import { Box, Typography, Stack, Divider, Button } from "@mui/material";
+import { Box, Typography, Divider, Button } from "@mui/material";
 import colors from "../../../theme/variables";
-import { statesOfTaskManager } from "../../../constant/Misc";
 import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
 import { activeLink } from "../../../redux/task/taskSlice";
@@ -19,6 +18,7 @@ const TaskComponent = ({
     totalTask,
     getTaskToDisplay,
     total_status,
+    active_link,
   } = useTaskComponent({
     backgroundColors,
     projectData,
@@ -59,6 +59,7 @@ const TaskComponent = ({
           }}
         >
           {total_status?.map((item, i) => {
+            // console.log(ac);
             return (
               <Box
                 key={i}
@@ -69,15 +70,14 @@ const TaskComponent = ({
                   alignItems: "center",
                   justifyContent: "flex-start",
                   gap: 1,
-                  borderBottom:
-                    activeLink === item
-                      ? `1px solid  ${colors.primaryColor}`
-                      : "1px solid transparent",
+                  backgroundColor: active_link === item ? "#dce0e6" : "none",
                   "&:hover": {
-                    borderBottom: `1px solid  ${colors.primaryColor}`, // Change border on hover
+                    backgroundColor: "#dce0e6", // Change border on hover
                   },
-                  transition: "border 0.3s ease",
+                  transition: "0.3s ease",
                   ml: i === 0 ? "0rem" : "2rem",
+                  padding: ".2rem .4rem",
+                  borderRadius: ".3rem",
                 }}
                 onClick={() => handleClickOnLink(item)}
               >
@@ -149,7 +149,7 @@ const TaskComponent = ({
           })
         )}
       </Box>
-      <CreateTaskPopup status={activeLink} projectData={projectData} />
+      <CreateTaskPopup status={active_link} projectData={projectData} />
     </Box>
   );
 };

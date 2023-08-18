@@ -41,7 +41,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
     dispatch(isCreateTaskModalOpen(false));
     dispatch(activeTask(""));
   };
-  console.log(status);
+  console.log(status, ":::status");
 
   const initialValues = {
     task: active_task?.task ?? "",

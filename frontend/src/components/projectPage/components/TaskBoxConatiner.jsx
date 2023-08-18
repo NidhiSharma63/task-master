@@ -142,7 +142,6 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                 />
               ))}
               {data?.map((item) => {
-                console.log(item, "item");
                 return (
                   <TaskCard item={item} handleClickOnTask={handleClickOnTask} />
                 );
