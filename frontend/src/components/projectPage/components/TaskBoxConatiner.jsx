@@ -5,20 +5,15 @@ import {
   Menu,
   MenuItem,
   IconButton,
-  Avatar,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import colors from "../../../theme/variables";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAddColumn from "../../../hook/board/useAddColumn";
 import useDeleteColumn from "../../../hook/board/useDeleteColumn";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import useLayout from "../../../hook/layout/useLayout";
-import UserName from "../../../common/UserName";
 import TaskCard from "./TaskCard";
 
 const TaskBoxContainer = ({ name, data, colId }) => {

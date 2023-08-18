@@ -13,7 +13,10 @@ import {
   booleanDataInStore,
   isCreateTaskModalOpen,
 } from "../../../redux/boolean/booleanSlice";
-import { useAddTaskQuery } from "../../../hook/useTaskQuery";
+import {
+  useAddTaskQuery,
+  useUpdateTaskQueryWithDetails,
+} from "../../../hook/useTaskQuery";
 import { Form, Formik } from "formik";
 import FormikControls from "../../../common/formik/FormikControls";
 import { validationForUpdatingTask } from "../../../constant/validation";
@@ -32,7 +35,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
   const { mutate: updateTask, isLoading: isUpdatingTask } =
-    useUpdateTaskQuery();
+    useUpdateTaskQueryWithDetails();
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
