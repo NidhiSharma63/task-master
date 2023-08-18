@@ -132,9 +132,7 @@ const createColumnsApi = async (req, res, next) => {
     const existingColumn = await Column.findOne({ userId, name });
 
     if (existingColumn) {
-      return res.status(400).json({
-        message: "Column with the same name already exists for the user",
-      });
+      throw new Error("column with same name already exists");
     }
 
     // Get all columns count
