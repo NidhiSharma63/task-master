@@ -6,12 +6,14 @@ import {
   taskDataInStore,
 } from "../../redux/task/taskSlice";
 import { useEffect, useState } from "react";
+import { statusDataInStore } from "../../redux/status/statusSlice";
 
 const useTaskComponent = ({ backgroundColors, taskData }) => {
   const [allTask, setAllTask] = useState([]);
   const dispatch = useDispatch();
   const [totalTask, setTotalTask] = useState(null);
   const { active_link } = useSelector(taskDataInStore);
+  const { total_status } = useSelector(statusDataInStore);
 
   /**
    * set link when user click on that
@@ -77,7 +79,7 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
     handleClickOnTask,
     handleClickOnLink,
     getTaskToDisplay,
-
+    total_status,
     totalTask,
   };
 };

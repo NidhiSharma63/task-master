@@ -41,6 +41,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
     dispatch(isCreateTaskModalOpen(false));
     dispatch(activeTask(""));
   };
+  console.log(status);
 
   const initialValues = {
     task: active_task?.task ?? "",
@@ -50,6 +51,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
     projectName: active_task?.projectName ?? projectName?.[0],
     label: active_task?.label ?? "",
     labelColor: active_task?.labelColor ?? "#e33529",
+    index: active_task?.index ?? 0,
   };
 
   // active task is present
