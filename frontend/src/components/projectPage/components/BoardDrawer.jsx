@@ -40,6 +40,7 @@ const BoardDrawer = () => {
     status: active_task.status,
     description: active_task?.description ?? "",
     subTasks: active_task?.subTasks ?? "",
+    label: active_task?.label ?? "",
   };
 
   const handleSubmit = (values) => {
@@ -105,6 +106,7 @@ const BoardDrawer = () => {
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
+                <FormikControls control="formikInputForLable" name="label" />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
                 <FormikControls control="formikInputArray" name="subTasks" />

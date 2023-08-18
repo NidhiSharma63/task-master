@@ -23,7 +23,17 @@ const TaskCard = ({ item, handleClickOnTask }) => {
           }}
           onClick={() => handleClickOnTask(item)}
         >
-          <Typography>{item?.task}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "fles-start",
+              justifyContent: "space-between",
+              flexDirection: "column",
+            }}
+          >
+            <Typography>{item?.task}</Typography>
+            {item?.label && <Typography>{item.label}</Typography>}
+          </Box>
           <Box
             sx={{
               mt: 2,
