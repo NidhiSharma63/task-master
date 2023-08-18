@@ -21,7 +21,7 @@ import { Form, Formik } from "formik";
 import FormikControls from "../../../common/formik/FormikControls";
 import { validationForUpdatingTask } from "../../../constant/validation";
 import colors from "../../../theme/variables";
-import { useUpdateTaskQuery, useDeleteTask } from "../../../hook/useTaskQuery";
+import { useDeleteTask } from "../../../hook/useTaskQuery";
 
 import { activeTask, taskDataInStore } from "../../../redux/task/taskSlice";
 import { useEffect } from "react";
@@ -41,7 +41,6 @@ const CreateTaskPopup = ({ status, projectData }) => {
     dispatch(isCreateTaskModalOpen(false));
     dispatch(activeTask(""));
   };
-  console.log(status, ":::status");
 
   const initialValues = {
     task: active_task?.task ?? "",
@@ -52,6 +51,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
     label: active_task?.label ?? "",
     labelColor: active_task?.labelColor ?? "#e33529",
     index: active_task?.index ?? 0,
+    subTasks: active_task?.subTasks ?? "",
   };
 
   // active task is present
@@ -112,6 +112,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
                 values={projectName ?? []}
                 mt={2}
               />
+              <FormikControls control="formikInputArray" name="subTasks" />
               <Box sx={{ mt: 2, display: "flex" }}>
                 <Typography sx={{ fontWeight: 600 }}>
                   Created At : &nbsp;
