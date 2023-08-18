@@ -52,6 +52,7 @@ const FormikInputArray = (props) => {
                             {...field}
                             value={task.value}
                             className="not-remove-input"
+                            disabled={task.isCompleted}
                           />
                           <TaskAltIcon
                             sx={{
