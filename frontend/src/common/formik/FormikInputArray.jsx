@@ -56,7 +56,9 @@ const FormikInputArray = (props) => {
                           <TaskAltIcon
                             sx={{
                               cursor: "pointer",
-                              color: `${task.isCompleted ? "#045c08" : ""}`,
+                              color: `${
+                                task.isCompleted ? "#045c08" : undefined
+                              }`,
                             }}
                             onClick={() => toggleTaskCompletion(index)}
                           />
