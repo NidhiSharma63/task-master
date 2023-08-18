@@ -1,14 +1,3 @@
-// import { statesOfTaskManager } from "../../constant/Misc";
-// import {
-//   useUpdateTaskQuery,
-//   useUpdateTaskQueryWithStatus,
-// } from "../../hook/useTaskQuery";
-// import { useSelector, useDispatch } from "react-redux";
-// import {
-//   booleanDataInStore,
-//   isUpdatingTask,
-// } from "../../redux/boolean/booleanSlice";
-// import { isTaskDisplayed } from "../../redux/boolean/booleanSlice";
 import { useGetProjectQuery } from "../../hook/useProjectQuery";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo, useCallback } from "react";
@@ -18,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { totalStatus } from "../../redux/status/statusSlice";
 import {
   booleanDataInStore,
+  isBackDropLoaderDisplayed,
   isUpdatingTask,
 } from "../../redux/boolean/booleanSlice";
 import {
@@ -199,6 +189,7 @@ const useBoard = () => {
         // setShowRerender(true);
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updateTaskForBE);
+        dispatch(isBackDropLoaderDisplayed(true));
       } else {
         /**
          * Get the state where task is moved
@@ -280,6 +271,7 @@ const useBoard = () => {
         setFinalTaskUpdate(updatedValues);
         updateTaskWithStatus(updateTask);
         dispatch(isUpdatingTask(true));
+        dispatch(isBackDropLoaderDisplayed(true));
       }
     },
     [finalState]

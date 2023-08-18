@@ -8,7 +8,8 @@ const generateRandomColor = require("../../utils/getRandomColor");
  */
 const createProjectApi = async (req, res, next) => {
   try {
-    const { userId, name } = req.body;
+    const { userId, name, color: colorName } = req.body;
+    let projectColor = colorName;
 
     if (!name) {
       throw new Error("Project name is required");
@@ -21,10 +22,14 @@ const createProjectApi = async (req, res, next) => {
       throw new Error("Project is already present");
     }
 
+    if (!colorName) {
+      projectColor = generateRandomColor();
+    }
+
     const project = new Project({
       userId,
       name,
-      color: generateRandomColor(),
+      color: projectColor,
     });
 
     /**
@@ -127,9 +132,7 @@ const createColumnsApi = async (req, res, next) => {
     const existingColumn = await Column.findOne({ userId, name });
 
     if (existingColumn) {
-      return res.status(400).json({
-        message: "Column with the same name already exists for the user",
-      });
+      throw new Error("column with same name already exists");
     }
 
     // Get all columns count

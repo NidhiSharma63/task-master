@@ -21,6 +21,7 @@ const useProjectNameModal = () => {
   const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
     useUpdateProjectQuery();
   const { setValue } = useBackDropLoaderContext();
+  const [colorName, setColorName] = useState("");
 
   useEffect(() => {
     setOpen(is_project_name_modal_open);
@@ -57,6 +58,7 @@ const useProjectNameModal = () => {
   useEffect(() => {
     if (project_rename) {
       setProjectName(project_rename.projectName);
+      setColorName(project_rename.color);
     }
   }, [project_rename]);
 
@@ -67,11 +69,12 @@ const useProjectNameModal = () => {
           name: projectName.trim(),
           _id: project_rename.projectId,
           previousName: project_rename.projectName,
+          color: colorName,
         });
         setProjectName("");
         dispatch(projectRename({}));
       } else {
-        mutate({ name: projectName.trim() });
+        mutate({ name: projectName.trim(), color: colorName });
         setProjectName("");
       }
       handleClose();
@@ -89,6 +92,8 @@ const useProjectNameModal = () => {
     isLoading,
     projectName,
     open,
+    colorName,
+    setColorName,
   };
 };
 

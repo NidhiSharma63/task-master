@@ -7,15 +7,15 @@ import {
   IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import colors from "../../../theme/variables";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAddColumn from "../../../hook/board/useAddColumn";
 import useDeleteColumn from "../../../hook/board/useDeleteColumn";
-import { CommonLoaderWithBackDrop } from "../../../common/loader/CommonLoader";
+import TaskCard from "./TaskCard";
+import { ClipLoader } from "react-spinners";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -34,7 +34,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     anchorElForColumnIcons,
     openColsIcons,
     isColsRename,
-    isLoading,
+    show_loader_for_task,
   } = useTaskBoxContainer({ data, name });
 
   const { colsValue, handleColsValue } = useAddColumn({
@@ -45,6 +45,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
   });
 
   const { deleteColumn } = useDeleteColumn({ colId });
+  // const { userName } = useLayout();
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -68,7 +69,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           </Typography>
         )}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton disabled={isLoading}>
+          <IconButton disabled={show_loader_for_task}>
             {" "}
             <AddIcon
               onClick={handleAddTask}
@@ -129,65 +130,75 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               className="box"
             >
               {textAreaValuesTop?.map((value, index) => (
-                <textarea
-                  key={index}
-                  value={value}
-                  data-id={name}
-                  onChange={(event) =>
-                    handleChange(event, index, event.target.value)
-                  }
-                  onBlur={(event) => handleBlur(event, index)}
-                  onInput={handleInput}
-                  className="textArea"
-                />
+                <>
+                  <textarea
+                    key={index}
+                    value={value}
+                    data-id={name}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
+                    onBlur={(event) => handleBlur(event, index)}
+                    onInput={handleInput}
+                    className="textArea"
+                  />
+                  {show_loader_for_task && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        mt: -1,
+                      }}
+                    >
+                      <ClipLoader sx={{ mt: -2 }} />
+                    </Box>
+                  )}
+                </>
               ))}
               {data?.map((item) => {
                 return (
-                  <Draggable
+                  <TaskCard
                     key={item._id}
-                    draggableId={item._id}
-                    index={item.index}
-                  >
-                    {(provided) => (
-                      <Box
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        sx={{
-                          border: `1px solid ${colors.lightGrey}`,
-                          width: "100%",
-                          padding: 2,
-                          backgroundColor: "rgba(255, 255, 255, 0.64)",
-                          borderRadius: "0.4rem",
-                          marginBottom: "1rem",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handleClickOnTask(item)}
-                      >
-                        <Typography>{item.task}</Typography>
-                      </Box>
-                    )}
-                  </Draggable>
+                    item={item}
+                    handleClickOnTask={handleClickOnTask}
+                  />
                 );
               })}
               {provided.placeholder}
               {textAreaValuesBottom?.map((value, index) => (
-                <textarea
-                  key={index}
-                  value={value}
-                  data-id={name}
-                  onChange={(event) =>
-                    handleChange(event, index, event.target.value)
-                  }
-                  onBlur={(event) => handleBlur(event, index)}
-                  onInput={handleInput}
-                  className="textArea"
-                />
+                <>
+                  <textarea
+                    key={index}
+                    value={value}
+                    data-id={name}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
+                    onBlur={(event) => handleBlur(event, index)}
+                    onInput={handleInput}
+                    className="textArea"
+                  />
+                  {show_loader_for_task && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                        mt: -1,
+                      }}
+                    >
+                      <ClipLoader sx={{ mt: -2 }} />
+                    </Box>
+                  )}
+                </>
               ))}
               {data?.length > 0 ? (
                 <Button
                   variant="contained"
-                  disabled={isLoading}
+                  disabled={show_loader_for_task}
                   onClick={handleClickForAddingTaskFromBottom}
                 >
                   Add Task

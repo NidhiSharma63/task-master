@@ -10,6 +10,12 @@ const taskSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  label: {
+    type: String,
+  },
+  labelColor: {
+    type: String,
+  },
   userId: {
     type: String,
     required: true,

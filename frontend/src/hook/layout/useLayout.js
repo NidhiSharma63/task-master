@@ -27,7 +27,7 @@ import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
 const useLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user_email } = useSelector(usersDataInStore);
+  // const { user_email } = useSelector(usersDataInStore);
   const { active_project } = useSelector(projectDataInStore);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -42,7 +42,7 @@ const useLayout = () => {
   const { setValue } = useBackDropLoaderContext();
   const [userName, setUserName] = useState("");
 
-  // navigate the user to /todo directly
+  // // navigate the user to /todo directly
   useEffect(() => {
     navigate("Dashboard");
   }, []);
@@ -58,9 +58,9 @@ const useLayout = () => {
     setAllProjects(data?.projects);
   }, [data]);
 
-  useEffect(() => {
-    setUserName(getUserFirstNameFirstLetter(user_email));
-  }, [user_email]);
+  // useEffect(() => {
+  // setUserName(getUserFirstNameFirstLetter(user_email));
+  // }, [user_email]);
 
   const handleLogout = () => {
     mutate();
@@ -129,11 +129,12 @@ const useLayout = () => {
     setOpenPorjectsIcons(false);
   };
 
-  const handleClickOnRename = (projectName, projectId) => {
+  const handleClickOnRename = (projectName, projectId, color) => {
     dispatch(
       projectRename({
         projectName,
         projectId,
+        color,
       })
     );
     dispatch(isProjectNameModalOpen(true));
@@ -158,7 +159,7 @@ const useLayout = () => {
     openPorjectsIcons,
     deleteInProgress,
     allProjects,
-    userName,
+    // userName,
   };
 };
 

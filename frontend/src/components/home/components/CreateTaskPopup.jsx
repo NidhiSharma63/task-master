@@ -13,14 +13,17 @@ import {
   booleanDataInStore,
   isCreateTaskModalOpen,
 } from "../../../redux/boolean/booleanSlice";
-import { useAddTaskQuery } from "../../../hook/useTaskQuery";
+import {
+  useAddTaskQuery,
+  useUpdateTaskQueryWithDetails,
+} from "../../../hook/useTaskQuery";
 import { Form, Formik } from "formik";
 import FormikControls from "../../../common/formik/FormikControls";
 import { validationForUpdatingTask } from "../../../constant/validation";
 import colors from "../../../theme/variables";
 import { useUpdateTaskQuery, useDeleteTask } from "../../../hook/useTaskQuery";
 
-import { taskDataInStore } from "../../../redux/task/taskSlice";
+import { activeTask, taskDataInStore } from "../../../redux/task/taskSlice";
 import { useEffect } from "react";
 
 const CreateTaskPopup = ({ status, projectData }) => {
@@ -32,18 +35,23 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
   const { mutate: updateTask, isLoading: isUpdatingTask } =
-    useUpdateTaskQuery();
+    useUpdateTaskQueryWithDetails();
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
+    dispatch(activeTask(""));
   };
+  console.log(status, ":::status");
 
   const initialValues = {
-    task: active_task.task ?? "",
+    task: active_task?.task ?? "",
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
     description: active_task?.description ?? "",
     projectName: active_task?.projectName ?? projectName?.[0],
+    label: active_task?.label ?? "",
+    labelColor: active_task?.labelColor ?? "#e33529",
+    index: active_task?.index ?? 0,
   };
 
   // active task is present
@@ -59,6 +67,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
       mutate(values);
       dispatch(isCreateTaskModalOpen(true));
     }
+    dispatch(activeTask(""));
   };
 
   useEffect(() => {
@@ -66,6 +75,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
       dispatch(isCreateTaskModalOpen(false));
     }
   }, [isUpdatingTask, isLoadingTask]);
+
   const handleDelete = () => {
     deleteTask({ id: active_task._id });
     dispatch(isCreateTaskModalOpen(false));
@@ -89,13 +99,18 @@ const CreateTaskPopup = ({ status, projectData }) => {
               }}
             >
               <FormikControls control="formikInput" name="task" />
+              <FormikControls
+                control="formikInputForLable"
+                name="label"
+                colorName="labelColor"
+              />
               <FormikControls control="formikDatePicker" name="dueDate" />
               <FormikControls control="formikTextArea" name="description" />
               <FormikControls
                 control="formikSelect"
                 name="projectName"
                 values={projectName ?? []}
-                mt={11}
+                mt={2}
               />
               <Box sx={{ mt: 2, display: "flex" }}>
                 <Typography sx={{ fontWeight: 600 }}>

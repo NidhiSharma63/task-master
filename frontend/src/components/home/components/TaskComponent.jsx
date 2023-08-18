@@ -1,6 +1,5 @@
-import { Box, Typography, Stack, Divider, Button } from "@mui/material";
+import { Box, Typography, Divider, Button } from "@mui/material";
 import colors from "../../../theme/variables";
-import { statesOfTaskManager } from "../../../constant/Misc";
 import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
 import { activeLink } from "../../../redux/task/taskSlice";
@@ -18,6 +17,8 @@ const TaskComponent = ({
     handleClickOnTask,
     totalTask,
     getTaskToDisplay,
+    total_status,
+    active_link,
   } = useTaskComponent({
     backgroundColors,
     projectData,
@@ -29,14 +30,14 @@ const TaskComponent = ({
   return (
     <Box
       sx={{
-        width: "50%",
+        width: "500px",
         border: "1px solid",
         borderColor: (theme) => theme.palette.grey[400],
         borderRadius: "0.3rem",
         height: "100%",
       }}
     >
-      <Box sx={{ padding: " 0.8rem" }}>
+      <Box sx={{ padding: " 0.8rem", width: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
             My Tasks
@@ -49,8 +50,16 @@ const TaskComponent = ({
             Add Task
           </Button>
         </Box>
-        <Stack direction="row" spacing={2} mt={1}>
-          {statesOfTaskManager?.map((item, i) => {
+        <Box
+          mt={1}
+          sx={{
+            display: "flex",
+            overflowX: "scroll",
+            width: "100%",
+          }}
+        >
+          {total_status?.map((item, i) => {
+            // console.log(ac);
             return (
               <Box
                 key={i}
@@ -59,20 +68,20 @@ const TaskComponent = ({
                   fontWeight: 500,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   gap: 1,
-                  borderBottom:
-                    activeLink === item
-                      ? `1px solid  ${colors.primaryColor}`
-                      : "1px solid transparent",
+                  backgroundColor: active_link === item ? "#dce0e6" : "none",
                   "&:hover": {
-                    borderBottom: `1px solid  ${colors.primaryColor}`, // Change border on hover
+                    backgroundColor: "#dce0e6", // Change border on hover
                   },
-                  transition: "border 0.3s ease",
+                  transition: "0.3s ease",
+                  ml: i === 0 ? "0rem" : "2rem",
+                  padding: ".2rem .4rem",
+                  borderRadius: ".3rem",
                 }}
                 onClick={() => handleClickOnLink(item)}
               >
-                <Typography>{item}</Typography>
+                <Typography sx={{ width: "max-content" }}>{item}</Typography>
                 <Box
                   sx={{
                     backgroundColor: (theme) => theme.palette.primary.main,
@@ -86,7 +95,7 @@ const TaskComponent = ({
               </Box>
             );
           })}
-        </Stack>
+        </Box>
       </Box>
       <Divider />
       <Box
@@ -140,7 +149,7 @@ const TaskComponent = ({
           })
         )}
       </Box>
-      <CreateTaskPopup status={activeLink} projectData={projectData} />
+      <CreateTaskPopup status={active_link} projectData={projectData} />
     </Box>
   );
 };

@@ -40,9 +40,12 @@ const BoardDrawer = () => {
     status: active_task.status,
     description: active_task?.description ?? "",
     subTasks: active_task?.subTasks ?? "",
+    label: active_task?.label ?? "",
+    labelColor: active_task?.labelColor ?? "#e33529",
   };
 
   const handleSubmit = (values) => {
+    // console.log(values, "::::::::values:::::::");
     mutate(values);
   };
 
@@ -105,6 +108,11 @@ const BoardDrawer = () => {
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
+                <FormikControls
+                  control="formikInputForLable"
+                  name="label"
+                  colorName="labelColor"
+                />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
                 <FormikControls control="formikInputArray" name="subTasks" />
