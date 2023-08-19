@@ -12,7 +12,6 @@ import InfoPart from "../../components/auth/components/InfoPart";
 import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
-import { ClipLoader } from "react-spinners";
 import useLogin from "../../hook/auth/useLogin";
 import CommonLoader from "../../common/loader/CommonLoader";
 
@@ -32,6 +31,7 @@ const Login = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          background: (theme) => theme.palette.primary.main,
         }}
       >
         <Box
@@ -47,7 +47,9 @@ const Login = () => {
           <IconButton sx={{ width: "3rem" }}>
             <Logo />
           </IconButton>
-          <Typography fontWeight={600}>Task Master</Typography>
+          <Typography sx={{ color: "white" }} fontWeight={600}>
+            Task Master
+          </Typography>
         </Box>
         <Divider />
         <Box
@@ -64,8 +66,8 @@ const Login = () => {
           <Box>
             <Typography
               sx={{
-                fontWeight: "700",
                 fontSize: "1.7rem",
+                color: "white",
               }}
             >
               Login
@@ -73,7 +75,6 @@ const Login = () => {
             <Typography
               sx={{
                 marginTop: 3,
-                fontWeight: "500",
                 color: (theme) => theme.palette.text.primary,
               }}
             >
@@ -105,12 +106,14 @@ const Login = () => {
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button
                       type="submit"
+                      variant="outlined"
                       sx={{
                         backgroundColor: "primary.main",
-                        color: "white",
                         "&:hover": {
-                          backgroundColor: colors.primaryHoverColor,
+                          borderColor: colors.secondaryTextColor,
                         },
+                        borderColor: colors.secondaryTextColor,
+                        color: colors.secondaryTextColor,
                       }}
                     >
                       login
@@ -128,7 +131,7 @@ const Login = () => {
               mt: 4,
             }}
           >
-            <Typography>
+            <Typography sx={{ color: "white" }}>
               Don't have account{" "}
               <a style={{ fontWeight: "700" }} href="/register">
                 sign up

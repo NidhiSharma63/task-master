@@ -32,6 +32,7 @@ const Register = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          background: (theme) => theme.palette.primary.main,
         }}
       >
         <Box
@@ -47,7 +48,7 @@ const Register = () => {
           <IconButton sx={{ width: "3rem" }}>
             <Logo />
           </IconButton>
-          <Typography fontWeight={600}>Task Master</Typography>
+          <Typography sx={{ color: "white" }}>Task Master</Typography>
         </Box>
         <Divider />
         <Box
@@ -64,8 +65,8 @@ const Register = () => {
           <Box>
             <Typography
               sx={{
-                fontWeight: "700",
                 fontSize: "1.7rem",
+                color: "white",
               }}
             >
               Register
@@ -81,7 +82,7 @@ const Register = () => {
               your life productive.
             </Typography>
           </Box>
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "100%", mt: 2 }}>
             <Formik
               initialValues={initialValues}
               validationSchema={registerSchema}
@@ -109,13 +110,15 @@ const Register = () => {
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button
                       type="submit"
+                      variant="outlined"
                       onClick={handleSubmit}
                       sx={{
                         backgroundColor: "primary.main",
-                        color: "white",
                         "&:hover": {
-                          backgroundColor: colors.primaryHoverColor,
+                          borderColor: colors.secondaryTextColor,
                         },
+                        borderColor: colors.secondaryTextColor,
+                        color: colors.secondaryTextColor,
                       }}
                     >
                       register
@@ -133,7 +136,7 @@ const Register = () => {
               mt: 2,
             }}
           >
-            <Typography>
+            <Typography sx={{ color: "white" }}>
               Already have account{" "}
               <a style={{ fontWeight: "700" }} href="/login">
                 login

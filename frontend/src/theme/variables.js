@@ -6,7 +6,7 @@ const colors = {
   lightGrey: "#424244",
   mainColor: "#252628",
 
-  bannerColor: "#B36BD4",
+  bannerColor: "#570C59",
 
   // navigationColor: "#2e2e30"
   navigationColor: "#191919",

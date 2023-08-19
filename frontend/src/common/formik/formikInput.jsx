@@ -28,9 +28,9 @@ function FormikInput(props) {
           >
             <Typography
               sx={{
-                fontWeight: "700",
                 maxWidth: "13rem",
                 mb: 1,
+                color: "white",
               }}
             >
               {name === "email" ? TitleCase("e-mail") : TitleCase(name)}
