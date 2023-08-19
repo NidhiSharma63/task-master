@@ -85,8 +85,6 @@ const useGetTaskAccordingToStatus = () => {
  */
 
 const useUpdateTaskQuery = () => {
-  const dispatch = useDispatch();
-
   let state;
   return useMutation({
     mutationFn: (payload) => {
@@ -95,7 +93,7 @@ const useUpdateTaskQuery = () => {
       return customAxiosRequestForPost("/task", "put", payload);
     },
     onSuccess: () => {
-      toast.success("Task updated successfully!");
+      // toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
       // setTimeout(() => {
@@ -123,7 +121,7 @@ const useUpdateTaskQueryWithStatus = () => {
       return customAxiosRequestForPost("/task/status", "put", payload);
     },
     onSuccess: () => {
-      toast.success("Task updated successfully!");
+      // toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {

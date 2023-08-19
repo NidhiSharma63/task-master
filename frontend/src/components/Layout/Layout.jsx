@@ -163,6 +163,7 @@ export const Layout = () => {
                       />
                       <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
+                          sx={{ color: colors.secondaryTextColor }}
                           onClick={handleClickOnThreeDots}
                           data-id={item._id}
                         />
@@ -174,7 +175,7 @@ export const Layout = () => {
                         >
                           <MenuItem
                             sx={{
-                              color: (theme) => theme.palette.primary.main,
+                              color: colors.secondaryTextColor,
                             }}
                             onClick={handleClickOnRename}
                           >
@@ -182,7 +183,7 @@ export const Layout = () => {
                           </MenuItem>
                           <MenuItem
                             sx={{
-                              color: (theme) => theme.palette.primary.main,
+                              color: colors.secondaryTextColor,
                             }}
                             onClick={handleDelete}
                           >

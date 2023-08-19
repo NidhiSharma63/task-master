@@ -11,6 +11,7 @@ import { COLORS_FOR_PROJECTS } from "../../constant/colors";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { Field } from "formik";
 import TitleCase from "../../utils/TextTransformer";
+import colors from "../../theme/variables";
 
 const FormikInputForLabel = (props) => {
   const [isAccordianOpen, setIsAccodianOpen] = useState(false);
@@ -19,10 +20,6 @@ const FormikInputForLabel = (props) => {
 
   const hanldeAccordianOpen = () => {
     setIsAccodianOpen((prev) => !prev);
-  };
-  const hanldeChange = (event) => {
-    const inputValue = event.target.value;
-    setTextValue(inputValue);
   };
 
   return (
@@ -99,6 +96,9 @@ const FormikInputForLabel = (props) => {
                     display: "flex",
                     flexDirection: "row",
                     width: `${isAccordianOpen ? "30rem" : "5rem"}`,
+                    background: colors.primaryColor,
+                    border: `1px solid ${colors.secondaryTextColor}`,
+                    borderRadius: ".3rem",
                   }}
                 >
                   <AccordionSummary

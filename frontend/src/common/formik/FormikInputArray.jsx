@@ -2,8 +2,8 @@ import { Field, FieldArray } from "formik";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import useFormikInput from "../../hook/boardDrawer/useFormikInput";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import colors from "../../theme/variables";
 
 const FormikInputArray = (props) => {
   const { name } = props;
@@ -82,6 +82,11 @@ const FormikInputArray = (props) => {
               type="button"
               variant="outlined"
               className="not-remove-input"
+              sx={{
+                mt: 2,
+                color: colors.secondaryColor,
+                borderColor: colors.secondaryTextColor,
+              }}
               onClick={() =>
                 arrayHelpers.push({ value: "", isCompleted: false })
               }

@@ -14,6 +14,7 @@ import {
   useUpdateTaskQueryWithDetails,
   useDeleteTask,
 } from "../../../hook/useTaskQuery";
+import colors from "../../../theme/variables";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -68,7 +69,6 @@ const BoardDrawer = () => {
       onClose={handleClose}
       sx={{
         "& .MuiDrawer-paper": {
-          backgroundColor: (theme) => theme.palette.secondary.main,
           width: 600,
         },
       }}
@@ -117,19 +117,24 @@ const BoardDrawer = () => {
                 <FormikControls control="formikInputArray" name="subTasks" />
 
                 <Box sx={{ mt: 2, display: "flex" }}>
-                  <Typography sx={{ fontWeight: 600 }}>
-                    Created At : &nbsp;
-                  </Typography>
+                  <Typography>Created At : &nbsp;</Typography>
                   <Typography
                     sx={{
-                      fontWeight: 600,
-                      color: (theme) => theme.palette.primary.main,
+                      color: (theme) => theme.palette.secondary.main,
                     }}
                   >
                     {new Date(active_task.createdAt).toUTCString()}
                   </Typography>
                 </Box>
-                <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+                <Button
+                  variant="outlined"
+                  type="submit"
+                  sx={{
+                    mt: 2,
+                    color: colors.secondaryColor,
+                    borderColor: colors.secondaryTextColor,
+                  }}
+                >
                   Save
                 </Button>
                 <Button
@@ -140,11 +145,11 @@ const BoardDrawer = () => {
                     ml: 2,
 
                     backgroundColor: "rgb(168, 13, 13)",
-                    "&:hover": {
-                      background: "white",
-                      borderColor: (theme) => theme.palette.primary.main,
-                      color: (theme) => theme.palette.primary.main,
-                    },
+                    // "&:hover": {
+                    //   background: "white",
+                    //   borderColor: (theme) => theme.palette.primary.main,
+                    //   color: (theme) => theme.palette.primary.main,
+                    // },
                   }}
                 >
                   Delete
