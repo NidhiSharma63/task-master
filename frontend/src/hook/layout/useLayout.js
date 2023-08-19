@@ -80,6 +80,7 @@ const useLayout = () => {
   };
 
   const handleOpenProjectModal = () => {
+    dispatch(projectRename({}));
     dispatch(isProjectNameModalOpen(true));
     navigate("/Dashboard");
   };
