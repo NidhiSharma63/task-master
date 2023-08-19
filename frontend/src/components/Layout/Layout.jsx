@@ -37,12 +37,14 @@ export const Layout = () => {
     handleOpen,
     handleCloseOfProjectsIcons,
     handleOpenProjectModal,
+    setItemId,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
     openPorjectsIcons,
     allProjects,
+    itemId,
     // userName,
   } = useLayout();
 
@@ -151,7 +153,10 @@ export const Layout = () => {
                         onClick={() => handleActiveProject(item.name)}
                       />
                       <ListItemIcon>
-                        <MoreVertIcon onClick={handleClickOnThreeDots} />
+                        <MoreVertIcon
+                          onClick={handleClickOnThreeDots}
+                          data-id={item._id}
+                        />
                         <Menu
                           id="logout"
                           anchorEl={anchorElForProjectIcons}
@@ -176,7 +181,7 @@ export const Layout = () => {
                             sx={{
                               color: (theme) => theme.palette.primary.main,
                             }}
-                            onClick={() => handleDelete(item._id)}
+                            onClick={handleDelete}
                           >
                             <DeleteIcon />
                           </MenuItem>

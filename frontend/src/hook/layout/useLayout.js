@@ -36,6 +36,7 @@ const useLayout = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
   const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
+  const [itemId, setItemId] = useState(null);
   const { mutate: deleteProject, isLoading: deleteInProgress } =
     useDeleteProjectQuery();
 
@@ -83,8 +84,9 @@ const useLayout = () => {
     navigate("/Dashboard");
   };
 
-  const handleDelete = (id) => {
-    deleteProject({ id });
+  const handleDelete = () => {
+    deleteProject({ id: itemId });
+    // console.log(id, ":::this is the id coming");
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
     setAnchorEl(null);
     setOpenPorjectsIcons(false);
@@ -122,6 +124,7 @@ const useLayout = () => {
   const handleClickOnThreeDots = (event) => {
     setOpenPorjectsIcons(true);
     setAnchorElForProjectIcons(event.target);
+    setItemId(event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
@@ -151,6 +154,7 @@ const useLayout = () => {
     handleOpen,
     handleOpenProjectModal,
     handleCloseOfProjectsIcons,
+    setItemId,
     anchorEl,
     open,
     isLoading,
@@ -158,6 +162,7 @@ const useLayout = () => {
     openPorjectsIcons,
     deleteInProgress,
     allProjects,
+    itemId,
     // userName,
   };
 };
