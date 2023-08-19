@@ -69,7 +69,7 @@ const useInsight = ({ status }) => {
     labels: allProjects,
     datasets: [
       {
-        label: "Conatin Tasks",
+        label: `Total Tasks ${status === "All" ? "" : "in" + status}`,
         data: allTask,
         backgroundColor: bgColors,
         borderWidth: 1,

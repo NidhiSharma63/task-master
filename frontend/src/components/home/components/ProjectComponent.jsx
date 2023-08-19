@@ -59,7 +59,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         sx={{
           padding: "0.4rem",
           height: "calc(100% - 60px)",
-          overflowY: "scroll",
+          overflowY: "auto",
           "&::-webkit-scrollbar": {
             width: "4px",
             height: "5px",

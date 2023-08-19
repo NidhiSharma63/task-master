@@ -29,10 +29,9 @@ const Insights = () => {
           <Typography
             variant="h5"
             sx={{
-              fontWeight: 600,
               ml: 3,
               mb: 2,
-              color: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.secondary.main,
             }}
           >
             Insights
