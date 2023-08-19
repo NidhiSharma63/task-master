@@ -35,9 +35,7 @@ const Headers = () => {
           variant="h5"
           sx={{
             textTransform: "capitalize",
-            fontWeight: "600",
             pl: 2,
-            color: (theme) => theme.palette.primary.main,
           }}
         >
           {active_project}
@@ -45,12 +43,12 @@ const Headers = () => {
         <Box>
           <NavLink
             style={({ isActive }) => ({
-              color: colors.primaryTextColor,
+              color: colors.secondaryColor,
               fontWeight: isActive ? 600 : 100,
               textDecoration: "none",
               marginLeft: "1.2rem",
               borderBottom: isActive
-                ? `1px solid ${colors.primaryTextColor}`
+                ? `1px solid ${colors.secondaryColor}`
                 : "",
             })}
             to={`activeProject/board/${active_project}`}

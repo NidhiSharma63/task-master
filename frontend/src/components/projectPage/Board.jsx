@@ -5,6 +5,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "../../hook/board/useBoard";
 import useAddColumn from "../../hook/board/useAddColumn";
 import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
+import colors from "../../theme/variables";
 
 const Board = () => {
   const {
@@ -32,6 +33,7 @@ const Board = () => {
         // overflowY: "scroll",
         display: "flex",
         alignItems: "center",
+        // background: colors.navigationColor,
       }}
     >
       <DragDropContext onDragEnd={handleDragEnd}>

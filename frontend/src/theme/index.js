@@ -3,7 +3,7 @@ import colors from "./variables";
 
 const theme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
     primary: {
       main: colors.primaryColor,
     },
@@ -14,7 +14,7 @@ const theme = createTheme({
       50: colors.lightGrey,
     },
     text: {
-      primary: colors.primaryTextColor,
+      primary: colors.secondaryColor,
       secondary: colors.secondaryTextColor,
     },
     divider: colors.lightGrey,

@@ -1,9 +1,13 @@
 const colors = {
-  primaryColor: "rgb(87,17,89)", // voilet
+  primaryColor: "#2E2E30", // voilet
   secondaryColor: "rgba(255, 255, 255, 0.993)",
 
   // light grey
-  lightGrey: "rgb(189, 189, 189)",
+  lightGrey: "#424244",
+  mainColor: "#252628",
+
+  // navigationColor: "#2e2e30"
+  navigationColor: "#191919",
 
   // text color
   primaryTextColor: "rgb(18,17,17)",

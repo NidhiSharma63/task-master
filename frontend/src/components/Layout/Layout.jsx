@@ -22,7 +22,8 @@ import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
 import UserName from "../../common/UserName";
-const drawerWidth = 180;
+import colors from "../../theme/variables";
+const drawerWidth = 160;
 
 export const Layout = () => {
   const {
@@ -53,7 +54,12 @@ export const Layout = () => {
         <AppBar
           position="fixed"
           display="flex"
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            // background: "#121212",
+            background: colors.navigationColor,
+            boxShadow: "none",
+          }}
         >
           <Toolbar
             sx={{
@@ -62,7 +68,12 @@ export const Layout = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" noWrap component="div">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ color: `${colors.secondaryColor}` }}
+            >
               Task Manager
             </Typography>
             <UserName handleOpen={handleOpen} />
@@ -72,16 +83,10 @@ export const Layout = () => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem
-                sx={{
-                  color: (theme) => theme.palette.primary.main,
-                }}
-                onClick={handleLogout}
-              >
-                Logout
-              </MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
+          <Divider />
         </AppBar>
         <Drawer
           variant="permanent"
@@ -91,11 +96,17 @@ export const Layout = () => {
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
               boxSizing: "border-box",
+              background: colors.navigationColor,
             },
+            // backgroundColor: "red",
           }}
         >
           <Toolbar />
-          <Box sx={{ overflow: "auto" }}>
+          <Box
+            sx={{
+              overflow: "auto",
+            }}
+          >
             <List>
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
