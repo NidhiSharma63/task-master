@@ -42,7 +42,7 @@ const HomeComponent = () => {
       <Box
         sx={{
           width: "90%",
-          height: "calc(100% - 130px)",
+          height: "calc(100% - 160px)",
           display: "flex",
           gap: 4,
         }}

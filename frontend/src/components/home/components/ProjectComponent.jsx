@@ -62,6 +62,17 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           padding: "0.4rem",
           height: "calc(100% - 60px)",
           overflowY: "scroll",
+          "&::-webkit-scrollbar": {
+            width: "4px",
+            height: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: `${colors.primaryColor}`,
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: `${colors.secondaryTextColor}`,
+            borderRadius: "4px",
+          },
         }}
       >
         {isLoading ? (

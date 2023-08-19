@@ -17,11 +17,22 @@ const theme = createTheme({
       primary: colors.secondaryColor,
       secondary: colors.secondaryTextColor,
     },
+
     divider: colors.lightGrey,
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
   },
+  // components: {
+  //   MuiTextField: {
+  //     styleOverrides: {
+  //       root: {
+  //         border: "1px solid green",
+  //         outline: "none",
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;

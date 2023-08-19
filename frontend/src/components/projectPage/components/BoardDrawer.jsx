@@ -92,6 +92,7 @@ const BoardDrawer = () => {
             flexDirection: "column",
             gap: "1rem",
             mt: 1,
+            mb: 2,
           }}
         >
           <Formik
@@ -145,11 +146,6 @@ const BoardDrawer = () => {
                     ml: 2,
 
                     backgroundColor: "rgb(168, 13, 13)",
-                    // "&:hover": {
-                    //   background: "white",
-                    //   borderColor: (theme) => theme.palette.primary.main,
-                    //   color: (theme) => theme.palette.primary.main,
-                    // },
                   }}
                 >
                   Delete

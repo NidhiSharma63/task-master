@@ -1,9 +1,8 @@
 import { Box, Typography, Divider, Button } from "@mui/material";
-import colors from "../../../theme/variables";
 import { ClipLoader } from "react-spinners";
 import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
-import { activeLink } from "../../../redux/task/taskSlice";
 import useTaskComponent from "../../../hook/home/useTaskComponent";
+import colors from "../../../theme/variables";
 
 const TaskComponent = ({
   backgroundColors,
@@ -56,6 +55,17 @@ const TaskComponent = ({
             display: "flex",
             overflowX: "scroll",
             width: "100%",
+            "&::-webkit-scrollbar": {
+              width: "2px",
+              height: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: `${colors.primaryColor}`,
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: `${colors.secondaryTextColor}`,
+              borderRadius: "4px",
+            },
           }}
         >
           {total_status?.map((item, i) => {
@@ -70,9 +80,11 @@ const TaskComponent = ({
                   alignItems: "center",
                   justifyContent: "flex-start",
                   gap: 1,
-                  backgroundColor: active_link === item ? "#dce0e6" : "none",
+                  mb: 1,
+                  backgroundColor:
+                    active_link === item ? colors.mainColor : "none",
                   "&:hover": {
-                    backgroundColor: "#dce0e6", // Change border on hover
+                    backgroundColor: colors.mainColor, // Change border on hover
                   },
                   transition: "0.3s ease",
                   ml: i === 0 ? "0rem" : "2rem",
@@ -84,10 +96,10 @@ const TaskComponent = ({
                 <Typography sx={{ width: "max-content" }}>{item}</Typography>
                 <Box
                   sx={{
-                    backgroundColor: (theme) => theme.palette.primary.main,
                     borderRadius: "50%",
                     padding: "0rem .5rem",
                     color: "white",
+                    background: colors.bannerColor,
                   }}
                 >
                   {totalTask?.[i] ? totalTask?.[i]?.count : 0}
