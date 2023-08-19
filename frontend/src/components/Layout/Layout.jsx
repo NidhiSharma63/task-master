@@ -37,14 +37,12 @@ export const Layout = () => {
     handleOpen,
     handleCloseOfProjectsIcons,
     handleOpenProjectModal,
-    setItemId,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
     openPorjectsIcons,
     allProjects,
-    itemId,
     // userName,
   } = useLayout();
 
@@ -152,13 +150,13 @@ export const Layout = () => {
                         primary={item.name}
                         onClick={() => handleActiveProject(item.name)}
                       />
-                      <ListItemIcon>
+                      <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
                           onClick={handleClickOnThreeDots}
                           data-id={item._id}
                         />
                         <Menu
-                          id="logout"
+                          data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
                           open={openPorjectsIcons}
                           onClose={handleCloseOfProjectsIcons}
@@ -167,13 +165,7 @@ export const Layout = () => {
                             sx={{
                               color: (theme) => theme.palette.primary.main,
                             }}
-                            onClick={() =>
-                              handleClickOnRename(
-                                item.name,
-                                item._id,
-                                item.color
-                              )
-                            }
+                            onClick={handleClickOnRename}
                           >
                             <DriveFileRenameOutlineIcon />
                           </MenuItem>

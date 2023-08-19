@@ -122,6 +122,7 @@ const useLayout = () => {
   }, [active_project]);
 
   const handleClickOnThreeDots = (event) => {
+    if (!event.target.dataset.id) return;
     setOpenPorjectsIcons(true);
     setAnchorElForProjectIcons(event.target);
     setItemId(event.target.dataset.id);
@@ -131,12 +132,15 @@ const useLayout = () => {
     setOpenPorjectsIcons(false);
   };
 
-  const handleClickOnRename = (projectName, projectId, color) => {
+  const handleClickOnRename = () => {
+    const projectToUpdate = allProjects.find((item) => item._id === itemId);
+
+    if (!itemId) return;
     dispatch(
       projectRename({
-        projectName,
-        projectId,
-        color,
+        projectName: projectToUpdate?.name,
+        projectId: projectToUpdate?._id,
+        color: projectToUpdate?.color,
       })
     );
     dispatch(isProjectNameModalOpen(true));
