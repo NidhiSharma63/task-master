@@ -46,7 +46,7 @@ const ProjectNameModal = () => {
           <DialogTitle
             id="projectModal"
             sx={{
-              color: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.secondary.main,
             }}
           >
             Create your project
@@ -108,13 +108,11 @@ const ProjectNameModal = () => {
           </DialogContent>
           <DialogActions>
             <Button
+              variant="outlined"
               onClick={handleSave}
               sx={{
-                backgroundColor: (theme) => theme.palette.primary.main,
+                borderColor: colors.secondaryTextColor,
                 color: "white",
-                "&:hover": {
-                  backgroundColor: colors.primaryHoverColor,
-                },
               }}
             >
               Save
