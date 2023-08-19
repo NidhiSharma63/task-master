@@ -33,11 +33,6 @@ const useProjectNameModal = () => {
   };
 
   useEffect(() => {
-    if (isLoading === false) {
-      handleClose();
-      dispatch(isBackDropLoaderDisplayed(false));
-      setValue("");
-    }
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Creating project");
@@ -45,10 +40,6 @@ const useProjectNameModal = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    if (projectUpdateIsLoading === false) {
-      dispatch(isBackDropLoaderDisplayed(false));
-      setValue("");
-    }
     if (projectUpdateIsLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Updating project");

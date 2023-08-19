@@ -86,6 +86,8 @@ const useLayout = () => {
   const handleDelete = (id) => {
     deleteProject({ id });
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
+    setAnchorEl(null);
+    setOpenPorjectsIcons(false);
   };
 
   /**
@@ -95,9 +97,6 @@ const useLayout = () => {
     if (deleteInProgress) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Deleting project");
-    } else {
-      dispatch(isBackDropLoaderDisplayed(false));
-      setValue("");
     }
   }, [deleteInProgress]);
 

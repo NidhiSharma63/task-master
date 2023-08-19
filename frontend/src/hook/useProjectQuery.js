@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "../index";
 import { queryKeyForTask } from "../constant/queryKey";
+import { useBackDropLoaderContext } from "../context/BackDropLoaderContext";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "../redux/boolean/booleanSlice";
 
 // post
 const usePostProjectQuery = () => {
@@ -15,7 +18,7 @@ const usePostProjectQuery = () => {
       return customAxiosRequestForPost("/projects", "post", payload);
     },
     onSuccess: () => {
-      toast.success("Project created successfully!");
+      // toast.success("Project created successfully!");
       queryClient.invalidateQueries("projects");
       queryKeyForTask.forEach((status) =>
         queryClient.invalidateQueries(status)
@@ -36,9 +39,17 @@ const getAllProjects = async () => {
 //get
 
 const useGetProjectQuery = () => {
+  const { setValue } = useBackDropLoaderContext();
+  const dispatch = useDispatch();
+
   return useQuery({
     queryKey: ["projects"],
     queryFn: getAllProjects,
+    // onSuccess:()
+    onSuccess: () => {
+      setValue("");
+      dispatch(isBackDropLoaderDisplayed(false));
+    },
     onError: (error) => {
       toast.error(error?.response?.data);
     },
@@ -52,7 +63,7 @@ const useDeleteProjectQuery = () => {
       return customAxiosRequestForPost("/projects", "delete", payload);
     },
     onSuccess: () => {
-      toast.success("Project deleted successfully!");
+      // toast.success("Project deleted successfully!");
       queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries(["charts-data"]);
     },
