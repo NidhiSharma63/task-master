@@ -1,6 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import { usersDataInStore } from "../../redux/auth/userSlice";
-import { getUserFirstNameFirstLetter } from "../../utils/getUserFirstName";
 import useLogoutQuery from "../../hook/useLogoutQuery";
 import {
   useGetProjectQuery,
@@ -46,6 +44,8 @@ const useLayout = () => {
   // // navigate the user to /todo directly
   useEffect(() => {
     navigate("Dashboard");
+    dispatch(isBackDropLoaderDisplayed(false));
+    setValue("");
   }, []);
 
   // if only single present or first time project is created then make that as active project\

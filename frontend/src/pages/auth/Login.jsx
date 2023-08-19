@@ -13,13 +13,21 @@ import FormikControls from "../../common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../../constant/validation";
 import useLogin from "../../hook/auth/useLogin";
-import CommonLoader from "../../common/loader/CommonLoader";
+// import CommonLoader from "../../common/loader/CommonLoader";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "../../redux/boolean/booleanSlice";
+import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
 
 const Login = () => {
   const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
 
+  const dispatch = useDispatch();
+
+  const { setValue } = useBackDropLoaderContext();
   if (isLoading) {
-    return <CommonLoader value={"Redirecting..."} />;
+    setValue("Redirecting...");
+    dispatch(isBackDropLoaderDisplayed(true));
   }
 
   return (
@@ -141,6 +149,7 @@ const Login = () => {
         </Box>
       </Grid>
       <InfoPart />
+      <CommonLoaderWithBackDrop />
     </Grid>
   );
 };

@@ -7,8 +7,11 @@ import {
   KEY_FOR_STORING_USER_DETAILS,
 } from "../constant/Misc";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "../redux/boolean/booleanSlice";
 
 const useLoginQuery = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return useMutation({
@@ -22,6 +25,7 @@ const useLoginQuery = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data);
+      dispatch(isBackDropLoaderDisplayed(false));
     },
   });
 };

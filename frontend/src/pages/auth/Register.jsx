@@ -13,14 +13,21 @@ import { Formik, Form } from "formik";
 import { registerSchema } from "../../constant/validation";
 import FormikControls from "../../common/formik/FormikControls";
 import useRegister from "../../hook/auth/useRegister";
-import CommonLoader from "../../common/loader/CommonLoader";
+// import CommonLoader from "../../common/loader/CommonLoader";
+import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "../../redux/boolean/booleanSlice";
+import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
 
 const Register = () => {
   const { handleSubmit, initialValues, isLoading, setValuesOfForm } =
     useRegister();
+  const dispatch = useDispatch();
 
+  const { setValue } = useBackDropLoaderContext();
   if (isLoading) {
-    return <CommonLoader value={"Redirecting..."} />;
+    setValue("Redirecting...");
+    dispatch(isBackDropLoaderDisplayed(true));
   }
 
   return (
@@ -146,6 +153,7 @@ const Register = () => {
         </Box>
       </Grid>
       <InfoPart />
+      <CommonLoaderWithBackDrop />
     </Grid>
   );
 };

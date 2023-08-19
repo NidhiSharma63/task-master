@@ -11,9 +11,10 @@ const CommonLoader = ({ value }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         flexDirection: "column",
         gap: 1,
+        color: "white",
       }}
     >
       <Typography
@@ -22,7 +23,7 @@ const CommonLoader = ({ value }) => {
       >
         {value}
       </Typography>
-      <ClipLoader />
+      <ClipLoader sx={{ color: "white" }} />
     </Box>
   );
 };

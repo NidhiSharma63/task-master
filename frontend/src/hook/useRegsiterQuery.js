@@ -9,6 +9,7 @@ import {
 } from "../constant/Misc";
 import { useDispatch } from "react-redux";
 import { userEmail } from "../redux/auth/userSlice";
+import { isBackDropLoaderDisplayed } from "../redux/boolean/booleanSlice";
 
 const useRegisterQuery = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const useRegisterQuery = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data);
+      dispatch(isBackDropLoaderDisplayed(false));
     },
   });
 };
