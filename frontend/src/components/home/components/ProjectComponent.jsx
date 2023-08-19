@@ -44,12 +44,10 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           Projects
         </Typography>
         <Button
+          variant="outlined"
           sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
-            color: "white",
-            "&:hover": {
-              backgroundColor: colors.primaryHoverColor,
-            },
+            borderColor: colors.secondaryTextColor,
+            color: colors.secondaryTextColor,
           }}
           onClick={handleClickOnAddProject}
         >

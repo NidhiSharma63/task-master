@@ -42,8 +42,13 @@ const TaskComponent = ({
             My Tasks
           </Typography>
           <Button
-            variant="contained"
-            sx={{ mb: 1, display: "flex" }}
+            variant="outlined"
+            sx={{
+              mb: 1,
+              display: "flex",
+              borderColor: colors.secondaryTextColor,
+              color: colors.secondaryTextColor,
+            }}
             onClick={handleClickOnAddTask}
           >
             Add Task
