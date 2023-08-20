@@ -150,7 +150,7 @@ export const Layout = () => {
               {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <ClipLoader color="#571159" />
+                    <ClipLoader color="white" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (

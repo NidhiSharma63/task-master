@@ -23,7 +23,7 @@ const CommonLoader = ({ value }) => {
       >
         {value}
       </Typography>
-      <ClipLoader sx={{ color: "white" }} />
+      <ClipLoader color="white" />
     </Box>
   );
 };
