@@ -14,15 +14,15 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "../../constant/sidebar";
+import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import useLayout from "../../hook/layout/useLayout";
+import useLayout from "src/hook/layout/useLayout";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
-import UserName from "../../common/UserName";
-import colors from "../../theme/variables";
+import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
+import UserName from "src/common/UserName";
+import colors from "src/theme/variables";
 const drawerWidth = 160;
 
 export const Layout = () => {

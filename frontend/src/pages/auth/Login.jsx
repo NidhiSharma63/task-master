@@ -6,18 +6,18 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import { Logo } from "../../assets/assets";
-import colors from "../../theme/variables";
-import InfoPart from "../../components/auth/components/InfoPart";
-import FormikControls from "../../common/formik/FormikControls";
+import { Logo } from "src/assets/assets";
+import colors from "src/theme/variables";
+import InfoPart from "src/components/auth/components/InfoPart";
+import FormikControls from "src/common/formik/FormikControls";
 import { Formik, Form } from "formik";
-import { loginSchema } from "../../constant/validation";
-import useLogin from "../../hook/auth/useLogin";
-// import CommonLoader from "../../common/loader/CommonLoader";
+import { loginSchema } from "src/constant/validation";
+import useLogin from "src/hook/auth/useLogin";
+// import CommonLoader from "src/common/loader/CommonLoader";
 import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed } from "../../redux/boolean/booleanSlice";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
-import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 
 const Login = () => {
   const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();

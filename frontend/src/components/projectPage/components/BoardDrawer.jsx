@@ -5,16 +5,16 @@ import {
   booleanDataInStore,
   isBoardDrawerOpen,
   isUpdatingTask,
-} from "../../../redux/boolean/booleanSlice";
-import { taskDataInStore } from "../../../redux/task/taskSlice";
+} from "src/redux/boolean/booleanSlice";
+import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
-import FormikControls from "../../../common/formik/FormikControls";
-import { validationForUpdatingTask } from "../../../constant/validation";
+import FormikControls from "src/common/formik/FormikControls";
+import { validationForUpdatingTask } from "src/constant/validation";
 import {
   useUpdateTaskQueryWithDetails,
   useDeleteTask,
-} from "../../../hook/useTaskQuery";
-import colors from "../../../theme/variables";
+} from "src/hook/useTaskQuery";
+import colors from "src/theme/variables";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);

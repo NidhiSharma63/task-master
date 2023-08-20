@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Box, Typography, IconButton } from "@mui/material";
-import { LightLogo } from "../../../assets/assets";
-import colors from "../../../theme/variables";
+import { LightLogo } from "src/assets/assets";
+import colors from "src/theme/variables";
 
 const InfoPart = () => {
   return (

@@ -9,14 +9,14 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Droppable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
+import useTaskBoxContainer from "src/hook/board/useTaskBoxContainer";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useAddColumn from "../../../hook/board/useAddColumn";
-import useDeleteColumn from "../../../hook/board/useDeleteColumn";
+import useAddColumn from "src/hook/board/useAddColumn";
+import useDeleteColumn from "src/hook/board/useDeleteColumn";
 import TaskCard from "./TaskCard";
 import { ClipLoader } from "react-spinners";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {

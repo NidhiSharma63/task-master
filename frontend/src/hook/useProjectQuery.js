@@ -2,14 +2,14 @@ import { useMutation } from "@tanstack/react-query";
 import {
   customAxiosRequestForPost,
   customAxiosRequestForGet,
-} from "../utils/axiosRequest";
+} from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "../index";
-import { queryKeyForTask } from "../constant/queryKey";
-import { useBackDropLoaderContext } from "../context/BackDropLoaderContext";
+import { queryClient } from "src/index";
+import { queryKeyForTask } from "src/constant/queryKey";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed } from "../redux/boolean/booleanSlice";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 // post
 const usePostProjectQuery = () => {

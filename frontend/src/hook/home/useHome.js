@@ -1,7 +1,6 @@
-import { useGetProjectQuery } from "../useProjectQuery";
-import { useEffect, useMemo, useState } from "react";
-import { generateBackgroundColors } from "../../utils/generateRandomColor";
-import { useGetAllTaskAccordingToStatusForEachProject } from "../useTaskQuery";
+import { useGetProjectQuery } from "src/hook/useProjectQuery";
+import { useEffect, useState } from "react";
+import { useGetAllTaskAccordingToStatusForEachProject } from "src/hook/useTaskQuery";
 
 const useHome = () => {
   const { data: projectData, isLoading: projectIsLoading } =

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Box, Divider, Typography } from "@mui/material";
-import TitleCase from "../../utils/TextTransformer";
-import InsightsCharts from "../../components/insights/InsightsCharts";
+import TitleCase from "src/utils/TextTransformer";
+import InsightsCharts from "src/components/insights/InsightsCharts";
 import InsightsFilter from "./components/InsightsFilter";
 import { useState } from "react";
 

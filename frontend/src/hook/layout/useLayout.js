@@ -1,26 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
-import useLogoutQuery from "../../hook/useLogoutQuery";
+import useLogoutQuery from "src/hook/useLogoutQuery";
 import {
   useGetProjectQuery,
   useDeleteProjectQuery,
-} from "../../hook/useProjectQuery";
+} from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
   isProjectNameModalOpen,
   isUpdatingTask,
-} from "../../redux/boolean/booleanSlice";
+} from "src/redux/boolean/booleanSlice";
 import {
   activeProject,
   projectDataInStore,
   projectRename,
-} from "../../redux/projects/projectSlice";
-import { setValueToLs } from "../../utils/localstorage";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../constant/Misc";
-import { queryKeyForTask } from "../../constant/queryKey";
-import { queryClient } from "../../index";
+} from "src/redux/projects/projectSlice";
+import { setValueToLs } from "src/utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { queryKeyForTask } from "src/constant/queryKey";
+import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const useLayout = () => {
   const navigate = useNavigate();

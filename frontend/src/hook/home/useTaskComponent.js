@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { isCreateTaskModalOpen } from "../../redux/boolean/booleanSlice";
+import { isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
 import {
   activeLink,
   activeTask,
   taskDataInStore,
-} from "../../redux/task/taskSlice";
+} from "src/redux/task/taskSlice";
 import { useEffect, useState } from "react";
-import { statusDataInStore } from "../../redux/status/statusSlice";
+import { statusDataInStore } from "src/redux/status/statusSlice";
 
 const useTaskComponent = ({ backgroundColors, taskData }) => {
   const [allTask, setAllTask] = useState([]);

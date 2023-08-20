@@ -7,11 +7,11 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import { COLORS_FOR_PROJECTS } from "../../constant/colors";
+import { COLORS_FOR_PROJECTS } from "src/constant/colors";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { Field } from "formik";
-import TitleCase from "../../utils/TextTransformer";
-import colors from "../../theme/variables";
+import TitleCase from "src/utils/TextTransformer";
+import colors from "src/theme/variables";
 
 const FormikInputForLabel = (props) => {
   const [isAccordianOpen, setIsAccodianOpen] = useState(false);

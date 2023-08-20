@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { usersDataInStore } from "../redux/auth/userSlice";
-import { getUserFirstNameFirstLetter } from "../utils/getUserFirstName";
+import { usersDataInStore } from "src/redux/auth/userSlice";
+import { getUserFirstNameFirstLetter } from "src/utils/getUserFirstName";
 import { Avatar } from "@mui/material";
-import colors from "../theme/variables";
+import colors from "src/theme/variables";
 
 const UserName = ({ handleOpen, formTaskComponent = false }) => {
   const { user_email } = useSelector(usersDataInStore);

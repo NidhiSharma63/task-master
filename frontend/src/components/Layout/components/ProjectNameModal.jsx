@@ -9,10 +9,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 import DotLoader from "react-spinners/DotLoader";
-import useProjectNameModal from "../../../hook/project/useProjectNameModal";
-import { COLORS_FOR_PROJECTS } from "../../../constant/colors";
+import useProjectNameModal from "src/hook/project/useProjectNameModal";
+import { COLORS_FOR_PROJECTS } from "src/constant/colors";
 
 const ProjectNameModal = () => {
   const {

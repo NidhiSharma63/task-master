@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { capitalizeFirstLetter } from "../../utils/TextTransformer";
+import { capitalizeFirstLetter } from "src/utils/TextTransformer";
 import { ClipLoader } from "react-spinners";
-import colors from "../../theme/variables";
-import useInsight from "../../hook/insights/useInsight";
+import colors from "src/theme/variables";
+import useInsight from "src/hook/insights/useInsight";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

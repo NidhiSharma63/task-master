@@ -1,6 +1,6 @@
 import { Box, Select, MenuItem } from "@mui/material";
 import { useSelector } from "react-redux";
-import { statusDataInStore } from "../../../redux/status/statusSlice";
+import { statusDataInStore } from "src/redux/status/statusSlice";
 import { MuiSelect } from "./InsightStyled";
 import { useCallback } from "react";
 

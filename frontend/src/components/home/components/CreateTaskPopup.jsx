@@ -12,18 +12,18 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
   isCreateTaskModalOpen,
-} from "../../../redux/boolean/booleanSlice";
+} from "src/redux/boolean/booleanSlice";
 import {
   useAddTaskQuery,
   useUpdateTaskQueryWithDetails,
-} from "../../../hook/useTaskQuery";
+} from "src/hook/useTaskQuery";
 import { Form, Formik } from "formik";
-import FormikControls from "../../../common/formik/FormikControls";
-import { validationForUpdatingTask } from "../../../constant/validation";
-import colors from "../../../theme/variables";
-import { useDeleteTask } from "../../../hook/useTaskQuery";
+import FormikControls from "src/common/formik/FormikControls";
+import { validationForUpdatingTask } from "src/constant/validation";
+import colors from "src/theme/variables";
+import { useDeleteTask } from "src/hook/useTaskQuery";
 
-import { activeTask, taskDataInStore } from "../../../redux/task/taskSlice";
+import { activeTask, taskDataInStore } from "src/redux/task/taskSlice";
 import { useEffect } from "react";
 
 const CreateTaskPopup = ({ status, projectData }) => {

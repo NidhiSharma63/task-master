@@ -1,4 +1,4 @@
-import useAllTaskAccordingToSatusQuery from "../useAllTaskAccordingToSatusQuery";
+import useAllTaskAccordingToSatusQuery from "src/hook/useAllTaskAccordingToSatusQuery";
 import { useState, useEffect } from "react";
 
 const useInsight = ({ status }) => {

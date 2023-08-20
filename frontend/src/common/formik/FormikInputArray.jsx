@@ -1,9 +1,9 @@
 import { Field, FieldArray } from "formik";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import useFormikInput from "../../hook/boardDrawer/useFormikInput";
+import useFormikInput from "src/hook/boardDrawer/useFormikInput";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import colors from "../../theme/variables";
+import colors from "src/theme/variables";
 
 const FormikInputArray = (props) => {
   const { name } = props;

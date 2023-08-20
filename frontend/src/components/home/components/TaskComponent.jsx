@@ -1,8 +1,8 @@
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { ClipLoader } from "react-spinners";
-import CreateTaskPopup from "../../../components/home/components/CreateTaskPopup";
-import useTaskComponent from "../../../hook/home/useTaskComponent";
-import colors from "../../../theme/variables";
+import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
+import useTaskComponent from "src/hook/home/useTaskComponent";
+import colors from "src/theme/variables";
 
 const TaskComponent = ({
   backgroundColors,

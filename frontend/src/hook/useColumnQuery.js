@@ -2,13 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import {
   customAxiosRequestForPost,
   customAxiosRequestForGet,
-} from "../utils/axiosRequest";
+} from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "../index";
+import { queryClient } from "src/index";
 import { useSelector } from "react-redux";
-import { projectDataInStore } from "../redux/projects/projectSlice";
-import { statusDataInStore } from "../redux/status/statusSlice";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
+import { statusDataInStore } from "src/redux/status/statusSlice";
 
 /**
  * use post column query

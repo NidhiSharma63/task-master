@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { getValueFromLS } from "../../utils/localstorage";
-import useLoginQuery from "../useLoginQuery";
-import { KEY_FOR_STORING_TOKEN } from "../../constant/Misc";
+import { getValueFromLS } from "src/utils/localstorage";
+import useLoginQuery from "src/hook/useLoginQuery";
+import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
 import { useState, useEffect } from "react";
-import { loginSchema } from "../../constant/validation";
+import { loginSchema } from "src/constant/validation";
 
 const useLogin = () => {
   const navigate = useNavigate();

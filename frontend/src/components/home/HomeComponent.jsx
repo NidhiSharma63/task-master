@@ -1,9 +1,9 @@
-import { getUserFirstName } from "../../utils/getUserFirstName";
-import { getCurrentDate } from "../../utils/getCurrentDate";
-import TaskComponent from "../../components/home/components/TaskComponent";
+import { getUserFirstName } from "src/utils/getUserFirstName";
+import { getCurrentDate } from "src/utils/getCurrentDate";
+import TaskComponent from "src/components/home/components/TaskComponent";
 import { Box, Typography } from "@mui/material";
-import ProjectComponent from "../../components/home/components/ProjectComponent";
-import useHome from "../../hook/home/useHome";
+import ProjectComponent from "src/components/home/components/ProjectComponent";
+import useHome from "src/hook/home/useHome";
 
 const HomeComponent = () => {
   const {

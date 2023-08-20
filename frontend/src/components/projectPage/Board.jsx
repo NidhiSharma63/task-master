@@ -1,11 +1,11 @@
 import { Box, Button } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
-import BoardDrawer from "../../components/projectPage/components/BoardDrawer";
+import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
-import useBoard from "../../hook/board/useBoard";
-import useAddColumn from "../../hook/board/useAddColumn";
-import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
-import colors from "../../theme/variables";
+import useBoard from "src/hook/board/useBoard";
+import useAddColumn from "src/hook/board/useAddColumn";
+import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
+import colors from "src/theme/variables";
 import { ClipLoader } from "react-spinners";
 
 const Board = () => {

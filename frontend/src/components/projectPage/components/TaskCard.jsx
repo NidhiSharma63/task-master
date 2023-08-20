@@ -1,8 +1,8 @@
 import { Draggable } from "react-beautiful-dnd";
 import { Typography, Box } from "@mui/material";
-import UserName from "../../../common/UserName";
+import UserName from "src/common/UserName";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 
 const TaskCard = ({ item, handleClickOnTask }) => {
   return (
