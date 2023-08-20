@@ -9,13 +9,14 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Droppable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import useTaskBoxContainer from "../../../hook/board/useTaskBoxContainer";
+import useTaskBoxContainer from "src/hook/board/useTaskBoxContainer";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useAddColumn from "../../../hook/board/useAddColumn";
-import useDeleteColumn from "../../../hook/board/useDeleteColumn";
+import useAddColumn from "src/hook/board/useAddColumn";
+import useDeleteColumn from "src/hook/board/useDeleteColumn";
 import TaskCard from "./TaskCard";
 import { ClipLoader } from "react-spinners";
+import colors from "src/theme/variables";
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -75,12 +76,12 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               onClick={handleAddTask}
               sx={{
                 cursor: "pointer",
-                color: (theme) => theme.palette.primary.main,
+                color: colors.secondaryTextColor,
               }}
             />
           </IconButton>
           <MoreVertIcon
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", color: colors.secondaryTextColor }}
             onClick={handleClickOnThreeDots}
           />
           <Menu
@@ -91,7 +92,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           >
             <MenuItem
               sx={{
-                color: (theme) => theme.palette.primary.main,
+                color: colors.secondaryTextColor,
               }}
               onClick={handleClickOnRename}
             >
@@ -99,7 +100,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
             </MenuItem>
             <MenuItem
               sx={{
-                color: (theme) => theme.palette.primary.main,
+                color: colors.secondaryTextColor,
               }}
               onClick={deleteColumn}
             >
@@ -197,7 +198,11 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               ))}
               {data?.length > 0 ? (
                 <Button
-                  variant="contained"
+                  variant="outlined"
+                  sx={{
+                    color: colors.secondaryTextColor,
+                    borderColor: colors.secondaryTextColor,
+                  }}
                   disabled={show_loader_for_task}
                   onClick={handleClickForAddingTaskFromBottom}
                 >

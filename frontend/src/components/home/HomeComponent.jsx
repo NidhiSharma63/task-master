@@ -1,9 +1,9 @@
-import { getUserFirstName } from "../../utils/getUserFirstName";
-import { getCurrentDate } from "../../utils/getCurrentDate";
-import TaskComponent from "../../components/home/components/TaskComponent";
+import { getUserFirstName } from "src/utils/getUserFirstName";
+import { getCurrentDate } from "src/utils/getCurrentDate";
+import TaskComponent from "src/components/home/components/TaskComponent";
 import { Box, Typography } from "@mui/material";
-import ProjectComponent from "../../components/home/components/ProjectComponent";
-import useHome from "../../hook/home/useHome";
+import ProjectComponent from "src/components/home/components/ProjectComponent";
+import useHome from "src/hook/home/useHome";
 
 const HomeComponent = () => {
   const {
@@ -42,7 +42,7 @@ const HomeComponent = () => {
       <Box
         sx={{
           width: "90%",
-          height: "calc(100% - 130px)",
+          height: "calc(100% - 160px)",
           display: "flex",
           gap: 4,
         }}

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { usePostColumnQuery } from "../useColumnQuery";
-import { projectDataInStore } from "../../redux/projects/projectSlice";
+import {
+  usePostColumnQuery,
+  useUpdateColumnName,
+} from "src/hook/useColumnQuery";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useUpdateColumnName } from "../useColumnQuery";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
-import { isBackDropLoaderDisplayed } from "../../redux/boolean/booleanSlice";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 const useAddColumn = ({
   setIsAddColBtnClicked,

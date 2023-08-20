@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Box, Typography, IconButton } from "@mui/material";
-import { LightLogo } from "../../../assets/assets";
+import { LightLogo } from "src/assets/assets";
+import colors from "src/theme/variables";
 
 const InfoPart = () => {
   return (
@@ -8,13 +9,13 @@ const InfoPart = () => {
       item
       sm={6}
       sx={{
-        bgcolor: "primary.main",
+        bgcolor: colors.bannerColor,
         display: { xs: "none", sm: "flex" },
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
         gap: { sm: "2rem", md: "3rem" },
-        height: "100%",
+        height: "unset",
       }}
     >
       <IconButton sx={{ width: { sm: "5rem", md: "10rem" } }}>

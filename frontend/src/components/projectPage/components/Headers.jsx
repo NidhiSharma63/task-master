@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
-import { projectDataInStore } from "../../../redux/projects/projectSlice";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 
 const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
@@ -35,9 +35,7 @@ const Headers = () => {
           variant="h5"
           sx={{
             textTransform: "capitalize",
-            fontWeight: "600",
             pl: 2,
-            color: (theme) => theme.palette.primary.main,
           }}
         >
           {active_project}
@@ -45,12 +43,12 @@ const Headers = () => {
         <Box>
           <NavLink
             style={({ isActive }) => ({
-              color: colors.primaryTextColor,
+              color: colors.secondaryColor,
               fontWeight: isActive ? 600 : 100,
               textDecoration: "none",
               marginLeft: "1.2rem",
               borderBottom: isActive
-                ? `1px solid ${colors.primaryTextColor}`
+                ? `1px solid ${colors.secondaryColor}`
                 : "",
             })}
             to={`activeProject/board/${active_project}`}

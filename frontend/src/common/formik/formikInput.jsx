@@ -1,7 +1,7 @@
 import { Field } from "formik";
 import React from "react";
 import { TextField, Typography, Box } from "@mui/material";
-import TitleCase from "../../utils/TextTransformer";
+import TitleCase from "src/utils/TextTransformer";
 
 /**
  * Function that returns custom input component
@@ -28,9 +28,9 @@ function FormikInput(props) {
           >
             <Typography
               sx={{
-                fontWeight: "700",
                 maxWidth: "13rem",
                 mb: 1,
+                color: "white",
               }}
             >
               {name === "email" ? TitleCase("e-mail") : TitleCase(name)}

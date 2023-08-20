@@ -1,13 +1,19 @@
 const colors = {
-  primaryColor: "rgb(87,17,89)", // voilet
+  primaryColor: "#2E2E30",
   secondaryColor: "rgba(255, 255, 255, 0.993)",
 
   // light grey
-  lightGrey: "rgb(189, 189, 189)",
+  lightGrey: "#424244",
+  mainColor: "#252628",
+
+  bannerColor: "#570C59",
+
+  // navigationColor: "#2e2e30"
+  navigationColor: "#191919",
 
   // text color
   primaryTextColor: "rgb(18,17,17)",
-  secondaryTextColor: "rgb(18,17,17)", // had to change because of mui date picker days name
+  secondaryTextColor: "#807E81", // had to change because of mui date picker days name
 
   // hover color
   primaryHoverColor: "rgb(60, 9, 61)",

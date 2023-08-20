@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { ClipLoader } from "react-spinners";
 import Backdrop from "@mui/material/Backdrop";
 import { useSelector } from "react-redux";
-import { booleanDataInStore } from "../../redux/boolean/booleanSlice";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { booleanDataInStore } from "src/redux/boolean/booleanSlice";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const CommonLoader = ({ value }) => {
   return (
@@ -11,9 +11,10 @@ const CommonLoader = ({ value }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         flexDirection: "column",
         gap: 1,
+        color: "white",
       }}
     >
       <Typography
@@ -22,7 +23,7 @@ const CommonLoader = ({ value }) => {
       >
         {value}
       </Typography>
-      <ClipLoader />
+      <ClipLoader color="white" />
     </Box>
   );
 };

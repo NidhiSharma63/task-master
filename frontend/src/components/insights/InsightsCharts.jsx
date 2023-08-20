@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { capitalizeFirstLetter } from "../../utils/TextTransformer";
+import { capitalizeFirstLetter } from "src/utils/TextTransformer";
 import { ClipLoader } from "react-spinners";
-import colors from "../../theme/variables";
-import useInsight from "../../hook/insights/useInsight";
+import colors from "src/theme/variables";
+import useInsight from "src/hook/insights/useInsight";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -100,15 +100,16 @@ const InsightsCharts = ({ status }) => {
             height: "100%",
             // border: "1px solid green",
             mt: 7,
-            overflowY: "scroll",
+            overflowY: "auto",
             "&::-webkit-scrollbar": {
-              width: "4px",
+              width: "2px",
+              height: "5px",
             },
             "&::-webkit-scrollbar-track": {
               background: `${colors.primaryColor}`,
             },
             "&::-webkit-scrollbar-thumb": {
-              background: `${colors.primaryColor}`,
+              background: `${colors.secondaryTextColor}`,
               borderRadius: "4px",
             },
           }}
@@ -126,7 +127,7 @@ const InsightsCharts = ({ status }) => {
                   minWidth: "15rem",
                   padding: "0.5rem",
                   borderRadius: ".3rem",
-                  backgroundColor: "white",
+                  border: `1px solid ${colors.lightGrey}`,
                 }}
               >
                 <Box
@@ -147,10 +148,8 @@ const InsightsCharts = ({ status }) => {
                     padding: "0rem .4rem",
                   }}
                 >
-                  <Typography sx={{ fontWeight: 600 }}>
-                    {capitalizeFirstLetter(item)}
-                  </Typography>
-                  <Typography sx={{ fontWeight: 600 }}>{allTask[i]}</Typography>
+                  <Typography>{capitalizeFirstLetter(item)}</Typography>
+                  <Typography>{allTask[i]}</Typography>
                 </Box>
               </Box>
             );

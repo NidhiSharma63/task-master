@@ -1,14 +1,15 @@
-import { customAxiosRequestForPost } from "../utils/axiosRequest";
+import { customAxiosRequestForPost } from "src/utils/axiosRequest";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { setValueToLs } from "../utils/localstorage";
+import { setValueToLs } from "src/utils/localstorage";
 import {
   KEY_FOR_STORING_TOKEN,
   KEY_FOR_STORING_USER_DETAILS,
-} from "../constant/Misc";
+} from "src/constant/Misc";
 import { useDispatch } from "react-redux";
-import { userEmail } from "../redux/auth/userSlice";
+import { userEmail } from "src/redux/auth/userSlice";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 const useRegisterQuery = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const useRegisterQuery = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data);
+      dispatch(isBackDropLoaderDisplayed(false));
     },
   });
 };

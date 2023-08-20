@@ -1,14 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
-import { customAxiosRequestForPost } from "../utils/axiosRequest";
+import { customAxiosRequestForPost } from "src/utils/axiosRequest";
 import { useNavigate } from "react-router-dom";
-import { setValueToLs } from "../utils/localstorage";
+import { setValueToLs } from "src/utils/localstorage";
 import {
   KEY_FOR_STORING_TOKEN,
   KEY_FOR_STORING_USER_DETAILS,
-} from "../constant/Misc";
+} from "src/constant/Misc";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 const useLoginQuery = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return useMutation({
@@ -22,6 +25,7 @@ const useLoginQuery = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data);
+      dispatch(isBackDropLoaderDisplayed(false));
     },
   });
 };

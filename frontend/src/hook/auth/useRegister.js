@@ -1,6 +1,6 @@
-import useRegisterQuery from "../useRegsiterQuery";
+import useRegisterQuery from "src/hook/useRegsiterQuery";
 import { useEffect, useState } from "react";
-import { registerSchema } from "../../constant/validation";
+import { registerSchema } from "src/constant/validation";
 
 const useRegister = () => {
   const { mutate, isLoading } = useRegisterQuery();

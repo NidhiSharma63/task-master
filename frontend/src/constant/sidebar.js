@@ -1,10 +1,5 @@
 import HomeIcon from "@mui/icons-material/Home";
 import InsightsIcon from "@mui/icons-material/Insights";
-
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import HourglassFullIcon from "@mui/icons-material/HourglassFull";
-import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import AddIcon from "@mui/icons-material/Add";
 
 export const UPPER_SIDE_BAR = [
@@ -16,10 +11,6 @@ export const UPPER_SIDE_BAR = [
 export const INSIGHTS = [
   {
     Insights: <InsightsIcon />,
-    Todo: <WorkspacesIcon />,
-    "In progress": <HourglassBottomIcon />,
-    "In priority": <PriorityHighIcon />,
-    Done: <HourglassFullIcon />,
   },
 ];
 

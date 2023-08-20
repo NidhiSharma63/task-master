@@ -16,7 +16,7 @@ import {
 } from "../../hook/useTaskQuery";
 
 const useBoard = () => {
-  const { data: columnData } = useGetColumnQuery();
+  const { data: columnData, isLoading } = useGetColumnQuery();
   const { data } = useGetTaskAccordingToStatus();
   const { data: projectData } = useGetProjectQuery();
   const { mutate: updateTaskWithStatus } = useUpdateTaskQueryWithStatus();
@@ -274,7 +274,7 @@ const useBoard = () => {
         dispatch(isBackDropLoaderDisplayed(true));
       }
     },
-    [finalState]
+    [finalState, updateTaskWithIndex, updateTaskWithStatus, dispatch]
   );
 
   // console.log(finalState, ":::::::::column Data::::::::::");
@@ -284,6 +284,7 @@ const useBoard = () => {
     handleClickOnAddColsBtn,
     setIsAddColBtnClicked,
     handleDragEnd,
+    isLoading,
   };
 };
 

@@ -1,8 +1,8 @@
 import { Draggable } from "react-beautiful-dnd";
 import { Typography, Box } from "@mui/material";
-import UserName from "../../../common/UserName";
+import UserName from "src/common/UserName";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 
 const TaskCard = ({ item, handleClickOnTask }) => {
   return (
@@ -16,7 +16,6 @@ const TaskCard = ({ item, handleClickOnTask }) => {
             border: `1px solid ${colors.lightGrey}`,
             width: "100%",
             padding: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.64)",
             borderRadius: "0.4rem",
             marginBottom: "1rem",
             cursor: "pointer",
@@ -57,7 +56,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
               justifyContent: "space-between",
             }}
           >
-            <UserName formTaskComponent={true} />
+            <UserName />
             {item?.subTasks?.length > 0 && (
               <Box
                 sx={{

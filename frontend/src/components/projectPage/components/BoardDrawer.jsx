@@ -5,15 +5,16 @@ import {
   booleanDataInStore,
   isBoardDrawerOpen,
   isUpdatingTask,
-} from "../../../redux/boolean/booleanSlice";
-import { taskDataInStore } from "../../../redux/task/taskSlice";
+} from "src/redux/boolean/booleanSlice";
+import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
-import FormikControls from "../../../common/formik/FormikControls";
-import { validationForUpdatingTask } from "../../../constant/validation";
+import FormikControls from "src/common/formik/FormikControls";
+import { validationForUpdatingTask } from "src/constant/validation";
 import {
   useUpdateTaskQueryWithDetails,
   useDeleteTask,
-} from "../../../hook/useTaskQuery";
+} from "src/hook/useTaskQuery";
+import colors from "src/theme/variables";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -45,7 +46,6 @@ const BoardDrawer = () => {
   };
 
   const handleSubmit = (values) => {
-    // console.log(values, "::::::::values:::::::");
     mutate(values);
   };
 
@@ -69,7 +69,6 @@ const BoardDrawer = () => {
       onClose={handleClose}
       sx={{
         "& .MuiDrawer-paper": {
-          backgroundColor: (theme) => theme.palette.secondary.main,
           width: 600,
         },
       }}
@@ -93,6 +92,7 @@ const BoardDrawer = () => {
             flexDirection: "column",
             gap: "1rem",
             mt: 1,
+            mb: 2,
           }}
         >
           <Formik
@@ -118,19 +118,24 @@ const BoardDrawer = () => {
                 <FormikControls control="formikInputArray" name="subTasks" />
 
                 <Box sx={{ mt: 2, display: "flex" }}>
-                  <Typography sx={{ fontWeight: 600 }}>
-                    Created At : &nbsp;
-                  </Typography>
+                  <Typography>Created At : &nbsp;</Typography>
                   <Typography
                     sx={{
-                      fontWeight: 600,
-                      color: (theme) => theme.palette.primary.main,
+                      color: (theme) => theme.palette.secondary.main,
                     }}
                   >
                     {new Date(active_task.createdAt).toUTCString()}
                   </Typography>
                 </Box>
-                <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+                <Button
+                  variant="outlined"
+                  type="submit"
+                  sx={{
+                    mt: 2,
+                    color: colors.secondaryColor,
+                    borderColor: colors.secondaryTextColor,
+                  }}
+                >
                   Save
                 </Button>
                 <Button
@@ -141,11 +146,6 @@ const BoardDrawer = () => {
                     ml: 2,
 
                     backgroundColor: "rgb(168, 13, 13)",
-                    "&:hover": {
-                      background: "white",
-                      borderColor: (theme) => theme.palette.primary.main,
-                      color: (theme) => theme.palette.primary.main,
-                    },
                   }}
                 >
                   Delete

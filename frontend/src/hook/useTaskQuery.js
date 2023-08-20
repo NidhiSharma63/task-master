@@ -2,21 +2,21 @@ import { useMutation } from "@tanstack/react-query";
 import {
   customAxiosRequestForPost,
   customAxiosRequestForGet,
-} from "../utils/axiosRequest";
+} from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
-import { queryClient } from "../index";
+import { queryClient } from "src/index";
 import { useQueries } from "@tanstack/react-query";
-import { statesOfTaskManager } from "../constant/Misc";
+import { statesOfTaskManager } from "src/constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
-import { projectDataInStore } from "../redux/projects/projectSlice";
+import { projectDataInStore } from "src/redux/projects/projectSlice";
 import {
   isBackDropLoaderDisplayed,
   isTaskDisplayed,
   isUpdatingTask,
   showLoaderForTask,
-} from "../redux/boolean/booleanSlice";
+} from "src/redux/boolean/booleanSlice";
 import { useMemo } from "react";
-import { statusDataInStore } from "../redux/status/statusSlice";
+import { statusDataInStore } from "src/redux/status/statusSlice";
 /**
  *
  * @returns Post request for adding task with status
@@ -85,8 +85,6 @@ const useGetTaskAccordingToStatus = () => {
  */
 
 const useUpdateTaskQuery = () => {
-  const dispatch = useDispatch();
-
   let state;
   return useMutation({
     mutationFn: (payload) => {
@@ -95,7 +93,7 @@ const useUpdateTaskQuery = () => {
       return customAxiosRequestForPost("/task", "put", payload);
     },
     onSuccess: () => {
-      toast.success("Task updated successfully!");
+      // toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
       // setTimeout(() => {
@@ -123,7 +121,7 @@ const useUpdateTaskQueryWithStatus = () => {
       return customAxiosRequestForPost("/task/status", "put", payload);
     },
     onSuccess: () => {
-      toast.success("Task updated successfully!");
+      // toast.success("Task updated successfully!");
       queryClient.invalidateQueries(state);
       queryClient.invalidateQueries(["charts-data"]);
       setTimeout(() => {

@@ -1,9 +1,9 @@
 import { createTheme } from "@mui/material";
-import colors from "./variables";
+import colors from "src/theme/variables";
 
 const theme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
     primary: {
       main: colors.primaryColor,
     },
@@ -14,14 +14,25 @@ const theme = createTheme({
       50: colors.lightGrey,
     },
     text: {
-      primary: colors.primaryTextColor,
+      primary: colors.secondaryColor,
       secondary: colors.secondaryTextColor,
     },
+
     divider: colors.lightGrey,
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
   },
+  // components: {
+  //   MuiTextField: {
+  //     styleOverrides: {
+  //       root: {
+  //         border: "1px solid green",
+  //         outline: "none",
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;

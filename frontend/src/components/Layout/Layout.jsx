@@ -11,19 +11,19 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Avatar,
   Menu,
   MenuItem,
 } from "@mui/material";
-import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "../../constant/sidebar";
+import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import useLayout from "../../hook/layout/useLayout";
+import useLayout from "src/hook/layout/useLayout";
 import { ClipLoader } from "react-spinners";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { CommonLoaderWithBackDrop } from "../../common/loader/CommonLoader";
-import UserName from "../../common/UserName";
-const drawerWidth = 180;
+import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
+import UserName from "src/common/UserName";
+import colors from "src/theme/variables";
+const drawerWidth = 160;
 
 export const Layout = () => {
   const {
@@ -54,7 +54,12 @@ export const Layout = () => {
         <AppBar
           position="fixed"
           display="flex"
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            // background: "#121212",
+            background: colors.navigationColor,
+            boxShadow: "none",
+          }}
         >
           <Toolbar
             sx={{
@@ -63,7 +68,12 @@ export const Layout = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" noWrap component="div">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ color: `${colors.secondaryColor}` }}
+            >
               Task Manager
             </Typography>
             <UserName handleOpen={handleOpen} />
@@ -73,16 +83,10 @@ export const Layout = () => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem
-                sx={{
-                  color: (theme) => theme.palette.primary.main,
-                }}
-                onClick={handleLogout}
-              >
-                Logout
-              </MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
+          <Divider />
         </AppBar>
         <Drawer
           variant="permanent"
@@ -92,11 +96,17 @@ export const Layout = () => {
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
               boxSizing: "border-box",
+              background: colors.navigationColor,
             },
+            // backgroundColor: "red",
           }}
         >
           <Toolbar />
-          <Box sx={{ overflow: "auto" }}>
+          <Box
+            sx={{
+              overflow: "auto",
+            }}
+          >
             <List>
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
@@ -140,7 +150,7 @@ export const Layout = () => {
               {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <ClipLoader color="#571159" />
+                    <ClipLoader color="white" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
@@ -151,33 +161,31 @@ export const Layout = () => {
                         primary={item.name}
                         onClick={() => handleActiveProject(item.name)}
                       />
-                      <ListItemIcon>
-                        <MoreVertIcon onClick={handleClickOnThreeDots} />
+                      <ListItemIcon data-id={item._id}>
+                        <MoreVertIcon
+                          sx={{ color: colors.secondaryTextColor }}
+                          onClick={handleClickOnThreeDots}
+                          data-id={item._id}
+                        />
                         <Menu
-                          id="logout"
+                          data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
                           open={openPorjectsIcons}
                           onClose={handleCloseOfProjectsIcons}
                         >
                           <MenuItem
                             sx={{
-                              color: (theme) => theme.palette.primary.main,
+                              color: colors.secondaryTextColor,
                             }}
-                            onClick={() =>
-                              handleClickOnRename(
-                                item.name,
-                                item._id,
-                                item.color
-                              )
-                            }
+                            onClick={handleClickOnRename}
                           >
                             <DriveFileRenameOutlineIcon />
                           </MenuItem>
                           <MenuItem
                             sx={{
-                              color: (theme) => theme.palette.primary.main,
+                              color: colors.secondaryTextColor,
                             }}
-                            onClick={() => handleDelete(item._id)}
+                            onClick={handleDelete}
                           >
                             <DeleteIcon />
                           </MenuItem>

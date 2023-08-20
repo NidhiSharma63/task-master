@@ -1,28 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
-import { usersDataInStore } from "../../redux/auth/userSlice";
-import { getUserFirstNameFirstLetter } from "../../utils/getUserFirstName";
-import useLogoutQuery from "../../hook/useLogoutQuery";
+import useLogoutQuery from "src/hook/useLogoutQuery";
 import {
   useGetProjectQuery,
   useDeleteProjectQuery,
-} from "../../hook/useProjectQuery";
+} from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
   isProjectNameModalOpen,
   isUpdatingTask,
-} from "../../redux/boolean/booleanSlice";
+} from "src/redux/boolean/booleanSlice";
 import {
   activeProject,
   projectDataInStore,
   projectRename,
-} from "../../redux/projects/projectSlice";
-import { setValueToLs } from "../../utils/localstorage";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../constant/Misc";
-import { queryKeyForTask } from "../../constant/queryKey";
-import { queryClient } from "../../index";
+} from "src/redux/projects/projectSlice";
+import { setValueToLs } from "src/utils/localstorage";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { queryKeyForTask } from "src/constant/queryKey";
+import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -36,6 +34,7 @@ const useLayout = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
   const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
+  const [itemId, setItemId] = useState(null);
   const { mutate: deleteProject, isLoading: deleteInProgress } =
     useDeleteProjectQuery();
 
@@ -45,6 +44,8 @@ const useLayout = () => {
   // // navigate the user to /todo directly
   useEffect(() => {
     navigate("Dashboard");
+    dispatch(isBackDropLoaderDisplayed(false));
+    setValue("");
   }, []);
 
   // if only single present or first time project is created then make that as active project\
@@ -79,13 +80,17 @@ const useLayout = () => {
   };
 
   const handleOpenProjectModal = () => {
+    dispatch(projectRename({}));
     dispatch(isProjectNameModalOpen(true));
     navigate("/Dashboard");
   };
 
-  const handleDelete = (id) => {
-    deleteProject({ id });
+  const handleDelete = () => {
+    deleteProject({ id: itemId });
+    // console.log(id, ":::this is the id coming");
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
+    setAnchorEl(null);
+    setOpenPorjectsIcons(false);
   };
 
   /**
@@ -95,9 +100,6 @@ const useLayout = () => {
     if (deleteInProgress) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Deleting project");
-    } else {
-      dispatch(isBackDropLoaderDisplayed(false));
-      setValue("");
     }
   }, [deleteInProgress]);
 
@@ -121,20 +123,25 @@ const useLayout = () => {
   }, [active_project]);
 
   const handleClickOnThreeDots = (event) => {
+    if (!event.target.dataset.id) return;
     setOpenPorjectsIcons(true);
     setAnchorElForProjectIcons(event.target);
+    setItemId(event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
     setOpenPorjectsIcons(false);
   };
 
-  const handleClickOnRename = (projectName, projectId, color) => {
+  const handleClickOnRename = () => {
+    const projectToUpdate = allProjects.find((item) => item._id === itemId);
+
+    if (!itemId) return;
     dispatch(
       projectRename({
-        projectName,
-        projectId,
-        color,
+        projectName: projectToUpdate?.name,
+        projectId: projectToUpdate?._id,
+        color: projectToUpdate?.color,
       })
     );
     dispatch(isProjectNameModalOpen(true));
@@ -152,6 +159,7 @@ const useLayout = () => {
     handleOpen,
     handleOpenProjectModal,
     handleCloseOfProjectsIcons,
+    setItemId,
     anchorEl,
     open,
     isLoading,
@@ -159,6 +167,7 @@ const useLayout = () => {
     openPorjectsIcons,
     deleteInProgress,
     allProjects,
+    itemId,
     // userName,
   };
 };

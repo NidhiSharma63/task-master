@@ -9,10 +9,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import colors from "../../../theme/variables";
+import colors from "src/theme/variables";
 import DotLoader from "react-spinners/DotLoader";
-import useProjectNameModal from "../../../hook/project/useProjectNameModal";
-import { COLORS_FOR_PROJECTS } from "../../../constant/colors";
+import useProjectNameModal from "src/hook/project/useProjectNameModal";
+import { COLORS_FOR_PROJECTS } from "src/constant/colors";
 
 const ProjectNameModal = () => {
   const {
@@ -46,7 +46,7 @@ const ProjectNameModal = () => {
           <DialogTitle
             id="projectModal"
             sx={{
-              color: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.secondary.main,
             }}
           >
             Create your project
@@ -108,13 +108,11 @@ const ProjectNameModal = () => {
           </DialogContent>
           <DialogActions>
             <Button
+              variant="outlined"
               onClick={handleSave}
               sx={{
-                backgroundColor: (theme) => theme.palette.primary.main,
+                borderColor: colors.secondaryTextColor,
                 color: "white",
-                "&:hover": {
-                  backgroundColor: colors.primaryHoverColor,
-                },
               }}
             >
               Save

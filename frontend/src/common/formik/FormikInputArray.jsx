@@ -1,12 +1,23 @@
 import { Field, FieldArray } from "formik";
 import { Box, Button, TextField } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import useFormikInput from "../../hook/boardDrawer/useFormikInput";
+import useFormikInput from "src/hook/boardDrawer/useFormikInput";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import colors from "src/theme/variables";
 
 const FormikInputArray = (props) => {
   const { name } = props;
+  const { setFieldValue } = useFormikInput(name);
   const { values } = useFormikInput(name);
 
+  // Function to toggle task completion
+  const toggleTaskCompletion = (index) => {
+    const updatedTasks = [...values[name]];
+    const taskToUpdate = { ...updatedTasks[index] }; // Create a deep copy of the task object
+    taskToUpdate.isCompleted = !taskToUpdate.isCompleted;
+    updatedTasks[index] = taskToUpdate;
+    setFieldValue(name, updatedTasks);
+  };
   return (
     <Box
       mt={2}
@@ -22,8 +33,8 @@ const FormikInputArray = (props) => {
         render={(arrayHelpers) => (
           <>
             {values[name] && values[name].length > 0
-              ? values[name].map((val, index) => (
-                  <Field name={`${name}.${index}`} key={index}>
+              ? values[name].map((task, index) => (
+                  <Field name={`${name}.${index}.value`} key={index}>
                     {({ field }) => {
                       return (
                         <Box
@@ -39,9 +50,20 @@ const FormikInputArray = (props) => {
                           <TextField
                             sx={{ width: "100%" }}
                             {...field}
-                            value={val}
+                            value={task.value}
                             className="not-remove-input"
+                            disabled={task.isCompleted}
                           />
+                          <TaskAltIcon
+                            sx={{
+                              cursor: "pointer",
+                              color: `${
+                                task.isCompleted ? "#045c08" : undefined
+                              }`,
+                            }}
+                            onClick={() => toggleTaskCompletion(index)}
+                          />
+                          {/* #045c08 */}
                           <DeleteOutlineIcon
                             sx={{
                               cursor: "pointer",
@@ -60,7 +82,14 @@ const FormikInputArray = (props) => {
               type="button"
               variant="outlined"
               className="not-remove-input"
-              onClick={() => arrayHelpers.push("")}
+              sx={{
+                mt: 2,
+                color: colors.secondaryColor,
+                borderColor: colors.secondaryTextColor,
+              }}
+              onClick={() =>
+                arrayHelpers.push({ value: "", isCompleted: false })
+              }
             >
               Sub task
             </Button>

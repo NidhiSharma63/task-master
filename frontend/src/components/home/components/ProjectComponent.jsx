@@ -1,13 +1,13 @@
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import colors from "../../../theme/variables";
-import { isProjectNameModalOpen } from "../../../redux/boolean/booleanSlice";
-import ProjectNameModal from "../../../components/Layout/components/ProjectNameModal";
+import colors from "src/theme/variables";
+import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
+import ProjectNameModal from "src/components/Layout/components/ProjectNameModal";
 import { useNavigate } from "react-router-dom";
-import { activeProject } from "../../../redux/projects/projectSlice";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "../../../constant/Misc";
-import { setValueToLs } from "../../../utils/localstorage";
+import { activeProject } from "src/redux/projects/projectSlice";
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
+import { setValueToLs } from "src/utils/localstorage";
 
 const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   const navigate = useNavigate();
@@ -44,12 +44,10 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           Projects
         </Typography>
         <Button
+          variant="outlined"
           sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
-            color: "white",
-            "&:hover": {
-              backgroundColor: colors.primaryHoverColor,
-            },
+            borderColor: colors.secondaryTextColor,
+            color: colors.secondaryTextColor,
           }}
           onClick={handleClickOnAddProject}
         >
@@ -61,7 +59,18 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         sx={{
           padding: "0.4rem",
           height: "calc(100% - 60px)",
-          overflowY: "scroll",
+          overflowY: "auto",
+          "&::-webkit-scrollbar": {
+            width: "4px",
+            height: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: `${colors.primaryColor}`,
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: `${colors.secondaryTextColor}`,
+            borderRadius: "4px",
+          },
         }}
       >
         {isLoading ? (
