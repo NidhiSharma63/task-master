@@ -10,6 +10,7 @@ const useLogin = () => {
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   const { mutate, isLoading } = useLoginQuery();
   const [formValues, setFormValues] = useState({});
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     // because we are
@@ -21,6 +22,7 @@ const useLogin = () => {
   const initialValues = {
     email: "",
     password: "",
+    timeZone,
   };
 
   useEffect(() => {
