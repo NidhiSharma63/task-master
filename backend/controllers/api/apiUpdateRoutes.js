@@ -1,6 +1,7 @@
 const Task = require("../../models/taskSchema");
 const Project = require("../../models/projectsSchema");
 const Column = require("../../models/columnsSchema");
+const rescheduleReminders = require("../../utils/setSchedule");
 /**
  * update task with index
  */
@@ -157,6 +158,7 @@ const updateTaskWithDetail = async (req, res, next) => {
     taskObj.labelColor = taskBody.labelColor;
 
     await taskObj.save();
+    rescheduleReminders();
     res.json({ data: taskObj });
   } catch (error) {
     next(error);

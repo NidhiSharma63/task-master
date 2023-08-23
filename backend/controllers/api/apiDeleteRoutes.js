@@ -1,7 +1,7 @@
 const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
-
+const rescheduleReminders = require("../../utils/setSchedule");
 /**
  * Project delete
  */
@@ -26,6 +26,7 @@ const deleteProjectApi = async (req, res, next) => {
 
     await Column.deleteMany({ projectName: project.name, userId });
 
+    rescheduleReminders();
     res.status(204).json({ projects });
   } catch (error) {
     next(error);
@@ -59,7 +60,7 @@ const deleteTaskApi = async (req, res, next) => {
       await item.save();
     });
     await Promise.all(updateTasksPromises);
-
+    rescheduleReminders();
     res.status(201).json({ msg: "Task deleted", task: deletedTask });
   } catch (error) {
     next(error);
@@ -72,8 +73,10 @@ const deleteTaskApi = async (req, res, next) => {
 
 const deleteColumn = async (req, res, next) => {
   try {
-    const { _id } = req.body;
-    await Column.deleteOne({ _id });
+    const { _id, userId } = req.body;
+    const col = await Column.deleteOne({ _id });
+    // delete task related to that column
+    await Task.deleteMany({ status: col.name, userId });
     res.status(200).json({ msg: "Deleted successfully" });
   } catch (error) {
     next(error);
