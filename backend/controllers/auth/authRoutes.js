@@ -9,7 +9,7 @@ const User = require("../../models/userSchema");
 // register
 const registerUser = async (req, res, next) => {
   try {
-    const { email, password, confirmPassword } = req.body;
+    const { email, password, confirmPassword, timeZone } = req.body;
 
     // check if any field is missing or not
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
@@ -29,7 +29,6 @@ const registerUser = async (req, res, next) => {
     if (isAlreadyPresentEmail.email) {
       throw new Error("Email is already exists");
     }
-    console.log(isAlreadyPresentEmail, "isAlreadyPresentEmail");
 
     // generate hash password with round 10
     const hashPassword = await bcrypt.hash(password, 10);
@@ -37,6 +36,7 @@ const registerUser = async (req, res, next) => {
     const user = new User({
       email: email,
       password: hashPassword,
+      timeZone: timeZone,
     });
 
     // before saving the user create the toke

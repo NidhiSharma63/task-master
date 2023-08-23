@@ -2,7 +2,7 @@ const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 const generateRandomColor = require("../../utils/getRandomColor");
-
+const rescheduleReminders = require("../../utils/setSchedule");
 /**
  * Create Project
  */
@@ -113,6 +113,7 @@ const createTaskApi = async (req, res, next) => {
     await Promise.all(updateTasksPromises);
 
     await taskObj.save();
+    rescheduleReminders();
 
     res.json({ data: taskObj });
   } catch (error) {

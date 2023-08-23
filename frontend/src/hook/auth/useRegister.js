@@ -4,10 +4,12 @@ import { registerSchema } from "src/constant/validation";
 
 const useRegister = () => {
   const { mutate, isLoading } = useRegisterQuery();
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const initialValues = {
     email: "",
     password: "",
     confirmPassword: "",
+    timeZone,
   };
 
   const [valuesOfForm, setValuesOfForm] = useState(initialValues);

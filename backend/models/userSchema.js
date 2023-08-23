@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  timeZone: {
+    type: String,
+  },
 });
 
 // create a token

@@ -5,6 +5,7 @@ const server = express();
 const cors = require("cors");
 const router = require("./routes/router");
 const errorHandle = require("./middleware/errorHanlde");
+const rescheduleReminders = require("./utils/setSchedule");
 
 // use cors
 server.use(cors());
@@ -32,6 +33,7 @@ const start = async () => {
       process.env.PORT ?? 3000,
       console.log("running at port", process.env.PORT ?? 3000)
     );
+    rescheduleReminders();
   } catch (error) {
     console.log("::error::", error);
   }
