@@ -77,6 +77,7 @@ const deleteColumn = async (req, res, next) => {
     const col = await Column.deleteOne({ _id });
     // delete task related to that column
     await Task.deleteMany({ status: col.name, userId });
+    rescheduleReminders();
     res.status(200).json({ msg: "Deleted successfully" });
   } catch (error) {
     next(error);
