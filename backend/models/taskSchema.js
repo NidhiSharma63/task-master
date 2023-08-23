@@ -4,6 +4,10 @@ const taskSchema = new mongoose.Schema({
     type: Date, // Change type to Date for storing date values
     default: Date.now, // Set the default value to the current date and time
   },
+  isNotified: {
+    type: Boolean,
+    default: false,
+  },
   dueDate: {
     type: Date, // Change type to Date for storing date values
   },
