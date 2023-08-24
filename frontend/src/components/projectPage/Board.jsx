@@ -73,9 +73,14 @@ const Board = () => {
             ></textarea>
           ) : (
             <Button
-              sx={{ ml: 1 }}
-              variant="contained"
+              // variant="contained"
               onClick={handleClickOnAddColsBtn}
+              variant="outlined"
+              sx={{
+                ml: 1,
+                color: colors.secondaryTextColor,
+                borderColor: colors.secondaryTextColor,
+              }}
             >
               Add Section
             </Button>

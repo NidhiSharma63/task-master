@@ -74,7 +74,7 @@ export const Layout = () => {
               component="div"
               sx={{ color: `${colors.secondaryColor}` }}
             >
-              Task Manager
+              Task Master
             </Typography>
             <UserName handleOpen={handleOpen} />
             <Menu
@@ -112,7 +112,9 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleClickOnHome}>
-                      <ListItemIcon>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
                   );
@@ -128,7 +130,9 @@ export const Layout = () => {
                       key={key}
                       onClick={() => handleClickOnInsights(key)}
                     >
-                      <ListItemIcon>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
                   );
@@ -141,7 +145,9 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleOpenProjectModal}>
-                      <ListItemIcon>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                       <ListItemText primary={key} />
                     </ListItemButton>
                   );

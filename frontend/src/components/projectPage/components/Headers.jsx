@@ -43,12 +43,12 @@ const Headers = () => {
         <Box>
           <NavLink
             style={({ isActive }) => ({
-              color: colors.secondaryColor,
+              color: colors.secondaryTextColor,
               fontWeight: isActive ? 600 : 100,
               textDecoration: "none",
               marginLeft: "1.2rem",
               borderBottom: isActive
-                ? `1px solid ${colors.secondaryColor}`
+                ? `1px solid ${colors.secondaryTextColor}`
                 : "",
             })}
             to={`activeProject/board/${active_project}`}
