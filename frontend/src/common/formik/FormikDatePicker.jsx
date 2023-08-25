@@ -22,12 +22,24 @@ const FormikDatePicker = (props) => {
             <DatePicker
               name={name}
               value={value}
+              inputFormat="MM/dd/yyyy"
               sx={{
                 outline: "none",
               }}
               onChange={(date) => {
+                const dates = new Date(date);
+                var dateWithNumbers = new Date(
+                  dates.getFullYear(),
+                  dates.getMonth(),
+                  dates.getDate(),
+                  new Date().getHours(),
+                  0,
+                  0,
+                  0
+                );
+                // console.log(dateWithNumbers, "Dates with numbers");
                 if (date) {
-                  setFieldValue(name, new Date(date));
+                  setFieldValue(name, dateWithNumbers);
                 } else {
                   setFieldValue(name, null);
                 }

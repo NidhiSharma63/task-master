@@ -20,15 +20,15 @@ function sendEmail(user, task) {
       <h1>Task Reminder</h1>
       <p>Hello There,</p>
       <p>
-        This is a friendly reminder that the task <strong>${task.name}</strong>
+        This is a friendly reminder that the task <strong>${task.task}</strong>
         is currently pending.
       </p>
       <ul>
         <li>
-          <strong>Task Name:</strong> ${task.name}
+          <strong>Task Name:</strong> ${task.task}
         </li>
         <li>
-          <strong>Due Date:</strong> ${task.dueDate}
+          <strong>Due Date:</strong> ${new Date(task.dueDate).toLocaleString()}
         </li>
       </ul>
       <p>Please make sure to complete this task as soon as possible.</p>
