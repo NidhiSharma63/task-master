@@ -1,5 +1,5 @@
 import React from "react";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Typography, TextField } from "@mui/material";
 import TitleCase from "src/utils/TextTransformer";
@@ -19,7 +19,7 @@ const FormikDatePicker = (props) => {
             <Typography sx={{ fontWeight: 600, mb: 1 }}>
               {TitleCase(name)}
             </Typography>
-            <DatePicker
+            <DateTimePicker
               name={name}
               value={value}
               sx={{
