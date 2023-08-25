@@ -1,5 +1,5 @@
 import React from "react";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Typography, TextField } from "@mui/material";
 import TitleCase from "src/utils/TextTransformer";
@@ -19,17 +19,27 @@ const FormikDatePicker = (props) => {
             <Typography sx={{ fontWeight: 600, mb: 1 }}>
               {TitleCase(name)}
             </Typography>
-            <DateTimePicker
+            <DatePicker
               name={name}
-              value={value}
+              value={new Date(value)}
+              inputFormat="MM/dd/yyyy"
               sx={{
                 outline: "none",
               }}
               onChange={(date) => {
+                const dates = new Date(date);
+                var dateWithNumbers = new Date(
+                  dates.getFullYear(),
+                  dates.getMonth(),
+                  dates.getDate(),
+                  new Date().getHours(),
+                  0,
+                  0,
+                  0
+                );
+                console.log(dateWithNumbers, "Dates with numbers");
                 if (date) {
-                  setFieldValue(name, new Date(date));
-                } else {
-                  setFieldValue(name, null);
+                  setFieldValue(name, dateWithNumbers);
                 }
               }}
               textField={(params) => (
