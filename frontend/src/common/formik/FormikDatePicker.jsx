@@ -37,7 +37,7 @@ const FormikDatePicker = (props) => {
                   0,
                   0
                 );
-                console.log(dateWithNumbers, "Dates with numbers");
+                // console.log(dateWithNumbers, "Dates with numbers");
                 if (date) {
                   setFieldValue(name, dateWithNumbers);
                 } else {
