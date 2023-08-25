@@ -9,6 +9,7 @@ async function fetchTasks() {
   const currentDate = new Date();
   const tasks = await Task.find({
     dueDate: { $exists: true },
+    dueDate: { $exists: true },
   });
 
   return tasks;
@@ -16,6 +17,7 @@ async function fetchTasks() {
 
 async function rescheduleReminders() {
   const tasks = await fetchTasks();
+  console.log(tasks);
   // Clear existing scheduled jobs
   schedule.cancelJob();
 
