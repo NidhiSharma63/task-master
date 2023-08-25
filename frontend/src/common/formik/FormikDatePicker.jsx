@@ -21,7 +21,7 @@ const FormikDatePicker = (props) => {
             </Typography>
             <DatePicker
               name={name}
-              value={new Date(value)}
+              value={value}
               inputFormat="MM/dd/yyyy"
               sx={{
                 outline: "none",
@@ -40,6 +40,8 @@ const FormikDatePicker = (props) => {
                 console.log(dateWithNumbers, "Dates with numbers");
                 if (date) {
                   setFieldValue(name, dateWithNumbers);
+                } else {
+                  setFieldValue(name, null);
                 }
               }}
               textField={(params) => (

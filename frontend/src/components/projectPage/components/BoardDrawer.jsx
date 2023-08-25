@@ -39,7 +39,7 @@ const BoardDrawer = () => {
     dueDate: active_task?.dueDate ?? null,
     userId: active_task.userId,
     status: active_task.status,
-    description: active_task?.description ?? "",
+    description: new Date(active_task?.description) ?? null,
     subTasks: active_task?.subTasks ?? "",
     label: active_task?.label ?? "",
     labelColor: active_task?.labelColor ?? "#e33529",
