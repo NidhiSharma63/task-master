@@ -4,7 +4,7 @@ import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
 import { useDispatch } from "react-redux";
 import { isBackDropLoaderDisplayed,isBackDropLoaderDisplayedForColumns } from "../../redux/boolean/booleanSlice";
 
-const useDeleteColumn = ({ colId }) => {
+const useDeleteColumn = ({ colId,setAnchorElForColumnIcons }) => {
   const { mutate: deleteCols, isLoading } = useDeleteColumnName();
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
@@ -17,12 +17,9 @@ const useDeleteColumn = ({ colId }) => {
       setValue("Column deleting");
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackDropLoaderDisplayedForColumns(true))
+      setAnchorElForColumnIcons(null)
     } 
-    // else {
-    //   setValue("");
-    //   dispatch(isBackDropLoaderDisplayed(false));
-    //   dispatch(isBackDropLoaderDisplayedForColumns(false))
-    // }
+    
   }, [isLoading, setValue, dispatch]);
 
   const deleteColumn = () => {

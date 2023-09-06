@@ -23,15 +23,17 @@ const useAddColumn = ({
   const { active_project } = useSelector(projectDataInStore);
   const {
     mutate: updateColsname,
-
     isLoading: isColumnUpdating,
   } = useUpdateColumnName();
+
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
 
   const handleColsValue = (event) => {
     setColsValue(event.target.value);
   };
+
+  // console.log(isColsRename,"::::isColsRename::::",colsValue,":::colsValue:::colsValue")
 
   /**
    * show back drop loader when column name is updating
@@ -73,13 +75,15 @@ const useAddColumn = ({
       return;
     }
 
+    console.log("is columns rename")
     const handleColsSubmit = (event) => {
       /** click on outside of texarea */
       if (event.target.tagName !== "TEXTAREA") {
+        console.log(event.target.tagName,"::Target name::")
         /**
          * add column
          */
-        if (colsValue?.trim()?.length > 0 && !isColsRename) {
+        if (!isColsRename) {
           mutate({
             name: colsValue,
             projectName: active_project,

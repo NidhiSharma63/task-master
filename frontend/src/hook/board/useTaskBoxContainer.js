@@ -182,6 +182,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     handleCloseOfColsIcons,
     handleClickOnThreeDots,
     handleClickOnRename,
+    setAnchorElForColumnIcons,
     textAreaValuesBottom,
     textAreaValuesTop,
     anchorElForColumnIcons,

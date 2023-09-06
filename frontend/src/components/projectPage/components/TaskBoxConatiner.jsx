@@ -30,6 +30,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     handleCloseOfColsIcons,
     handleClickOnRename,
     setIsColsRename,
+    setAnchorElForColumnIcons,
     textAreaValuesBottom,
     textAreaValuesTop,
     anchorElForColumnIcons,
@@ -45,7 +46,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     prevColName: name,
   });
 
-  const { deleteColumn } = useDeleteColumn({ colId });
+  const { deleteColumn } = useDeleteColumn({ colId,setAnchorElForColumnIcons });
   // const { userName } = useLayout();
 
   return (
