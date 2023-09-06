@@ -39,7 +39,7 @@ export const CommonLoaderWithBackDrop = () => {
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={is_back_Drop_loader_displayed}
     >
-      <CommonLoader value={value} />
+      <CommonLoader value={value ?? "Loading..."} />
     </Backdrop>
   );
 };

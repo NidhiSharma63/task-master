@@ -9,21 +9,25 @@ import { queryClient } from "src/index";
 import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { statusDataInStore } from "src/redux/status/statusSlice";
+import { useDispatch } from "react-redux";
+import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 /**
  * use post column query
  */
 const usePostColumnQuery = () => {
   const { total_status } = useSelector(statusDataInStore);
+  const dispatch = useDispatch();
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "post", payload);
     },
     onSuccess: () => {
-      toast.success("Section created successfully!");
+      // toast.success("Section created successfully!");
       queryClient.invalidateQueries("projects");
-      total_status?.forEach((status) => queryClient.invalidateQueries(status));
+      // total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
+      dispatch(isBackDropLoaderDisplayed(true))
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -60,17 +64,19 @@ const useGetColumnQuery = () => {
 
 const useUpdateColumnName = () => {
   const { total_status } = useSelector(statusDataInStore);
+  const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "put", payload);
     },
     onSuccess: () => {
-      toast.success("Section updated successfully!");
+      // toast.success("Section updated successfully!");
       queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries("column");
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
+      dispatch(isBackDropLoaderDisplayed(true))
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -84,17 +90,19 @@ const useUpdateColumnName = () => {
 
 const useDeleteColumnName = () => {
   const { total_status } = useSelector(statusDataInStore);
+  const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "delete", payload);
     },
     onSuccess: () => {
-      toast.success("Section deleted successfully!");
+      // toast.success("Section deleted successfully!");
       queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries("column");
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
+      dispatch(isBackDropLoaderDisplayed(true))
     },
     onError: (error) => {
       toast.error(error?.response?.data);
