@@ -10,7 +10,6 @@ import { statesOfTaskManager } from "src/constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import {
-  isBackDropLoaderDisplayed,
   isTaskDisplayed,
   isUpdatingTask,
   showLoaderForTask,
@@ -61,7 +60,6 @@ const useGetTaskAccordingToStatus = () => {
           setTimeout(() => {
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
-            dispatch(isBackDropLoaderDisplayed(false));
           }, 100);
           return data;
         },

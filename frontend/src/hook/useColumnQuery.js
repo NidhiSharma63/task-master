@@ -10,24 +10,19 @@ import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { statusDataInStore } from "src/redux/status/statusSlice";
 import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
+import { booleanDataInStore, isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 
 /**
  * use post column query
  */
 const usePostColumnQuery = () => {
-  const { total_status } = useSelector(statusDataInStore);
-  const dispatch = useDispatch();
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost("/column", "post", payload);
     },
     onSuccess: () => {
-      // toast.success("Section created successfully!");
       queryClient.invalidateQueries("projects");
-      // total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
-      dispatch(isBackDropLoaderDisplayed(true))
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -41,6 +36,8 @@ const usePostColumnQuery = () => {
 
 const useGetColumnQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
+  const dispatch = useDispatch();
+  const {is_backdrop_loader_displayed_for_Columns} = useSelector(booleanDataInStore);
 
   return useQuery({
     queryKey: ["column", active_project],
@@ -50,6 +47,9 @@ const useGetColumnQuery = () => {
       });
     },
     onSuccess: ({ data }) => {
+      if(is_backdrop_loader_displayed_for_Columns){
+       dispatch(isBackDropLoaderDisplayed(false));
+      }
       return data;
     },
     onError: (error) => {
@@ -64,7 +64,6 @@ const useGetColumnQuery = () => {
 
 const useUpdateColumnName = () => {
   const { total_status } = useSelector(statusDataInStore);
-  const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (payload) => {
@@ -76,7 +75,6 @@ const useUpdateColumnName = () => {
       queryClient.invalidateQueries("column");
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
-      dispatch(isBackDropLoaderDisplayed(true))
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -99,7 +97,7 @@ const useDeleteColumnName = () => {
     onSuccess: () => {
       // toast.success("Section deleted successfully!");
       queryClient.invalidateQueries("projects");
-      queryClient.invalidateQueries("column");
+      queryClient.invalidateQueries(["column"]);
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
       dispatch(isBackDropLoaderDisplayed(true))

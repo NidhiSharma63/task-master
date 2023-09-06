@@ -6,7 +6,7 @@ import {
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
+import { isBackDropLoaderDisplayed,isBackDropLoaderDisplayedForColumns } from "src/redux/boolean/booleanSlice";
 
 const useAddColumn = ({
   setIsAddColBtnClicked,
@@ -40,11 +40,13 @@ const useAddColumn = ({
     if (isColumnUpdating) {
       setValue("Column updating");
       dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackDropLoaderDisplayedForColumns(true))
     } else {
       setValue("");
       dispatch(isBackDropLoaderDisplayed(false));
       setColsValue("");
       setIsAddColBtnClicked(false);
+      dispatch(isBackDropLoaderDisplayedForColumns(false))
     }
   }, [isColumnUpdating, setValue, dispatch, setIsAddColBtnClicked]);
 
@@ -53,14 +55,15 @@ const useAddColumn = ({
    */
   useEffect(() => {
     if (isColumnCreating) {
-      console.log(isColumnCreating, "::::is column creating");
       setValue("Column creating");
       dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackDropLoaderDisplayedForColumns(true))
     } else {
       setValue("");
       dispatch(isBackDropLoaderDisplayed(false));
       setColsValue("");
       setIsAddColBtnClicked(false);
+      dispatch(isBackDropLoaderDisplayedForColumns(false))
     }
   }, [isColumnCreating, setValue, dispatch, setIsAddColBtnClicked]);
 
