@@ -46,4 +46,5 @@
 .textarea-col {
   resize: none;
   padding: 0.1rem;
+  background-color: transparent;
 }
