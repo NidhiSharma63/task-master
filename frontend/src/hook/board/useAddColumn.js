@@ -1,30 +1,15 @@
 import { useEffect, useState } from "react";
-import {
-  usePostColumnQuery,
-  useUpdateColumnName,
-} from "src/hook/useColumnQuery";
+import { usePostColumnQuery, useUpdateColumnName } from "src/hook/useColumnQuery";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-import { isBackDropLoaderDisplayed,isBackDropLoaderDisplayedForColumns } from "src/redux/boolean/booleanSlice";
+import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForColumns } from "src/redux/boolean/booleanSlice";
 
-const useAddColumn = ({
-  setIsAddColBtnClicked,
-  isColsRename,
-  colId,
-  prevColName,
-}) => {
+const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId, prevColName }) => {
   const [colsValue, setColsValue] = useState("");
-  const {
-    mutateAsync,
-    isLoading: isColumnCreating,
-    mutate,
-  } = usePostColumnQuery();
+  const { isLoading: isColumnCreating, mutate } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
-  const {
-    mutate: updateColsname,
-    isLoading: isColumnUpdating,
-  } = useUpdateColumnName();
+  const { mutate: updateColsname, isLoading: isColumnUpdating } = useUpdateColumnName();
 
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
@@ -33,7 +18,15 @@ const useAddColumn = ({
     setColsValue(event.target.value);
   };
 
-  // console.log(isColsRename,"::::isColsRename::::",colsValue,":::colsValue:::colsValue")
+  /**
+   * useEffect that fire when user tries to rename columns value
+   */
+
+  useEffect(() => {
+    if (isColsRename) {
+      setColsValue(prevColName);
+    }
+  }, [isColsRename, prevColName]);
 
   /**
    * show back drop loader when column name is updating
@@ -42,13 +35,13 @@ const useAddColumn = ({
     if (isColumnUpdating) {
       setValue("Column updating");
       dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackDropLoaderDisplayedForColumns(true))
+      dispatch(isBackDropLoaderDisplayedForColumns(true));
     } else {
       setValue("");
       dispatch(isBackDropLoaderDisplayed(false));
       setColsValue("");
       setIsAddColBtnClicked(false);
-      dispatch(isBackDropLoaderDisplayedForColumns(false))
+      dispatch(isBackDropLoaderDisplayedForColumns(false));
     }
   }, [isColumnUpdating, setValue, dispatch, setIsAddColBtnClicked]);
 
@@ -59,69 +52,50 @@ const useAddColumn = ({
     if (isColumnCreating) {
       setValue("Column creating");
       dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackDropLoaderDisplayedForColumns(true))
+      dispatch(isBackDropLoaderDisplayedForColumns(true));
     } else {
       setValue("");
       dispatch(isBackDropLoaderDisplayed(false));
       setColsValue("");
       setIsAddColBtnClicked(false);
-      dispatch(isBackDropLoaderDisplayedForColumns(false))
+      dispatch(isBackDropLoaderDisplayedForColumns(false));
     }
   }, [isColumnCreating, setValue, dispatch, setIsAddColBtnClicked]);
 
-  useEffect(() => {
-    if (colsValue?.trim()?.length <= 0) {
-      // console.log("i run");
-      return;
+  const handleColsSubmit = (event) => {
+    if (colsValue?.length === 0) {
+      return setIsAddColBtnClicked(false);
     }
+    /**
+     * add column
+     */
+    if (!isColsRename) {
+      mutate({
+        name: colsValue,
+        projectName: active_project,
+      });
+    }
+    /**
+     * update cols value
+     */
 
-    console.log("is columns rename")
-    const handleColsSubmit = (event) => {
-      /** click on outside of texarea */
-      if (event.target.tagName !== "TEXTAREA") {
-        console.log(event.target.tagName,"::Target name::")
-        /**
-         * add column
-         */
-        if (!isColsRename) {
-          mutate({
-            name: colsValue,
-            projectName: active_project,
-          });
-        }
-        /**
-         * update cols value
-         */
-        if (isColsRename) {
-          updateColsname({
-            name: colsValue,
-            _id: colId,
-            previousColName: prevColName,
-          });
-        }
-      }
-    };
-
-    window.addEventListener("click", handleColsSubmit);
-
-    return () => {
-      window.removeEventListener("click", handleColsSubmit);
-    };
-  }, [
-    active_project,
-    colsValue,
-    mutateAsync,
-    setIsAddColBtnClicked,
-    colId,
-    updateColsname,
-    isColsRename,
-    prevColName,
-    mutate,
-  ]);
+    if (isColsRename) {
+      updateColsname({
+        name: colsValue,
+        _id: colId,
+        previousColName: prevColName,
+      });
+    }
+  };
 
   useEffect(() => {
     const removeTextArea = (event) => {
-      if (event.target.tagName === "DIV" && colsValue?.trim()?.length === 0) {
+      if (
+        event.target.tagName !== "TEXTAREA" &&
+        event.target.tagName !== "BUTTON" &&
+        colsValue?.trim()?.length === 0 &&
+        isColsRename
+      ) {
         setIsAddColBtnClicked(false);
       }
     };
@@ -130,11 +104,12 @@ const useAddColumn = ({
     return () => {
       window.removeEventListener("click", removeTextArea);
     };
-  }, []);
+  }, [colsValue, setIsAddColBtnClicked]);
 
   return {
     colsValue,
     handleColsValue,
+    handleColsSubmit,
   };
 };
 

@@ -1,5 +1,5 @@
 const colors = {
-  primaryColor: "#2E2E30",
+  primaryColor: "#A69FF3",
   secondaryColor: "rgba(255, 255, 255, 0.993)",
 
   // light grey
