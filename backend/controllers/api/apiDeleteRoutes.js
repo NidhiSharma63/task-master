@@ -40,9 +40,7 @@ const deleteTaskApi = async (req, res, next) => {
   try {
     const { _id, index, userId, status, projectName } = req.body;
     if (!_id || index === undefined || !userId || !status || !projectName) {
-      throw new Error(
-        "Something is missing _id, index, userId, status, projectName"
-      );
+      throw new Error("Something is missing _id, index, userId, status, projectName");
     }
     const deletedTask = await Task.deleteOne({ _id });
 
@@ -74,10 +72,34 @@ const deleteTaskApi = async (req, res, next) => {
 const deleteColumn = async (req, res, next) => {
   try {
     const { _id, userId } = req.body;
-    const col = await Column.deleteOne({ _id });
+
+    /**
+     * find the column related to id
+     */
+
+    const foundColumn = await Column.findOne({ _id });
+
+    /**
+     * update the index of other columns as well
+     */
+    const foundOtherColumnsNextToDeletedOne = await Column.find({ index: { $gt: foundColumn.index } });
+
+    // Update the index of the found tasks and save them
+    const updateColumnsPromises = foundOtherColumnsNextToDeletedOne?.map(async (item) => {
+      item.index = item.index - 1;
+      await item.save();
+    });
+    await Promise.all(updateColumnsPromises);
+
+    /**
+     * delete the column
+     */
+    await Column.deleteOne({ _id });
+
     // delete task related to that column
-    await Task.deleteMany({ status: col.name, userId });
+    await Task.deleteMany({ status: foundColumn.name, userId });
     rescheduleReminders();
+
     res.status(200).json({ msg: "Deleted successfully" });
   } catch (error) {
     next(error);
