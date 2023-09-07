@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   booleanDataInStore,
   isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForProjects,
   isProjectNameModalOpen,
 } from "src/redux/boolean/booleanSlice";
 
@@ -35,6 +36,7 @@ const useProjectNameModal = () => {
   useEffect(() => {
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackdropLoaderDisplayedForProjects(true))
       setValue("Creating project");
     }
   }, [isLoading]);
@@ -42,6 +44,7 @@ const useProjectNameModal = () => {
   useEffect(() => {
     if (projectUpdateIsLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackdropLoaderDisplayedForProjects(true))
       setValue("Updating project");
     }
   }, [projectUpdateIsLoading]);

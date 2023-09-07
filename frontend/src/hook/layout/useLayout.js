@@ -6,6 +6,7 @@ import {
 } from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForProjects,
   isProjectNameModalOpen,
   isUpdatingTask,
 } from "src/redux/boolean/booleanSlice";
@@ -39,7 +40,6 @@ const useLayout = () => {
     useDeleteProjectQuery();
 
   const { setValue } = useBackDropLoaderContext();
-  const [userName, setUserName] = useState("");
 
   // // navigate the user to /todo directly
   useEffect(() => {
@@ -100,8 +100,9 @@ const useLayout = () => {
     if (deleteInProgress) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Deleting project");
+      dispatch(isBackdropLoaderDisplayedForProjects(true))
     }
-  }, [deleteInProgress]);
+  }, [deleteInProgress,setValue,dispatch]);
 
   const handleClickOnInsights = (name) => {
     navigate(`Charts/${name}`);

@@ -9,7 +9,8 @@ import { queryClient } from "src/index";
 import { queryKeyForTask } from "src/constant/queryKey";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
+import { booleanDataInStore, isBackDropLoaderDisplayed, isBackdropLoaderDisplayedForProjects } from "src/redux/boolean/booleanSlice";
+import { useSelector } from "react-redux";
 
 // post
 const usePostProjectQuery = () => {
@@ -36,19 +37,21 @@ const getAllProjects = async () => {
   return res;
 };
 
-//get
 
 const useGetProjectQuery = () => {
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
+  const {is_backdrop_loader_displayed_for_projects} = useSelector(booleanDataInStore)
 
   return useQuery({
     queryKey: ["projects"],
     queryFn: getAllProjects,
-    // onSuccess:()
     onSuccess: () => {
-      setValue("");
-      dispatch(isBackDropLoaderDisplayed(false));
+      if(is_backdrop_loader_displayed_for_projects){
+        setValue("");
+        dispatch(isBackDropLoaderDisplayed(false));
+      }
+      dispatch(isBackdropLoaderDisplayedForProjects(false));
     },
     onError: (error) => {
       toast.error(error?.response?.data);

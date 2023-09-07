@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -7,18 +7,13 @@ import useAddColumn from "src/hook/board/useAddColumn";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import colors from "src/theme/variables";
 import { ClipLoader } from "react-spinners";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 const Board = () => {
-  const {
-    finalState,
-    isAddColBtnClicked,
-    handleClickOnAddColsBtn,
-    setIsAddColBtnClicked,
-    handleDragEnd,
-    isLoading,
-  } = useBoard();
+  const { finalState, isAddColBtnClicked, handleClickOnAddColsBtn, setIsAddColBtnClicked, handleDragEnd, isLoading } =
+    useBoard();
 
-  const { colsValue, handleColsValue } = useAddColumn({
+  const { colsValue, handleColsValue, handleColsSubmit } = useAddColumn({
     setIsAddColBtnClicked,
   });
 
@@ -32,22 +27,12 @@ const Board = () => {
         marginTop: 8,
         width: "1115px",
         pl: 3,
-        // overflowY: "scroll",
         display: "flex",
         alignItems: "center",
-        // background: colors.navigationColor,
-      }}
-    >
+      }}>
       <DragDropContext onDragEnd={handleDragEnd}>
         {finalState?.map((item) => {
-          return (
-            <TaskBoxConatiner
-              key={item._id}
-              colId={item._id}
-              name={item.name}
-              data={item.tasks}
-            />
-          );
+          return <TaskBoxConatiner key={item._id} colId={item._id} name={item.name} data={item.tasks} />;
         })}
         <BoardDrawer />
       </DragDropContext>
@@ -59,18 +44,18 @@ const Board = () => {
             alignItems: "center",
             justifyContent: "center",
             width: "100%",
-          }}
-        >
+          }}>
           <ClipLoader color="white" />
         </Box>
       ) : (
         <Box item sx={{ height: "100%", minWidth: "250px" }}>
           {isAddColBtnClicked ? (
-            <textarea
-              value={colsValue}
-              className="textarea-col"
-              onChange={handleColsValue}
-            ></textarea>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <textarea value={colsValue} className="textarea-col" onChange={handleColsValue}></textarea>
+              <IconButton onClick={handleColsSubmit}>
+                <CheckCircleRoundedIcon sx={{ color: "red", cursor: "pointer" }} />
+              </IconButton>
+            </Box>
           ) : (
             <Button
               // variant="contained"
@@ -80,8 +65,7 @@ const Board = () => {
                 ml: 1,
                 color: colors.secondaryTextColor,
                 borderColor: colors.secondaryTextColor,
-              }}
-            >
+              }}>
               Add Section
             </Button>
           )}
@@ -101,8 +85,7 @@ const Board = () => {
               overflowY: "auto",
               p: 1,
             }}
-            className="box"
-          ></Box>
+            className="box"></Box>
         </Box>
       )}
       <CommonLoaderWithBackDrop />
