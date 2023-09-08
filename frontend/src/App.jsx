@@ -1,20 +1,16 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import { Layout } from "./components/Layout/Layout";
+import { createBrowserRouter, RouterProvider, useLocation, Navigate } from "react-router-dom";
+import Login from "src/pages/auth/Login";
+import Register from "src/pages/auth/Register";
+import { Layout } from "src/components/Layout/Layout";
 
-import { getValueFromLS } from "./utils/localstorage";
-import { KEY_FOR_STORING_TOKEN } from "./constant/Misc";
-import NotFound from "./pages/error/NotFound";
-import ProjectPage from "./pages/project/ProjectPage";
-import Board from "./components/projectPage/Board";
-import Insights from "./pages/insights/Insights";
-import Home from "./pages/home/Home";
+import { getValueFromLS } from "src/utils/localstorage";
+import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
+import NotFound from "src/pages/error/NotFound";
+import ProjectPage from "src/pages/project/ProjectPage";
+import Board from "src/components/projectPage/Board";
+import Insights from "src/pages/insights/Insights";
+import Home from "src/pages/home/Home";
+import GettingStartedComponent from "src/components/userPages/components/GettingStartedComponent";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -70,6 +66,10 @@ let router = createBrowserRouter([
       {
         path: "/Home",
         element: <Home />,
+      },
+      {
+        path: "/pages/:page",
+        element: <GettingStartedComponent />,
       },
     ],
   },

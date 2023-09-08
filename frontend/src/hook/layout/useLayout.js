@@ -1,26 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import useLogoutQuery from "src/hook/useLogoutQuery";
-import {
-  useGetProjectQuery,
-  useDeleteProjectQuery,
-} from "src/hook/useProjectQuery";
+import { useGetProjectQuery, useDeleteProjectQuery } from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
   isBackdropLoaderDisplayedForProjects,
   isProjectNameModalOpen,
   isUpdatingTask,
 } from "src/redux/boolean/booleanSlice";
-import {
-  activeProject,
-  projectDataInStore,
-  projectRename,
-} from "src/redux/projects/projectSlice";
+import { activeProject, projectDataInStore, projectRename } from "src/redux/projects/projectSlice";
 import { setValueToLs } from "src/utils/localstorage";
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
 import { queryKeyForTask } from "src/constant/queryKey";
 import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const useLayout = () => {
@@ -36,8 +29,7 @@ const useLayout = () => {
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
   const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
   const [itemId, setItemId] = useState(null);
-  const { mutate: deleteProject, isLoading: deleteInProgress } =
-    useDeleteProjectQuery();
+  const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
 
   const { setValue } = useBackDropLoaderContext();
 
@@ -58,10 +50,6 @@ const useLayout = () => {
   useEffect(() => {
     setAllProjects(data?.projects);
   }, [data]);
-
-  // useEffect(() => {
-  // setUserName(getUserFirstNameFirstLetter(user_email));
-  // }, [user_email]);
 
   const handleLogout = () => {
     mutate();
@@ -100,9 +88,9 @@ const useLayout = () => {
     if (deleteInProgress) {
       dispatch(isBackDropLoaderDisplayed(true));
       setValue("Deleting project");
-      dispatch(isBackdropLoaderDisplayedForProjects(true))
+      dispatch(isBackdropLoaderDisplayedForProjects(true));
     }
-  }, [deleteInProgress,setValue,dispatch]);
+  }, [deleteInProgress, setValue, dispatch]);
 
   const handleClickOnInsights = (name) => {
     navigate(`Charts/${name}`);
@@ -118,6 +106,13 @@ const useLayout = () => {
   const handleClickOnHome = () => {
     navigate("/Home");
   };
+  /**
+   * navigate to pages
+   */
+
+  const handleClickOnPages = useCallback((val) => {
+    navigate(`/pages/${val}`);
+  }, []);
 
   useEffect(() => {
     queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
@@ -161,6 +156,7 @@ const useLayout = () => {
     handleOpenProjectModal,
     handleCloseOfProjectsIcons,
     setItemId,
+    handleClickOnPages,
     anchorEl,
     open,
     isLoading,

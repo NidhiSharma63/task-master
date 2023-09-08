@@ -22,6 +22,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
+    fontSize: 8,
   },
   // components: {
   //   MuiTextField: {

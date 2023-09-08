@@ -14,4 +14,5 @@ export const INSIGHTS = [
   },
 ];
 
+export const BOTTOM = [{ pages: <AddIcon /> }];
 export const LOWER_PART = [{ Projects: <AddIcon /> }];
