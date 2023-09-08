@@ -1,12 +1,16 @@
-import { Box, Typography } from "@mui/material";
-import { useRef } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
 const GettingStartedComponent = () => {
   const editorRef = useRef();
+  const [content, setContent] = useState();
 
-  const handleContentChange = (event) => {
-    console.log(editorRef.current);
+  const handleContentChange = () => {
+    setContent(editorRef.current);
   };
+
+  const handleClick = () => {};
+
   return (
     <Box
       sx={{
@@ -16,7 +20,18 @@ const GettingStartedComponent = () => {
         margin: "auto",
         marginTop: "1rem",
       }}>
-      <Box onInput={handleContentChange} ref={editorRef}>
+      <Button
+        variant="contained"
+        sx={{ position: "fixed", right: "1rem", color: "white", fontSize: ".7rem" }}
+        onClick={handleClick}>
+        Save
+      </Button>
+      <Box
+        onInput={handleContentChange}
+        ref={editorRef}
+        onFocus={() => {
+          console.log("focus");
+        }}>
         <Typography contentEditable="true" variant="h1" sx={{ outline: "none" }}>
           Untitled
         </Typography>

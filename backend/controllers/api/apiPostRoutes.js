@@ -155,6 +155,10 @@ const createColumnsApi = async (req, res, next) => {
   }
 };
 
+/**
+ * Create pages
+ */
+
 module.exports = {
   createProjectApi,
   createTaskApi,
