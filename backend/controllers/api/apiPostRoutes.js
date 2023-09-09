@@ -162,8 +162,8 @@ const createColumnsApi = async (req, res, next) => {
 
 const createPages = async (req, res, next) => {
   try {
-    const { userId, pageName, content } = req.body;
-    if (!pageName) {
+    const { userId, name, content } = req.body;
+    if (!name) {
       throw new Error("page name does not exists");
     }
 
@@ -171,7 +171,7 @@ const createPages = async (req, res, next) => {
     const totalPages = await Page.countDocuments();
 
     const newPage = new Page({
-      name: pageName,
+      name,
       userId,
       content,
       index: totalPages,
