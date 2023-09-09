@@ -1,4 +1,5 @@
 const Column = require("../../models/columnsSchema");
+const Page = require("../../models/pagesSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 const rescheduleReminders = require("../../utils/setSchedule");
@@ -59,7 +60,7 @@ const deleteTaskApi = async (req, res, next) => {
     });
     await Promise.all(updateTasksPromises);
     rescheduleReminders();
-    res.status(201).json({ msg: "Task deleted", task: deletedTask });
+    res.status(204).json({ msg: "Task deleted", task: deletedTask });
   } catch (error) {
     next(error);
   }
@@ -100,14 +101,44 @@ const deleteColumn = async (req, res, next) => {
     await Task.deleteMany({ status: foundColumn.name, userId });
     rescheduleReminders();
 
-    res.status(200).json({ msg: "Deleted successfully" });
+    res.status(204).json({ msg: "Deleted successfully" });
   } catch (error) {
     next(error);
   }
 };
 
+/**
+ * delete pages
+ */
+
+const deletePagesApi = async (req, res, next) => {
+  try {
+    const { _id } = req.body;
+
+    /**
+     * delete the page
+     */
+    const deletedPage = await Page.deleteOne({ _id });
+    /**
+     * now update the index of others
+     */
+    const foundOtherPagesNextToDeletedOne = await Page.find({ index: { $gt: deletedPage.index } });
+
+    // Update the index of the found tasks and save them
+    const updatePagesPromises = foundOtherPagesNextToDeletedOne?.map(async (item) => {
+      item.index = item.index - 1;
+      await item.save();
+    });
+    await Promise.all(updatePagesPromises);
+
+    res.status(204).send({ msg: "Deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   deleteProjectApi,
   deleteTaskApi,
   deleteColumn,
+  deletePagesApi,
 };
