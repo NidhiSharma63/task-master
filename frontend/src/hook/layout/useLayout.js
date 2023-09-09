@@ -15,6 +15,7 @@ import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { useGetPages } from "src/hook/usePagesQuery";
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const useLayout = () => {
   const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
   const [itemId, setItemId] = useState(null);
   const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
+
+  const { data: pagesData, isLoading: pagesLoading } = useGetPages();
 
   const { setValue } = useBackDropLoaderContext();
 
@@ -165,6 +168,8 @@ const useLayout = () => {
     deleteInProgress,
     allProjects,
     itemId,
+    pagesData,
+    pagesLoading,
     // userName,
   };
 };

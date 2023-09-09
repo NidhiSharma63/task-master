@@ -45,6 +45,8 @@ export const Layout = () => {
     anchorElForProjectIcons,
     openPorjectsIcons,
     allProjects,
+    pagesData,
+    pagesLoading,
     // userName,
   } = useLayout();
 
@@ -185,6 +187,33 @@ export const Layout = () => {
                     </ListItemButton>
                   );
                 });
+              })}
+              {pagesData?.data?.map((item) => {
+                return (
+                  <ListItemButton key={item._id}>
+                    <ListItemText primary={item.name} onClick={() => handleActiveProject(item.name)} />
+                    <ListItemIcon data-id={item._id}>
+                      <MoreVertIcon
+                        sx={{ color: colors.secondaryTextColor }}
+                        onClick={handleClickOnThreeDots}
+                        data-id={item._id}
+                      />
+                      <Menu
+                        data-id={item._id}
+                        anchorEl={anchorElForProjectIcons}
+                        open={openPorjectsIcons}
+                        onClose={handleCloseOfProjectsIcons}>
+                        <MenuItem
+                          sx={{
+                            color: colors.secondaryTextColor,
+                          }}
+                          onClick={handleDelete}>
+                          <DeleteIcon />
+                        </MenuItem>
+                      </Menu>
+                    </ListItemIcon>
+                  </ListItemButton>
+                );
               })}
             </List>
           </Box>
