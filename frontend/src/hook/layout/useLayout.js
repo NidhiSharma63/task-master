@@ -115,6 +115,7 @@ const useLayout = () => {
    */
 
   const handleClickOnPages = useCallback((val) => {
+    console.log("ckliced");
     navigate(`/pages/${val}`);
   }, []);
 

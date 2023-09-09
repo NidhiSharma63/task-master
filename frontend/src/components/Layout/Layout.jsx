@@ -185,12 +185,10 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key}>
-                      <ListItemIcon
-                        sx={{ color: colors.secondaryTextColor, border: "1px solid red" }}
-                        onClick={handleClickOnPageAddIcon}>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }} onClick={handleClickOnPageAddIcon}>
                         {value}
                       </ListItemIcon>
-                      <ListItemText primary={key} onClick={() => handleClickOnPages(key)} />
+                      <ListItemText primary={key} />
                     </ListItemButton>
                   );
                 });
@@ -198,7 +196,7 @@ export const Layout = () => {
               {pagesData?.data?.map((item) => {
                 return (
                   <ListItemButton key={item._id}>
-                    <ListItemText primary={item.name} onClick={() => handleActiveProject(item.name)} />
+                    <ListItemText primary={item.name} onClick={() => handleClickOnPages(item._id)} />
                     <ListItemIcon data-id={item._id}>
                       <MoreVertIcon
                         sx={{ color: colors.secondaryTextColor }}

@@ -68,7 +68,7 @@ let router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/pages/:page",
+        path: "/pages/:id",
         element: <GettingStartedComponent />,
       },
     ],
