@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import PagesModal from "src/components/userPages/components/PagesModal";
 
 const GettingStartedComponent = () => {
   const editorRef = useRef();
@@ -39,6 +40,7 @@ const GettingStartedComponent = () => {
           Start typing
         </Box>
       </Box>
+      <PagesModal />
     </Box>
   );
 };

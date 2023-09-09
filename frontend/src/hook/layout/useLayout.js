@@ -4,6 +4,7 @@ import { useGetProjectQuery, useDeleteProjectQuery } from "src/hook/useProjectQu
 import {
   isBackDropLoaderDisplayed,
   isBackdropLoaderDisplayedForProjects,
+  isDialogBoxOpen,
   isProjectNameModalOpen,
   isUpdatingTask,
 } from "src/redux/boolean/booleanSlice";
@@ -146,6 +147,14 @@ const useLayout = () => {
     dispatch(isProjectNameModalOpen(true));
     handleCloseOfProjectsIcons();
   };
+  /**
+   * pages
+   */
+
+  const handleClickOnPageAddIcon = useCallback(() => {
+    dispatch(isDialogBoxOpen(true));
+  }, []);
+
   return {
     handleClickOnRename,
     handleClickOnThreeDots,
@@ -160,6 +169,7 @@ const useLayout = () => {
     handleCloseOfProjectsIcons,
     setItemId,
     handleClickOnPages,
+    handleClickOnPageAddIcon,
     anchorEl,
     open,
     isLoading,

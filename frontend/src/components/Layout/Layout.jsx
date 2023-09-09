@@ -23,6 +23,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import UserName from "src/common/UserName";
 import colors from "src/theme/variables";
+import PagesModal from "src/components/userPages/components/PagesModal";
+
 const drawerWidth = 160;
 
 export const Layout = () => {
@@ -39,6 +41,7 @@ export const Layout = () => {
     handleCloseOfProjectsIcons,
     handleOpenProjectModal,
     handleClickOnPages,
+    handleClickOnPageAddIcon,
     anchorEl,
     open,
     isLoading,
@@ -181,9 +184,13 @@ export const Layout = () => {
               {BOTTOM.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton key={key} onClick={() => handleClickOnPages(key)}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
-                      <ListItemText primary={key} />
+                    <ListItemButton key={key}>
+                      <ListItemIcon
+                        sx={{ color: colors.secondaryTextColor, border: "1px solid red" }}
+                        onClick={handleClickOnPageAddIcon}>
+                        {value}
+                      </ListItemIcon>
+                      <ListItemText primary={key} onClick={() => handleClickOnPages(key)} />
                     </ListItemButton>
                   );
                 });
@@ -220,6 +227,7 @@ export const Layout = () => {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, mt: 9 }}>
           <Outlet />
+          <PagesModal />
         </Box>
       </Box>
       <CommonLoaderWithBackDrop />
