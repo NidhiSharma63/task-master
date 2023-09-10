@@ -171,7 +171,6 @@ const useLayout = () => {
    * Add page icon
    */
   const handleClickOnPageAddIcon = useCallback(() => {
-    console.log("i clicked");
     setPageData({});
     dispatch(isDialogBoxOpen(true));
   }, []);
