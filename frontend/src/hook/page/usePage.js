@@ -13,27 +13,25 @@ const usePage = () => {
   const { mutate } = useUpdatePage();
   const dispatch = useDispatch();
   const { setValue } = useBackDropLoaderContext();
-  const [editing, setEditing] = useState(false);
   const [innerHTML, setInnerHTML] = useState("");
   const editorRef = useRef();
+  const [isAccordianOpen, setIsAccordianOpen] = useState(false);
 
   /**
    * only initial render set the inner html
    */
   useEffect(() => {
-    if (editing) return;
     const currentPage = data?.find((item) => item._id === id);
     const value =
       currentPage?.content.length > 0 ? currentPage?.content : `<h1>Untitled</h1><br/><div>Starting typing</div>`;
     setInnerHTML(value);
-  }, [id, data, editing]);
+  }, [id, data]);
 
   /**
    * set editing true on changing text and update the innerHTML as well
    */
 
   const handleChange = (event) => {
-    setEditing(true);
     setInnerHTML(event.target.value);
   };
 
@@ -50,12 +48,22 @@ const usePage = () => {
     dispatch(isBackDropLoaderDisplayedForPage(true));
   };
 
+  /**
+   * open accordian on click
+   */
+
+  const openAccordianOnClick = () => {
+    console.log("i clicked");
+    setIsAccordianOpen((prev) => !prev);
+  };
+
   return {
     handleClick,
     handleChange,
-    setEditing,
+    openAccordianOnClick,
     innerHTML,
     editorRef,
+    isAccordianOpen,
   };
 };
 

@@ -3,11 +3,11 @@ import PagesModal from "src/components/userPages/components/PagesModal";
 import usePage from "src/hook/page/usePage";
 import ContentEditable from "react-contenteditable";
 import sanitizeHtml from "sanitize-html";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { ACTIONS_FOR_EDITABLE_CONTENT } from "src/constant/Misc";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
-const GettingStartedComponent = () => {
-  const { handleClick, handleChange, innerHTML, editorRef } = usePage();
+const PageComponent = () => {
+  const { handleClick, handleChange, openAccordianOnClick, innerHTML, editorRef, isAccordianOpen } = usePage();
 
   return (
     <Box
@@ -32,25 +32,22 @@ const GettingStartedComponent = () => {
         onChange={handleChange}
       />
       <Accordion
-        sx={
-          {
-            // display: "flex",
-            // flexDirection: "row",
-            // width: `${isAccordianOpen ? "30rem" : "5rem"}`,
-            // background: colors.primaryColor,
-            // border: `1px solid ${colors.secondaryTextColor}`,
-            // borderRadius: ".3rem",
-          }
-        }>
-        <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />} onClick={() => {}}>
-          <Box
-            sx={{
-              width: "2rem",
-              height: "2rem",
-              borderRadius: "50%",
-              backgroundColor: "ornage",
-              cursor: "pointer",
-            }}></Box>
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          width: `${isAccordianOpen ? "30rem" : "3rem"}`,
+          borderRadius: `${isAccordianOpen ? ".3rem" : "50%"}`,
+          position: "fixed",
+          bottom: 0,
+          left: "50%",
+          border: "none",
+          marginBottom: 2,
+          "&::before": {
+            backgroundColor: "transparent",
+          },
+        }}>
+        <AccordionSummary onClick={openAccordianOnClick}>
+          <AddOutlinedIcon sx={{ cursor: "pointer" }} />
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -62,7 +59,6 @@ const GettingStartedComponent = () => {
             mt: 1.5,
           }}>
           {ACTIONS_FOR_EDITABLE_CONTENT.map((item) => {
-            console.log(item, ":::item:::");
             return (
               <Button
                 key={item.value}
@@ -83,4 +79,4 @@ const GettingStartedComponent = () => {
   );
 };
 
-export default GettingStartedComponent;
+export default PageComponent;

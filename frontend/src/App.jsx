@@ -10,7 +10,7 @@ import ProjectPage from "src/pages/project/ProjectPage";
 import Board from "src/components/projectPage/Board";
 import Insights from "src/pages/insights/Insights";
 import Home from "src/pages/home/Home";
-import GettingStartedComponent from "src/components/userPages/components/GettingStartedComponent";
+import PageComponent from "src/components/userPages/components/PageComponent";
 import BackDropLoaderContextComp from "src/context/BackDropLoaderContext";
 
 const RequiredAuth = ({ children }) => {
@@ -71,7 +71,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/pages/:id",
-        element: <GettingStartedComponent />,
+        element: <PageComponent />,
       },
     ],
   },
