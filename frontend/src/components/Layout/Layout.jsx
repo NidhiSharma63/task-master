@@ -43,6 +43,7 @@ export const Layout = () => {
     handleClickOnPages,
     handleClickOnPageAddIcon,
     handleClickOnThreeDotsPages,
+    handleCloseOnPage,
     anchorEl,
     open,
     isLoading,
@@ -51,8 +52,12 @@ export const Layout = () => {
     allProjects,
     pagesData,
     pagesLoading,
+    isProjectIconsOpen,
+    isPageIconsOpen,
     // userName,
   } = useLayout();
+
+  console.log(anchorElementForPages, "anchorElementForPages");
 
   return (
     <>
@@ -157,7 +162,7 @@ export const Layout = () => {
                         <Menu
                           data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
-                          open={Boolean(anchorElForProjectIcons)}
+                          open={isProjectIconsOpen}
                           onClose={handleCloseOfProjectsIcons}>
                           <MenuItem
                             sx={{
@@ -208,14 +213,14 @@ export const Layout = () => {
                       <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
                           sx={{ color: colors.secondaryTextColor }}
-                          onClick={handleClickOnThreeDots}
+                          onClick={handleClickOnThreeDotsPages}
                           data-id={item._id}
                         />
                         <Menu
                           data-id={item._id}
                           anchorEl={anchorElementForPages}
-                          open={Boolean(anchorElementForPages)}
-                          onClose={handleClickOnThreeDotsPages}>
+                          open={isPageIconsOpen}
+                          onClose={handleCloseOnPage}>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,

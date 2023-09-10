@@ -29,7 +29,9 @@ const useLayout = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
   const [itemId, setItemId] = useState(null);
-  const [anchorElementForPages, setAnchorElementForPages] = useState(false);
+  const [anchorElementForPages, setAnchorElementForPages] = useState(null);
+  const [isProjectIconsOpen, setIsProjectIconsOpen] = useState(false);
+  const [isPageIconsOpen, setIsPageIconsOpen] = useState(false);
 
   const { data, isLoading } = useGetProjectQuery();
   const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
@@ -126,11 +128,13 @@ const useLayout = () => {
   const handleClickOnThreeDots = (event) => {
     if (!event.target.dataset.id) return;
     setAnchorElForProjectIcons(event.target);
+    setIsProjectIconsOpen(true);
     setItemId(event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
     setAnchorElForProjectIcons(null);
+    setIsProjectIconsOpen(false);
   };
 
   const handleClickOnRename = () => {
@@ -162,11 +166,23 @@ const useLayout = () => {
    * show page icons
    */
 
-  const handleClickOnThreeDotsPages = () => {
-    setAnchorElementForPages(true);
+  const handleClickOnThreeDotsPages = (event) => {
+    setAnchorElementForPages(event.target);
     dispatch(isDialogBoxOpen(true));
+    setIsPageIconsOpen(true);
   };
 
+  /**
+   * close menu icons
+   */
+
+  const handleCloseOnPage = () => {
+    setAnchorElementForPages(null);
+    dispatch(isDialogBoxOpen(false));
+    setIsPageIconsOpen(false);
+  };
+
+  console.log("ach", anchorElementForPages);
   return {
     handleClickOnRename,
     handleClickOnThreeDots,
@@ -183,6 +199,7 @@ const useLayout = () => {
     handleClickOnPages,
     handleClickOnPageAddIcon,
     handleClickOnThreeDotsPages,
+    handleCloseOnPage,
     anchorEl,
     open,
     isLoading,
@@ -193,6 +210,8 @@ const useLayout = () => {
     pagesData,
     pagesLoading,
     anchorElementForPages,
+    isProjectIconsOpen,
+    isPageIconsOpen,
     // userName,
   };
 };
