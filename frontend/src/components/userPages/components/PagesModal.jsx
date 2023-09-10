@@ -15,13 +15,18 @@ const PagesModal = () => {
   useEffect(() => {
     if (pageData?.name) {
       setValue(pageData.name);
+    } else {
+      setValue("");
     }
   }, [pageData]);
 
   const handleSaveButtonClicked = () => {
     dispatch(isDialogBoxOpen(false));
 
-    if (pageData) {
+    if (value?.trim()?.length === 0) {
+      return;
+    }
+    if (pageData?.name) {
       updatePage({
         _id: pageData._id,
         name: value,

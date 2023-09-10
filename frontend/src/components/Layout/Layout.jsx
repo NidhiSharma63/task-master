@@ -30,6 +30,7 @@ const drawerWidth = 160;
 export const Layout = () => {
   const {
     handleClickOnRename,
+
     handleClickOnThreeDots,
     handleClickOnHome,
     handleActiveProject,
@@ -45,6 +46,7 @@ export const Layout = () => {
     handleClickOnThreeDotsPages,
     handleCloseOnPage,
     handleClickOnPageRename,
+    handlePageDelete,
     anchorEl,
     open,
     isLoading,
@@ -231,7 +233,7 @@ export const Layout = () => {
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleDelete}>
+                            onClick={handlePageDelete}>
                             <DeleteIcon />
                           </MenuItem>
                         </Menu>

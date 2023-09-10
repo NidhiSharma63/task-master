@@ -18,6 +18,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { useGetPages } from "src/hook/usePagesQuery";
 import { usePagesContext } from "src/context/PagesContextProvider";
+import { useDeletePage } from "src/hook/usePagesQuery";
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ const useLayout = () => {
   const [anchorElementForPages, setAnchorElementForPages] = useState(null);
   const [isProjectIconsOpen, setIsProjectIconsOpen] = useState(false);
   const [isPageIconsOpen, setIsPageIconsOpen] = useState(false);
+  const { mutate: deletePage } = useDeletePage();
+
   const pageItemId = useRef();
   const projectItemId = useRef();
 
@@ -168,6 +171,7 @@ const useLayout = () => {
    * Add page icon
    */
   const handleClickOnPageAddIcon = useCallback(() => {
+    console.log("i clicked");
     setPageData({});
     dispatch(isDialogBoxOpen(true));
   }, []);
@@ -207,6 +211,16 @@ const useLayout = () => {
     setIsPageIconsOpen(false);
   };
 
+  /**
+   * page delete
+   */
+
+  const handlePageDelete = () => {
+    deletePage({ _id: pageItemId.current });
+    setAnchorElementForPages(null);
+    setIsPageIconsOpen(false);
+  };
+
   return {
     handleClickOnRename,
     handleClickOnThreeDots,
@@ -224,6 +238,7 @@ const useLayout = () => {
     handleClickOnThreeDotsPages,
     handleCloseOnPage,
     handleClickOnPageRename,
+    handlePageDelete,
     anchorEl,
     open,
     isLoading,
