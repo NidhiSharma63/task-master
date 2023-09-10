@@ -53,7 +53,6 @@ const usePage = () => {
    */
 
   const openAccordianOnClick = () => {
-    console.log("i clicked");
     setIsAccordianOpen((prev) => !prev);
   };
 

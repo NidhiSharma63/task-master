@@ -14,9 +14,10 @@ import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
 import { queryKeyForTask } from "src/constant/queryKey";
 import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { useGetPages } from "src/hook/usePagesQuery";
+import { usePagesContext } from "src/context/PagesContextProvider";
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -28,10 +29,12 @@ const useLayout = () => {
   const [open, setOpen] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
-  const [itemId, setItemId] = useState(null);
+
   const [anchorElementForPages, setAnchorElementForPages] = useState(null);
   const [isProjectIconsOpen, setIsProjectIconsOpen] = useState(false);
   const [isPageIconsOpen, setIsPageIconsOpen] = useState(false);
+  const pageItemId = useRef();
+  const projectItemId = useRef();
 
   const { data, isLoading } = useGetProjectQuery();
   const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
@@ -39,6 +42,7 @@ const useLayout = () => {
   const { mutate } = useLogoutQuery();
 
   const { setValue } = useBackDropLoaderContext();
+  const { setPageData } = usePagesContext();
 
   // // navigate the user to /todo directly
   useEffect(() => {
@@ -54,9 +58,24 @@ const useLayout = () => {
     }
   }, [allProjects]);
 
+  /**
+   * Show backdrop
+   */
+  useEffect(() => {
+    if (deleteInProgress) {
+      dispatch(isBackDropLoaderDisplayed(true));
+      setValue("Deleting project");
+      dispatch(isBackdropLoaderDisplayedForProjects(true));
+    }
+  }, [deleteInProgress, setValue, dispatch]);
+
   useEffect(() => {
     setAllProjects(data?.projects);
   }, [data]);
+
+  useEffect(() => {
+    queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+  }, [active_project]);
 
   const handleLogout = () => {
     mutate();
@@ -74,6 +93,19 @@ const useLayout = () => {
     setOpen(true);
   };
 
+  const handleClickOnHome = () => {
+    navigate("/Home");
+  };
+  /**
+   * Insights
+   */
+  const handleClickOnInsights = (name) => {
+    navigate(`Charts/${name}`);
+  };
+
+  /**
+   * projects
+   */
   const handleOpenProjectModal = () => {
     dispatch(projectRename({}));
     dispatch(isProjectNameModalOpen(true));
@@ -81,25 +113,9 @@ const useLayout = () => {
   };
 
   const handleDelete = () => {
-    deleteProject({ id: itemId });
-    // console.log(id, ":::this is the id coming");
+    deleteProject({ id: projectItemId.current });
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
     setAnchorEl(null);
-  };
-
-  /**
-   * Show backdrop
-   */
-  useEffect(() => {
-    if (deleteInProgress) {
-      dispatch(isBackDropLoaderDisplayed(true));
-      setValue("Deleting project");
-      dispatch(isBackdropLoaderDisplayedForProjects(true));
-    }
-  }, [deleteInProgress, setValue, dispatch]);
-
-  const handleClickOnInsights = (name) => {
-    navigate(`Charts/${name}`);
   };
 
   const handleActiveProject = (name) => {
@@ -109,27 +125,12 @@ const useLayout = () => {
     navigate("/Dashboard");
   };
 
-  const handleClickOnHome = () => {
-    navigate("/Home");
-  };
-  /**
-   * navigate to pages
-   */
-
-  const handleClickOnPages = useCallback((val) => {
-    console.log("ckliced");
-    navigate(`/pages/${val}`);
-  }, []);
-
-  useEffect(() => {
-    queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
-  }, [active_project]);
-
   const handleClickOnThreeDots = (event) => {
     if (!event.target.dataset.id) return;
     setAnchorElForProjectIcons(event.target);
     setIsProjectIconsOpen(true);
-    setItemId(event.target.dataset.id);
+    projectItemId.current = event.target.dataset.id;
+    console.log(projectItemId.current, event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
@@ -138,9 +139,9 @@ const useLayout = () => {
   };
 
   const handleClickOnRename = () => {
-    const projectToUpdate = allProjects.find((item) => item._id === itemId);
+    if (!projectItemId.current) return;
+    const projectToUpdate = allProjects.find((item) => item._id === projectItemId.current);
 
-    if (!itemId) return;
     dispatch(
       projectRename({
         projectName: projectToUpdate?.name,
@@ -156,9 +157,18 @@ const useLayout = () => {
    */
 
   /**
+   * navigate to pages
+   */
+
+  const handleClickOnPages = useCallback((val) => {
+    navigate(`/pages/${val}`);
+  }, []);
+
+  /**
    * Add page icon
    */
   const handleClickOnPageAddIcon = useCallback(() => {
+    setPageData({});
     dispatch(isDialogBoxOpen(true));
   }, []);
 
@@ -167,9 +177,11 @@ const useLayout = () => {
    */
 
   const handleClickOnThreeDotsPages = (event) => {
+    const id = event.target.dataset.id;
+    if (!id) return;
     setAnchorElementForPages(event.target);
-    dispatch(isDialogBoxOpen(true));
     setIsPageIconsOpen(true);
+    pageItemId.current = id;
   };
 
   /**
@@ -180,9 +192,21 @@ const useLayout = () => {
     setAnchorElementForPages(null);
     dispatch(isDialogBoxOpen(false));
     setIsPageIconsOpen(false);
+    setPageData({});
   };
 
-  console.log("ach", anchorElementForPages);
+  /**
+   * page rename
+   */
+
+  const handleClickOnPageRename = () => {
+    const updatedPage = pagesData?.data?.find((item) => item._id === pageItemId.current);
+    dispatch(isDialogBoxOpen(true));
+    setPageData(updatedPage);
+    setAnchorElementForPages(null);
+    setIsPageIconsOpen(false);
+  };
+
   return {
     handleClickOnRename,
     handleClickOnThreeDots,
@@ -195,18 +219,17 @@ const useLayout = () => {
     handleOpen,
     handleOpenProjectModal,
     handleCloseOfProjectsIcons,
-    setItemId,
     handleClickOnPages,
     handleClickOnPageAddIcon,
     handleClickOnThreeDotsPages,
     handleCloseOnPage,
+    handleClickOnPageRename,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
     deleteInProgress,
     allProjects,
-    itemId,
     pagesData,
     pagesLoading,
     anchorElementForPages,

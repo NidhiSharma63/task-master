@@ -44,6 +44,7 @@ export const Layout = () => {
     handleClickOnPageAddIcon,
     handleClickOnThreeDotsPages,
     handleCloseOnPage,
+    handleClickOnPageRename,
     anchorEl,
     open,
     isLoading,
@@ -56,8 +57,6 @@ export const Layout = () => {
     isPageIconsOpen,
     // userName,
   } = useLayout();
-
-  console.log(anchorElementForPages, "anchorElementForPages");
 
   return (
     <>
@@ -221,6 +220,13 @@ export const Layout = () => {
                           anchorEl={anchorElementForPages}
                           open={isPageIconsOpen}
                           onClose={handleCloseOnPage}>
+                          <MenuItem
+                            sx={{
+                              color: colors.secondaryTextColor,
+                            }}
+                            onClick={handleClickOnPageRename}>
+                            <DriveFileRenameOutlineIcon />
+                          </MenuItem>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,

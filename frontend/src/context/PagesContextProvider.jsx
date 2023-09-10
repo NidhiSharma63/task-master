@@ -3,9 +3,9 @@ import { createContext, useContext, useState } from "react";
 const PagesContext = createContext();
 
 const PagesContextComp = ({ children }) => {
-  const [value, setValue] = useState([]);
+  const [pageData, setPageData] = useState("");
 
-  return <PagesContext.Provider value={{ value, setValue }}>{children}</PagesContext.Provider>;
+  return <PagesContext.Provider value={{ pageData, setPageData }}>{children}</PagesContext.Provider>;
 };
 
 export default PagesContextComp;
