@@ -19,7 +19,11 @@ const InsightsFilter = ({ setActiveStatue, activeStatus }) => {
       Status
       <MuiSelect onChange={handleChange} value={activeStatus}>
         {valuesOfStatus?.map((status) => {
-          return <MenuItem value={status}>{status}</MenuItem>;
+          return (
+            <MenuItem key={status} value={status}>
+              {status}
+            </MenuItem>
+          );
         })}
       </MuiSelect>
     </Box>
