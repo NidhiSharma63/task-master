@@ -42,11 +42,12 @@ export const Layout = () => {
     handleOpenProjectModal,
     handleClickOnPages,
     handleClickOnPageAddIcon,
+    handleClickOnThreeDotsPages,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
-    openPorjectsIcons,
+    anchorElementForPages,
     allProjects,
     pagesData,
     pagesLoading,
@@ -156,7 +157,7 @@ export const Layout = () => {
                         <Menu
                           data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
-                          open={openPorjectsIcons}
+                          open={Boolean(anchorElForProjectIcons)}
                           onClose={handleCloseOfProjectsIcons}>
                           <MenuItem
                             sx={{
@@ -212,9 +213,9 @@ export const Layout = () => {
                         />
                         <Menu
                           data-id={item._id}
-                          anchorEl={anchorElForProjectIcons}
-                          open={openPorjectsIcons}
-                          onClose={handleCloseOfProjectsIcons}>
+                          anchorEl={anchorElementForPages}
+                          open={Boolean(anchorElementForPages)}
+                          onClose={handleClickOnThreeDotsPages}>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,

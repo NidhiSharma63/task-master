@@ -21,19 +21,20 @@ import { useGetPages } from "src/hook/usePagesQuery";
 const useLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { user_email } = useSelector(usersDataInStore);
+
   const { active_project } = useSelector(projectDataInStore);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const { mutate } = useLogoutQuery();
-  const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
-  const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
   const [itemId, setItemId] = useState(null);
-  const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
+  const [anchorElementForPages, setAnchorElementForPages] = useState(false);
 
+  const { data, isLoading } = useGetProjectQuery();
+  const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
   const { data: pagesData, isLoading: pagesLoading } = useGetPages();
+  const { mutate } = useLogoutQuery();
 
   const { setValue } = useBackDropLoaderContext();
 
@@ -82,7 +83,6 @@ const useLayout = () => {
     // console.log(id, ":::this is the id coming");
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
     setAnchorEl(null);
-    setOpenPorjectsIcons(false);
   };
 
   /**
@@ -125,13 +125,12 @@ const useLayout = () => {
 
   const handleClickOnThreeDots = (event) => {
     if (!event.target.dataset.id) return;
-    setOpenPorjectsIcons(true);
     setAnchorElForProjectIcons(event.target);
     setItemId(event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
-    setOpenPorjectsIcons(false);
+    setAnchorElForProjectIcons(null);
   };
 
   const handleClickOnRename = () => {
@@ -152,9 +151,21 @@ const useLayout = () => {
    * pages
    */
 
+  /**
+   * Add page icon
+   */
   const handleClickOnPageAddIcon = useCallback(() => {
     dispatch(isDialogBoxOpen(true));
   }, []);
+
+  /**
+   * show page icons
+   */
+
+  const handleClickOnThreeDotsPages = () => {
+    setAnchorElementForPages(true);
+    dispatch(isDialogBoxOpen(true));
+  };
 
   return {
     handleClickOnRename,
@@ -171,16 +182,17 @@ const useLayout = () => {
     setItemId,
     handleClickOnPages,
     handleClickOnPageAddIcon,
+    handleClickOnThreeDotsPages,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
-    openPorjectsIcons,
     deleteInProgress,
     allProjects,
     itemId,
     pagesData,
     pagesLoading,
+    anchorElementForPages,
     // userName,
   };
 };
