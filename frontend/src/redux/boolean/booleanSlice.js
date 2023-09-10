@@ -13,6 +13,7 @@ const booleanSlice = createSlice({
     is_backdrop_loader_displayed_for_projects: false,
     is_backdrop_loader_displayed_for_Columns: false,
     is_dialog_box_open: false,
+    is_back_Drop_loader_displayed_for_page: false,
   },
   reducers: {
     isProjectNameModalOpen: (state, action) => {
@@ -45,6 +46,9 @@ const booleanSlice = createSlice({
     isDialogBoxOpen: (state, action) => {
       state.is_dialog_box_open = action.payload;
     },
+    isBackDropLoaderDisplayedForPage: (state, action) => {
+      state.is_back_Drop_loader_displayed_for_page = action.payload;
+    },
   },
 });
 
@@ -59,6 +63,7 @@ export const {
   isBackdropLoaderDisplayedForProjects,
   isBackDropLoaderDisplayedForColumns,
   isDialogBoxOpen,
+  isBackDropLoaderDisplayedForPage,
 } = booleanSlice.actions;
 export const booleanDataInStore = (state) => state.boolean;
 export default booleanSlice.reducer;

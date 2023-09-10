@@ -11,6 +11,7 @@ import Board from "src/components/projectPage/Board";
 import Insights from "src/pages/insights/Insights";
 import Home from "src/pages/home/Home";
 import GettingStartedComponent from "src/components/userPages/components/GettingStartedComponent";
+import BackDropLoaderContextComp from "src/context/BackDropLoaderContext";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -45,6 +46,7 @@ let router = createBrowserRouter([
     element: (
       <RequiredAuth>
         <Layout />
+        <BackDropLoaderContextComp />
       </RequiredAuth>
     ),
     children: [

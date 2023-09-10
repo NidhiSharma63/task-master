@@ -3,6 +3,13 @@ import { customAxiosRequestForGet, customAxiosRequestForPost } from "src/utils/a
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "src/index";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  booleanDataInStore,
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForPage,
+} from "src/redux/boolean/booleanSlice";
 
 const getAllPages = async () => {
   const res = await customAxiosRequestForGet("/page");
@@ -14,10 +21,17 @@ const getAllPages = async () => {
  */
 
 const useGetPages = () => {
+  const dispatch = useDispatch();
+  const { is_back_Drop_loader_displayed_for_page } = useSelector(booleanDataInStore);
   return useQuery({
     queryKey: ["pages"],
     queryFn: getAllPages,
-    onSuccess: () => {},
+    onSuccess: () => {
+      if (is_back_Drop_loader_displayed_for_page) {
+        dispatch(isBackDropLoaderDisplayedForPage(false));
+        dispatch(isBackDropLoaderDisplayed(false));
+      }
+    },
     onError: (error) => {
       toast.error(error?.response?.data);
     },
@@ -34,7 +48,7 @@ const usePostPage = () => {
     },
     onSuccess: () => {
       // toast.success("Project created successfully!");
-      queryClient.invalidateQueries("pages");
+      queryClient.invalidateQueries(["pages"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -53,7 +67,7 @@ const useUpdatePage = () => {
     },
     onSuccess: () => {
       // toast.success("Project name updated successfully!");
-      queryClient.invalidateQueries("pages");
+      queryClient.invalidateQueries(["pages"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -72,7 +86,7 @@ const useDeletePage = () => {
     },
     onSuccess: () => {
       // toast.success("Project deleted successfully!");
-      queryClient.invalidateQueries("pages");
+      queryClient.invalidateQueries(["pages"]);
     },
     onError: (error) => {
       toast.error(error?.response?.data);

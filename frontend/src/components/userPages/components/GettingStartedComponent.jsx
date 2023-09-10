@@ -1,19 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useRef } from "react";
+import { Box, Button } from "@mui/material";
 import PagesModal from "src/components/userPages/components/PagesModal";
 import usePage from "src/hook/page/usePage";
 import ContentEditable from "react-contenteditable";
 import sanitizeHtml from "sanitize-html";
 
 const GettingStartedComponent = () => {
-  // const editorRef = useRef();
-  // const handleContentChange = () => {
-  //   setContent(editorRef.current);
-  // };
-
-  // const [content, setContent] = useState();
-
-  const { handleClick, handleContentChange, innerHTML, content, editorRef } = usePage();
+  const { handleClick, handleChange, innerHTML, editorRef } = usePage();
 
   return (
     <Box
@@ -31,7 +23,12 @@ const GettingStartedComponent = () => {
         Save
       </Button>
 
-      <ContentEditable html={sanitizeHtml(innerHTML)} className="editable-content" ref={editorRef} />
+      <ContentEditable
+        html={sanitizeHtml(innerHTML)}
+        className="editable-content"
+        ref={editorRef}
+        onChange={handleChange}
+      />
       <PagesModal />
     </Box>
   );
