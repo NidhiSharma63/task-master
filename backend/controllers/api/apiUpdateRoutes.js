@@ -201,8 +201,8 @@ const updateColumnName = async (req, res, next) => {
 
 const updatePagesApi = async (req, res, next) => {
   try {
-    const { pageId, content } = req.body;
-    const updatedPage = await Page.findOneAndUpdate({ _id }, { $set: { content } });
+    const { _id, content, name } = req.body;
+    const updatedPage = await Page.findOneAndUpdate({ _id }, { $set: { content, name } });
     res.send(200).json({ data: updatedPage });
   } catch (error) {
     next(error);
