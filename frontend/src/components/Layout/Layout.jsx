@@ -193,33 +193,41 @@ export const Layout = () => {
                   );
                 });
               })}
-              {pagesData?.data?.map((item) => {
-                return (
-                  <ListItemButton key={item._id}>
-                    <ListItemText primary={item.name} onClick={() => handleClickOnPages(item._id)} />
-                    <ListItemIcon data-id={item._id}>
-                      <MoreVertIcon
-                        sx={{ color: colors.secondaryTextColor }}
-                        onClick={handleClickOnThreeDots}
-                        data-id={item._id}
-                      />
-                      <Menu
-                        data-id={item._id}
-                        anchorEl={anchorElForProjectIcons}
-                        open={openPorjectsIcons}
-                        onClose={handleCloseOfProjectsIcons}>
-                        <MenuItem
-                          sx={{
-                            color: colors.secondaryTextColor,
-                          }}
-                          onClick={handleDelete}>
-                          <DeleteIcon />
-                        </MenuItem>
-                      </Menu>
-                    </ListItemIcon>
-                  </ListItemButton>
-                );
-              })}
+              {pagesLoading ? (
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ClipLoader color="white" />
+                  </ListItemIcon>
+                </ListItemButton>
+              ) : (
+                pagesData?.data?.map((item) => {
+                  return (
+                    <ListItemButton key={item._id}>
+                      <ListItemText primary={item.name} onClick={() => handleClickOnPages(item._id)} />
+                      <ListItemIcon data-id={item._id}>
+                        <MoreVertIcon
+                          sx={{ color: colors.secondaryTextColor }}
+                          onClick={handleClickOnThreeDots}
+                          data-id={item._id}
+                        />
+                        <Menu
+                          data-id={item._id}
+                          anchorEl={anchorElForProjectIcons}
+                          open={openPorjectsIcons}
+                          onClose={handleCloseOfProjectsIcons}>
+                          <MenuItem
+                            sx={{
+                              color: colors.secondaryTextColor,
+                            }}
+                            onClick={handleDelete}>
+                            <DeleteIcon />
+                          </MenuItem>
+                        </Menu>
+                      </ListItemIcon>
+                    </ListItemButton>
+                  );
+                })
+              )}
             </List>
           </Box>
         </Drawer>
