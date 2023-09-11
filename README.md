@@ -2,6 +2,8 @@
 
 Task Manager is a powerful and user-friendly open-source todo app that empowers you to efficiently organize your tasks, projects, and subtasks. With a wide range of features designed to enhance your productivity, Task Manager helps you stay on top of your tasks and accomplish your goals.
 
+[![Screenshot-2023-09-11-154407.png](https://i.postimg.cc/1XCq0PFV/Screenshot-2023-09-11-154407.png)](https://postimg.cc/T5b1GzCT)
+
 ## Future goals
 
 I want to make this app like [Aasna](https://app.asana.com/0/home/) and [Trello](https://trello.com/)
