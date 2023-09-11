@@ -22,17 +22,24 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
+    fontSize: 8,
   },
-  // components: {
-  //   MuiTextField: {
-  //     styleOverrides: {
-  //       root: {
-  //         border: "1px solid green",
-  //         outline: "none",
-  //       },
-  //     },
-  //   },
-  // },
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          padding: ".5 0",
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          minWidth: 0,
+        },
+      },
+    },
+  },
 });
 
 export default theme;

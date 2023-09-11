@@ -2,6 +2,7 @@ const Task = require("../../models/taskSchema");
 const Project = require("../../models/projectsSchema");
 const Column = require("../../models/columnsSchema");
 const rescheduleReminders = require("../../utils/setSchedule");
+const Page = require("../../models/pagesSchema");
 /**
  * update task with index
  */
@@ -9,14 +10,7 @@ const rescheduleReminders = require("../../utils/setSchedule");
 const updateTaskApi = async (req, res, next) => {
   try {
     const taskBody = req.body;
-    const {
-      _id,
-      userId,
-      index: previousIndex,
-      currentIndex,
-      status,
-      projectName,
-    } = taskBody;
+    const { _id, userId, index: previousIndex, currentIndex, status, projectName } = taskBody;
     // const taskObj = await Task.findOne({ _id, userId });
     if (currentIndex === undefined || previousIndex === undefined) {
       throw new Error("Something is missing currentIndex or previousIndex");
@@ -69,25 +63,9 @@ const updateTaskApi = async (req, res, next) => {
 
 const updateTaskWithStatus = async (req, res, next) => {
   try {
-    const {
-      status,
-      currentIndex,
-      projectName,
-      userId,
-      _id,
-      prevStatus,
-      prevIndex,
-    } = req.body;
-    if (
-      currentIndex === undefined ||
-      !status ||
-      !prevStatus ||
-      !projectName ||
-      prevIndex === undefined
-    ) {
-      throw new Error(
-        "Something is missing currentIndex, previousIndex,projectName, prevStatus or status"
-      );
+    const { status, currentIndex, projectName, userId, _id, prevStatus, prevIndex } = req.body;
+    if (currentIndex === undefined || !status || !prevStatus || !projectName || prevIndex === undefined) {
+      throw new Error("Something is missing currentIndex, previousIndex,projectName, prevStatus or status");
     }
     // find all related to project of that user according to status
     const allProjectRelatedTaskToStatus = await Task.find({
@@ -97,12 +75,10 @@ const updateTaskWithStatus = async (req, res, next) => {
       index: { $gte: currentIndex },
     });
     if (allProjectRelatedTaskToStatus.length > 0) {
-      const updateTasksPromises = allProjectRelatedTaskToStatus?.map(
-        async (item) => {
-          item.index = item.index + 1;
-          await item.save();
-        }
-      );
+      const updateTasksPromises = allProjectRelatedTaskToStatus?.map(async (item) => {
+        item.index = item.index + 1;
+        await item.save();
+      });
 
       await Promise.all(updateTasksPromises);
     }
@@ -114,12 +90,10 @@ const updateTaskWithStatus = async (req, res, next) => {
       index: { $gt: prevIndex },
     });
     if (allProjectRelatedTaskToPrevStatus.length > 0) {
-      const updateTasksPromises = allProjectRelatedTaskToPrevStatus?.map(
-        async (item) => {
-          item.index = item.index - 1;
-          await item.save();
-        }
-      );
+      const updateTasksPromises = allProjectRelatedTaskToPrevStatus?.map(async (item) => {
+        item.index = item.index - 1;
+        await item.save();
+      });
 
       await Promise.all(updateTasksPromises);
     }
@@ -177,10 +151,7 @@ const updateProjectApi = async (req, res, next) => {
       throw new Error("Project id is required");
     }
 
-    await Project.findOneAndUpdate(
-      { name: previousName, _id },
-      { $set: { name: newProjectName, color: color } }
-    );
+    await Project.findOneAndUpdate({ name: previousName, _id }, { $set: { name: newProjectName, color: color } });
 
     // Update the project of the found tasks and save them
     await Task.updateMany(
@@ -192,10 +163,7 @@ const updateProjectApi = async (req, res, next) => {
      * updating the project name in columns as well
      */
 
-    await Column.updateMany(
-      { projectName: previousName, userId },
-      { $set: { projectName: newProjectName } }
-    );
+    await Column.updateMany({ projectName: previousName, userId }, { $set: { projectName: newProjectName } });
 
     res.status(201).json({ msg: "project name updated" });
   } catch (error) {
@@ -214,21 +182,28 @@ const updateColumnName = async (req, res, next) => {
     /**
      * update the column
      */
-    const updatedColumn = await Column.findOneAndUpdate(
-      { _id },
-      { $set: { name } },
-      { new: true }
-    );
+    const updatedColumn = await Column.findOneAndUpdate({ _id }, { $set: { name } }, { new: true });
 
     /**
      * update the tasks as well
      */
-    const task = await Task.updateMany(
-      { status: previousColName, userId },
-      { $set: { status: name } }
-    );
+    await Task.updateMany({ status: previousColName, userId }, { $set: { status: name } });
 
     res.status(200).json({ data: updatedColumn });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * pages
+ */
+
+const updatePagesApi = async (req, res, next) => {
+  try {
+    const { _id, content, name } = req.body;
+    const updatedPage = await Page.findOneAndUpdate({ _id }, { $set: { content, name } });
+    res.send(200).json({ data: updatedPage });
   } catch (error) {
     next(error);
   }
@@ -240,4 +215,5 @@ module.exports = {
   updateTaskWithDetail,
   updateProjectApi,
   updateColumnName,
+  updatePagesApi,
 };

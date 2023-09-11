@@ -1,4 +1,5 @@
 const Column = require("../../models/columnsSchema");
+const Page = require("../../models/pagesSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
 
@@ -24,9 +25,7 @@ const getAllTaskAccordingToStatusApi = async (req, res, next) => {
     const { userId, status, projectName } = req.query;
 
     if (!userId || !status || !projectName) {
-      throw new Error(
-        "Some thing is missing in params, check userId, status, projectName"
-      );
+      throw new Error("Some thing is missing in params, check userId, status, projectName");
     }
 
     // filter the task based on userID and return all the task
@@ -96,9 +95,22 @@ const getColumns = async (req, res, next) => {
   }
 };
 
+/**
+ * pages
+ */
+
+const getPagesApi = async (req, res, next) => {
+  try {
+    const pages = await Page.find().sort({ index: 1 });
+    res.status(200).json({ data: pages });
+  } catch {
+    next(error);
+  }
+};
 module.exports = {
   getProjectApi,
   getAllTaskAccordingToStatusApi,
   getAllTaskFromAllProjectAccordingToStatus,
   getColumns,
+  getPagesApi,
 };

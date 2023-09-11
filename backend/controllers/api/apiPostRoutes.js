@@ -1,6 +1,7 @@
 const Column = require("../../models/columnsSchema");
 const Project = require("../../models/projectsSchema");
 const Task = require("../../models/taskSchema");
+const Page = require("../../models/pagesSchema");
 const generateRandomColor = require("../../utils/getRandomColor");
 const rescheduleReminders = require("../../utils/setSchedule");
 /**
@@ -155,8 +156,37 @@ const createColumnsApi = async (req, res, next) => {
   }
 };
 
+/**
+ * Create pages
+ */
+
+const createPages = async (req, res, next) => {
+  try {
+    const { userId, name, content } = req.body;
+    if (!name) {
+      throw new Error("page name does not exists");
+    }
+
+    // Get all columns count
+    const totalPages = await Page.countDocuments();
+
+    const newPage = new Page({
+      name,
+      userId,
+      content,
+      index: totalPages,
+    });
+
+    await newPage.save();
+    res.status(201).json({ data: newPage });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createProjectApi,
   createTaskApi,
   createColumnsApi,
+  createPages,
 };

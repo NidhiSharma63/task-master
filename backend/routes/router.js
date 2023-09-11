@@ -19,6 +19,10 @@ const {
   getColumns,
   deleteColumn,
   updateColumnName,
+  createPages,
+  getPagesApi,
+  deletePagesApi,
+  updatePagesApi,
 } = require("../controllers/routes");
 const checkAuthorization = require("../middleware/auth");
 
@@ -51,9 +55,7 @@ router.route("/task").delete(checkAuthorization, deleteTaskApi);
 /**
  * Task routes for charts
  */
-router
-  .route("/project/status/alltasks")
-  .get(checkAuthorization, getAllTaskFromAllProjectAccordingToStatus);
+router.route("/project/status/alltasks").get(checkAuthorization, getAllTaskFromAllProjectAccordingToStatus);
 
 /**
  * Columns
@@ -62,4 +64,13 @@ router.route("/column").post(checkAuthorization, createColumnsApi);
 router.route("/column").get(checkAuthorization, getColumns);
 router.route("/column").delete(checkAuthorization, deleteColumn);
 router.route("/column").put(checkAuthorization, updateColumnName);
+
+/**
+ * Pages
+ */
+router.route("/page").post(checkAuthorization, createPages);
+router.route("/page").get(checkAuthorization, getPagesApi);
+router.route("/page").delete(checkAuthorization, deletePagesApi);
+router.route("/page").put(checkAuthorization, updatePagesApi);
+
 module.exports = router;

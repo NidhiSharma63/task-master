@@ -14,7 +14,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS } from "src/constant/sidebar";
+import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS, BOTTOM } from "src/constant/sidebar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import useLayout from "src/hook/layout/useLayout";
@@ -23,11 +23,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import UserName from "src/common/UserName";
 import colors from "src/theme/variables";
-const drawerWidth = 160;
+import PagesModal from "src/components/userPages/components/PagesModal";
+
+const drawerWidth = 120;
 
 export const Layout = () => {
   const {
     handleClickOnRename,
+
     handleClickOnThreeDots,
     handleClickOnHome,
     handleActiveProject,
@@ -38,12 +41,22 @@ export const Layout = () => {
     handleOpen,
     handleCloseOfProjectsIcons,
     handleOpenProjectModal,
+    handleClickOnPages,
+    handleClickOnPageAddIcon,
+    handleClickOnThreeDotsPages,
+    handleCloseOnPage,
+    handleClickOnPageRename,
+    handlePageDelete,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
-    openPorjectsIcons,
+    anchorElementForPages,
     allProjects,
+    pagesData,
+    pagesLoading,
+    isProjectIconsOpen,
+    isPageIconsOpen,
     // userName,
   } = useLayout();
 
@@ -59,30 +72,18 @@ export const Layout = () => {
             // background: "#121212",
             background: colors.navigationColor,
             boxShadow: "none",
-          }}
-        >
+          }}>
           <Toolbar
             sx={{
               display: "flex",
               width: "100%",
               justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: `${colors.secondaryColor}` }}
-            >
+            }}>
+            <Typography variant="h6" noWrap component="div" sx={{ color: `${colors.secondaryColor}` }}>
               Task Master
             </Typography>
             <UserName handleOpen={handleOpen} />
-            <Menu
-              id="logout"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-            >
+            <Menu id="logout" anchorEl={anchorEl} open={open} onClose={handleClose}>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
@@ -99,23 +100,19 @@ export const Layout = () => {
               background: colors.navigationColor,
             },
             // backgroundColor: "red",
-          }}
-        >
+          }}>
           <Toolbar />
           <Box
             sx={{
               overflow: "auto",
-            }}
-          >
+            }}>
             <List>
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleClickOnHome}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
-                        {value}
-                      </ListItemIcon>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -126,14 +123,9 @@ export const Layout = () => {
               {INSIGHTS.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton
-                      key={key}
-                      onClick={() => handleClickOnInsights(key)}
-                    >
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
-                        {value}
-                      </ListItemIcon>
+                    <ListItemButton key={key} onClick={() => handleClickOnInsights(key)}>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -145,10 +137,8 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleOpenProjectModal}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
-                        {value}
-                      </ListItemIcon>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -163,10 +153,7 @@ export const Layout = () => {
                 allProjects?.map((item) => {
                   return (
                     <ListItemButton key={item._id}>
-                      <ListItemText
-                        primary={item.name}
-                        onClick={() => handleActiveProject(item.name)}
-                      />
+                      <ListItemText primary={item.name} onClick={() => handleActiveProject(item.name)} />
                       <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
                           sx={{ color: colors.secondaryTextColor }}
@@ -176,23 +163,81 @@ export const Layout = () => {
                         <Menu
                           data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
-                          open={openPorjectsIcons}
-                          onClose={handleCloseOfProjectsIcons}
-                        >
+                          open={isProjectIconsOpen}
+                          onClose={handleCloseOfProjectsIcons}>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleClickOnRename}
-                          >
+                            onClick={handleClickOnRename}>
                             <DriveFileRenameOutlineIcon />
                           </MenuItem>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleDelete}
-                          >
+                            onClick={handleDelete}>
+                            <DeleteIcon />
+                          </MenuItem>
+                        </Menu>
+                      </ListItemIcon>
+                    </ListItemButton>
+                  );
+                })
+              )}
+            </List>
+            <Divider />
+            <List>
+              {BOTTOM.map((i) => {
+                return Object.entries(i).map(([key, value]) => {
+                  return (
+                    <ListItemButton key={key}>
+                      <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }} onClick={handleClickOnPageAddIcon}>
+                        {value}
+                      </ListItemIcon>
+                    </ListItemButton>
+                  );
+                });
+              })}
+              {pagesLoading ? (
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ClipLoader color="white" />
+                  </ListItemIcon>
+                </ListItemButton>
+              ) : (
+                pagesData?.data?.map((item) => {
+                  return (
+                    <ListItemButton key={item._id} sx={{ p: ".5 0" }}>
+                      <ListItemText
+                        primary={item.name}
+                        onClick={() => handleClickOnPages(item._id)}
+                        sx={{ wordBreak: "break-all" }}
+                      />
+                      <ListItemIcon data-id={item._id} sx={{ minWidth: 0 }}>
+                        <MoreVertIcon
+                          sx={{ color: colors.secondaryTextColor }}
+                          onClick={handleClickOnThreeDotsPages}
+                          data-id={item._id}
+                        />
+                        <Menu
+                          data-id={item._id}
+                          anchorEl={anchorElementForPages}
+                          open={isPageIconsOpen}
+                          onClose={handleCloseOnPage}>
+                          <MenuItem
+                            sx={{
+                              color: colors.secondaryTextColor,
+                            }}
+                            onClick={handleClickOnPageRename}>
+                            <DriveFileRenameOutlineIcon />
+                          </MenuItem>
+                          <MenuItem
+                            sx={{
+                              color: colors.secondaryTextColor,
+                            }}
+                            onClick={handlePageDelete}>
                             <DeleteIcon />
                           </MenuItem>
                         </Menu>
@@ -206,6 +251,7 @@ export const Layout = () => {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, mt: 9 }}>
           <Outlet />
+          <PagesModal />
         </Box>
       </Box>
       <CommonLoaderWithBackDrop />

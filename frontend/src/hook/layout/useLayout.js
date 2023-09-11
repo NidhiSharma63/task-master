@@ -1,45 +1,52 @@
 import { useSelector, useDispatch } from "react-redux";
 import useLogoutQuery from "src/hook/useLogoutQuery";
-import {
-  useGetProjectQuery,
-  useDeleteProjectQuery,
-} from "src/hook/useProjectQuery";
+import { useGetProjectQuery, useDeleteProjectQuery } from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForPage,
   isBackdropLoaderDisplayedForProjects,
+  isDialogBoxOpen,
   isProjectNameModalOpen,
   isUpdatingTask,
 } from "src/redux/boolean/booleanSlice";
-import {
-  activeProject,
-  projectDataInStore,
-  projectRename,
-} from "src/redux/projects/projectSlice";
+import { activeProject, projectDataInStore, projectRename } from "src/redux/projects/projectSlice";
 import { setValueToLs } from "src/utils/localstorage";
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
 import { queryKeyForTask } from "src/constant/queryKey";
 import { queryClient } from "src/index";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { useGetPages } from "src/hook/usePagesQuery";
+import { usePagesContext } from "src/context/PagesContextProvider";
+import { useDeletePage } from "src/hook/usePagesQuery";
 
 const useLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { user_email } = useSelector(usersDataInStore);
+
   const { active_project } = useSelector(projectDataInStore);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
-  const { mutate } = useLogoutQuery();
-  const { data, isLoading } = useGetProjectQuery();
   const [allProjects, setAllProjects] = useState([]);
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState(null);
-  const [openPorjectsIcons, setOpenPorjectsIcons] = useState(false);
-  const [itemId, setItemId] = useState(null);
-  const { mutate: deleteProject, isLoading: deleteInProgress } =
-    useDeleteProjectQuery();
+
+  const [anchorElementForPages, setAnchorElementForPages] = useState(null);
+  const [isProjectIconsOpen, setIsProjectIconsOpen] = useState(false);
+  const [isPageIconsOpen, setIsPageIconsOpen] = useState(false);
+  const { mutate: deletePage } = useDeletePage();
+
+  const pageItemId = useRef();
+  const projectItemId = useRef();
+
+  const { data, isLoading } = useGetProjectQuery();
+  const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
+  const { data: pagesData, isLoading: pagesLoading } = useGetPages();
+  const { mutate } = useLogoutQuery();
 
   const { setValue } = useBackDropLoaderContext();
+  const { setPageData } = usePagesContext();
 
   // // navigate the user to /todo directly
   useEffect(() => {
@@ -55,13 +62,24 @@ const useLayout = () => {
     }
   }, [allProjects]);
 
+  /**
+   * Show backdrop
+   */
+  useEffect(() => {
+    if (deleteInProgress) {
+      dispatch(isBackDropLoaderDisplayed(true));
+      setValue("Deleting project");
+      dispatch(isBackdropLoaderDisplayedForProjects(true));
+    }
+  }, [deleteInProgress, setValue, dispatch]);
+
   useEffect(() => {
     setAllProjects(data?.projects);
   }, [data]);
 
-  // useEffect(() => {
-  // setUserName(getUserFirstNameFirstLetter(user_email));
-  // }, [user_email]);
+  useEffect(() => {
+    queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
+  }, [active_project]);
 
   const handleLogout = () => {
     mutate();
@@ -79,6 +97,19 @@ const useLayout = () => {
     setOpen(true);
   };
 
+  const handleClickOnHome = () => {
+    navigate("/Home");
+  };
+  /**
+   * Insights
+   */
+  const handleClickOnInsights = (name) => {
+    navigate(`Charts/${name}`);
+  };
+
+  /**
+   * projects
+   */
   const handleOpenProjectModal = () => {
     dispatch(projectRename({}));
     dispatch(isProjectNameModalOpen(true));
@@ -86,26 +117,9 @@ const useLayout = () => {
   };
 
   const handleDelete = () => {
-    deleteProject({ id: itemId });
-    // console.log(id, ":::this is the id coming");
+    deleteProject({ id: projectItemId.current });
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
     setAnchorEl(null);
-    setOpenPorjectsIcons(false);
-  };
-
-  /**
-   * Show backdrop
-   */
-  useEffect(() => {
-    if (deleteInProgress) {
-      dispatch(isBackDropLoaderDisplayed(true));
-      setValue("Deleting project");
-      dispatch(isBackdropLoaderDisplayedForProjects(true))
-    }
-  }, [deleteInProgress,setValue,dispatch]);
-
-  const handleClickOnInsights = (name) => {
-    navigate(`Charts/${name}`);
   };
 
   const handleActiveProject = (name) => {
@@ -115,29 +129,23 @@ const useLayout = () => {
     navigate("/Dashboard");
   };
 
-  const handleClickOnHome = () => {
-    navigate("/Home");
-  };
-
-  useEffect(() => {
-    queryKeyForTask.map((status) => queryClient.invalidateQueries(status));
-  }, [active_project]);
-
   const handleClickOnThreeDots = (event) => {
     if (!event.target.dataset.id) return;
-    setOpenPorjectsIcons(true);
     setAnchorElForProjectIcons(event.target);
-    setItemId(event.target.dataset.id);
+    setIsProjectIconsOpen(true);
+    projectItemId.current = event.target.dataset.id;
+    console.log(projectItemId.current, event.target.dataset.id);
   };
 
   const handleCloseOfProjectsIcons = () => {
-    setOpenPorjectsIcons(false);
+    setAnchorElForProjectIcons(null);
+    setIsProjectIconsOpen(false);
   };
 
   const handleClickOnRename = () => {
-    const projectToUpdate = allProjects.find((item) => item._id === itemId);
+    if (!projectItemId.current) return;
+    const projectToUpdate = allProjects.find((item) => item._id === projectItemId.current);
 
-    if (!itemId) return;
     dispatch(
       projectRename({
         projectName: projectToUpdate?.name,
@@ -148,6 +156,74 @@ const useLayout = () => {
     dispatch(isProjectNameModalOpen(true));
     handleCloseOfProjectsIcons();
   };
+  /**
+   * pages
+   */
+
+  /**
+   * navigate to pages
+   */
+
+  const handleClickOnPages = useCallback((val) => {
+    navigate(`/pages/${val}`);
+  }, []);
+
+  /**
+   * Add page icon
+   */
+  const handleClickOnPageAddIcon = useCallback(() => {
+    setPageData({});
+    dispatch(isDialogBoxOpen(true));
+  }, []);
+
+  /**
+   * show page icons
+   */
+
+  const handleClickOnThreeDotsPages = (event) => {
+    const id = event.target.dataset.id;
+    if (!id) return;
+    setAnchorElementForPages(event.target);
+    setIsPageIconsOpen(true);
+    pageItemId.current = id;
+  };
+
+  /**
+   * close menu icons
+   */
+
+  const handleCloseOnPage = () => {
+    setAnchorElementForPages(null);
+    dispatch(isDialogBoxOpen(false));
+    setIsPageIconsOpen(false);
+    setPageData({});
+  };
+
+  /**
+   * page rename
+   */
+
+  const handleClickOnPageRename = () => {
+    const updatedPage = pagesData?.data?.find((item) => item._id === pageItemId.current);
+    dispatch(isDialogBoxOpen(true));
+    setPageData(updatedPage);
+    setAnchorElementForPages(null);
+    setIsPageIconsOpen(false);
+  };
+
+  /**
+   * page delete
+   */
+
+  const handlePageDelete = () => {
+    deletePage({ _id: pageItemId.current });
+    setAnchorElementForPages(null);
+    setIsPageIconsOpen(false);
+    dispatch(isBackDropLoaderDisplayedForPage(true));
+    dispatch(isBackDropLoaderDisplayed(true));
+    setValue("deleting...");
+  };
+
   return {
     handleClickOnRename,
     handleClickOnThreeDots,
@@ -160,15 +236,23 @@ const useLayout = () => {
     handleOpen,
     handleOpenProjectModal,
     handleCloseOfProjectsIcons,
-    setItemId,
+    handleClickOnPages,
+    handleClickOnPageAddIcon,
+    handleClickOnThreeDotsPages,
+    handleCloseOnPage,
+    handleClickOnPageRename,
+    handlePageDelete,
     anchorEl,
     open,
     isLoading,
     anchorElForProjectIcons,
-    openPorjectsIcons,
     deleteInProgress,
     allProjects,
-    itemId,
+    pagesData,
+    pagesLoading,
+    anchorElementForPages,
+    isProjectIconsOpen,
+    isPageIconsOpen,
     // userName,
   };
 };
