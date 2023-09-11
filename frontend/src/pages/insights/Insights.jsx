@@ -2,6 +2,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import InsightsCharts from "src/components/insights/InsightsCharts";
 import InsightsFilter from "./components/InsightsFilter";
 import { useState } from "react";
+import InsightsLogo from "src/assets/icons/Insights.png";
 
 const Insights = () => {
   const [activeStatus, setActiveStatue] = useState("All");
@@ -21,15 +22,17 @@ const Insights = () => {
             alignItems: "center",
             justifyContent: "space-between",
           }}>
-          <Typography
-            variant="h5"
-            sx={{
-              ml: 3,
-              mb: 2,
-              color: (theme) => theme.palette.secondary.main,
-            }}>
-            Insights
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2, gap: 1 }}>
+            <img src={InsightsLogo} alt="logo" style={{ width: "50px" }} />
+            <Typography
+              variant="h5"
+              sx={{
+                color: (theme) => theme.palette.secondary.main,
+                fontWeight: "bold",
+              }}>
+              Insights
+            </Typography>
+          </Box>
           <InsightsFilter setActiveStatue={setActiveStatue} activeStatus={activeStatus} />
         </Box>
         <Divider />
