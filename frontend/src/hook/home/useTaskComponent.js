@@ -24,25 +24,22 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
   useEffect(() => {
     if (!taskData) return;
     const taskWithStatus = [];
-    console.log(taskData, ":::task data");
-    taskData?.forEach((task, i) => {
-      let indexForTask = 0;
-      if (task?.length > 0) {
-        task.forEach((task) => {
-          const isAlreadyAddedTask = taskWithStatus.find((val) => val.taskName === task.status);
-          if (isAlreadyAddedTask) {
-            isAlreadyAddedTask.count = isAlreadyAddedTask.count + 1;
-          } else {
-            taskWithStatus.push({ taskName: task.status, count: 1 });
-            indexForTask += 1;
-          }
-        });
-      }
+
+    total_status.forEach((status) => {
+      taskWithStatus.push({ taskName: status, count: 0 });
     });
 
+    taskData.forEach((tasks) => {
+      tasks.forEach((task) => {
+        const isAlreadyAddedTask = taskWithStatus.find((val) => val.taskName === task.status);
+        if (isAlreadyAddedTask) {
+          isAlreadyAddedTask.count = isAlreadyAddedTask.count + 1;
+        }
+      });
+    });
     setAllTask(taskData.flat());
     setTotalTask(taskWithStatus);
-  }, [taskData, backgroundColors]);
+  }, [taskData, backgroundColors, total_status]);
 
   /**
    * return task according to active link
