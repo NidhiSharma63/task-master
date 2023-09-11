@@ -4,7 +4,6 @@ import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "src/hook/board/useBoard";
 import useAddColumn from "src/hook/board/useAddColumn";
-import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import { ClipLoader } from "react-spinners";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
@@ -85,8 +84,6 @@ const Board = () => {
             className="box"></Box>
         </Box>
       )}
-      <CommonLoaderWithBackDrop />
-      {/*  */}
     </Box>
   );
 };

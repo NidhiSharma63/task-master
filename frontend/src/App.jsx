@@ -11,7 +11,7 @@ import Board from "src/components/projectPage/Board";
 import Insights from "src/pages/insights/Insights";
 import Home from "src/pages/home/Home";
 import PageComponent from "src/components/userPages/components/PageComponent";
-import BackDropLoaderContextComp from "src/context/BackDropLoaderContext";
+import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 
 const RequiredAuth = ({ children }) => {
   let location = useLocation();
@@ -46,7 +46,7 @@ let router = createBrowserRouter([
     element: (
       <RequiredAuth>
         <Layout />
-        <BackDropLoaderContextComp />
+        <CommonLoaderWithBackDrop />
       </RequiredAuth>
     ),
     children: [
