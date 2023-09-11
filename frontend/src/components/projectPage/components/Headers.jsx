@@ -13,10 +13,7 @@ const Headers = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (
-      location.pathname === "/Dashboard" ||
-      location.pathname.includes("/Dashboard/activeProject/board")
-    ) {
+    if (location.pathname === "/Dashboard" || location.pathname.includes("/Dashboard/activeProject/board")) {
       navigate(`/Dashboard/activeProject/board/${active_project}`);
       // queryClient.invalidateQueries("projects"); invalidate all the query
     }
@@ -28,16 +25,16 @@ const Headers = () => {
         position: "fixed",
         width: "100%",
         top: "4.5rem",
-      }}
-    >
+      }}>
       <Box>
         <Typography
           variant="h5"
           sx={{
             textTransform: "capitalize",
             pl: 2,
-          }}
-        >
+            color: colors.primaryColor,
+            fontWeight: "bold",
+          }}>
           {active_project}
         </Typography>
         <Box>
@@ -47,12 +44,9 @@ const Headers = () => {
               fontWeight: isActive ? 600 : 100,
               textDecoration: "none",
               marginLeft: "1.2rem",
-              borderBottom: isActive
-                ? `1px solid ${colors.secondaryTextColor}`
-                : "",
+              borderBottom: isActive ? `1px solid ${colors.secondaryTextColor}` : "",
             })}
-            to={`activeProject/board/${active_project}`}
-          >
+            to={`activeProject/board/${active_project}`}>
             Board
           </NavLink>
         </Box>
