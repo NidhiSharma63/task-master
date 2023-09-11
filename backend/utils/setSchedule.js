@@ -17,7 +17,7 @@ async function fetchTasks() {
 
 async function rescheduleReminders() {
   const tasks = await fetchTasks();
-  console.log(tasks);
+  // console.log(tasks);
   // Clear existing scheduled jobs
   schedule.cancelJob();
 
