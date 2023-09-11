@@ -1,19 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-  customAxiosRequestForPost,
-  customAxiosRequestForGet,
-} from "src/utils/axiosRequest";
+import { customAxiosRequestForPost, customAxiosRequestForGet } from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { queryClient } from "src/index";
 import { useQueries } from "@tanstack/react-query";
-import { statesOfTaskManager } from "src/constant/Misc";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
-import {
-  isTaskDisplayed,
-  isUpdatingTask,
-  showLoaderForTask,
-} from "src/redux/boolean/booleanSlice";
+import { isTaskDisplayed, isUpdatingTask, showLoaderForTask } from "src/redux/boolean/booleanSlice";
 import { useMemo } from "react";
 import { statusDataInStore } from "src/redux/status/statusSlice";
 /**
@@ -67,10 +59,7 @@ const useGetTaskAccordingToStatus = () => {
     }),
   });
 
-  const data = useMemo(
-    () => userQueries?.map((item) => item?.data?.data),
-    [userQueries]
-  );
+  const data = useMemo(() => userQueries?.map((item) => item?.data?.data), [userQueries]);
   // const isLoading = userQueries?.[0]?.isLoading;
   // const status = userQueries?.map((item) => item?.data?.status);
 
@@ -183,8 +172,10 @@ const useDeleteTask = (status) => {
  * @returns Getting all task for home component
  */
 const useGetAllTaskAccordingToStatusForEachProject = () => {
+  const { total_status } = useSelector(statusDataInStore);
+
   const userQueries = useQueries({
-    queries: statesOfTaskManager.map((status) => {
+    queries: total_status.map((status) => {
       return {
         queryKey: [status, "All-task"],
         queryFn: () =>
