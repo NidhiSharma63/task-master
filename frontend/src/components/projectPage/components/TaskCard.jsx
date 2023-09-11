@@ -67,7 +67,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
                     fontSize: "1.6rem",
                   }}
                 />
-                <Typography sx={{ fontSize: "1.4rem" }}>{item?.subTasks?.length}</Typography>
+                <Typography sx={{ fontSize: "1.2rem" }}>{item?.subTasks?.length}</Typography>
               </Box>
             )}
           </Box>
