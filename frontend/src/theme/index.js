@@ -14,8 +14,8 @@ const theme = createTheme({
       50: colors.lightGrey,
     },
     text: {
-      primary: colors.secondaryColor,
-      secondary: colors.secondaryTextColor,
+      // primary: colors.secondaryColor,
+      // secondary: colors.secondaryTextColor,
     },
 
     divider: colors.lightGrey,
@@ -36,6 +36,14 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           minWidth: 0,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgb(166,159,243)",
+          color: "white",
         },
       },
     },

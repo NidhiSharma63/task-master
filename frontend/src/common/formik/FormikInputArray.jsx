@@ -26,8 +26,7 @@ const FormikInputArray = (props) => {
         alignItems: "flex-start",
         flexDirection: "column",
         gap: 2,
-      }}
-    >
+      }}>
       <FieldArray
         name={name}
         render={(arrayHelpers) => (
@@ -45,8 +44,7 @@ const FormikInputArray = (props) => {
                             // border: "1px solid red",
                             width: "100%",
                             gap: 2,
-                          }}
-                        >
+                          }}>
                           <TextField
                             sx={{ width: "100%" }}
                             {...field}
@@ -57,9 +55,7 @@ const FormikInputArray = (props) => {
                           <TaskAltIcon
                             sx={{
                               cursor: "pointer",
-                              color: `${
-                                task.isCompleted ? "#045c08" : undefined
-                              }`,
+                              color: `${task.isCompleted ? "#045c08" : undefined}`,
                             }}
                             onClick={() => toggleTaskCompletion(index)}
                           />
@@ -80,17 +76,13 @@ const FormikInputArray = (props) => {
               : null}
             <Button
               type="button"
-              variant="outlined"
+              variant="contained"
               className="not-remove-input"
               sx={{
                 mt: 2,
-                color: colors.secondaryColor,
-                borderColor: colors.secondaryTextColor,
+                background: colors.subTaskButtonColor,
               }}
-              onClick={() =>
-                arrayHelpers.push({ value: "", isCompleted: false })
-              }
-            >
+              onClick={() => arrayHelpers.push({ value: "", isCompleted: false })}>
               Sub task
             </Button>
           </>

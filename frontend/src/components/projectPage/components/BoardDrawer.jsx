@@ -1,19 +1,12 @@
 import { Drawer, Box, Typography, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  booleanDataInStore,
-  isBoardDrawerOpen,
-  isUpdatingTask,
-} from "src/redux/boolean/booleanSlice";
+import { booleanDataInStore, isBoardDrawerOpen, isUpdatingTask } from "src/redux/boolean/booleanSlice";
 import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
-import {
-  useUpdateTaskQueryWithDetails,
-  useDeleteTask,
-} from "src/hook/useTaskQuery";
+import { useUpdateTaskQueryWithDetails, useDeleteTask } from "src/hook/useTaskQuery";
 import colors from "src/theme/variables";
 
 const BoardDrawer = () => {
@@ -72,14 +65,12 @@ const BoardDrawer = () => {
         "& .MuiDrawer-paper": {
           width: 600,
         },
-      }}
-    >
+      }}>
       <Box
         sx={{
           position: "relative",
           top: "5rem",
-        }}
-      >
+        }}>
         <Box>
           <Typography sx={{ pl: 2, textTransform: "capitalize" }} variant="h5">
             {active_task.task}
@@ -94,26 +85,16 @@ const BoardDrawer = () => {
             gap: "1rem",
             mt: 1,
             mb: 2,
-          }}
-        >
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-            validationSchema={validationForUpdatingTask}
-          >
+          }}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationForUpdatingTask}>
             <Form>
               <Box
                 sx={{
                   width: "30rem",
                   height: "auto",
-                }}
-              >
+                }}>
                 <FormikControls control="formikInput" name="task" />
-                <FormikControls
-                  control="formikInputForLable"
-                  name="label"
-                  colorName="labelColor"
-                />
+                <FormikControls control="formikInputForLable" name="label" colorName="labelColor" />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
                 <FormikControls control="formikInputArray" name="subTasks" />
@@ -123,20 +104,16 @@ const BoardDrawer = () => {
                   <Typography
                     sx={{
                       color: (theme) => theme.palette.secondary.main,
-                    }}
-                  >
+                    }}>
                     {new Date(active_task.createdAt).toUTCString()}
                   </Typography>
                 </Box>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   type="submit"
                   sx={{
                     mt: 2,
-                    color: colors.secondaryColor,
-                    borderColor: colors.secondaryTextColor,
-                  }}
-                >
+                  }}>
                   Save
                 </Button>
                 <Button
@@ -145,10 +122,8 @@ const BoardDrawer = () => {
                   sx={{
                     mt: 2,
                     ml: 2,
-
-                    backgroundColor: "rgb(168, 13, 13)",
-                  }}
-                >
+                    backgroundColor: colors.bannerColor,
+                  }}>
                   Delete
                 </Button>
               </Box>

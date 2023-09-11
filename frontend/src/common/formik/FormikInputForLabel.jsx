@@ -1,11 +1,4 @@
-import {
-  Box,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { Box, Accordion, AccordionSummary, AccordionDetails, Typography, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { COLORS_FOR_PROJECTS } from "src/constant/colors";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -37,15 +30,13 @@ const FormikInputForLabel = (props) => {
                 mb: 2,
                 width: "100%",
                 flexDirection: "column",
-              }}
-            >
+              }}>
               <Typography
                 sx={{
                   fontWeight: "700",
                   maxWidth: "13rem",
                   mb: 1,
-                }}
-              >
+                }}>
                 {TitleCase(name)}
               </Typography>
               <TextField
@@ -85,8 +76,7 @@ const FormikInputForLabel = (props) => {
                       width: "fit-content",
                       borderRadius: "1rem",
                       fontSize: ".8rem",
-                    }}
-                  >
+                    }}>
                     {textValue}
                   </Typography>
                 )}
@@ -96,15 +86,12 @@ const FormikInputForLabel = (props) => {
                     display: "flex",
                     flexDirection: "row",
                     width: `${isAccordianOpen ? "30rem" : "5rem"}`,
-                    background: colors.primaryColor,
-                    border: `1px solid ${colors.secondaryTextColor}`,
+                    background: "transparent",
+                    boxShadow: "none",
+                    border: `1px solid ${colors.lightGrey}`,
                     borderRadius: ".3rem",
-                  }}
-                >
-                  <AccordionSummary
-                    expandIcon={<ArrowForwardIosSharpIcon />}
-                    onClick={hanldeAccordianOpen}
-                  >
+                  }}>
+                  <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />} onClick={hanldeAccordianOpen}>
                     <Box
                       sx={{
                         width: "2rem",
@@ -112,8 +99,7 @@ const FormikInputForLabel = (props) => {
                         borderRadius: "50%",
                         backgroundColor: value,
                         cursor: "pointer",
-                      }}
-                    ></Box>
+                      }}></Box>
                   </AccordionSummary>
                   <AccordionDetails
                     sx={{
@@ -123,8 +109,7 @@ const FormikInputForLabel = (props) => {
                       gap: "8px",
                       alignItems: "center",
                       mt: 1.5,
-                    }}
-                  >
+                    }}>
                     {COLORS_FOR_PROJECTS.map((color) => {
                       return (
                         <Box
@@ -135,14 +120,11 @@ const FormikInputForLabel = (props) => {
                             borderRadius: "50%",
                             backgroundColor: color,
                             cursor: "pointer",
-                            border: `${
-                              color === value ? "3px solid black" : "none"
-                            }`,
+                            border: `${color === value ? "3px solid black" : "none"}`,
                           }}
                           onClick={() => {
                             setFieldValue(colorName, color);
-                          }}
-                        ></Box>
+                          }}></Box>
                       );
                     })}
                   </AccordionDetails>

@@ -31,26 +31,17 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
         borderColor: (theme) => theme.palette.grey[400],
         borderRadius: "0.3rem",
         height: "100%",
-      }}
-    >
+      }}>
       <Box
         sx={{
           padding: " 0.8rem",
           display: "flex",
           justifyContent: "space-between",
-        }}
-      >
+        }}>
         <Typography variant="h5" sx={{ fontWeight: 700 }}>
           Projects
         </Typography>
-        <Button
-          variant="outlined"
-          sx={{
-            borderColor: colors.secondaryTextColor,
-            color: colors.secondaryTextColor,
-          }}
-          onClick={handleClickOnAddProject}
-        >
+        <Button variant="contained" onClick={handleClickOnAddProject}>
           Add Project
         </Button>
       </Box>
@@ -67,20 +58,18 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           "&::-webkit-scrollbar-track": {
             background: `${colors.primaryColor}`,
           },
-          "&::-webkit-scrollbar-thumb": {
-            background: `${colors.secondaryTextColor}`,
-            borderRadius: "4px",
-          },
-        }}
-      >
+          // "&::-webkit-scrollbar-thumb": {
+          //   background: `${colors.secondaryTextColor}`,
+          //   borderRadius: "4px",
+          // },
+        }}>
         {isLoading ? (
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-            }}
-          >
+            }}>
             <ClipLoader color="#571159" />
           </Box>
         ) : (
@@ -98,20 +87,15 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
                   borderRadius: ".4rem",
                   mb: 1,
                 }}
-                onClick={() => handleNavigationToProject(item.name)}
-              >
+                onClick={() => handleNavigationToProject(item.name)}>
                 <Box
                   sx={{
                     width: "100%",
                     padding: "0.5rem",
                     backgroundColor: backgroundColors[i],
                     borderRadius: "0.3rem",
-                  }}
-                >
-                  <Typography sx={{ fontWeight: 500, color: "white" }}>
-                    {" "}
-                    {item.name}
-                  </Typography>
+                  }}>
+                  <Typography sx={{ fontWeight: 500, color: "white" }}> {item.name}</Typography>
                 </Box>
               </Box>
             );
