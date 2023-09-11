@@ -25,7 +25,7 @@ import UserName from "src/common/UserName";
 import colors from "src/theme/variables";
 import PagesModal from "src/components/userPages/components/PagesModal";
 
-const drawerWidth = 160;
+const drawerWidth = 120;
 
 export const Layout = () => {
   const {
@@ -111,8 +111,8 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleClickOnHome}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -124,8 +124,8 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={() => handleClickOnInsights(key)}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -137,8 +137,8 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleOpenProjectModal}>
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                       <ListItemText primary={key} />
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -192,10 +192,10 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key}>
+                      <ListItemText primary={key} />
                       <ListItemIcon sx={{ color: colors.secondaryTextColor }} onClick={handleClickOnPageAddIcon}>
                         {value}
                       </ListItemIcon>
-                      <ListItemText primary={key} />
                     </ListItemButton>
                   );
                 });
@@ -209,9 +209,13 @@ export const Layout = () => {
               ) : (
                 pagesData?.data?.map((item) => {
                   return (
-                    <ListItemButton key={item._id}>
-                      <ListItemText primary={item.name} onClick={() => handleClickOnPages(item._id)} />
-                      <ListItemIcon data-id={item._id}>
+                    <ListItemButton key={item._id} sx={{ p: ".5 0" }}>
+                      <ListItemText
+                        primary={item.name}
+                        onClick={() => handleClickOnPages(item._id)}
+                        sx={{ wordBreak: "break-all" }}
+                      />
+                      <ListItemIcon data-id={item._id} sx={{ minWidth: 0 }}>
                         <MoreVertIcon
                           sx={{ color: colors.secondaryTextColor }}
                           onClick={handleClickOnThreeDotsPages}
