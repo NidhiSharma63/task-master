@@ -12,16 +12,15 @@ const UserName = ({ handleOpen, formTaskComponent = false }) => {
   return (
     <Avatar
       sx={{
-        bgcolor: colors.bannerColor,
+        bgcolor: colors.userLogoColor,
         cursor: "pointer",
         fontWeight: 600,
         width: `${formTaskComponent ? "30px" : "40px"}`,
         height: `${formTaskComponent ? "30px" : "40px"}`,
-        color: colors.secondaryColor,
+        color: "white",
       }}
       variant="circle"
-      onClick={handleOpen}
-    >
+      onClick={handleOpen}>
       {userName}
     </Avatar>
   );

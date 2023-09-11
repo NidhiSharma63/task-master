@@ -1,22 +1,7 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Box,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, Divider } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  booleanDataInStore,
-  isCreateTaskModalOpen,
-} from "src/redux/boolean/booleanSlice";
-import {
-  useAddTaskQuery,
-  useUpdateTaskQueryWithDetails,
-} from "src/hook/useTaskQuery";
+import { booleanDataInStore, isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
+import { useAddTaskQuery, useUpdateTaskQueryWithDetails } from "src/hook/useTaskQuery";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
@@ -34,8 +19,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
 
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
-  const { mutate: updateTask, isLoading: isUpdatingTask } =
-    useUpdateTaskQueryWithDetails();
+  const { mutate: updateTask, isLoading: isUpdatingTask } = useUpdateTaskQueryWithDetails();
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
@@ -85,44 +69,27 @@ const CreateTaskPopup = ({ status, projectData }) => {
     <Dialog open={is_create_task_modal_open} onClose={handleClose}>
       <DialogTitle>Add Task</DialogTitle>
       <Divider />
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationForUpdatingTask}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationForUpdatingTask}>
         <Form>
           <DialogContent>
             <Box
               sx={{
                 width: "30rem",
                 height: "25rem",
-              }}
-            >
+              }}>
               <FormikControls control="formikInput" name="task" />
-              <FormikControls
-                control="formikInputForLable"
-                name="label"
-                colorName="labelColor"
-              />
+              <FormikControls control="formikInputForLable" name="label" colorName="labelColor" />
               <FormikControls control="formikDatePicker" name="dueDate" />
               <FormikControls control="formikTextArea" name="description" />
-              <FormikControls
-                control="formikSelect"
-                name="projectName"
-                values={projectName ?? []}
-                mt={2}
-              />
+              <FormikControls control="formikSelect" name="projectName" values={projectName ?? []} mt={2} />
               <FormikControls control="formikInputArray" name="subTasks" />
               <Box sx={{ mt: 2, display: "flex" }}>
-                <Typography sx={{ fontWeight: 600 }}>
-                  Created At : &nbsp;
-                </Typography>
+                <Typography sx={{ fontWeight: 600 }}>Created At : &nbsp;</Typography>
                 <Typography
                   sx={{
                     fontWeight: 600,
                     color: (theme) => theme.palette.primary.main,
-                  }}
-                >
+                  }}>
                   {active_task.createdAt
                     ? new Date(active_task.createdAt ?? " ").toUTCString()
                     : new Date().toUTCString()}
@@ -130,24 +97,31 @@ const CreateTaskPopup = ({ status, projectData }) => {
               </Box>
             </Box>
           </DialogContent>
-          <DialogActions sx={{ borderTop: `1px solid ${colors.lightGrey}` }}>
+          <Divider />
+          <DialogActions sx={{}}>
             {active_task.task ? (
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "rgb(168, 13, 13)",
+                  backgroundColor: colors.bannerColor,
                   "&:hover": {
-                    background: "white",
-                    borderColor: (theme) => theme.palette.primary.main,
-                    color: (theme) => theme.palette.primary.main,
+                    background: colors.bannerColor,
                   },
                 }}
-                onClick={handleDelete}
-              >
+                onClick={handleDelete}>
                 Delete
               </Button>
             ) : (
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                onClick={handleClose}
+                sx={{
+                  backgroundColor: colors.bannerColor,
+                  "&:hover": {
+                    background: colors.bannerColor,
+                  },
+                }}>
+                Cancel
+              </Button>
             )}
             <Button variant="contained" type="submit">
               Save

@@ -2,10 +2,6 @@
   margin: 0;
   padding: 0;
 }
-.Toastify__toast-theme--dark.Toastify__toast--success {
-  background-color: rgb(87, 17, 89) !important;
-  color: white !important;
-}
 
 .textArea {
   width: 100%;
@@ -24,7 +20,7 @@
 }
 .textArea:focus {
   outline: none;
-  border: 1px solid rgb(87, 17, 89);
+  border: 1px solid rgb(166,159,243);
 }
 .board-drawer-textarea {
   resize: none;
@@ -40,7 +36,7 @@
 
 .board-drawer-textarea:focus {
   outline: none;
-  border: 2px solid rgb(87, 17, 89);
+  border: 2px solid rgb(166,159,243);
 }
 
 .textarea-col {

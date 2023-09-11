@@ -14,15 +14,15 @@ const theme = createTheme({
       50: colors.lightGrey,
     },
     text: {
-      primary: colors.secondaryColor,
-      secondary: colors.secondaryTextColor,
+      // primary: colors.secondaryColor,
+      // secondary: colors.secondaryTextColor,
     },
 
     divider: colors.lightGrey,
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
-    fontSize: 8,
+    fontSize: 12,
   },
   components: {
     MuiListItemButton: {
@@ -36,6 +36,14 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           minWidth: 0,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgb(166,159,243)",
+          color: "white",
         },
       },
     },

@@ -13,8 +13,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { booleanDataInStore, isDialogBoxOpen } from "src/redux/boolean/booleanSlice";
 
-import colors from "src/theme/variables";
-
 const DialogComponent = ({ title, subTitle, handleSaveButtonClicked, children, value, handleChangeInput }) => {
   const dispatch = useDispatch();
   const { is_dialog_box_open } = useSelector(booleanDataInStore);
@@ -49,13 +47,7 @@ const DialogComponent = ({ title, subTitle, handleSaveButtonClicked, children, v
           {children}
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="outlined"
-            onClick={handleSaveButtonClicked}
-            sx={{
-              borderColor: colors.secondaryTextColor,
-              color: "white",
-            }}>
+          <Button variant="contained" onClick={handleSaveButtonClicked}>
             Save
           </Button>
         </DialogActions>

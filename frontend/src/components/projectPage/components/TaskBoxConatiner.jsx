@@ -179,11 +179,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               ))}
               {data?.length > 0 ? (
                 <Button
-                  variant="outlined"
-                  sx={{
-                    color: colors.secondaryTextColor,
-                    borderColor: colors.secondaryTextColor,
-                  }}
+                  variant="contained"
                   disabled={show_loader_for_task}
                   onClick={handleClickForAddingTaskFromBottom}>
                   Add Task

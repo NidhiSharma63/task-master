@@ -20,16 +20,14 @@ const TaskCard = ({ item, handleClickOnTask }) => {
             marginBottom: "1rem",
             cursor: "pointer",
           }}
-          onClick={() => handleClickOnTask(item)}
-        >
+          onClick={() => handleClickOnTask(item)}>
           <Box
             sx={{
               display: "flex",
               alignItems: "fles-start",
               justifyContent: "space-between",
               flexDirection: "column",
-            }}
-          >
+            }}>
             <Typography>{item?.task}</Typography>
             {item?.label && (
               <Typography
@@ -42,8 +40,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
                   mt: 2,
                   ml: -1,
                   fontSize: ".8rem",
-                }}
-              >
+                }}>
                 {item?.label}
               </Typography>
             )}
@@ -54,8 +51,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-            }}
-          >
+            }}>
             <UserName />
             {item?.subTasks?.length > 0 && (
               <Box
@@ -64,17 +60,14 @@ const TaskCard = ({ item, handleClickOnTask }) => {
                   gap: 1,
                   alignItems: "center",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 <FormatListBulletedIcon
                   sx={{
                     color: (theme) => theme.palette.primary.main,
-                    fontSize: ".9rem",
+                    fontSize: "1.6rem",
                   }}
                 />
-                <Typography sx={{ fontSize: ".9rem" }}>
-                  {item?.subTasks?.length}
-                </Typography>
+                <Typography sx={{ fontSize: "1.4rem" }}>{item?.subTasks?.length}</Typography>
               </Box>
             )}
           </Box>

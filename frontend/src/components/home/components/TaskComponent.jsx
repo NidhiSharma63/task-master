@@ -4,12 +4,7 @@ import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
 import useTaskComponent from "src/hook/home/useTaskComponent";
 import colors from "src/theme/variables";
 
-const TaskComponent = ({
-  backgroundColors,
-  projectData,
-  taskData,
-  isLoading,
-}) => {
+const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) => {
   const {
     handleClickOnAddTask,
     handleClickOnLink,
@@ -34,23 +29,19 @@ const TaskComponent = ({
         borderColor: (theme) => theme.palette.grey[400],
         borderRadius: "0.3rem",
         height: "100%",
-      }}
-    >
+      }}>
       <Box sx={{ padding: " 0.8rem", width: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
             My Tasks
           </Typography>
           <Button
-            variant="outlined"
+            variant="contained"
             sx={{
               mb: 1,
               display: "flex",
-              borderColor: colors.secondaryTextColor,
-              color: colors.secondaryTextColor,
             }}
-            onClick={handleClickOnAddTask}
-          >
+            onClick={handleClickOnAddTask}>
             Add Task
           </Button>
         </Box>
@@ -71,8 +62,7 @@ const TaskComponent = ({
               background: `${colors.secondaryTextColor}`,
               borderRadius: "4px",
             },
-          }}
-        >
+          }}>
           {total_status?.map((item, i) => {
             // console.log(ac);
             return (
@@ -86,8 +76,7 @@ const TaskComponent = ({
                   justifyContent: "flex-start",
                   gap: 1,
                   mb: 1,
-                  backgroundColor:
-                    active_link === item ? colors.mainColor : "none",
+                  backgroundColor: active_link === item ? colors.mainColor : "none",
                   "&:hover": {
                     backgroundColor: colors.mainColor, // Change border on hover
                   },
@@ -96,8 +85,7 @@ const TaskComponent = ({
                   padding: ".2rem .4rem",
                   borderRadius: ".3rem",
                 }}
-                onClick={() => handleClickOnLink(item)}
-              >
+                onClick={() => handleClickOnLink(item)}>
                 <Typography sx={{ width: "max-content" }}>{item}</Typography>
                 <Box
                   sx={{
@@ -105,8 +93,7 @@ const TaskComponent = ({
                     padding: "0rem .5rem",
                     color: "white",
                     background: colors.bannerColor,
-                  }}
-                >
+                  }}>
                   {totalTask?.[i] ? totalTask?.[i]?.count : 0}
                 </Box>
               </Box>
@@ -120,16 +107,14 @@ const TaskComponent = ({
           padding: "0.4rem",
           height: "calc(100% - 100px)",
           overflowY: "auto",
-        }}
-      >
+        }}>
         {isLoading ? (
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-            }}
-          >
+            }}>
             <ClipLoader color="#571159" />
           </Box>
         ) : (
@@ -148,8 +133,7 @@ const TaskComponent = ({
                   mb: 1,
                   cursor: "pointer",
                 }}
-                onClick={() => handleClickOnTask(item)}
-              >
+                onClick={() => handleClickOnTask(item)}>
                 <Typography>{item.task}</Typography>
                 <Box
                   sx={{
@@ -157,8 +141,7 @@ const TaskComponent = ({
                     backgroundColor: item.color,
                     borderRadius: "0.3rem",
                     color: "white",
-                  }}
-                >
+                  }}>
                   {item.projectName}
                 </Box>
               </Box>

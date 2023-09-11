@@ -4,8 +4,6 @@ import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "src/hook/board/useBoard";
 import useAddColumn from "src/hook/board/useAddColumn";
-import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
-import colors from "src/theme/variables";
 import { ClipLoader } from "react-spinners";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
@@ -60,11 +58,9 @@ const Board = () => {
             <Button
               // variant="contained"
               onClick={handleClickOnAddColsBtn}
-              variant="outlined"
+              variant="contained"
               sx={{
                 ml: 1,
-                color: colors.secondaryTextColor,
-                borderColor: colors.secondaryTextColor,
               }}>
               Add Section
             </Button>
@@ -88,8 +84,6 @@ const Board = () => {
             className="box"></Box>
         </Box>
       )}
-      <CommonLoaderWithBackDrop />
-      {/*  */}
     </Box>
   );
 };
