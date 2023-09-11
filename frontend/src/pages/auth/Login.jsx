@@ -1,11 +1,4 @@
-import {
-  Grid,
-  Box,
-  IconButton,
-  Typography,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Grid, Box, IconButton, Typography, Button, Divider } from "@mui/material";
 import { Logo } from "src/assets/assets";
 import colors from "src/theme/variables";
 import InfoPart from "src/components/auth/components/InfoPart";
@@ -13,11 +6,11 @@ import FormikControls from "src/common/formik/FormikControls";
 import { Formik, Form } from "formik";
 import { loginSchema } from "src/constant/validation";
 import useLogin from "src/hook/auth/useLogin";
-// import CommonLoader from "src/common/loader/CommonLoader";
 import { useDispatch } from "react-redux";
 import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
+import logoImage from "src/assets/icons/Logo.png";
 
 const Login = () => {
   const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
@@ -39,9 +32,8 @@ const Login = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          background: (theme) => theme.palette.primary.main,
-        }}
-      >
+          background: colors.mainColor,
+        }}>
         <Box
           sx={{
             display: "flex",
@@ -50,14 +42,12 @@ const Login = () => {
             ml: 3,
             height: "2rem",
             padding: ".5rem 0",
-          }}
-        >
-          <IconButton sx={{ width: "3rem" }}>
-            <Logo />
-          </IconButton>
-          <Typography sx={{ color: "white" }} fontWeight={600}>
-            Task Master
-          </Typography>
+          }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <img src={logoImage} alt="project" style={{ width: "40px" }} />
+
+            <Typography sx={{ color: "white", fontWeight: "bold" }}>Task Master</Typography>
+          </Box>
         </Box>
         <Divider />
         <Box
@@ -69,39 +59,30 @@ const Login = () => {
             width: "70%",
             margin: "auto",
             marginTop: "5rem",
-          }}
-        >
+          }}>
           <Box>
             <Typography
               sx={{
                 fontSize: "1.7rem",
                 color: "white",
-              }}
-            >
+              }}>
               Login
             </Typography>
             <Typography
               sx={{
                 marginTop: 3,
                 color: (theme) => theme.palette.text.primary,
-              }}
-            >
-              Welcome to Task Master. Manage your task with task master and make
-              your life productive.
+              }}>
+              Welcome to Task Master. Manage your task with task master and make your life productive.
             </Typography>
           </Box>
           <Box sx={{ width: "100%" }}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={loginSchema}
-              onSubmit={handleSubmit}
-            >
+            <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={handleSubmit}>
               {({ values }) => (
                 <Form
                   onBlur={() => {
                     setFormValues(values);
-                  }}
-                >
+                  }}>
                   <FormikControls control="formikInput" name="email" />
                   <FormikControls control="formikInput" name="password" />
 
@@ -122,8 +103,7 @@ const Login = () => {
                         },
                         borderColor: colors.secondaryTextColor,
                         color: colors.secondaryTextColor,
-                      }}
-                    >
+                      }}>
                       login
                     </Button>
                   </Box>
@@ -137,11 +117,10 @@ const Login = () => {
               justifyContent: "center",
               width: "100%",
               mt: 4,
-            }}
-          >
+            }}>
             <Typography sx={{ color: "white" }}>
               Don't have account{" "}
-              <a style={{ fontWeight: "700" }} href="/register">
+              <a style={{ fontWeight: "700", color: "white" }} href="/register">
                 sign up
               </a>
             </Typography>
