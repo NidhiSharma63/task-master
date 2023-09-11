@@ -3,6 +3,7 @@ import useLogoutQuery from "src/hook/useLogoutQuery";
 import { useGetProjectQuery, useDeleteProjectQuery } from "src/hook/useProjectQuery";
 import {
   isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForPage,
   isBackdropLoaderDisplayedForProjects,
   isDialogBoxOpen,
   isProjectNameModalOpen,
@@ -218,6 +219,9 @@ const useLayout = () => {
     deletePage({ _id: pageItemId.current });
     setAnchorElementForPages(null);
     setIsPageIconsOpen(false);
+    dispatch(isBackDropLoaderDisplayedForPage(true));
+    dispatch(isBackDropLoaderDisplayed(true));
+    setValue("deleting...");
   };
 
   return {

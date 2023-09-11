@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import DialogComponent from "src/common/DialogComponent";
-import { isDialogBoxOpen } from "src/redux/boolean/booleanSlice";
+import {
+  isDialogBoxOpen,
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForPage,
+} from "src/redux/boolean/booleanSlice";
 import { usePostPage, useUpdatePage } from "src/hook/usePagesQuery";
 import { usePagesContext } from "src/context/PagesContextProvider";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const PagesModal = () => {
   const { pageData } = usePagesContext();
   const [value, setValue] = useState("");
+  const { setValue: backdropValue } = useBackDropLoaderContext();
   const { mutate } = usePostPage();
   const { mutate: updatePage } = useUpdatePage();
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (pageData?.name) {
       setValue(pageData.name);
@@ -38,6 +45,9 @@ const PagesModal = () => {
         content: "",
       });
     }
+    dispatch(isBackDropLoaderDisplayedForPage(true));
+    dispatch(isBackDropLoaderDisplayed(true));
+    backdropValue("updating...");
   };
 
   const handleChangeInput = (event) => {
