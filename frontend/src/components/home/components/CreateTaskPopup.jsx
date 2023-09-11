@@ -97,23 +97,31 @@ const CreateTaskPopup = ({ status, projectData }) => {
               </Box>
             </Box>
           </DialogContent>
-          <DialogActions sx={{ borderTop: `1px solid ${colors.bannerColor}` }}>
+          <Divider />
+          <DialogActions sx={{}}>
             {active_task.task ? (
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "rgb(168, 13, 13)",
+                  backgroundColor: colors.bannerColor,
                   "&:hover": {
-                    background: "white",
-                    borderColor: (theme) => theme.palette.primary.main,
-                    color: (theme) => theme.palette.primary.main,
+                    background: colors.bannerColor,
                   },
                 }}
                 onClick={handleDelete}>
                 Delete
               </Button>
             ) : (
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                onClick={handleClose}
+                sx={{
+                  backgroundColor: colors.bannerColor,
+                  "&:hover": {
+                    background: colors.bannerColor,
+                  },
+                }}>
+                Cancel
+              </Button>
             )}
             <Button variant="contained" type="submit">
               Save

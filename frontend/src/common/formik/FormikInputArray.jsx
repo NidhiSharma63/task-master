@@ -81,6 +81,9 @@ const FormikInputArray = (props) => {
               sx={{
                 mt: 2,
                 background: colors.subTaskButtonColor,
+                "&:hover": {
+                  backgroundColor: colors.subTaskButtonColor,
+                },
               }}
               onClick={() => arrayHelpers.push({ value: "", isCompleted: false })}>
               Sub task

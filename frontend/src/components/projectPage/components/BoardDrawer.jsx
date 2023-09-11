@@ -123,6 +123,9 @@ const BoardDrawer = () => {
                     mt: 2,
                     ml: 2,
                     backgroundColor: colors.bannerColor,
+                    "&:hover": {
+                      backgroundColor: colors.bannerColor,
+                    },
                   }}>
                   Delete
                 </Button>
