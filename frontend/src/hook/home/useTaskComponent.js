@@ -25,12 +25,12 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
     if (!taskData) return;
     const taskWithStatus = [];
 
-    total_status.forEach((status) => {
+    total_status?.forEach((status) => {
       taskWithStatus.push({ taskName: status, count: 0 });
     });
 
-    taskData.forEach((tasks) => {
-      tasks.forEach((task) => {
+    taskData?.forEach((tasks) => {
+      tasks?.forEach((task) => {
         const isAlreadyAddedTask = taskWithStatus.find((val) => val.taskName === task.status);
         if (isAlreadyAddedTask) {
           isAlreadyAddedTask.count = isAlreadyAddedTask.count + 1;
