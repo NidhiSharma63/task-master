@@ -24,6 +24,7 @@ import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import UserName from "src/common/UserName";
 import colors from "src/theme/variables";
 import PagesModal from "src/components/userPages/components/PagesModal";
+import image from "src/assets/icons/Logo.png";
 
 const drawerWidth = 150;
 
@@ -79,9 +80,12 @@ export const Layout = () => {
               width: "100%",
               justifyContent: "space-between",
             }}>
-            <Typography variant="h6" noWrap component="div" sx={{ color: `${colors.secondaryColor}` }}>
-              Task Master
-            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <img src={image} alt="logo" style={{ width: "40px" }} />
+              <Typography variant="h6" noWrap component="div" sx={{ color: `${colors.secondaryColor}` }}>
+                Task Master
+              </Typography>
+            </Box>
             <UserName handleOpen={handleOpen} />
             <Menu id="logout" anchorEl={anchorEl} open={open} onClose={handleClose}>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>

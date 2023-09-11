@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import colors from "src/theme/variables";
+import projectImage from "src/assets/icons/Project.png";
 
 const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
@@ -27,24 +28,27 @@ const Headers = () => {
         top: "4.5rem",
       }}>
       <Box>
-        <Typography
-          variant="h5"
-          sx={{
-            textTransform: "capitalize",
-            pl: 2,
-            color: colors.primaryColor,
-            fontWeight: "bold",
-          }}>
-          {active_project}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+          <img src={projectImage} alt="project" style={{ width: "40px" }} />
+          <Typography
+            variant="h5"
+            sx={{
+              textTransform: "capitalize",
+              pl: 2,
+              color: colors.primaryColor,
+              fontWeight: "bold",
+            }}>
+            {active_project}
+          </Typography>
+        </Box>
         <Box>
           <NavLink
             style={({ isActive }) => ({
-              color: colors.secondaryTextColor,
+              color: "white",
               fontWeight: isActive ? 600 : 100,
               textDecoration: "none",
               marginLeft: "1.2rem",
-              borderBottom: isActive ? `1px solid ${colors.secondaryTextColor}` : "",
+              borderBottom: isActive ? `1px solid ${colors.secondaryColor}` : "",
             })}
             to={`activeProject/board/${active_project}`}>
             Board
