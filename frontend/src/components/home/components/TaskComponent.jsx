@@ -63,8 +63,9 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
               borderRadius: "4px",
             },
           }}>
-          {total_status?.map((item, i) => {
-            // console.log(ac);
+          {totalTask?.map((item, i) => {
+            // console.log(item, totalTask[item]);
+
             return (
               <Box
                 key={i}
@@ -85,8 +86,8 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
                   padding: ".2rem .4rem",
                   borderRadius: ".3rem",
                 }}
-                onClick={() => handleClickOnLink(item)}>
-                <Typography sx={{ width: "max-content" }}>{item}</Typography>
+                onClick={() => handleClickOnLink(item.taskName)}>
+                <Typography sx={{ width: "max-content" }}>{item.taskName}</Typography>
                 <Box
                   sx={{
                     borderRadius: "50%",
@@ -94,7 +95,7 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
                     color: "white",
                     background: colors.bannerColor,
                   }}>
-                  {totalTask?.[i] ? totalTask?.[i]?.count : 0}
+                  {item?.count ?? 0}
                 </Box>
               </Box>
             );

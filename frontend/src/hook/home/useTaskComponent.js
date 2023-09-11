@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
-import {
-  activeLink,
-  activeTask,
-  taskDataInStore,
-} from "src/redux/task/taskSlice";
+import { activeLink, activeTask, taskDataInStore } from "src/redux/task/taskSlice";
 import { useEffect, useState } from "react";
 import { statusDataInStore } from "src/redux/status/statusSlice";
 
@@ -28,13 +24,12 @@ const useTaskComponent = ({ backgroundColors, taskData }) => {
   useEffect(() => {
     if (!taskData) return;
     const taskWithStatus = [];
+    console.log(taskData, ":::task data");
     taskData?.forEach((task, i) => {
       let indexForTask = 0;
       if (task?.length > 0) {
         task.forEach((task) => {
-          const isAlreadyAddedTask = taskWithStatus.find(
-            (val) => val.taskName === task.status
-          );
+          const isAlreadyAddedTask = taskWithStatus.find((val) => val.taskName === task.status);
           if (isAlreadyAddedTask) {
             isAlreadyAddedTask.count = isAlreadyAddedTask.count + 1;
           } else {
