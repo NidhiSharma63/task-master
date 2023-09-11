@@ -22,7 +22,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: " 'Quicksand', sans-serif",
-    fontSize: 8,
+    fontSize: 12,
   },
   components: {
     MuiListItemButton: {

@@ -25,7 +25,7 @@ import UserName from "src/common/UserName";
 import colors from "src/theme/variables";
 import PagesModal from "src/components/userPages/components/PagesModal";
 
-const drawerWidth = 120;
+const drawerWidth = 150;
 
 export const Layout = () => {
   const {
