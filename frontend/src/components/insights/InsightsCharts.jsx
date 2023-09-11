@@ -9,10 +9,9 @@ import useInsight from "src/hook/insights/useInsight";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const InsightsCharts = ({ status }) => {
-  const { data, isLoading, chartData, allProjects, allTask, bgColors } =
-    useInsight({
-      status,
-    });
+  const { data, isLoading, chartData, allProjects, allTask, bgColors } = useInsight({
+    status,
+  });
 
   if (data?.data?.length === 0) {
     return (
@@ -23,8 +22,7 @@ const InsightsCharts = ({ status }) => {
           mr: 5,
           justifyContent: "center",
           height: "100%",
-        }}
-      >
+        }}>
         <Typography variant="h4" sx={{ fontWeight: 600 }}>
           {" "}
           You have no task!
@@ -42,8 +40,7 @@ const InsightsCharts = ({ status }) => {
           mr: 5,
           justifyContent: "center",
           height: "100%",
-        }}
-      >
+        }}>
         <ClipLoader color="#571159" />
       </Box>
     );
@@ -56,14 +53,12 @@ const InsightsCharts = ({ status }) => {
         justifyContent: "space-around",
         height: "100%",
         flexDirection: { xs: "column", md: "row" },
-      }}
-    >
+      }}>
       <Box
         sx={{
           width: { xs: "18rem", md: "25rem" },
           height: { md: "100%", xs: "auto" },
-        }}
-      >
+        }}>
         <Doughnut data={chartData} />
       </Box>
       <Box
@@ -79,15 +74,13 @@ const InsightsCharts = ({ status }) => {
           height: { md: "calc(100vh - 200px)", xs: "200px" },
           // overflowY: "scroll",
           maxWidth: "40rem",
-        }}
-      >
+        }}>
         <Box
           sx={{
             // border: "1px solid red",
             position: "fixed",
             maxWidth: "40rem",
-          }}
-        >
+          }}>
           <Typography sx={{ color: "white" }} variant="h5">
             Project List
           </Typography>
@@ -102,18 +95,16 @@ const InsightsCharts = ({ status }) => {
             mt: 7,
             overflowY: "auto",
             "&::-webkit-scrollbar": {
-              width: "2px",
-              height: "5px",
+              width: "10px",
             },
             "&::-webkit-scrollbar-track": {
-              background: `${colors.primaryColor}`,
+              background: "transparent",
             },
             "&::-webkit-scrollbar-thumb": {
-              background: `${colors.secondaryTextColor}`,
+              background: `${colors.mainColor}`,
               borderRadius: "4px",
             },
-          }}
-        >
+          }}>
           {allProjects?.map((item, i) => {
             return (
               <Box
@@ -128,8 +119,7 @@ const InsightsCharts = ({ status }) => {
                   padding: "0.5rem",
                   borderRadius: ".3rem",
                   border: `1px solid ${colors.lightGrey}`,
-                }}
-              >
+                }}>
                 <Box
                   sx={{
                     backgroundColor: bgColors[i],
@@ -137,8 +127,7 @@ const InsightsCharts = ({ status }) => {
                     height: "1.7rem",
                     borderRadius: "50%",
                     boxShadow: "0px 0px 32px -4px #00000054",
-                  }}
-                ></Box>
+                  }}></Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -146,8 +135,7 @@ const InsightsCharts = ({ status }) => {
                     width: "100%",
                     alignItems: "center",
                     padding: "0rem .4rem",
-                  }}
-                >
+                  }}>
                   <Typography>{capitalizeFirstLetter(item)}</Typography>
                   <Typography>{allTask[i]}</Typography>
                 </Box>

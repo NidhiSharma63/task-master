@@ -13,9 +13,7 @@ const useInsight = ({ status }) => {
     if (status === "Insights") {
       data?.data?.forEach((item) => {
         // check if task status is already added or not
-        const isAlreadyAddedProjectName = tempData.find(
-          (val) => val.projectName === item.projectName
-        );
+        const isAlreadyAddedProjectName = tempData.find((val) => val.projectName === item.projectName);
 
         if (isAlreadyAddedProjectName) {
           isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;
@@ -30,9 +28,7 @@ const useInsight = ({ status }) => {
     } else {
       data?.data?.forEach((item) => {
         // check if project name is already added or not
-        const isAlreadyAddedProjectName = tempData.find(
-          (val) => val.projectName === item.projectName
-        );
+        const isAlreadyAddedProjectName = tempData.find((val) => val.projectName === item.projectName);
 
         if (isAlreadyAddedProjectName) {
           isAlreadyAddedProjectName.task = isAlreadyAddedProjectName.task + 1;

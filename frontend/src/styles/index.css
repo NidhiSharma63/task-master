@@ -24,7 +24,7 @@
 }
 .textArea:focus {
   outline: none;
-  border: 1px solid rgb(87, 17, 89);
+  border: 1px solid rgb(166,159,243);
 }
 .board-drawer-textarea {
   resize: none;
