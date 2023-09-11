@@ -120,6 +120,7 @@ const useLayout = () => {
     deleteProject({ id: projectItemId.current });
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, null);
     setAnchorEl(null);
+    setIsProjectIconsOpen(false);
   };
 
   const handleActiveProject = (name) => {
