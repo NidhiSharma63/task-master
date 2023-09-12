@@ -55,7 +55,9 @@ const deleteTaskApi = async (req, res, next) => {
 
     // Update the index of the found tasks and save them
     const updateTasksPromises = tasks?.map(async (item) => {
-      item.index = item.index - 1;
+      if (item.index > 0) {
+        item.index = item.index - 1;
+      }
       await item.save();
     });
     await Promise.all(updateTasksPromises);

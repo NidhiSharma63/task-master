@@ -5,7 +5,12 @@ import { queryClient } from "src/index";
 import { useQueries } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { isTaskDisplayed, isUpdatingTask, showLoaderForTask } from "src/redux/boolean/booleanSlice";
+import {
+  isBackDropLoaderDisplayed,
+  isTaskDisplayed,
+  isUpdatingTask,
+  showLoaderForTask,
+} from "src/redux/boolean/booleanSlice";
 import { useMemo } from "react";
 import { statusDataInStore } from "src/redux/status/statusSlice";
 /**
@@ -50,8 +55,10 @@ const useGetTaskAccordingToStatus = () => {
           }),
         onSuccess: ({ data }) => {
           setTimeout(() => {
+            dispatch(isBackDropLoaderDisplayed(false));
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
+            dispatch(isUpdatingTask(false));
           }, 100);
           return data;
         },

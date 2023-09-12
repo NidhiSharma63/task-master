@@ -148,7 +148,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                   )}
                 </>
               ))}
-              {data?.map((item) => {
+              {data?.map((item, i) => {
                 return <TaskCard key={item._id} item={item} handleClickOnTask={handleClickOnTask} />;
               })}
               {provided.placeholder}

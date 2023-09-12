@@ -5,15 +5,9 @@ import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
 import { useGetColumnQuery } from "../useColumnQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { totalStatus } from "../../redux/status/statusSlice";
-import {
-  booleanDataInStore,
-  isBackDropLoaderDisplayed,
-  isUpdatingTask,
-} from "../../redux/boolean/booleanSlice";
-import {
-  useUpdateTaskQueryWithStatus,
-  useUpdateTaskQuery,
-} from "../../hook/useTaskQuery";
+import { booleanDataInStore, isBackDropLoaderDisplayed, isUpdatingTask } from "../../redux/boolean/booleanSlice";
+import { useUpdateTaskQueryWithStatus, useUpdateTaskQuery } from "../../hook/useTaskQuery";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();
@@ -26,6 +20,8 @@ const useBoard = () => {
   const [finalTaskUpdate, setFinalTaskUpdate] = useState([]);
   const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
   const navigate = useNavigate();
+  const { setValue } = useBackDropLoaderContext();
+
   /**
    * navigate the use to /Dashboard when user do not have any project
    */
@@ -62,10 +58,12 @@ const useBoard = () => {
     if (is_updating_task) {
       return finalTaskUpdate;
     }
-    return columnDataWithTaskProperty?.map((column) => ({
-      ...column,
-      tasks: data.flat().filter((task) => task?.status === column.name),
-    }));
+    if (!is_updating_task) {
+      return columnDataWithTaskProperty?.map((column) => ({
+        ...column,
+        tasks: data.flat().filter((task) => task?.status === column.name),
+      }));
+    }
   }, [columnDataWithTaskProperty, data, is_updating_task, finalTaskUpdate]);
 
   /**
@@ -83,7 +81,12 @@ const useBoard = () => {
       const { source, destination } = result;
       const allTasksWithColumns = finalState;
       let finalStateOfTask = [];
+      console.log(destination, "destination", source, "source", Math.random());
       if (!destination) return;
+      if (destination.index < 0) {
+        destination.index = 0;
+      }
+      console.log(destination, "destination", source, "source", Math.random());
 
       /**
        * if task is moved into same column
@@ -92,9 +95,7 @@ const useBoard = () => {
       if (destination.droppableId === source.droppableId) {
         // find in which row task is drag and dropped
         // Get current state and its setter for the status
-        const columnWhereTaskIsDragAndDrop = finalState.filter(
-          (item) => item.name === destination.droppableId
-        );
+        const columnWhereTaskIsDragAndDrop = finalState.filter((item) => item.name === destination.droppableId);
 
         // find which task is moved
         const movedTask = columnWhereTaskIsDragAndDrop[0]?.tasks[source.index];
@@ -111,6 +112,8 @@ const useBoard = () => {
           index: destination.index,
         };
 
+        console.log(updateTaskForBE, ":::payload", updateTaskForLocal, ":::loal");
+
         // now update the local state as well
 
         /**
@@ -118,18 +121,13 @@ const useBoard = () => {
          */
 
         if (destination.index > source.index) {
-          const allTheTaskThatHavelessIndexValueOfDestinationIndex =
-            columnWhereTaskIsDragAndDrop[0]?.tasks
-              .filter(
-                (item) =>
-                  item.index <= destination.index && item.index !== source.index
-              )
-              .map((item) => ({ ...item, index: item.index - 1 }));
+          const allTheTaskThatHavelessIndexValueOfDestinationIndex = columnWhereTaskIsDragAndDrop[0]?.tasks
+            .filter((item) => item.index <= destination.index && item.index !== source.index)
+            .map((item) => ({ ...item, index: item.index - 1 }));
 
           // other remaining tasks
           const remainingTask = columnWhereTaskIsDragAndDrop[0]?.tasks.filter(
-            (item) =>
-              item.index > destination.index && item.index !== source.index
+            (item) => item.index > destination.index && item.index !== source.index
           );
           finalStateOfTask = [
             ...allTheTaskThatHavelessIndexValueOfDestinationIndex,
@@ -153,23 +151,18 @@ const useBoard = () => {
            */
 
           const allTaskToUpdate = columnWhereTaskIsDragAndDrop[0]?.tasks
-            .filter(
-              (item) =>
-                item.index >= destination.index && item.index < source.index
-            )
+            .filter((item) => item.index >= destination.index && item.index < source.index)
             .map((item) => ({ ...item, index: item.index + 1 }));
 
           // step - 2 find all task that have greater then index of destination
-          const remaningTaskHavingIndexGreaterThanDestination =
-            columnWhereTaskIsDragAndDrop[0]?.tasks.filter(
-              (item) => item.index < destination.index
-            );
+          const remaningTaskHavingIndexGreaterThanDestination = columnWhereTaskIsDragAndDrop[0]?.tasks.filter(
+            (item) => item.index < destination.index
+          );
 
           // step - 3 find all task that have less then index of source
-          const remaningTaskHavingIndexLessThanDestination =
-            columnWhereTaskIsDragAndDrop[0]?.tasks.filter(
-              (item) => item.index > source.index
-            );
+          const remaningTaskHavingIndexLessThanDestination = columnWhereTaskIsDragAndDrop[0]?.tasks.filter(
+            (item) => item.index > source.index
+          );
 
           finalStateOfTask = [
             ...remaningTaskHavingIndexGreaterThanDestination,
@@ -186,28 +179,25 @@ const useBoard = () => {
           });
           setFinalTaskUpdate(updatedValues);
         }
-        // setShowRerender(true);
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updateTaskForBE);
         dispatch(isBackDropLoaderDisplayed(true));
+        setValue("updating...");
       } else {
         /**
          * Get the state where task is moved
          */
-        const columnWhereTaskIsDragAndDrop = finalState.filter(
-          (item) => item.name === destination.droppableId
-        );
+        const columnWhereTaskIsDragAndDrop = finalState?.filter((item) => item.name === destination.droppableId);
 
         /**
          * source tasks
          */
-        const sourceOfTask = finalState.filter(
-          (item) => item.name === source.droppableId
-        );
+        const sourceOfTask = finalState.filter((item) => item.name === source.droppableId);
 
         // find which task is moved
         const movedTask = sourceOfTask[0]?.tasks[source.index];
 
+        console.log(movedTask, "::::moved Task", sourceOfTask);
         // for payload
         const updateTask = {
           ...movedTask,
@@ -216,6 +206,7 @@ const useBoard = () => {
           prevStatus: source.droppableId,
           prevIndex: source.index,
         };
+        console.log("payload", updateTask);
 
         // for local
         const updateTaskInDestination = {
@@ -241,19 +232,17 @@ const useBoard = () => {
           .sort((a, b) => a.index - b.index);
 
         // add the task into destination state and update the index
-        const updatedIndexOfTaskInRangeOfDestination =
-          columnWhereTaskIsDragAndDrop[0]?.tasks?.map((item) => {
-            if (item.index >= source.index) {
-              return { ...item, index: item.index + 1 };
-            } else {
-              return item;
-            }
-          });
+        const updatedIndexOfTaskInRangeOfDestination = columnWhereTaskIsDragAndDrop[0]?.tasks?.map((item) => {
+          if (item.index >= source.index) {
+            return { ...item, index: item.index + 1 };
+          } else {
+            return item;
+          }
+        });
 
-        const finalArrayWithDroppedTask = [
-          ...updatedIndexOfTaskInRangeOfDestination,
-          updateTaskInDestination,
-        ].sort((a, b) => a.index - b.index);
+        const finalArrayWithDroppedTask = [...updatedIndexOfTaskInRangeOfDestination, updateTaskInDestination].sort(
+          (a, b) => a.index - b.index
+        );
 
         /**
          * final update
@@ -272,9 +261,10 @@ const useBoard = () => {
         updateTaskWithStatus(updateTask);
         dispatch(isUpdatingTask(true));
         dispatch(isBackDropLoaderDisplayed(true));
+        setValue("updating...");
       }
     },
-    [finalState, updateTaskWithIndex, updateTaskWithStatus, dispatch]
+    [finalState, updateTaskWithIndex, updateTaskWithStatus]
   );
 
   // console.log(finalState, ":::::::::column Data::::::::::");
