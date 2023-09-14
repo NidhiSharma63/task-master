@@ -1,6 +1,8 @@
-# Task Manager - An Open Source Todo App
+# Task Master - An Open Source Todo App
 
-Task Manager is a powerful and user-friendly open-source todo app that empowers you to efficiently organize your tasks, projects, and subtasks. With a wide range of features designed to enhance your productivity, Task Manager helps you stay on top of your tasks and accomplish your goals.
+Task Master is a powerful and user-friendly open-source todo app that empowers you to efficiently organize your tasks, projects, and subtasks. With a wide range of features designed to enhance your productivity, Task Master helps you stay on top of your tasks and accomplish your goals.
+
+## [Demo](https://task-master-eosin.vercel.app/)
 
 Here you go
 
