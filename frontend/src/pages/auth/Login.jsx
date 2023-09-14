@@ -14,18 +14,12 @@ import logoImage from "src/assets/icons/Logo.png";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useState } from "react";
 
 
 const Login = () => {
-  const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
+  const { handleSubmit, initialValues, isLoading, setFormValues, toggle, handleToggle } = useLogin();
 
   const dispatch = useDispatch();
-
-  const [toggle, setToggle] = useState(false);
-  const handleToggle = () => {
-    setToggle(!toggle);
-  }
 
   const { setValue } = useBackDropLoaderContext();
   if (isLoading) {

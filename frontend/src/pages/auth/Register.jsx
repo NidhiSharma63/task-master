@@ -14,34 +14,17 @@ import logoImage from "src/assets/icons/Logo.png";
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useState } from "react";
 
 
 const Register = () => {
-  const { handleSubmit, initialValues, isLoading, setValuesOfForm } = useRegister();
+  const { handleSubmit, initialValues, isLoading, setValuesOfForm, toggle, handleToggle } = useRegister();
   const dispatch = useDispatch();
   
-  //function to toggle password & confirmpassword input field...
-  const [toggle, setToggle] = useState({
-    password: false,
-    confirmpassword: false,
-  });
-  const handleToggle = (name) => {
-    setToggle({
-      ...toggle,
-      [name]: !toggle[name],
-    });
-  };
-
-  
-  
-
   const { setValue } = useBackDropLoaderContext();
   if (isLoading) {
     setValue("Redirecting...");
     dispatch(isBackDropLoaderDisplayed(true));
   }
-
 
   return (
     <Grid container sx={{ height: "100vh" }}>
