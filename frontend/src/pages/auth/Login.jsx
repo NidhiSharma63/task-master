@@ -11,9 +11,13 @@ import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import logoImage from "src/assets/icons/Logo.png";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 
 const Login = () => {
-  const { handleSubmit, initialValues, isLoading, setFormValues } = useLogin();
+  const { handleSubmit, initialValues, isLoading, setFormValues, toggle, handleToggle } = useLogin();
 
   const dispatch = useDispatch();
 
@@ -84,7 +88,18 @@ const Login = () => {
                     setFormValues(values);
                   }}>
                   <FormikControls control="formikInput" name="email" />
-                  <FormikControls control="formikInput" name="password" />
+
+                  <FormikControls control="formikInput" name="password"
+                  //InputProps, to avoid some boilerplates or add missing properties
+                    InputProps={{
+                      endAdornment: (
+                        //InputAdornment can be used for providing default props or style overrides at the theme level.
+                        <InputAdornment position="end" onClick={handleToggle} style={{cursor:"pointer"}}>
+                          {toggle ? (<Visibility />) : (<VisibilityOffIcon />)}
+                        </InputAdornment>
+                      ),
+                    }}
+                    type={toggle ? "text" : "password"} />
 
                   <Divider
                     sx={{

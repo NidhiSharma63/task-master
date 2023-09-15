@@ -10,7 +10,13 @@ const useLogin = () => {
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   const { mutate, isLoading } = useLoginQuery();
   const [formValues, setFormValues] = useState({});
+  const [toggle, setToggle] = useState(false);
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  //toggle password field
+  const handleToggle = () => {
+    setToggle(!toggle);
+  }
 
   useEffect(() => {
     // because we are
@@ -59,6 +65,8 @@ const useLogin = () => {
     setFormValues,
     initialValues,
     isLoading,
+    toggle,
+    handleToggle,
   };
 };
 

@@ -11,11 +11,15 @@ import { useDispatch } from "react-redux";
 import { isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
 import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
 import logoImage from "src/assets/icons/Logo.png";
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 
 const Register = () => {
-  const { handleSubmit, initialValues, isLoading, setValuesOfForm } = useRegister();
+  const { handleSubmit, initialValues, isLoading, setValuesOfForm, toggle, handleToggle } = useRegister();
   const dispatch = useDispatch();
-
+  
   const { setValue } = useBackDropLoaderContext();
   if (isLoading) {
     setValue("Redirecting...");
@@ -85,8 +89,29 @@ const Register = () => {
                   }}>
                   <FormikControls control="formikInput" name="email" />
                   <Typography color={"red"}>{}</Typography>
-                  <FormikControls control="formikInput" name="password" />
-                  <FormikControls control="formikInput" name="confirmPassword" />
+                  
+                  <FormikControls control="formikInput" name="password"
+                  //InputProps, to avoid some boilerplates or add missing properties
+                    InputProps={{
+                      endAdornment: (
+                        //InputAdornment can be used for providing default props or style overrides at the theme level.
+                        <InputAdornment position="end" onClick={() => handleToggle('password')} style={{cursor:"pointer"}}>
+                          {toggle.password ? (<Visibility />) : (<VisibilityOffIcon />)}
+                        </InputAdornment>
+                      ),
+                    }}
+                    type={toggle.password  ? "text" : "password"} />
+
+                  <FormikControls control="formikInput" name="confirmPassword"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end" onClick={() => handleToggle('confirmpassword')} style={{cursor:"pointer"}}>
+                          {toggle.confirmpassword ? (<Visibility />) : (<VisibilityOffIcon />)}
+                        </InputAdornment>
+                      ),
+                    }}
+                    type={toggle.confirmpassword ? "text" : "password"} />
+
                   <Divider
                     sx={{
                       mt: 4,

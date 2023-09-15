@@ -12,6 +12,18 @@ const useRegister = () => {
     timeZone,
   };
 
+  //function to toggle password & confirmpassword field...
+  const [toggle, setToggle] = useState({
+    password: false,
+    confirmpassword: false,
+  });
+  const handleToggle = (name) => {
+    setToggle({
+      ...toggle,
+      [name]: !toggle[name],
+    });
+  };
+
   const [valuesOfForm, setValuesOfForm] = useState(initialValues);
 
   useEffect(() => {
@@ -46,6 +58,8 @@ const useRegister = () => {
     initialValues,
     setValuesOfForm,
     isLoading,
+    toggle,
+    handleToggle,
   };
 };
 
