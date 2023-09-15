@@ -100,8 +100,9 @@ const getColumns = async (req, res, next) => {
  */
 
 const getPagesApi = async (req, res, next) => {
+  const { userId } = req.query;
   try {
-    const pages = await Page.find().sort({ index: 1 });
+    const pages = await Page.find({ userId }).sort({ index: 1 });
     res.status(200).json({ data: pages });
   } catch {
     next(error);
