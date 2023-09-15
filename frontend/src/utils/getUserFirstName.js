@@ -5,13 +5,9 @@ import { capitalizeFirstLetter } from "../utils/TextTransformer";
 // it takes email and returns user first name letter
 
 export const getUserFirstName = (email) => {
-  return capitalizeFirstLetter(
-    getValueFromLS(KEY_FOR_STORING_USER_DETAILS).email.split("@")[0]
-  );
+  return capitalizeFirstLetter(getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?.email?.split("@")[0]);
 };
 
 export const getUserFirstNameFirstLetter = (email) => {
-  return capitalizeFirstLetter(
-    getValueFromLS(KEY_FOR_STORING_USER_DETAILS).email.split("@")[0][0]
-  );
+  return capitalizeFirstLetter(getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?.email?.split("@")[0][0]);
 };
