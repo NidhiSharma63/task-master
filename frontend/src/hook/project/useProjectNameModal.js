@@ -19,8 +19,7 @@ const useProjectNameModal = () => {
   const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch();
   const { mutate, isLoading } = usePostProjectQuery();
-  const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
-    useUpdateProjectQuery();
+  const { mutate: updateProject, isLoading: projectUpdateIsLoading } = useUpdateProjectQuery();
   const { setValue } = useBackDropLoaderContext();
   const [colorName, setColorName] = useState("");
 
@@ -36,7 +35,7 @@ const useProjectNameModal = () => {
   useEffect(() => {
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackdropLoaderDisplayedForProjects(true))
+      dispatch(isBackdropLoaderDisplayedForProjects(true));
       setValue("Creating project");
     }
   }, [isLoading]);
@@ -44,7 +43,7 @@ const useProjectNameModal = () => {
   useEffect(() => {
     if (projectUpdateIsLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackdropLoaderDisplayedForProjects(true))
+      dispatch(isBackdropLoaderDisplayedForProjects(true));
       setValue("Updating project");
     }
   }, [projectUpdateIsLoading]);
@@ -57,7 +56,18 @@ const useProjectNameModal = () => {
   }, [project_rename]);
 
   const handleSave = () => {
-    if (projectName.trim()) {
+    /**
+     * if project name have no value then return
+     */
+    if (projectName?.trim()?.length === 0) return;
+
+    /**
+     * if project has value then run the if block
+     */
+    if (projectName?.trim()) {
+      /**
+       * if project rename obj is present that's mean user is trying to update the project name
+       */
       if (project_rename.projectId) {
         updateProject({
           name: projectName.trim(),
@@ -68,6 +78,9 @@ const useProjectNameModal = () => {
         setProjectName("");
         dispatch(projectRename({}));
       } else {
+        /**
+         * create new project
+         */
         mutate({ name: projectName.trim(), color: colorName });
         setProjectName("");
       }
