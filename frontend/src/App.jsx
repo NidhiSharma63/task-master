@@ -70,8 +70,14 @@ let router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/pages/:id",
+        path: "/pages/",
         element: <PageComponent />,
+        children: [
+          {
+            path: ":id",
+            element: <PageComponent />,
+          },
+        ],
       },
     ],
   },
