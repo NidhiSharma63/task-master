@@ -79,7 +79,6 @@ const useBoard = () => {
     (result) => {
       if (!result) return;
       const { destination, source, draggableId } = result;
-      console.log(destination, source, draggableId);
       let finalData = finalState;
 
       // if user moved the task into same column

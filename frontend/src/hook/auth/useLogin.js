@@ -16,7 +16,7 @@ const useLogin = () => {
   //toggle password field
   const handleToggle = () => {
     setToggle(!toggle);
-  }
+  };
 
   useEffect(() => {
     // because we are
