@@ -1,11 +1,10 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import TaskBoxConatiner from "./components/TaskBoxConatiner";
 import BoardDrawer from "src/components/projectPage/components/BoardDrawer";
 import { DragDropContext } from "react-beautiful-dnd";
 import useBoard from "src/hook/board/useBoard";
 import useAddColumn from "src/hook/board/useAddColumn";
 import { ClipLoader } from "react-spinners";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 const Board = () => {
   const { finalState, isAddColBtnClicked, handleClickOnAddColsBtn, setIsAddColBtnClicked, handleDragEnd, isLoading } =
@@ -50,9 +49,16 @@ const Board = () => {
           {isAddColBtnClicked ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <textarea value={colsValue} className="textarea-col" onChange={handleColsValue}></textarea>
-              <IconButton onClick={handleColsSubmit}>
-                <CheckCircleRoundedIcon sx={{ color: "red", cursor: "pointer" }} />
-              </IconButton>
+              <Button
+                variant="outlined"
+                onClick={handleColsSubmit()}
+                sx={{
+                    borderColor: colors.secondaryTextColor,
+                    color: "white",
+                }}
+              >
+                Save
+              </Button>
             </Box>
           ) : (
             <Button
