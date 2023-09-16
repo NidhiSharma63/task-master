@@ -61,7 +61,6 @@ const useBoard = () => {
       return finalTaskUpdate;
     }
     if (!is_updating_task) {
-      console.log("i should not run");
       return columnDataWithTaskProperty?.map((column) => ({
         ...column,
         tasks: data.flat().filter((task) => task?.status === column.name),
@@ -274,7 +273,7 @@ const useBoard = () => {
     (result) => {
       if (!result) return;
       const { destination, source, draggableId } = result;
-      console.log(destination, source);
+      console.log(destination, source, draggableId);
       let finalData = finalState;
 
       // if user moved the task into same column
@@ -304,7 +303,6 @@ const useBoard = () => {
            * so deduct -1 from all the task indexes that are next to the moved task
            */
           if (task.index === source.index) {
-            console.log("it is same");
             updatedTask.index = destination.index;
           }
           if (destination.index > source.index) {
@@ -339,7 +337,6 @@ const useBoard = () => {
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
       } else {
-        console.log("else part");
         // find the columns from where task is moved
         const columnFromWhereTaskIsMoved = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
 
@@ -407,10 +404,10 @@ const useBoard = () => {
         });
 
         setFinalTaskUpdate(completeUpdatedTask);
-        // dispatch(isBackDropLoaderDisplayed(true));
-        // setValue("updating...");
+        dispatch(isBackDropLoaderDisplayed(true));
+        setValue("updating...");
         dispatch(isUpdatingTask(true));
-        // updateTaskWithStatus(updateTaskInBE);
+        updateTaskWithStatus(updateTaskInBE);
       }
     },
     [finalState]

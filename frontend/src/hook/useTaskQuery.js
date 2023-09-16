@@ -55,12 +55,11 @@ const useGetTaskAccordingToStatus = () => {
           }),
         onSuccess: ({ data }) => {
           setTimeout(() => {
-            console.log("I RUN TO DO FASLE ERVERYTHING");
             dispatch(isBackDropLoaderDisplayed(false));
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
             dispatch(isUpdatingTask(false));
-          }, 100);
+          }, 300);
           return data;
         },
       };
