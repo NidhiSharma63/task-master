@@ -292,8 +292,7 @@ const useBoard = () => {
         let movedTask = activeColumn.find((task) => task?._id === draggableId);
 
         // update the index and also add the currentIndex property to update from backend
-        let updatedMovedTask = { ...movedTask, index: destination?.index };
-        let updatedTaskForBacked = { ...movedTask, currentIndex: destination?.index };
+        let updatedTaskForBackend = { ...movedTask, currentIndex: destination?.index };
 
         // update the index value of all the task from moved task
         activeColumn?.forEach((task) => {
@@ -305,10 +304,16 @@ const useBoard = () => {
              * then deduct -1 from all the task indexs that are next to moved task
              */
             if (destination.index > source.index) {
-              // console.log("TASK MOVED TO DOWN SIDE");
-              if (task.index > movedTask.index) {
+              console.log("TASK MOVED TO DOWN SIDE", task.index, "task index", task);
+              if (task.index > movedTask.index && task.index <= destination.index) {
+                console.log(task, "-1");
                 task.index = task.index - 1;
               }
+              // if (task.index > destination.index) {
+              //   console.log(task, "+1");
+
+              //   task.index = task.index + 1;
+              // }
             } else {
               console.log("TASK MOVED TO UP SIDE", task.index);
               if (task.index >= destination.index && task.index < source.index) {
@@ -327,10 +332,10 @@ const useBoard = () => {
         });
         console.log(finalData, "::::FINAL DATA::::");
         setFinalTaskUpdate(finalData);
-        dispatch(isBackDropLoaderDisplayed(true));
-        setValue("updating...");
+        // dispatch(isBackDropLoaderDisplayed(true));
+        // setValue("updating...");
         dispatch(isUpdatingTask(true));
-        updateTaskWithIndex(updatedTaskForBacked);
+        // updateTaskWithIndex(updatedTaskForBackend);
         console.log("I RUN TO DO TRUE ERVERYTHING");
       }
     },

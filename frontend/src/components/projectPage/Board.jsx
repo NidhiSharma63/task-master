@@ -17,7 +17,7 @@ const Board = () => {
 
   return (
     <Box
-      container
+      container={"true"}
       gap={2}
       sx={{
         position: "relative",
@@ -46,7 +46,7 @@ const Board = () => {
           <ClipLoader color="white" />
         </Box>
       ) : (
-        <Box item sx={{ height: "100%", minWidth: "250px" }}>
+        <Box item={"true"} sx={{ height: "100%", minWidth: "250px" }}>
           {isAddColBtnClicked ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <textarea value={colsValue} className="textarea-col" onChange={handleColsValue}></textarea>
