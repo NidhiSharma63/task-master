@@ -38,11 +38,11 @@ const PageComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          maxWidth: `${isAccordianOpen ? "40rem" : "3.3rem"}`,
+          maxWidth: `${isAccordianOpen ? "45rem" : "3.3rem"}`,
           borderRadius: `${isAccordianOpen ? ".3rem" : "50%"}`,
           position: "fixed",
           bottom: 0,
-          left: "50%",
+          // left: "50%",
           border: "none",
           marginBottom: 2,
           "&::before": {
