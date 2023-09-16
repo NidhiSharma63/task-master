@@ -59,7 +59,7 @@ const useGetTaskAccordingToStatus = () => {
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
             dispatch(isUpdatingTask(false));
-          }, 100);
+          }, 300);
           return data;
         },
       };

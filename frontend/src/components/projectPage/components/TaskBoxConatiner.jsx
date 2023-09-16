@@ -41,7 +41,6 @@ const TaskBoxContainer = ({ name, data, colId }) => {
   });
 
   const { deleteColumn } = useDeleteColumn({ colId, setAnchorElForColumnIcons });
-  // const { userName } = useLayout();
 
   return (
     <Box sx={{ height: "100%", minWidth: "250px" }}>
@@ -69,10 +68,9 @@ const TaskBoxContainer = ({ name, data, colId }) => {
             </IconButton>
           ) : (
             <>
-              <IconButton disabled={show_loader_for_task}>
+              <IconButton disabled={show_loader_for_task} onClick={handleAddTask}>
                 {" "}
                 <AddIcon
-                  onClick={handleAddTask}
                   sx={{
                     cursor: "pointer",
                     color: colors.secondaryTextColor,
@@ -109,6 +107,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
             <Box
               ref={provided.innerRef}
               {...provided.droppableProps}
+              key={name}
               sx={{
                 width: "100%",
                 mt: 1,
