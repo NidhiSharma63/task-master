@@ -272,7 +272,6 @@ const useBoard = () => {
 
   const handleDragEnd = useCallback(
     (result) => {
-      num = 1;
       if (!result) return;
       console.log(result);
       const { destination, source, draggableId } = result;
@@ -295,7 +294,7 @@ const useBoard = () => {
         let updatedTaskForBackend = { ...movedTask, currentIndex: destination?.index };
 
         // update the index value of all the task from moved task
-        activeColumn?.forEach((task) => {
+        const updatedColumnsValue = activeColumn?.map((task) => {
           // Work on those task that does not have same value
 
           if (task?._id !== movedTask?._id) {
@@ -304,18 +303,10 @@ const useBoard = () => {
              * then deduct -1 from all the task indexs that are next to moved task
              */
             if (destination.index > source.index) {
-              console.log("TASK MOVED TO DOWN SIDE", task.index, "task index", task);
-              if (task.index > movedTask.index && task.index <= destination.index) {
-                console.log(task, "-1");
+              if (task.index > source.index && task.index <= destination.index) {
                 task.index = task.index - 1;
               }
-              // if (task.index > destination.index) {
-              //   console.log(task, "+1");
-
-              //   task.index = task.index + 1;
-              // }
             } else {
-              console.log("TASK MOVED TO UP SIDE", task.index);
               if (task.index >= destination.index && task.index < source.index) {
                 task.index = task.index + 1;
               }
@@ -325,17 +316,20 @@ const useBoard = () => {
             movedTask.index = destination?.index;
           }
         });
+
+        console.log(updatedColumnsValue, ":::::::::updatedColumnsValue");
         // Iterate over each object in the array
-        finalData.forEach((item) => {
+        finalData?.forEach((item) => {
           // Sort the tasks array based on the 'index' property
           item.tasks.sort((a, b) => a.index - b.index);
         });
-        console.log(finalData, "::::FINAL DATA::::");
+        const ta = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
+        console.log(ta, "::::FINAL DATA::::");
         setFinalTaskUpdate(finalData);
-        // dispatch(isBackDropLoaderDisplayed(true));
-        // setValue("updating...");
+        dispatch(isBackDropLoaderDisplayed(true));
+        setValue("updating...");
         dispatch(isUpdatingTask(true));
-        // updateTaskWithIndex(updatedTaskForBackend);
+        updateTaskWithIndex(updatedTaskForBackend);
         console.log("I RUN TO DO TRUE ERVERYTHING");
       }
     },
