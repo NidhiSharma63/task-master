@@ -295,37 +295,45 @@ const useBoard = () => {
 
         // update the index value of all the task from moved task
         const updatedColumnsValue = activeColumn?.map((task) => {
-          // Work on those task that does not have same value
+          const updatedTask = { ...task };
 
-          if (task?._id !== movedTask?._id) {
-            /**
-             * If destination.index is greater then source.index. it's means task is moved to down side
-             * then deduct -1 from all the task indexs that are next to moved task
-             */
-            if (destination.index > source.index) {
-              if (task.index > source.index && task.index <= destination.index) {
-                task.index = task.index - 1;
-              }
-            } else {
-              if (task.index >= destination.index && task.index < source.index) {
-                task.index = task.index + 1;
-              }
-            }
-
-            // update the move task status also
-            movedTask.index = destination?.index;
+          // Work on those tasks that do not have the same _id as the moved task
+          // if (task._id !== movedTask._id) {
+          /**
+           * If destination.index is greater than source.index, it means the task is moved down,
+           * so deduct -1 from all the task indexes that are next to the moved task
+           */
+          if (task.index === source.index) {
+            console.log("it is same");
+            updatedTask.index = destination.index;
           }
+          if (destination.index > source.index) {
+            if (task.index > source.index && task.index <= destination.index) {
+              updatedTask.index = task.index - 1;
+            }
+          } else {
+            if (task.index >= destination.index && task.index < source.index) {
+              updatedTask.index = task.index + 1;
+            }
+          }
+          // }
+          return updatedTask;
         });
 
-        console.log(updatedColumnsValue, ":::::::::updatedColumnsValue");
-        // Iterate over each object in the array
-        finalData?.forEach((item) => {
-          // Sort the tasks array based on the 'index' property
-          item.tasks.sort((a, b) => a.index - b.index);
+        let completeUpdatedTask = finalData.map((item) => {
+          if (item.name === source.droppableId) {
+            // Update the tasks property with activeColumn
+            const updatedItem = { ...item, tasks: updatedColumnsValue };
+
+            // Sort the tasks array within updatedItem based on the 'index' property
+            updatedItem.tasks.sort((a, b) => a.index - b.index);
+
+            return updatedItem;
+          }
+          return item; // Return the item as is for other columns
         });
-        const ta = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
-        console.log(ta, "::::FINAL DATA::::");
-        setFinalTaskUpdate(finalData);
+
+        setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
         setValue("updating...");
         dispatch(isUpdatingTask(true));
