@@ -273,8 +273,8 @@ const useBoard = () => {
   const handleDragEnd = useCallback(
     (result) => {
       if (!result) return;
-      console.log(result);
       const { destination, source, draggableId } = result;
+      console.log(destination, source);
       let finalData = finalState;
 
       // if user moved the task into same column
@@ -338,7 +338,79 @@ const useBoard = () => {
         setValue("updating...");
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
-        console.log("I RUN TO DO TRUE ERVERYTHING");
+      } else {
+        console.log("else part");
+        // find the columns from where task is moved
+        const columnFromWhereTaskIsMoved = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
+
+        // find move task
+        let movedTask = columnFromWhereTaskIsMoved.find((task) => task.index === source.index);
+
+        // task to update frontend
+        const updateTaskInFE = {
+          ...movedTask,
+          index: destination.index,
+          status: destination.droppableId,
+        };
+
+        // update task in Backend
+        const updateTaskInBE = {
+          ...movedTask,
+          status: destination.droppableId,
+          currentIndex: destination.index,
+          prevStatus: source.droppableId,
+          prevIndex: source.index,
+        };
+
+        // now decrease -1 from all the tasks that are next to moved task
+        const updatedTaskColumnFromWhereTaskIsMoved = columnFromWhereTaskIsMoved
+          .filter((task) => task.index !== source.index)
+          .map((task) => {
+            //Shallow copy of task (potential immutability issue if nested objects/arrays exist)
+            const taskToUpdate = { ...task };
+            if (task.index > source.index) {
+              taskToUpdate.index = task.index - 1;
+            }
+            return taskToUpdate;
+          });
+
+        // find the column where task is moved
+        const columnWhereTaskIsMoved = finalData.find((item) => item?.name === destination?.droppableId)?.tasks;
+
+        const updatedTaskWhereTaskIsMoved = columnWhereTaskIsMoved?.map((task) => {
+          let updateTask = { ...task };
+          if (task.index >= destination.index) {
+            updateTask.index = updateTask.index + 1;
+          }
+          return updateTask;
+        });
+
+        // Then, push the new task into the updated array
+        updatedTaskWhereTaskIsMoved.push(updateTaskInFE);
+
+        let completeUpdatedTask = finalData.map((item) => {
+          let updateTaskColumn = { ...item };
+
+          if (updateTaskColumn.name === source.droppableId) {
+            updateTaskColumn.tasks = updatedTaskColumnFromWhereTaskIsMoved;
+            // Sort the tasks array within updateTaskColumn based on the 'index' property
+            updateTaskColumn.tasks.sort((a, b) => a.index - b.index);
+          }
+
+          if (updateTaskColumn.name === destination.droppableId) {
+            updateTaskColumn.tasks = updatedTaskWhereTaskIsMoved;
+            // Sort the tasks array within updateTaskColumn based on the 'index' property
+            updateTaskColumn.tasks.sort((a, b) => a.index - b.index);
+          }
+
+          return updateTaskColumn;
+        });
+
+        setFinalTaskUpdate(completeUpdatedTask);
+        // dispatch(isBackDropLoaderDisplayed(true));
+        // setValue("updating...");
+        dispatch(isUpdatingTask(true));
+        // updateTaskWithStatus(updateTaskInBE);
       }
     },
     [finalState]
