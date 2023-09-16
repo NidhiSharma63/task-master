@@ -7,7 +7,8 @@ import { ACTIONS_FOR_EDITABLE_CONTENT } from "src/constant/Misc";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const PageComponent = () => {
-  const { handleClick, handleChange, openAccordianOnClick, innerHTML, editorRef, isAccordianOpen } = usePage();
+  const { handleClick, handleChange, openAccordianOnClick, handleListCreation, innerHTML, editorRef, isAccordianOpen } =
+    usePage();
 
   return (
     <Box
@@ -15,8 +16,10 @@ const PageComponent = () => {
         display: "flex",
         minWidth: "300px",
         maxWidth: "80%",
+        width: "800px",
         margin: "auto",
         marginTop: "1rem",
+        height: "100%",
       }}>
       <Button
         variant="contained"
@@ -35,11 +38,11 @@ const PageComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          width: `${isAccordianOpen ? "30rem" : "3rem"}`,
+          maxWidth: `${isAccordianOpen ? "45rem" : "3.3rem"}`,
           borderRadius: `${isAccordianOpen ? ".3rem" : "50%"}`,
           position: "fixed",
           bottom: 0,
-          left: "50%",
+          // left: "50%",
           border: "none",
           marginBottom: 2,
           "&::before": {
@@ -66,7 +69,13 @@ const PageComponent = () => {
                 name={item.value === "h1" || item === "h2" || item === "h3" ? "heading" : ""}
                 onMouseDown={(evt) => {
                   evt.preventDefault(); // Avoids loosing focus from the editable area
-                  document.execCommand(item.key, false, item.value); // Send the command to the browser
+                  if (item.value === "ul") {
+                    handleListCreation("ul");
+                  } else if (item.value === "ol") {
+                    handleListCreation("ol");
+                  } else {
+                    document.execCommand(item.key, false, item.value); // Send the command to the browser
+                  }
                 }}>
                 {item.value}
               </Button>

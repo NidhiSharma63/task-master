@@ -56,6 +56,20 @@ const usePage = () => {
     setIsAccordianOpen((prev) => !prev);
   };
 
+  const handleListCreation = (listType) => {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const ulElement = document.createElement(listType);
+    const listItem = document.createElement("li");
+    listItem.contentEditable = true; // Make the list item editable
+    listItem.textContent = ""; // Initial text for the list item
+
+    ulElement.appendChild(listItem);
+
+    // Insert the unordered list element at the selection range
+    range.insertNode(ulElement);
+  };
+
   return {
     handleClick,
     handleChange,
@@ -63,6 +77,7 @@ const usePage = () => {
     innerHTML,
     editorRef,
     isAccordianOpen,
+    handleListCreation,
   };
 };
 
