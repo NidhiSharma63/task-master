@@ -19,7 +19,6 @@ const useLogin = () => {
   };
 
   useEffect(() => {
-    // because we are
     if (token) {
       navigate("/");
     }
