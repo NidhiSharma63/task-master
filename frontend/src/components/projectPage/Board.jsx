@@ -50,9 +50,9 @@ const Board = () => {
           {isAddColBtnClicked ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <textarea value={colsValue} className="textarea-col" onChange={handleColsValue}></textarea>
-              <IconButton onClick={handleColsSubmit}>
-                <CheckCircleRoundedIcon sx={{ color: "red", cursor: "pointer" }} />
-              </IconButton>
+              <Button onClick={handleColsSubmit} variant="contained" sx={{ ml: 1 }}>
+                Add
+              </Button>
             </Box>
           ) : (
             <Button
