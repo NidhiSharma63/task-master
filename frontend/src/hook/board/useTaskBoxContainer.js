@@ -1,10 +1,14 @@
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAddTaskQuery } from "../useTaskQuery";
-import { projectDataInStore } from "../../redux/projects/projectSlice";
-import { booleanDataInStore, showLoaderForTask } from "../../redux/boolean/booleanSlice";
-import { activeTask } from "../../redux/task/taskSlice";
-import { isBoardDrawerOpen, isTaskDisplayed } from "../../redux/boolean/booleanSlice";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  booleanDataInStore,
+  isBoardDrawerOpen,
+  isTaskDisplayed,
+  showLoaderForTask,
+} from '../../redux/boolean/booleanSlice';
+import { projectDataInStore } from '../../redux/projects/projectSlice';
+import { activeTask } from '../../redux/task/taskSlice';
+import { useAddTaskQuery } from '../useTaskQuery';
 
 const useTaskBoxContainer = ({ data, name }) => {
   const dispatch = useDispatch();
@@ -12,7 +16,8 @@ const useTaskBoxContainer = ({ data, name }) => {
   const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
-  const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] = useState(null);
+  const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
+    useState(null);
   const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState(null);
   const [openColsIcons, setOpenColsIcons] = useState(false);
   const isTaskAddedFromBottom = useRef(null);
@@ -23,18 +28,18 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * add task to top
    */
-  const handleAddTask = () => {
-    setTextAreaValuesTop((prevValues) => ["", ...prevValues]);
+  const handleAddTask = useCallback(() => {
+    setTextAreaValuesTop((prevValues) => ['', ...prevValues]);
     isTaskAddedFromBottom.current = false;
     dispatch(isTaskDisplayed(false));
-  };
+  }, []);
 
   /*
    * add task from bottom
    */
   const handleClickForAddingTaskFromBottom = () => {
     isTaskAddedFromBottom.current = true;
-    setTextAreaValuesBottom((prevValues) => [...prevValues, ""]);
+    setTextAreaValuesBottom((prevValues) => [...prevValues, '']);
     dispatch(isTaskDisplayed(false));
   };
 
@@ -62,7 +67,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    */
 
   const handleBlur = async (event, index) => {
-    let valueOfTextField = "";
+    let valueOfTextField = '';
     let lastIndexOfCurrentTask = data?.[data.length - 1]?.index;
 
     if (!isTaskAddedFromBottom.current) {
@@ -127,7 +132,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    * for managing style of textarea
    */
   const handleInput = (event) => {
-    event.target.style.height = "auto";
+    event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
