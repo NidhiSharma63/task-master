@@ -12,6 +12,7 @@ const Board = () => {
     useBoard();
 
   const { colsValue, handleColsValue, handleColsSubmit } = useAddColumn({
+    isAddColBtnClicked,
     setIsAddColBtnClicked,
   });
 

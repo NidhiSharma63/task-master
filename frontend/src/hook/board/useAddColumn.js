@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForColumns } from "src/redux/boolean/booleanSlice";
 
-const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId, prevColName }) => {
+/**
+ * This function is invoked at two places one 1. Board.jsx (where user can add the column)
+ * 2. Task box container (where user can edit the column name)
+ */
+
+const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColsRename, colId, prevColName }) => {
   const [colsValue, setColsValue] = useState("");
   const { isLoading: isColumnCreating, mutate } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
@@ -90,11 +95,12 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId, prevColName 
 
   useEffect(() => {
     const removeTextArea = (event) => {
+      console.log("i run to remove columns", event.target.tagName, isAddColBtnClicked);
       if (
         event.target.tagName !== "TEXTAREA" &&
         event.target.tagName !== "BUTTON" &&
         colsValue?.trim()?.length === 0 &&
-        isColsRename
+        isAddColBtnClicked
       ) {
         setIsAddColBtnClicked(false);
       }
@@ -104,7 +110,7 @@ const useAddColumn = ({ setIsAddColBtnClicked, isColsRename, colId, prevColName 
     return () => {
       window.removeEventListener("click", removeTextArea);
     };
-  }, [colsValue, setIsAddColBtnClicked]);
+  }, [colsValue, setIsAddColBtnClicked, isAddColBtnClicked]);
 
   return {
     colsValue,
