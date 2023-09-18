@@ -8,7 +8,6 @@ import { totalStatus } from "../../redux/status/statusSlice";
 import { booleanDataInStore, isBackDropLoaderDisplayed, isUpdatingTask } from "../../redux/boolean/booleanSlice";
 import { useUpdateTaskQueryWithStatus, useUpdateTaskQuery } from "../../hook/useTaskQuery";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-let num = 0;
 
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();

@@ -1,13 +1,20 @@
 import { Drawer, Box, Typography, Divider, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { booleanDataInStore, isBoardDrawerOpen, isUpdatingTask } from "src/redux/boolean/booleanSlice";
+import {
+  booleanDataInStore,
+  isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForProjects,
+  isBoardDrawerOpen,
+  isUpdatingTask,
+} from "src/redux/boolean/booleanSlice";
 import { taskDataInStore } from "src/redux/task/taskSlice";
 import { Form, Formik } from "formik";
 import FormikControls from "src/common/formik/FormikControls";
 import { validationForUpdatingTask } from "src/constant/validation";
 import { useUpdateTaskQueryWithDetails, useDeleteTask } from "src/hook/useTaskQuery";
 import colors from "src/theme/variables";
+import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -16,6 +23,7 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const { setValue } = useBackDropLoaderContext();
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -54,6 +62,9 @@ const BoardDrawer = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
     dispatch(isUpdatingTask(false));
+    dispatch(isBackdropLoaderDisplayedForProjects(true));
+    dispatch(isBackDropLoaderDisplayed(true));
+    setValue("Deleting Task...");
   };
 
   return (

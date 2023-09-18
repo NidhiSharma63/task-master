@@ -1,16 +1,14 @@
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAddTaskQuery } from "../useTaskQuery";
-import { projectDataInStore } from "../../redux/projects/projectSlice";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   booleanDataInStore,
-  showLoaderForTask,
-} from "../../redux/boolean/booleanSlice";
-import { activeTask } from "../../redux/task/taskSlice";
-import {
   isBoardDrawerOpen,
   isTaskDisplayed,
-} from "../../redux/boolean/booleanSlice";
+  showLoaderForTask,
+} from '../../redux/boolean/booleanSlice';
+import { projectDataInStore } from '../../redux/projects/projectSlice';
+import { activeTask } from '../../redux/task/taskSlice';
+import { useAddTaskQuery } from '../useTaskQuery';
 
 const useTaskBoxContainer = ({ data, name }) => {
   const dispatch = useDispatch();
@@ -23,25 +21,25 @@ const useTaskBoxContainer = ({ data, name }) => {
   const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState(null);
   const [openColsIcons, setOpenColsIcons] = useState(false);
   const isTaskAddedFromBottom = useRef(null);
-  const [isColsRename, setIsColsRename] = useState(false);
+  const [isColumnRename, setisColumnRename] = useState(false);
   const { show_loader_for_task } = useSelector(booleanDataInStore);
   const { mutate, isLoading } = useAddTaskQuery();
 
   /**
    * add task to top
    */
-  const handleAddTask = () => {
-    setTextAreaValuesTop((prevValues) => ["", ...prevValues]);
+  const handleAddTask = useCallback(() => {
+    setTextAreaValuesTop((prevValues) => ['', ...prevValues]);
     isTaskAddedFromBottom.current = false;
     dispatch(isTaskDisplayed(false));
-  };
+  }, []);
 
   /*
    * add task from bottom
    */
   const handleClickForAddingTaskFromBottom = () => {
     isTaskAddedFromBottom.current = true;
-    setTextAreaValuesBottom((prevValues) => [...prevValues, ""]);
+    setTextAreaValuesBottom((prevValues) => [...prevValues, '']);
     dispatch(isTaskDisplayed(false));
   };
 
@@ -69,7 +67,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    */
 
   const handleBlur = async (event, index) => {
-    let valueOfTextField = "";
+    let valueOfTextField = '';
     let lastIndexOfCurrentTask = data?.[data.length - 1]?.index;
 
     if (!isTaskAddedFromBottom.current) {
@@ -134,7 +132,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    * for managing style of textarea
    */
   const handleInput = (event) => {
-    event.target.style.height = "auto";
+    event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
@@ -163,7 +161,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    * hanlde column rename
    */
   const handleClickOnRename = (colId) => {
-    setIsColsRename(true);
+    setisColumnRename(true);
     handleCloseOfColsIcons();
   };
 
@@ -172,7 +170,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    */
 
   return {
-    setIsColsRename,
+    setisColumnRename,
     handleClickOnTask,
     handleInput,
     handleBlur,
@@ -187,7 +185,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     textAreaValuesTop,
     anchorElForColumnIcons,
     openColsIcons,
-    isColsRename,
+    isColumnRename,
     isLoading,
     show_loader_for_task,
   };
