@@ -52,10 +52,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           justifyContent: "space-between",
         }}>
         {isColumnRename ? (
-          <textarea
-            value={columnValue.length > 0 ? columnValue : name}
-            className="textarea-col"
-            onChange={handlecolumnValue}></textarea>
+          <textarea value={columnValue} className="textarea-col" onChange={handlecolumnValue}></textarea>
         ) : (
           <Typography sx={{ fontWeight: 600 }} variant="subtitle1">
             {name}
@@ -63,9 +60,9 @@ const TaskBoxContainer = ({ name, data, colId }) => {
         )}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {isColumnRename ? (
-            <IconButton onClick={handleColsSubmit}>
-              <CheckCircleRoundedIcon sx={{ color: "red", cursor: "pointer" }} />
-            </IconButton>
+            <Button onClick={handleColsSubmit} variant="contained" sx={{ ml: 1 }}>
+              Add
+            </Button>
           ) : (
             <>
               <IconButton disabled={show_loader_for_task} onClick={handleAddTask}>
