@@ -11,7 +11,7 @@ const Board = () => {
   const { finalState, isAddColBtnClicked, handleClickOnAddColsBtn, setIsAddColBtnClicked, handleDragEnd, isLoading } =
     useBoard();
 
-  const { colsValue, handleColsValue, handleColsSubmit } = useAddColumn({
+  const { columnValue, handlecolumnValue, handleColsSubmit } = useAddColumn({
     isAddColBtnClicked,
     setIsAddColBtnClicked,
   });
@@ -50,7 +50,7 @@ const Board = () => {
         <Box item={"true"} sx={{ height: "100%", minWidth: "250px" }}>
           {isAddColBtnClicked ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <textarea value={colsValue} className="textarea-col" onChange={handleColsValue}></textarea>
+              <textarea value={columnValue} className="textarea-col" onChange={handlecolumnValue}></textarea>
               <Button onClick={handleColsSubmit} variant="contained" sx={{ ml: 1 }}>
                 Add
               </Button>

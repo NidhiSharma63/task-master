@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { statusDataInStore } from "src/redux/status/statusSlice";
 import { useDispatch } from "react-redux";
-import { booleanDataInStore, isBackDropLoaderDisplayed } from "src/redux/boolean/booleanSlice";
+import {
+  booleanDataInStore,
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForColumns,
+} from "src/redux/boolean/booleanSlice";
 
 /**
  * use post column query
@@ -43,12 +47,14 @@ const useGetColumnQuery = () => {
         projectName: active_project,
       });
     },
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       if (is_backdrop_loader_displayed_for_Columns) {
+        console.log("ON SUCCESS");
         dispatch(isBackDropLoaderDisplayed(false));
+        dispatch(isBackDropLoaderDisplayedForColumns(false));
       }
-      return data;
     },
+
     onError: (error) => {
       toast.error(error?.response?.data);
     },
@@ -60,7 +66,7 @@ const useGetColumnQuery = () => {
  */
 
 const useUpdateColumnName = () => {
-  const { total_status } = useSelector(statusDataInStore);
+  // const { total_status } = useSelector(statusDataInStore);
   const { active_project } = useSelector(projectDataInStore);
   return useMutation({
     mutationFn: (payload) => {
@@ -68,9 +74,9 @@ const useUpdateColumnName = () => {
     },
     onSuccess: () => {
       // toast.success("Section updated successfully!");
-      queryClient.invalidateQueries("projects");
+      // queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries(["column", active_project]);
-      total_status?.forEach((status) => queryClient.invalidateQueries(status));
+      // total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
     },
     onError: (error) => {

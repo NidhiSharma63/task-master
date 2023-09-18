@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePostColumnQuery, useUpdateColumnName } from "src/hook/useColumnQuery";
+import { usePostColumnQuery, useUpdateColumnName, useGetColumnQuery } from "src/hook/useColumnQuery";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
@@ -10,102 +10,94 @@ import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForColumns } from "
  * 2. Task box container (where user can edit the column name)
  */
 
-const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColsRename, colId, prevColName }) => {
-  const [colsValue, setColsValue] = useState("");
-  const { isLoading: isColumnCreating, mutate } = usePostColumnQuery();
+const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRename, colId, prevColumnName }) => {
+  const [columnValue, setColumnValue] = useState("");
+  const { mutate } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
-  const { mutate: updateColsname, isLoading: isColumnUpdating } = useUpdateColumnName();
+  const { mutate: updateColsname } = useUpdateColumnName();
+  const { isFetching } = useGetColumnQuery();
 
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
 
-  const handleColsValue = (event) => {
-    setColsValue(event.target.value);
+  const handlecolumnValue = (event) => {
+    setColumnValue(event.target.value);
   };
 
   /**
-   * useEffect that fire when user tries to rename columns value
+   * useEffect that fire when user tries to rename columns value to set the columnValue to previous column name
    */
 
   useEffect(() => {
-    if (isColsRename) {
-      setColsValue(prevColName);
+    if (isColumnRename) {
+      setColumnValue(prevColumnName);
     }
-  }, [isColsRename, prevColName]);
+  }, [isColumnRename, prevColumnName]);
 
   /**
-   * show back drop loader when column name is updating
+   * When user added and updated the column then run this effect after the data is fetched
    */
   useEffect(() => {
-    if (isColumnUpdating) {
-      setValue("Column updating");
-      dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackDropLoaderDisplayedForColumns(true));
-    } else {
+    if (!isFetching) {
       setValue("");
-      dispatch(isBackDropLoaderDisplayed(false));
-      setColsValue("");
+      setColumnValue("");
       setIsAddColBtnClicked(false);
-      dispatch(isBackDropLoaderDisplayedForColumns(false));
     }
-  }, [isColumnUpdating, setValue, dispatch, setIsAddColBtnClicked]);
+  }, [isFetching, setValue, setIsAddColBtnClicked]);
 
   /**
-   * show back drop loader when column name is adding
+   * fire on when user try to submit the column
    */
-  useEffect(() => {
-    if (isColumnCreating) {
-      setValue("Column creating");
-      dispatch(isBackDropLoaderDisplayed(true));
-      dispatch(isBackDropLoaderDisplayedForColumns(true));
-    } else {
-      setValue("");
-      dispatch(isBackDropLoaderDisplayed(false));
-      setColsValue("");
-      setIsAddColBtnClicked(false);
-      dispatch(isBackDropLoaderDisplayedForColumns(false));
-    }
-  }, [isColumnCreating, setValue, dispatch, setIsAddColBtnClicked]);
-
-  const handleColsSubmit = (event) => {
-    if (colsValue?.length === 0) {
+  const handleColsSubmit = () => {
+    if (columnValue?.length === 0) {
       return setIsAddColBtnClicked(false);
     }
     /**
      * add column
      */
-    if (!isColsRename) {
+    if (!isColumnRename) {
       mutate({
-        name: colsValue,
+        name: columnValue,
         projectName: active_project,
       });
+      setValue("Column creating");
+      dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackDropLoaderDisplayedForColumns(true));
     }
     /**
      * update cols value
      */
 
-    if (isColsRename) {
+    if (isColumnRename) {
       /**
        * if column value is same as previous one then do nothing
        */
-      if (colsValue?.trim() === prevColName?.trim()) {
+      if (columnValue?.trim() === prevColumnName?.trim()) {
         setIsAddColBtnClicked(false);
         return;
       }
       updateColsname({
-        name: colsValue,
+        name: columnValue,
         _id: colId,
-        previousColName: prevColName,
+        previousColName: prevColumnName,
       });
+      setValue("Column updating");
+      dispatch(isBackDropLoaderDisplayed(true));
+      dispatch(isBackDropLoaderDisplayedForColumns(true));
     }
   };
+
+  /**
+   * when user click on add section button then text area should appear after that if user does not add anything and
+   * click out the textarea then remove the text area
+   */
 
   useEffect(() => {
     const removeTextArea = (event) => {
       if (
         event.target.tagName !== "TEXTAREA" &&
         event.target.tagName !== "BUTTON" &&
-        colsValue?.trim()?.length === 0 &&
+        columnValue?.trim()?.length === 0 &&
         isAddColBtnClicked
       ) {
         setIsAddColBtnClicked(false);
@@ -116,11 +108,11 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColsRename,
     return () => {
       window.removeEventListener("click", removeTextArea);
     };
-  }, [colsValue, setIsAddColBtnClicked, isAddColBtnClicked]);
+  }, [columnValue, setIsAddColBtnClicked, isAddColBtnClicked]);
 
   return {
-    colsValue,
-    handleColsValue,
+    columnValue,
+    handlecolumnValue,
     handleColsSubmit,
   };
 };

@@ -23,21 +23,21 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     handleClickOnThreeDots,
     handleCloseOfColsIcons,
     handleClickOnRename,
-    setIsColsRename,
+    setisColumnRename,
     setAnchorElForColumnIcons,
     textAreaValuesBottom,
     textAreaValuesTop,
     anchorElForColumnIcons,
     openColsIcons,
-    isColsRename,
+    isColumnRename,
     show_loader_for_task,
   } = useTaskBoxContainer({ data, name });
 
-  const { colsValue, handleColsValue, handleColsSubmit } = useAddColumn({
-    setIsAddColBtnClicked: setIsColsRename,
-    isColsRename,
+  const { columnValue, handlecolumnValue, handleColsSubmit } = useAddColumn({
+    setIsAddColBtnClicked: setisColumnRename,
+    isColumnRename,
     colId,
-    prevColName: name,
+    prevColumnName: name,
   });
 
   const { deleteColumn } = useDeleteColumn({ colId, setAnchorElForColumnIcons });
@@ -51,18 +51,18 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           alignItems: "center",
           justifyContent: "space-between",
         }}>
-        {isColsRename ? (
+        {isColumnRename ? (
           <textarea
-            value={colsValue.length > 0 ? colsValue : name}
+            value={columnValue.length > 0 ? columnValue : name}
             className="textarea-col"
-            onChange={handleColsValue}></textarea>
+            onChange={handlecolumnValue}></textarea>
         ) : (
           <Typography sx={{ fontWeight: 600 }} variant="subtitle1">
             {name}
           </Typography>
         )}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {isColsRename ? (
+          {isColumnRename ? (
             <IconButton onClick={handleColsSubmit}>
               <CheckCircleRoundedIcon sx={{ color: "red", cursor: "pointer" }} />
             </IconButton>

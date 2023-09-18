@@ -2,15 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAddTaskQuery } from "../useTaskQuery";
 import { projectDataInStore } from "../../redux/projects/projectSlice";
-import {
-  booleanDataInStore,
-  showLoaderForTask,
-} from "../../redux/boolean/booleanSlice";
+import { booleanDataInStore, showLoaderForTask } from "../../redux/boolean/booleanSlice";
 import { activeTask } from "../../redux/task/taskSlice";
-import {
-  isBoardDrawerOpen,
-  isTaskDisplayed,
-} from "../../redux/boolean/booleanSlice";
+import { isBoardDrawerOpen, isTaskDisplayed } from "../../redux/boolean/booleanSlice";
 
 const useTaskBoxContainer = ({ data, name }) => {
   const dispatch = useDispatch();
@@ -18,12 +12,11 @@ const useTaskBoxContainer = ({ data, name }) => {
   const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
-  const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
-    useState(null);
+  const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] = useState(null);
   const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState(null);
   const [openColsIcons, setOpenColsIcons] = useState(false);
   const isTaskAddedFromBottom = useRef(null);
-  const [isColsRename, setIsColsRename] = useState(false);
+  const [isColumnRename, setisColumnRename] = useState(false);
   const { show_loader_for_task } = useSelector(booleanDataInStore);
   const { mutate, isLoading } = useAddTaskQuery();
 
@@ -163,7 +156,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    * hanlde column rename
    */
   const handleClickOnRename = (colId) => {
-    setIsColsRename(true);
+    setisColumnRename(true);
     handleCloseOfColsIcons();
   };
 
@@ -172,7 +165,7 @@ const useTaskBoxContainer = ({ data, name }) => {
    */
 
   return {
-    setIsColsRename,
+    setisColumnRename,
     handleClickOnTask,
     handleInput,
     handleBlur,
@@ -187,7 +180,7 @@ const useTaskBoxContainer = ({ data, name }) => {
     textAreaValuesTop,
     anchorElForColumnIcons,
     openColsIcons,
-    isColsRename,
+    isColumnRename,
     isLoading,
     show_loader_for_task,
   };
