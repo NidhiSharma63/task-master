@@ -1,16 +1,22 @@
-import { Box, Button, Typography, Menu, MenuItem, IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { Droppable } from "react-beautiful-dnd";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import useTaskBoxContainer from "src/hook/board/useTaskBoxContainer";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import DeleteIcon from "@mui/icons-material/Delete";
-import useAddColumn from "src/hook/board/useAddColumn";
-import useDeleteColumn from "src/hook/board/useDeleteColumn";
-import TaskCard from "./TaskCard";
-import { ClipLoader } from "react-spinners";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import colors from "src/theme/variables";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
+import { Droppable } from 'react-beautiful-dnd';
+import { ClipLoader } from 'react-spinners';
+import useAddColumn from 'src/hook/board/useAddColumn';
+import useDeleteColumn from 'src/hook/board/useDeleteColumn';
+import useTaskBoxContainer from 'src/hook/board/useTaskBoxContainer';
+import colors from 'src/theme/variables';
+import TaskCard from './TaskCard';
 
 const TaskBoxContainer = ({ name, data, colId }) => {
   const {
@@ -40,59 +46,81 @@ const TaskBoxContainer = ({ name, data, colId }) => {
     prevColumnName: name,
   });
 
-  const { deleteColumn } = useDeleteColumn({ colId, setAnchorElForColumnIcons });
+  const { deleteColumn } = useDeleteColumn({
+    colId,
+    setAnchorElForColumnIcons,
+  });
 
   return (
-    <Box sx={{ height: "100%", minWidth: "250px" }}>
+    <Box sx={{ height: '100%', minWidth: '250px' }}>
       <Box
         sx={{
-          padding: "0 .7rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}>
+          padding: '0 .7rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         {isColumnRename ? (
-          <textarea value={columnValue} className="textarea-col" onChange={handlecolumnValue}></textarea>
+          <textarea
+            value={columnValue}
+            className="textarea-col"
+            onChange={handlecolumnValue}
+          ></textarea>
         ) : (
           <Typography sx={{ fontWeight: 600 }} variant="subtitle1">
             {name}
           </Typography>
         )}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {isColumnRename ? (
-            <Button onClick={handleColsSubmit} variant="contained" sx={{ ml: 1 }}>
+            <Button
+              onClick={handleColsSubmit}
+              variant="contained"
+              sx={{ ml: 1 }}
+            >
               Add
             </Button>
           ) : (
             <>
-              <IconButton disabled={show_loader_for_task} onClick={handleAddTask}>
-                {" "}
+              <IconButton
+                disabled={show_loader_for_task}
+                onClick={handleAddTask}
+              >
+                {' '}
                 <AddIcon
                   sx={{
-                    cursor: "pointer",
+                    cursor: 'pointer',
                     color: colors.secondaryTextColor,
                   }}
                 />
               </IconButton>
               <MoreVertIcon
-                sx={{ cursor: "pointer", color: colors.secondaryTextColor }}
+                sx={{ cursor: 'pointer', color: colors.secondaryTextColor }}
                 onClick={handleClickOnThreeDots}
               />
             </>
           )}
-          <Menu id="logout" anchorEl={anchorElForColumnIcons} open={openColsIcons} onClose={handleCloseOfColsIcons}>
+          <Menu
+            id="logout"
+            anchorEl={anchorElForColumnIcons}
+            open={openColsIcons}
+            onClose={handleCloseOfColsIcons}
+          >
             <MenuItem
               sx={{
                 color: colors.secondaryTextColor,
               }}
-              onClick={handleClickOnRename}>
+              onClick={handleClickOnRename}
+            >
               <DriveFileRenameOutlineIcon />
             </MenuItem>
             <MenuItem
               sx={{
                 color: colors.secondaryTextColor,
               }}
-              onClick={deleteColumn}>
+              onClick={deleteColumn}
+            >
               <DeleteIcon />
             </MenuItem>
           </Menu>
@@ -106,26 +134,29 @@ const TaskBoxContainer = ({ name, data, colId }) => {
               {...provided.droppableProps}
               key={name}
               sx={{
-                width: "100%",
+                width: '100%',
                 mt: 1,
-                height: "calc(100% - 30px)",
-                borderRadius: ".6rem",
-                boxShadow: "0px 0px 4px 1px #00000014",
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-                flexDirection: "column",
-                overflowY: "auto",
+                height: 'calc(100% - 30px)',
+                borderRadius: '.6rem',
+                boxShadow: '0px 0px 4px 1px #00000014',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                flexDirection: 'column',
+                overflowY: 'auto',
                 p: 1,
               }}
-              className="box">
+              className="box"
+            >
               {textAreaValuesTop?.map((value, index) => (
                 <>
                   <textarea
                     key={index}
                     value={value}
                     data-id={name}
-                    onChange={(event) => handleChange(event, index, event.target.value)}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
                     onBlur={(event) => handleBlur(event, index)}
                     onInput={handleInput}
                     className="textArea"
@@ -133,19 +164,26 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                   {show_loader_for_task && (
                     <Box
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "100%",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
                         mt: -1,
-                      }}>
+                      }}
+                    >
                       <ClipLoader sx={{ mt: -2 }} />
                     </Box>
                   )}
                 </>
               ))}
               {data?.map((item, i) => {
-                return <TaskCard key={item._id} item={item} handleClickOnTask={handleClickOnTask} />;
+                return (
+                  <TaskCard
+                    key={item._id}
+                    item={item}
+                    handleClickOnTask={handleClickOnTask}
+                  />
+                );
               })}
               {provided.placeholder}
               {textAreaValuesBottom?.map((value, index) => (
@@ -154,7 +192,9 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                     key={index}
                     value={value}
                     data-id={name}
-                    onChange={(event) => handleChange(event, index, event.target.value)}
+                    onChange={(event) =>
+                      handleChange(event, index, event.target.value)
+                    }
                     onBlur={(event) => handleBlur(event, index)}
                     onInput={handleInput}
                     className="textArea"
@@ -162,12 +202,13 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                   {show_loader_for_task && (
                     <Box
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "100%",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
                         mt: -1,
-                      }}>
+                      }}
+                    >
                       <ClipLoader sx={{ mt: -2 }} />
                     </Box>
                   )}
@@ -177,7 +218,8 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                 <Button
                   variant="contained"
                   disabled={show_loader_for_task}
-                  onClick={handleClickForAddingTaskFromBottom}>
+                  onClick={handleClickForAddingTaskFromBottom}
+                >
                   Add Task
                 </Button>
               ) : null}

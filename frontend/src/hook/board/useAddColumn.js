@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePostColumnQuery, useUpdateColumnName, useGetColumnQuery } from "src/hook/useColumnQuery";
 import { projectDataInStore } from "src/redux/projects/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,9 +20,9 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
   const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
 
-  const handlecolumnValue = (event) => {
+  const handlecolumnValue = useCallback((event) => {
     setColumnValue(event.target.value);
-  };
+  }, []);
 
   /**
    * useEffect that fire when user tries to rename columns value to set the columnValue to previous column name
