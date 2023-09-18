@@ -1,8 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-  customAxiosRequestForPost,
-  customAxiosRequestForGet,
-} from "src/utils/axiosRequest";
+import { customAxiosRequestForPost, customAxiosRequestForGet } from "src/utils/axiosRequest";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { queryClient } from "src/index";
@@ -37,7 +34,7 @@ const usePostColumnQuery = () => {
 const useGetColumnQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
   const dispatch = useDispatch();
-  const {is_backdrop_loader_displayed_for_Columns} = useSelector(booleanDataInStore);
+  const { is_backdrop_loader_displayed_for_Columns } = useSelector(booleanDataInStore);
 
   return useQuery({
     queryKey: ["column", active_project],
@@ -47,8 +44,8 @@ const useGetColumnQuery = () => {
       });
     },
     onSuccess: ({ data }) => {
-      if(is_backdrop_loader_displayed_for_Columns){
-       dispatch(isBackDropLoaderDisplayed(false));
+      if (is_backdrop_loader_displayed_for_Columns) {
+        dispatch(isBackDropLoaderDisplayed(false));
       }
       return data;
     },
@@ -72,7 +69,7 @@ const useUpdateColumnName = () => {
     onSuccess: () => {
       // toast.success("Section updated successfully!");
       queryClient.invalidateQueries("projects");
-      queryClient.invalidateQueries(["column",active_project]);
+      queryClient.invalidateQueries(["column", active_project]);
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
     },
@@ -88,7 +85,7 @@ const useUpdateColumnName = () => {
 
 const useDeleteColumnName = () => {
   const { total_status } = useSelector(statusDataInStore);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (payload) => {
@@ -96,11 +93,11 @@ const useDeleteColumnName = () => {
     },
     onSuccess: () => {
       // toast.success("Section deleted successfully!");
-      queryClient.invalidateQueries("projects");
+      // queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries(["column"]);
       total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(["charts-data"]);
-      dispatch(isBackDropLoaderDisplayed(true))
+      // dispatch(isBackDropLoaderDisplayed(true));
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -108,9 +105,4 @@ const useDeleteColumnName = () => {
   });
 };
 
-export {
-  usePostColumnQuery,
-  useGetColumnQuery,
-  useUpdateColumnName,
-  useDeleteColumnName,
-};
+export { usePostColumnQuery, useGetColumnQuery, useUpdateColumnName, useDeleteColumnName };
