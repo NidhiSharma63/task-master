@@ -1,9 +1,9 @@
-const Column = require("../../models/columnsSchema");
-const Project = require("../../models/projectsSchema");
-const Task = require("../../models/taskSchema");
-const Page = require("../../models/pagesSchema");
-const generateRandomColor = require("../../utils/getRandomColor");
-const rescheduleReminders = require("../../utils/setSchedule");
+const Column = require('../../models/columnsSchema');
+const Project = require('../../models/projectsSchema');
+const Task = require('../../models/taskSchema');
+const Page = require('../../models/pagesSchema');
+const generateRandomColor = require('../../utils/getRandomColor');
+const rescheduleReminders = require('../../utils/setSchedule');
 /**
  * Create Project
  */
@@ -13,14 +13,14 @@ const createProjectApi = async (req, res, next) => {
     let projectColor = colorName;
 
     if (!name) {
-      throw new Error("Project name is required");
+      throw new Error('Project name is required');
     }
 
     // check if user added the project already or not
     const isProjectAlreadyPresent = await Project.findOne({ userId, name });
 
     if (isProjectAlreadyPresent) {
-      throw new Error("Project is already present");
+      throw new Error('Project is already present');
     }
 
     if (!colorName) {
@@ -38,25 +38,25 @@ const createProjectApi = async (req, res, next) => {
      */
     await Column.create([
       {
-        name: "Todo",
+        name: 'Todo',
         projectName: name,
         userId,
         index: 0,
       },
       {
-        name: "In priority",
+        name: 'In priority',
         projectName: name,
         userId,
         index: 1,
       },
       {
-        name: "In progress",
+        name: 'In progress',
         projectName: name,
         userId,
         index: 2,
       },
       {
-        name: "Done",
+        name: 'Done',
         projectName: name,
         userId,
         index: 3,
@@ -88,7 +88,7 @@ const createTaskApi = async (req, res, next) => {
     const { index, projectName } = taskBody;
 
     if (index === undefined) {
-      throw new Error("Index is not present");
+      throw new Error('Index is not present');
     }
     // get the project and it's color
     const project = await Project.findOne({ name: projectName });
@@ -131,10 +131,10 @@ const createColumnsApi = async (req, res, next) => {
     const { userId, projectName, name } = req.body;
 
     // Check if a column with the same name exists for the user
-    const existingColumn = await Column.findOne({ userId, name });
+    const existingColumn = await Column.findOne({ userId, name, projectName });
 
     if (existingColumn) {
-      throw new Error("column with same name already exists");
+      throw new Error('column with same name already exists');
     }
 
     // Get all columns count
@@ -164,7 +164,7 @@ const createPages = async (req, res, next) => {
   try {
     const { userId, name, content } = req.body;
     if (!name) {
-      throw new Error("page name does not exists");
+      throw new Error('page name does not exists');
     }
 
     // Get all columns count
