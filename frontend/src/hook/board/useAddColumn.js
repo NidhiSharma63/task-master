@@ -85,6 +85,13 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColsRename,
      */
 
     if (isColsRename) {
+      /**
+       * if column value is same as previous one then do nothing
+       */
+      if (colsValue?.trim() === prevColName?.trim()) {
+        setIsAddColBtnClicked(false);
+        return;
+      }
       updateColsname({
         name: colsValue,
         _id: colId,
@@ -95,7 +102,6 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColsRename,
 
   useEffect(() => {
     const removeTextArea = (event) => {
-      console.log("i run to remove columns", event.target.tagName, isAddColBtnClicked);
       if (
         event.target.tagName !== "TEXTAREA" &&
         event.target.tagName !== "BUTTON" &&
