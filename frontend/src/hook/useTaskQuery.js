@@ -55,14 +55,16 @@ const useGetTaskAccordingToStatus = () => {
             status,
             projectName: active_project,
           }),
-        onSettled: ({ data }) => {
+        onSuccess: ({ data }) => {
+          return data;
+        },
+        onSettled: () => {
           setTimeout(() => {
             dispatch(isBackDropLoaderDisplayed(false));
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
             dispatch(isUpdatingTask(false));
           }, 300);
-          return data;
         },
       };
     }),
@@ -80,14 +82,14 @@ const useGetTaskAccordingToStatus = () => {
 
 /**
  *
- * @returns Update request drag and drop
+ * @returns Update task status when task moved to same column up or down
  */
 
 const useUpdateTaskQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
   const dispatch = useDispatch();
-  // let state;
   const [state, setState] = useState('');
+
   return useMutation({
     mutationFn: (payload) => {
       const { status } = payload;
@@ -114,15 +116,29 @@ const useUpdateTaskQuery = () => {
 const useUpdateTaskQueryWithStatus = () => {
   const dispatch = useDispatch();
   const { active_project } = useSelector(projectDataInStore);
-  let state;
+  const [state, setState] = useState({
+    previousStatusOfTask: '',
+    currentStatusOfTask: '',
+  });
+
   return useMutation({
     mutationFn: (payload) => {
-      const { status } = payload;
-      state = status;
+      const { status, prevStatus } = payload;
+      setState({
+        previousStatusOfTask: prevStatus,
+        currentStatusOfTask: status,
+      });
       return customAxiosRequestForPost('/task/status', 'put', payload);
     },
-    onSuccess: ({ data }) => {
-      queryClient.invalidateQueries([state, active_project]);
+    onSettled: () => {
+      queryClient.invalidateQueries([
+        state.previousStatusOfTask,
+        active_project,
+      ]);
+      queryClient.invalidateQueries([
+        state.currentStatusOfTask,
+        active_project,
+      ]);
       queryClient.invalidateQueries(['charts-data']);
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
