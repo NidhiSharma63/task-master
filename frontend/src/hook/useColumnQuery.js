@@ -8,7 +8,6 @@ import {
   isBackDropLoaderDisplayedForColumns,
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
-import { statusDataInStore } from 'src/redux/status/statusSlice';
 import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
@@ -25,7 +24,6 @@ const usePostColumnQuery = () => {
       return customAxiosRequestForPost('/column', 'post', payload);
     },
     onSettled: () => {
-      queryClient.invalidateQueries('projects');
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries(['column', active_project]);
     },
@@ -70,17 +68,13 @@ const useGetColumnQuery = () => {
  */
 
 const useUpdateColumnName = () => {
-  // const { total_status } = useSelector(statusDataInStore);
   const { active_project } = useSelector(projectDataInStore);
   return useMutation({
     mutationFn: (payload) => {
       return customAxiosRequestForPost('/column', 'put', payload);
     },
     onSettled: () => {
-      // toast.success("Section updated successfully!");
-      // queryClient.invalidateQueries("projects");
       queryClient.invalidateQueries(['column', active_project]);
-      // total_status?.forEach((status) => queryClient.invalidateQueries(status));
       queryClient.invalidateQueries(['charts-data']);
     },
     onError: (error) => {
@@ -94,7 +88,7 @@ const useUpdateColumnName = () => {
  */
 
 const useDeleteColumnName = () => {
-  const { total_status } = useSelector(statusDataInStore);
+  const { active_project } = useSelector(projectDataInStore);
   // const dispatch = useDispatch();
 
   return useMutation({
@@ -102,12 +96,8 @@ const useDeleteColumnName = () => {
       return customAxiosRequestForPost('/column', 'delete', payload);
     },
     onSettled: () => {
-      // toast.success("Section deleted successfully!");
-      // queryClient.invalidateQueries("projects");
-      queryClient.invalidateQueries(['column']);
-      total_status?.forEach((status) => queryClient.invalidateQueries(status));
+      queryClient.invalidateQueries(['column', active_project]);
       queryClient.invalidateQueries(['charts-data']);
-      // dispatch(isBackDropLoaderDisplayed(true));
     },
     onError: (error) => {
       toast.error(error?.response?.data);
