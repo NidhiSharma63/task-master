@@ -20,15 +20,18 @@ import {
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
-  let state;
+  const [state, setState] = useState('');
+
   return useMutation({
     mutationFn: (payload) => {
       const { status } = payload;
-      state = status;
+      setState(status);
       return customAxiosRequestForPost('/task', 'post', payload);
     },
     onSuccess: () => {
+      console.log(state, ':::state');
       queryClient.invalidateQueries(['charts-data']);
+      queryClient.invalidateQueries([state, 'All-task']);
       queryClient.invalidateQueries([state]);
     },
     onError: (error) => {
@@ -96,8 +99,11 @@ const useUpdateTaskQuery = () => {
       setState(status);
       return customAxiosRequestForPost('/task', 'put', payload);
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries([state, active_project]);
+      queryClient.invalidateQueries([state, 'All-task']);
+    },
+    onSettled: () => {
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
       }, 500);
@@ -130,7 +136,7 @@ const useUpdateTaskQueryWithStatus = () => {
       });
       return customAxiosRequestForPost('/task/status', 'put', payload);
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries([
         state.previousStatusOfTask,
         active_project,
@@ -140,6 +146,9 @@ const useUpdateTaskQueryWithStatus = () => {
         active_project,
       ]);
       queryClient.invalidateQueries(['charts-data']);
+      queryClient.invalidateQueries([state, 'All-task']);
+    },
+    onSettled: () => {
       setTimeout(() => {
         dispatch(isUpdatingTask(false));
       }, 1000);
@@ -168,6 +177,7 @@ const useUpdateTaskQueryWithDetails = () => {
       toast.success('Task updated successfully!');
       queryClient.invalidateQueries([state, active_project]);
       queryClient.invalidateQueries(['charts-data']);
+      queryClient.invalidateQueries([state, 'All-task']);
     },
     onError: (error) => {
       toast.error(error?.response?.data);
@@ -189,6 +199,7 @@ const useDeleteTask = (status) => {
     onSuccess: () => {
       toast.success('Task deleted successfully!');
       queryClient.invalidateQueries([status, active_project]);
+      queryClient.invalidateQueries([status, 'All-task']);
       queryClient.invalidateQueries(['charts-data']);
     },
     onError: (error) => {

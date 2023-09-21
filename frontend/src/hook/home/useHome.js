@@ -1,6 +1,6 @@
-import { useGetProjectQuery } from "src/hook/useProjectQuery";
-import { useEffect, useState } from "react";
-import { useGetAllTaskAccordingToStatusForEachProject } from "src/hook/useTaskQuery";
+import { useEffect, useState } from 'react';
+import { useGetProjectQuery } from 'src/hook/useProjectQuery';
+import { useGetAllTaskAccordingToStatusForEachProject } from 'src/hook/useTaskQuery';
 
 const useHome = () => {
   const { data: projectData, isLoading: projectIsLoading } =
@@ -24,6 +24,8 @@ const useHome = () => {
 
   const { data: taskData, isLoading: isTaskLoading } =
     useGetAllTaskAccordingToStatusForEachProject();
+
+  console.log(taskData, ':::taskData');
 
   return {
     projectData,

@@ -1,15 +1,29 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, Divider } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { booleanDataInStore, isCreateTaskModalOpen } from "src/redux/boolean/booleanSlice";
-import { useAddTaskQuery, useUpdateTaskQueryWithDetails } from "src/hook/useTaskQuery";
-import { Form, Formik } from "formik";
-import FormikControls from "src/common/formik/FormikControls";
-import { validationForUpdatingTask } from "src/constant/validation";
-import colors from "src/theme/variables";
-import { useDeleteTask } from "src/hook/useTaskQuery";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Typography,
+} from '@mui/material';
+import { Form, Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import FormikControls from 'src/common/formik/FormikControls';
+import { validationForUpdatingTask } from 'src/constant/validation';
+import {
+  useAddTaskQuery,
+  useDeleteTask,
+  useUpdateTaskQueryWithDetails,
+} from 'src/hook/useTaskQuery';
+import {
+  booleanDataInStore,
+  isCreateTaskModalOpen,
+} from 'src/redux/boolean/booleanSlice';
+import colors from 'src/theme/variables';
 
-import { activeTask, taskDataInStore } from "src/redux/task/taskSlice";
-import { useEffect } from "react";
+import { activeTask, taskDataInStore } from 'src/redux/task/taskSlice';
 
 const CreateTaskPopup = ({ status, projectData }) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
@@ -19,46 +33,47 @@ const CreateTaskPopup = ({ status, projectData }) => {
 
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
-  const { mutate: updateTask, isLoading: isUpdatingTask } = useUpdateTaskQueryWithDetails();
+  const { mutate: updateTask, isLoading: isUpdatingTask } =
+    useUpdateTaskQueryWithDetails();
 
   const handleClose = () => {
     dispatch(isCreateTaskModalOpen(false));
-    dispatch(activeTask(""));
+    dispatch(activeTask(''));
   };
 
   const initialValues = {
-    task: active_task?.task ?? "",
+    task: active_task?.task ?? '',
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
-    description: active_task?.description ?? "",
+    description: active_task?.description ?? '',
     projectName: active_task?.projectName ?? projectName?.[0],
-    label: active_task?.label ?? "",
-    labelColor: active_task?.labelColor ?? "#e33529",
+    label: active_task?.label ?? '',
+    labelColor: active_task?.labelColor ?? '#e33529',
     index: active_task?.index ?? 0,
-    subTasks: active_task?.subTasks ?? "",
+    subTasks: active_task?.subTasks ?? '',
   };
 
   // active task is present
   if (active_task.task) {
-    initialValues._id = active_task._id ?? "";
-    initialValues.userId = active_task.userId ?? "";
+    initialValues._id = active_task._id ?? '';
+    initialValues.userId = active_task.userId ?? '';
   }
   const handleSubmit = (values) => {
     if (active_task.task) {
       updateTask(values);
-      dispatch(isCreateTaskModalOpen(true));
+      dispatch(isCreateTaskModalOpen(false));
     } else {
       mutate(values);
-      dispatch(isCreateTaskModalOpen(true));
-    }
-    dispatch(activeTask(""));
-  };
-
-  useEffect(() => {
-    if ((!isUpdatingTask, !isLoadingTask && is_create_task_modal_open)) {
       dispatch(isCreateTaskModalOpen(false));
     }
-  }, [isUpdatingTask, isLoadingTask]);
+    dispatch(activeTask(''));
+  };
+
+  // useEffect(() => {
+  //   if ((!isUpdatingTask, !isLoadingTask && is_create_task_modal_open)) {
+  //     dispatch(isCreateTaskModalOpen(false));
+  //   }
+  // }, [isUpdatingTask, isLoadingTask, dispatch, is_create_task_modal_open]);
 
   const handleDelete = () => {
     deleteTask({ id: active_task._id });
@@ -69,29 +84,46 @@ const CreateTaskPopup = ({ status, projectData }) => {
     <Dialog open={is_create_task_modal_open} onClose={handleClose}>
       <DialogTitle>Add Task</DialogTitle>
       <Divider />
-      <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationForUpdatingTask}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationForUpdatingTask}
+      >
         <Form>
           <DialogContent>
             <Box
               sx={{
-                width: "30rem",
-                height: "25rem",
-              }}>
+                width: '30rem',
+                height: '25rem',
+              }}
+            >
               <FormikControls control="formikInput" name="task" />
-              <FormikControls control="formikInputForLable" name="label" colorName="labelColor" />
+              <FormikControls
+                control="formikInputForLable"
+                name="label"
+                colorName="labelColor"
+              />
               <FormikControls control="formikDatePicker" name="dueDate" />
               <FormikControls control="formikTextArea" name="description" />
-              <FormikControls control="formikSelect" name="projectName" values={projectName ?? []} mt={2} />
+              <FormikControls
+                control="formikSelect"
+                name="projectName"
+                values={projectName ?? []}
+                mt={2}
+              />
               <FormikControls control="formikInputArray" name="subTasks" />
-              <Box sx={{ mt: 2, display: "flex" }}>
-                <Typography sx={{ fontWeight: 600 }}>Created At : &nbsp;</Typography>
+              <Box sx={{ mt: 2, display: 'flex' }}>
+                <Typography sx={{ fontWeight: 600 }}>
+                  Created At : &nbsp;
+                </Typography>
                 <Typography
                   sx={{
                     fontWeight: 600,
                     color: (theme) => theme.palette.primary.main,
-                  }}>
+                  }}
+                >
                   {active_task.createdAt
-                    ? new Date(active_task.createdAt ?? " ").toUTCString()
+                    ? new Date(active_task.createdAt ?? ' ').toUTCString()
                     : new Date().toUTCString()}
                 </Typography>
               </Box>
@@ -104,11 +136,12 @@ const CreateTaskPopup = ({ status, projectData }) => {
                 variant="contained"
                 sx={{
                   backgroundColor: colors.bannerColor,
-                  "&:hover": {
+                  '&:hover': {
                     background: colors.bannerColor,
                   },
                 }}
-                onClick={handleDelete}>
+                onClick={handleDelete}
+              >
                 Delete
               </Button>
             ) : (
@@ -116,10 +149,11 @@ const CreateTaskPopup = ({ status, projectData }) => {
                 onClick={handleClose}
                 sx={{
                   backgroundColor: colors.bannerColor,
-                  "&:hover": {
+                  '&:hover': {
                     background: colors.bannerColor,
                   },
-                }}>
+                }}
+              >
                 Cancel
               </Button>
             )}

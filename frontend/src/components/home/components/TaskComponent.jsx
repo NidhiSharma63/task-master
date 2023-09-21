@@ -1,17 +1,21 @@
-import { Box, Typography, Divider, Button } from "@mui/material";
-import { ClipLoader } from "react-spinners";
-import CreateTaskPopup from "src/components/home/components/CreateTaskPopup";
-import useTaskComponent from "src/hook/home/useTaskComponent";
-import colors from "src/theme/variables";
+import { Box, Button, Divider, Typography } from '@mui/material';
+import { ClipLoader } from 'react-spinners';
+import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
+import useTaskComponent from 'src/hook/home/useTaskComponent';
+import colors from 'src/theme/variables';
 
-const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) => {
+const TaskComponent = ({
+  backgroundColors,
+  projectData,
+  taskData,
+  isLoading,
+}) => {
   const {
     handleClickOnAddTask,
     handleClickOnLink,
     handleClickOnTask,
     totalTask,
     getTaskToDisplay,
-    total_status,
     active_link,
   } = useTaskComponent({
     backgroundColors,
@@ -24,14 +28,15 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
   return (
     <Box
       sx={{
-        width: "500px",
-        border: "1px solid",
+        width: '500px',
+        border: '1px solid',
         borderColor: (theme) => theme.palette.grey[400],
-        borderRadius: "0.3rem",
-        height: "100%",
-      }}>
-      <Box sx={{ padding: " 0.8rem", width: "100%" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        borderRadius: '0.3rem',
+        height: '100%',
+      }}
+    >
+      <Box sx={{ padding: ' 0.8rem', width: '100%' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
             My Tasks
           </Typography>
@@ -39,62 +44,67 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
             variant="contained"
             sx={{
               mb: 1,
-              display: "flex",
+              display: 'flex',
             }}
-            onClick={handleClickOnAddTask}>
+            onClick={handleClickOnAddTask}
+          >
             Add Task
           </Button>
         </Box>
         <Box
           mt={1}
           sx={{
-            display: "flex",
-            overflowX: "scroll",
-            width: "100%",
-            "&::-webkit-scrollbar": {
-              width: "2px",
-              height: "5px",
+            display: 'flex',
+            overflowX: 'scroll',
+            width: '100%',
+            '&::-webkit-scrollbar': {
+              width: '2px',
+              height: '5px',
             },
-            "&::-webkit-scrollbar-track": {
+            '&::-webkit-scrollbar-track': {
               background: `${colors.primaryColor}`,
             },
-            "&::-webkit-scrollbar-thumb": {
+            '&::-webkit-scrollbar-thumb': {
               background: `${colors.secondaryTextColor}`,
-              borderRadius: "4px",
+              borderRadius: '4px',
             },
-          }}>
+          }}
+        >
           {totalTask?.map((item, i) => {
-            // console.log(item, totalTask[item]);
-
             return (
               <Box
                 key={i}
                 sx={{
-                  cursor: "pointer",
+                  cursor: 'pointer',
                   fontWeight: 500,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
                   gap: 1,
                   mb: 1,
-                  backgroundColor: active_link === item ? colors.mainColor : "none",
-                  "&:hover": {
+                  backgroundColor:
+                    active_link === item ? colors.mainColor : 'none',
+                  '&:hover': {
                     backgroundColor: colors.mainColor, // Change border on hover
                   },
-                  transition: "0.3s ease",
-                  ml: i === 0 ? "0rem" : "2rem",
-                  padding: ".2rem .4rem",
-                  borderRadius: ".3rem",
+                  transition: '0.3s ease',
+                  ml: i === 0 ? '0rem' : '2rem',
+                  padding: '.2rem .4rem',
+                  borderRadius: '.3rem',
                 }}
-                onClick={() => handleClickOnLink(item.taskName)}>
-                <Typography sx={{ width: "max-content" }}>{item.taskName}</Typography>
+                onClick={() => handleClickOnLink(item.taskName)}
+              >
+                <Typography sx={{ width: 'max-content' }}>
+                  {item.taskName}
+                </Typography>
                 <Box
                   sx={{
-                    borderRadius: "50%",
-                    padding: "0rem .5rem",
-                    color: "white",
+                    borderRadius: '50%',
+                    padding: '0rem .5rem',
+                    color: 'white',
                     background: colors.bannerColor,
-                  }}>
+                  }}
+                >
                   {item?.count ?? 0}
                 </Box>
               </Box>
@@ -105,17 +115,19 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
       <Divider />
       <Box
         sx={{
-          padding: "0.4rem",
-          height: "calc(100% - 100px)",
-          overflowY: "auto",
-        }}>
+          padding: '0.4rem',
+          height: 'calc(100% - 120px)',
+          overflowY: 'scroll',
+        }}
+      >
         {isLoading ? (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <ClipLoader color="#571159" />
           </Box>
         ) : (
@@ -124,25 +136,27 @@ const TaskComponent = ({ backgroundColors, projectData, taskData, isLoading }) =
               <Box
                 key={i}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  border: "1px solid",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  border: '1px solid',
                   borderColor: (theme) => theme.palette.grey[400],
-                  padding: "0.5rem",
-                  borderRadius: ".4rem",
+                  padding: '0.5rem',
+                  borderRadius: '.4rem',
                   mb: 1,
-                  cursor: "pointer",
+                  cursor: 'pointer',
                 }}
-                onClick={() => handleClickOnTask(item)}>
+                onClick={() => handleClickOnTask(item)}
+              >
                 <Typography>{item.task}</Typography>
                 <Box
                   sx={{
-                    padding: "0 .8rem",
+                    padding: '0 .8rem',
                     backgroundColor: item.color,
-                    borderRadius: "0.3rem",
-                    color: "white",
-                  }}>
+                    borderRadius: '0.3rem',
+                    color: 'white',
+                  }}
+                >
                   {item.projectName}
                 </Box>
               </Box>
