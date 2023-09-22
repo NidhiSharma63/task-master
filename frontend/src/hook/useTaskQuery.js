@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { queryClient } from 'src/index';
 import {
+  booleanDataInStore,
   isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForTask,
   isTaskDisplayed,
   isUpdatingTask,
   showLoaderForTask,
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
 import { statusDataInStore } from 'src/redux/status/statusSlice';
+import { taskDataInStore } from 'src/redux/task/taskSlice';
 import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
@@ -47,6 +50,8 @@ const useAddTaskQuery = () => {
 const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
   const { total_status } = useSelector(statusDataInStore);
+  const { is_backdrop_loader_displayed_for_Task } =
+    useSelector(taskDataInStore);
   const dispatch = useDispatch();
 
   const userQueries = useQueries({
@@ -63,7 +68,10 @@ const useGetTaskAccordingToStatus = () => {
         },
         onSettled: () => {
           setTimeout(() => {
-            dispatch(isBackDropLoaderDisplayed(false));
+            if (is_backdrop_loader_displayed_for_Task) {
+              dispatch(isBackDropLoaderDisplayed(false));
+              dispatch(isBackdropLoaderDisplayedForTask(false));
+            }
             dispatch(isTaskDisplayed(true));
             dispatch(showLoaderForTask(false));
             dispatch(isUpdatingTask(false));
@@ -165,17 +173,19 @@ const useUpdateTaskQueryWithStatus = () => {
  */
 
 const useUpdateTaskQueryWithDetails = () => {
-  let state;
+  const [state, setState] = useState('');
   const { active_project } = useSelector(projectDataInStore);
+
   return useMutation({
     mutationFn: (payload) => {
       const { status } = payload;
-      state = status;
+      setState(status);
       return customAxiosRequestForPost('/task/details', 'put', payload);
     },
     onSuccess: () => {
       toast.success('Task updated successfully!');
       queryClient.invalidateQueries([state, active_project]);
+      console.log('invalidated query', state, active_project);
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries([state, 'All-task']);
     },
@@ -214,7 +224,10 @@ const useDeleteTask = (status) => {
  */
 const useGetAllTaskAccordingToStatusForEachProject = () => {
   const { total_status } = useSelector(statusDataInStore);
-  console.log(total_status, 'Total status');
+  const { is_backdrop_loader_displayed_for_Task } =
+    useSelector(booleanDataInStore);
+  const dispatch = useDispatch();
+
   const userQueries = useQueries({
     queries: total_status.map((status) => {
       return {
@@ -225,6 +238,12 @@ const useGetAllTaskAccordingToStatusForEachProject = () => {
           }),
         onSuccess: ({ data }) => {
           return data;
+        },
+        onSettled: () => {
+          if (is_backdrop_loader_displayed_for_Task) {
+            dispatch(isBackDropLoaderDisplayed(false));
+            dispatch(isBackdropLoaderDisplayedForTask(false));
+          }
         },
       };
     }),
