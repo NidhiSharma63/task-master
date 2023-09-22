@@ -13,7 +13,6 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
 import { statusDataInStore } from 'src/redux/status/statusSlice';
-import { taskDataInStore } from 'src/redux/task/taskSlice';
 import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
@@ -32,7 +31,6 @@ const useAddTaskQuery = () => {
       return customAxiosRequestForPost('/task', 'post', payload);
     },
     onSuccess: () => {
-      console.log(state, ':::state');
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries([state, 'All-task']);
       queryClient.invalidateQueries([state]);
@@ -51,7 +49,7 @@ const useGetTaskAccordingToStatus = () => {
   const { active_project } = useSelector(projectDataInStore);
   const { total_status } = useSelector(statusDataInStore);
   const { is_backdrop_loader_displayed_for_Task } =
-    useSelector(taskDataInStore);
+    useSelector(booleanDataInStore);
   const dispatch = useDispatch();
 
   const userQueries = useQueries({
@@ -67,15 +65,18 @@ const useGetTaskAccordingToStatus = () => {
           return data;
         },
         onSettled: () => {
-          setTimeout(() => {
-            if (is_backdrop_loader_displayed_for_Task) {
-              dispatch(isBackDropLoaderDisplayed(false));
-              dispatch(isBackdropLoaderDisplayedForTask(false));
-            }
-            dispatch(isTaskDisplayed(true));
-            dispatch(showLoaderForTask(false));
-            dispatch(isUpdatingTask(false));
-          }, 300);
+          // setTimeout(() => {
+          console.log('i run', is_backdrop_loader_displayed_for_Task);
+
+          if (is_backdrop_loader_displayed_for_Task) {
+            console.log('i run');
+            dispatch(isBackDropLoaderDisplayed(false));
+            dispatch(isBackdropLoaderDisplayedForTask(false));
+          }
+          dispatch(isTaskDisplayed(true));
+          dispatch(showLoaderForTask(false));
+          dispatch(isUpdatingTask(false));
+          // }, 300);
         },
       };
     }),

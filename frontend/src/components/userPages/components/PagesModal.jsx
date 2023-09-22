@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import DialogComponent from "src/common/DialogComponent";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import DialogComponent from 'src/common/DialogComponent';
+import { usePagesContext } from 'src/context/PagesContextProvider';
+import { usePostPage, useUpdatePage } from 'src/hook/usePagesQuery';
 import {
-  isDialogBoxOpen,
   isBackDropLoaderDisplayed,
   isBackDropLoaderDisplayedForPage,
-} from "src/redux/boolean/booleanSlice";
-import { usePostPage, useUpdatePage } from "src/hook/usePagesQuery";
-import { usePagesContext } from "src/context/PagesContextProvider";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+  isDialogBoxOpen,
+} from 'src/redux/boolean/booleanSlice';
 
 const PagesModal = () => {
   const { pageData } = usePagesContext();
-  const [value, setValue] = useState("");
-  const { setValue: backdropValue } = useBackDropLoaderContext();
+  const [value, setValue] = useState('');
   const { mutate } = usePostPage();
   const { mutate: updatePage } = useUpdatePage();
 
@@ -23,7 +21,7 @@ const PagesModal = () => {
     if (pageData?.name) {
       setValue(pageData.name);
     } else {
-      setValue("");
+      setValue('');
     }
   }, [pageData]);
 
@@ -42,12 +40,11 @@ const PagesModal = () => {
     } else {
       mutate({
         name: value,
-        content: "",
+        content: '',
       });
     }
     dispatch(isBackDropLoaderDisplayedForPage(true));
     dispatch(isBackDropLoaderDisplayed(true));
-    backdropValue("updating...");
   };
 
   const handleChangeInput = (event) => {
@@ -57,8 +54,8 @@ const PagesModal = () => {
   return (
     <DialogComponent
       value={value}
-      title={pageData?.name ? "Edit your page" : "Create your Page"}
-      subTitle={"Enter page name"}
+      title={pageData?.name ? 'Edit your page' : 'Create your Page'}
+      subTitle={'Enter page name'}
       handleChangeInput={handleChangeInput}
       handleSaveButtonClicked={handleSaveButtonClicked}
     />

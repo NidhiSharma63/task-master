@@ -1,19 +1,21 @@
-import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
-import { useUpdatePage } from "src/hook/usePagesQuery";
-import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForPage } from "src/redux/boolean/booleanSlice";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useUpdatePage } from 'src/hook/usePagesQuery';
+import {
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForPage,
+} from 'src/redux/boolean/booleanSlice';
 
 const usePage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { data } = queryClient.getQueryData(["pages"]) ?? {};
+  const { data } = queryClient.getQueryData(['pages']) ?? {};
   const { mutate } = useUpdatePage();
   const dispatch = useDispatch();
-  const { setValue } = useBackDropLoaderContext();
-  const [innerHTML, setInnerHTML] = useState("");
+
+  const [innerHTML, setInnerHTML] = useState('');
   const editorRef = useRef();
   const [isAccordianOpen, setIsAccordianOpen] = useState(false);
 
@@ -23,7 +25,9 @@ const usePage = () => {
   useEffect(() => {
     const currentPage = data?.find((item) => item._id === id);
     const value =
-      currentPage?.content.length > 0 ? currentPage?.content : `<h1>Untitled</h1><br/><div>Starting typing</div>`;
+      currentPage?.content.length > 0
+        ? currentPage?.content
+        : `<h1>Untitled</h1><br/><div>Starting typing</div>`;
     setInnerHTML(value);
   }, [id, data]);
 
@@ -44,7 +48,6 @@ const usePage = () => {
       content: editorRef.current.lastHtml,
     });
     dispatch(isBackDropLoaderDisplayed(true));
-    setValue("saving...");
     dispatch(isBackDropLoaderDisplayedForPage(true));
   };
 
@@ -60,9 +63,9 @@ const usePage = () => {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
     const ulElement = document.createElement(listType);
-    const listItem = document.createElement("li");
+    const listItem = document.createElement('li');
     listItem.contentEditable = true; // Make the list item editable
-    listItem.textContent = ""; // Initial text for the list item
+    listItem.textContent = ''; // Initial text for the list item
 
     ulElement.appendChild(listItem);
 

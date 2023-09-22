@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { ClipLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
 import useTaskComponent from 'src/hook/home/useTaskComponent';
 import colors from 'src/theme/variables';
@@ -128,7 +128,7 @@ const TaskComponent = ({
               justifyContent: 'center',
             }}
           >
-            <ClipLoader color="#571159" />
+            <FadeLoader />
           </Box>
         ) : (
           data?.map((item, i) => {

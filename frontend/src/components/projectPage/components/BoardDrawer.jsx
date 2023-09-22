@@ -1,20 +1,22 @@
-import { Drawer, Box, Typography, Divider, Button } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import { Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import FormikControls from 'src/common/formik/FormikControls';
+import { validationForUpdatingTask } from 'src/constant/validation';
+import {
+  useDeleteTask,
+  useUpdateTaskQueryWithDetails,
+} from 'src/hook/useTaskQuery';
 import {
   booleanDataInStore,
   isBackDropLoaderDisplayed,
-  isBackdropLoaderDisplayedForProjects,
+  isBackdropLoaderDisplayedForTask,
   isBoardDrawerOpen,
   isUpdatingTask,
-} from "src/redux/boolean/booleanSlice";
-import { taskDataInStore } from "src/redux/task/taskSlice";
-import { Form, Formik } from "formik";
-import FormikControls from "src/common/formik/FormikControls";
-import { validationForUpdatingTask } from "src/constant/validation";
-import { useUpdateTaskQueryWithDetails, useDeleteTask } from "src/hook/useTaskQuery";
-import colors from "src/theme/variables";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+} from 'src/redux/boolean/booleanSlice';
+import { taskDataInStore } from 'src/redux/task/taskSlice';
+import colors from 'src/theme/variables';
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -23,7 +25,6 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
-  const { setValue } = useBackDropLoaderContext();
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -40,11 +41,11 @@ const BoardDrawer = () => {
     dueDate: new Date(active_task?.dueDate) ?? null,
     userId: active_task.userId,
     status: active_task.status,
-    description: active_task?.description ?? "",
-    subTasks: active_task?.subTasks ?? "",
-    label: active_task?.label ?? "",
-    labelColor: active_task?.labelColor ?? "#e33529",
-    originalDate: "",
+    description: active_task?.description ?? '',
+    subTasks: active_task?.subTasks ?? '',
+    label: active_task?.label ?? '',
+    labelColor: active_task?.labelColor ?? '#e33529',
+    originalDate: '',
   };
 
   const handleSubmit = (values) => {
@@ -62,28 +63,29 @@ const BoardDrawer = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
     dispatch(isUpdatingTask(false));
-    dispatch(isBackdropLoaderDisplayedForProjects(true));
+    dispatch(isBackdropLoaderDisplayedForTask(true));
     dispatch(isBackDropLoaderDisplayed(true));
-    setValue("Deleting Task...");
   };
 
   return (
     <Drawer
-      anchor={"right"}
+      anchor={'right'}
       open={open}
       onClose={handleClose}
       sx={{
-        "& .MuiDrawer-paper": {
+        '& .MuiDrawer-paper': {
           width: 600,
         },
-      }}>
+      }}
+    >
       <Box
         sx={{
-          position: "relative",
-          top: "5rem",
-        }}>
+          position: 'relative',
+          top: '5rem',
+        }}
+      >
         <Box>
-          <Typography sx={{ pl: 2, textTransform: "capitalize" }} variant="h5">
+          <Typography sx={{ pl: 2, textTransform: 'capitalize' }} variant="h5">
             {active_task.task}
           </Typography>
           <Divider sx={{ mt: 2 }} />
@@ -91,31 +93,42 @@ const BoardDrawer = () => {
         <Box
           sx={{
             ml: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
             mt: 1,
             mb: 2,
-          }}>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationForUpdatingTask}>
+          }}
+        >
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationForUpdatingTask}
+          >
             <Form>
               <Box
                 sx={{
-                  width: "30rem",
-                  height: "auto",
-                }}>
+                  width: '30rem',
+                  height: 'auto',
+                }}
+              >
                 <FormikControls control="formikInput" name="task" />
-                <FormikControls control="formikInputForLable" name="label" colorName="labelColor" />
+                <FormikControls
+                  control="formikInputForLable"
+                  name="label"
+                  colorName="labelColor"
+                />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
                 <FormikControls control="formikInputArray" name="subTasks" />
 
-                <Box sx={{ mt: 2, display: "flex" }}>
+                <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography>Created At : &nbsp;</Typography>
                   <Typography
                     sx={{
                       color: (theme) => theme.palette.secondary.main,
-                    }}>
+                    }}
+                  >
                     {new Date(active_task.createdAt).toUTCString()}
                   </Typography>
                 </Box>
@@ -124,7 +137,8 @@ const BoardDrawer = () => {
                   type="submit"
                   sx={{
                     mt: 2,
-                  }}>
+                  }}
+                >
                   Save
                 </Button>
                 <Button
@@ -134,10 +148,11 @@ const BoardDrawer = () => {
                     mt: 2,
                     ml: 2,
                     backgroundColor: colors.bannerColor,
-                    "&:hover": {
+                    '&:hover': {
                       backgroundColor: colors.bannerColor,
                     },
-                  }}>
+                  }}
+                >
                   Delete
                 </Button>
               </Box>

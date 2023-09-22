@@ -25,7 +25,6 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import colors from 'src/theme/variables';
 
-import { useBackDropLoaderContext } from 'src/context/BackDropLoaderContext';
 import { activeTask, taskDataInStore } from 'src/redux/task/taskSlice';
 
 const CreateTaskPopup = ({ status, projectData }) => {
@@ -33,7 +32,6 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const dispatch = useDispatch();
   const projectName = projectData?.projects?.map((item) => item.name);
   const { active_task } = useSelector(taskDataInStore);
-  const { setValue } = useBackDropLoaderContext();
 
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate, isLoading: isLoadingTask } = useAddTaskQuery();
@@ -67,11 +65,9 @@ const CreateTaskPopup = ({ status, projectData }) => {
     if (active_task.task) {
       updateTask(values);
       dispatch(isCreateTaskModalOpen(false));
-      setValue('Task updating...');
     } else {
       mutate(values);
       dispatch(isCreateTaskModalOpen(false));
-      setValue('Task creating...');
     }
     dispatch(activeTask(''));
     dispatch(isBackdropLoaderDisplayedForTask(true));

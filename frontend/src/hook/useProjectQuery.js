@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useBackDropLoaderContext } from 'src/context/BackDropLoaderContext';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -36,7 +35,6 @@ const getAllProjects = async () => {
 };
 
 const useGetProjectQuery = () => {
-  const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
   const { is_backdrop_loader_displayed_for_projects } =
     useSelector(booleanDataInStore);
@@ -46,7 +44,6 @@ const useGetProjectQuery = () => {
     queryFn: getAllProjects,
     onSettled: () => {
       if (is_backdrop_loader_displayed_for_projects) {
-        setValue('');
         dispatch(isBackDropLoaderDisplayed(false));
       }
       dispatch(isBackdropLoaderDisplayedForProjects(false));

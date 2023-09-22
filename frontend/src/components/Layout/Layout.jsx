@@ -1,30 +1,35 @@
-import { Outlet } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
-  CssBaseline,
-  Box,
-  Typography,
-  Toolbar,
-  Drawer,
   AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
   Menu,
   MenuItem,
-} from "@mui/material";
-import { UPPER_SIDE_BAR, LOWER_PART, INSIGHTS, BOTTOM } from "src/constant/sidebar";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import useLayout from "src/hook/layout/useLayout";
-import { ClipLoader } from "react-spinners";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { CommonLoaderWithBackDrop } from "src/common/loader/CommonLoader";
-import UserName from "src/common/UserName";
-import colors from "src/theme/variables";
-import PagesModal from "src/components/userPages/components/PagesModal";
-import image from "src/assets/icons/Logo.png";
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import { Outlet } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
+import image from 'src/assets/icons/Logo.png';
+import UserName from 'src/common/UserName';
+import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
+import PagesModal from 'src/components/userPages/components/PagesModal';
+import {
+  BOTTOM,
+  INSIGHTS,
+  LOWER_PART,
+  UPPER_SIDE_BAR,
+} from 'src/constant/sidebar';
+import useLayout from 'src/hook/layout/useLayout';
+import colors from 'src/theme/variables';
 
 const drawerWidth = 150;
 
@@ -63,7 +68,7 @@ export const Layout = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -72,22 +77,34 @@ export const Layout = () => {
             zIndex: (theme) => theme.zIndex.drawer + 1,
             // background: "#121212",
             background: colors.navigationColor,
-            boxShadow: "none",
-          }}>
+            boxShadow: 'none',
+          }}
+        >
           <Toolbar
             sx={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
-            }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <img src={image} alt="logo" style={{ width: "40px" }} />
-              <Typography variant="h6" noWrap component="div" sx={{ color: `${colors.secondaryColor}` }}>
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <img src={image} alt="logo" style={{ width: '40px' }} />
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ color: `${colors.secondaryColor}` }}
+              >
                 Task Master
               </Typography>
             </Box>
             <UserName handleOpen={handleOpen} />
-            <Menu id="logout" anchorEl={anchorEl} open={open} onClose={handleClose}>
+            <Menu
+              id="logout"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
@@ -100,23 +117,27 @@ export const Layout = () => {
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
-              boxSizing: "border-box",
+              boxSizing: 'border-box',
               background: colors.navigationColor,
             },
             // backgroundColor: "red",
-          }}>
+          }}
+        >
           <Toolbar />
           <Box
             sx={{
-              overflow: "auto",
-            }}>
+              overflow: 'auto',
+            }}
+          >
             <List>
               {UPPER_SIDE_BAR.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleClickOnHome}>
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -127,9 +148,14 @@ export const Layout = () => {
               {INSIGHTS.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton key={key} onClick={() => handleClickOnInsights(key)}>
+                    <ListItemButton
+                      key={key}
+                      onClick={() => handleClickOnInsights(key)}
+                    >
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -142,7 +168,9 @@ export const Layout = () => {
                   return (
                     <ListItemButton key={key} onClick={handleOpenProjectModal}>
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>{value}</ListItemIcon>
+                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                        {value}
+                      </ListItemIcon>
                     </ListItemButton>
                   );
                 });
@@ -150,14 +178,17 @@ export const Layout = () => {
               {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <ClipLoader color="white" />
+                    <FadeLoader color="white" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
                 allProjects?.map((item) => {
                   return (
                     <ListItemButton key={item._id}>
-                      <ListItemText primary={item.name} onClick={() => handleActiveProject(item.name)} />
+                      <ListItemText
+                        primary={item.name}
+                        onClick={() => handleActiveProject(item.name)}
+                      />
                       <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
                           sx={{ color: colors.secondaryTextColor }}
@@ -168,19 +199,22 @@ export const Layout = () => {
                           data-id={item._id}
                           anchorEl={anchorElForProjectIcons}
                           open={isProjectIconsOpen}
-                          onClose={handleCloseOfProjectsIcons}>
+                          onClose={handleCloseOfProjectsIcons}
+                        >
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleClickOnRename}>
+                            onClick={handleClickOnRename}
+                          >
                             <DriveFileRenameOutlineIcon />
                           </MenuItem>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleDelete}>
+                            onClick={handleDelete}
+                          >
                             <DeleteIcon />
                           </MenuItem>
                         </Menu>
@@ -197,7 +231,10 @@ export const Layout = () => {
                   return (
                     <ListItemButton key={key}>
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }} onClick={handleClickOnPageAddIcon}>
+                      <ListItemIcon
+                        sx={{ color: colors.secondaryTextColor }}
+                        onClick={handleClickOnPageAddIcon}
+                      >
                         {value}
                       </ListItemIcon>
                     </ListItemButton>
@@ -207,17 +244,17 @@ export const Layout = () => {
               {pagesLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <ClipLoader color="white" />
+                    <FadeLoader color="white" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
                 pagesData?.data?.map((item) => {
                   return (
-                    <ListItemButton key={item._id} sx={{ p: ".5 0" }}>
+                    <ListItemButton key={item._id} sx={{ p: '.5 0' }}>
                       <ListItemText
                         primary={item.name}
                         onClick={() => handleClickOnPages(item._id)}
-                        sx={{ wordBreak: "break-all" }}
+                        sx={{ wordBreak: 'break-all' }}
                       />
                       <ListItemIcon data-id={item._id} sx={{ minWidth: 0 }}>
                         <MoreVertIcon
@@ -229,19 +266,22 @@ export const Layout = () => {
                           data-id={item._id}
                           anchorEl={anchorElementForPages}
                           open={isPageIconsOpen}
-                          onClose={handleCloseOnPage}>
+                          onClose={handleCloseOnPage}
+                        >
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handleClickOnPageRename}>
+                            onClick={handleClickOnPageRename}
+                          >
                             <DriveFileRenameOutlineIcon />
                           </MenuItem>
                           <MenuItem
                             sx={{
                               color: colors.secondaryTextColor,
                             }}
-                            onClick={handlePageDelete}>
+                            onClick={handlePageDelete}
+                          >
                             <DeleteIcon />
                           </MenuItem>
                         </Menu>

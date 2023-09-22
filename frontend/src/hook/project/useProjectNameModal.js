@@ -1,27 +1,29 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   booleanDataInStore,
   isBackDropLoaderDisplayed,
   isBackdropLoaderDisplayedForProjects,
   isProjectNameModalOpen,
-} from "src/redux/boolean/booleanSlice";
+} from 'src/redux/boolean/booleanSlice';
 
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-import { usePostProjectQuery, useUpdateProjectQuery } from "../useProjectQuery";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { projectRename } from "src/redux/projects/projectSlice";
+import {
+  projectDataInStore,
+  projectRename,
+} from 'src/redux/projects/projectSlice';
+import { usePostProjectQuery, useUpdateProjectQuery } from '../useProjectQuery';
 
 const useProjectNameModal = () => {
   const { is_project_name_modal_open } = useSelector(booleanDataInStore);
   const { project_rename } = useSelector(projectDataInStore);
   const [open, setOpen] = useState(is_project_name_modal_open);
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState('');
   const dispatch = useDispatch();
   const { mutate, isLoading } = usePostProjectQuery();
-  const { mutate: updateProject, isLoading: projectUpdateIsLoading } = useUpdateProjectQuery();
-  const { setValue } = useBackDropLoaderContext();
-  const [colorName, setColorName] = useState("");
+  const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
+    useUpdateProjectQuery();
+
+  const [colorName, setColorName] = useState('');
 
   useEffect(() => {
     setOpen(is_project_name_modal_open);
@@ -36,7 +38,6 @@ const useProjectNameModal = () => {
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackdropLoaderDisplayedForProjects(true));
-      setValue("Creating project");
     }
   }, [isLoading]);
 
@@ -44,7 +45,6 @@ const useProjectNameModal = () => {
     if (projectUpdateIsLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackdropLoaderDisplayedForProjects(true));
-      setValue("Updating project");
     }
   }, [projectUpdateIsLoading]);
 
@@ -75,14 +75,14 @@ const useProjectNameModal = () => {
           previousName: project_rename.projectName,
           color: colorName,
         });
-        setProjectName("");
+        setProjectName('');
         dispatch(projectRename({}));
       } else {
         /**
          * create new project
          */
         mutate({ name: projectName.trim(), color: colorName });
-        setProjectName("");
+        setProjectName('');
       }
       handleClose();
     }

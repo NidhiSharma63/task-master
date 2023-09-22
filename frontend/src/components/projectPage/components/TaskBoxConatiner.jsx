@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Droppable } from 'react-beautiful-dnd';
-import { ClipLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useDeleteColumn from 'src/hook/board/useDeleteColumn';
 import useTaskBoxContainer from 'src/hook/board/useTaskBoxContainer';
@@ -171,7 +171,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                         mt: -1,
                       }}
                     >
-                      <ClipLoader sx={{ mt: -2 }} />
+                      <FadeLoader sx={{ mt: -2 }} />
                     </Box>
                   )}
                 </>
@@ -209,7 +209,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
                         mt: -1,
                       }}
                     >
-                      <ClipLoader sx={{ mt: -2 }} />
+                      <FadeLoader sx={{ mt: -2 }} />
                     </Box>
                   )}
                 </>

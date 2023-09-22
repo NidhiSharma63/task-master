@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useBackDropLoaderContext } from 'src/context/BackDropLoaderContext';
 import { useGetProjectQuery } from '../../hook/useProjectQuery';
 import {
   useGetTaskAccordingToStatus,
@@ -27,7 +26,6 @@ const useBoard = () => {
   const [finalTaskUpdate, setFinalTaskUpdate] = useState([]);
   const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
   const navigate = useNavigate();
-  const { setValue } = useBackDropLoaderContext();
 
   /**
    * navigate the use to /Dashboard when user do not have any project
@@ -147,7 +145,6 @@ const useBoard = () => {
 
         setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
-        setValue('updating...');
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
       } else {
@@ -227,12 +224,11 @@ const useBoard = () => {
 
         setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
-        setValue('updating...');
         dispatch(isUpdatingTask(true));
         updateTaskWithStatus(updateTaskInBE);
       }
     },
-    [finalState],
+    [finalState, dispatch, updateTaskWithStatus, updateTaskWithIndex],
   );
 
   // console.log(finalState, ":::::::::column Data::::::::::");

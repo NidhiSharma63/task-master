@@ -1,21 +1,22 @@
-import { useDeleteColumnName } from "../useColumnQuery";
-import { useCallback } from "react";
-import { useBackDropLoaderContext } from "../../context/BackDropLoaderContext";
-import { useDispatch } from "react-redux";
-import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForColumns } from "../../redux/boolean/booleanSlice";
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForColumns,
+} from '../../redux/boolean/booleanSlice';
+import { useDeleteColumnName } from '../useColumnQuery';
 
 const useDeleteColumn = ({ colId, setAnchorElForColumnIcons }) => {
   const { mutate: deleteCols } = useDeleteColumnName();
-  const { setValue } = useBackDropLoaderContext();
+
   const dispatch = useDispatch();
 
   const deleteColumn = useCallback(() => {
     deleteCols({ _id: colId });
-    setValue("Column deleting...");
     dispatch(isBackDropLoaderDisplayed(true));
     dispatch(isBackDropLoaderDisplayedForColumns(true));
     setAnchorElForColumnIcons(null);
-  }, [dispatch, setValue, deleteCols, colId, setAnchorElForColumnIcons]);
+  }, [dispatch, deleteCols, colId, setAnchorElForColumnIcons]);
 
   return { deleteColumn };
 };
