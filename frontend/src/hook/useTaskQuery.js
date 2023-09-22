@@ -214,7 +214,7 @@ const useDeleteTask = (status) => {
  */
 const useGetAllTaskAccordingToStatusForEachProject = () => {
   const { total_status } = useSelector(statusDataInStore);
-
+  console.log(total_status, 'Total status');
   const userQueries = useQueries({
     queries: total_status.map((status) => {
       return {
