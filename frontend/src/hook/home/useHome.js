@@ -26,7 +26,7 @@ const useHome = () => {
    */
   useEffect(() => {
     if (total_status?.length === 0) {
-      const onlyColumns = columnData?.data?.map((item) => item.name);
+      const onlyColumns = columnData?.data?.map((item) => item?.name);
       if (onlyColumns) {
         dispatch(totalStatus(onlyColumns));
       }
@@ -39,7 +39,7 @@ const useHome = () => {
   useEffect(() => {
     let bgColors = [];
     projectData?.projects?.map((item) => {
-      bgColors.push(item.color);
+      bgColors.push(item?.color);
     });
     setBackgroundColors(bgColors);
   }, [projectData]);
