@@ -164,7 +164,6 @@ const updateTaskWithDetail = async (req, res, next) => {
         name: taskBody.projectName,
         userId,
       });
-
       taskObj.color = selectedProject?.[0].color;
     }
 
