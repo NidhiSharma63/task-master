@@ -31,8 +31,8 @@ const CreateTaskPopup = ({ status, projectData }) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const projectName = projectData?.projects?.map((item) => ({
-    name: item.name,
-    color: item.color,
+    name: item?.name,
+    color: item?.color,
   }));
 
   const { active_task } = useSelector(taskDataInStore);
@@ -51,12 +51,12 @@ const CreateTaskPopup = ({ status, projectData }) => {
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
     description: active_task?.description ?? '',
-    projectName: active_task?.projectName ?? projectName?.[0].name,
+    projectName: active_task?.projectName ?? projectName?.[0]?.name,
     label: active_task?.label ?? '',
     labelColor: active_task?.labelColor ?? '#e33529',
     index: active_task?.index ?? 0,
     subTasks: active_task?.subTasks ?? '',
-    color: active_task?.color ?? projectName?.[0].color,
+    color: active_task?.color ?? projectName?.[0]?.color,
   };
 
   // active task is present
