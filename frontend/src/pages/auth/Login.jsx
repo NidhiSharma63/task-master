@@ -135,11 +135,6 @@ const Login = () => {
                       variant="outlined"
                       sx={{
                         backgroundColor: 'primary.main',
-                        '&:hover': {
-                          borderColor: colors.secondaryTextColor,
-                        },
-                        borderColor: colors.secondaryTextColor,
-                        color: colors.secondaryTextColor,
                       }}
                     >
                       login
