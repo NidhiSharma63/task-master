@@ -160,6 +160,12 @@ const updateTaskWithDetail = async (req, res, next) => {
 
     if (taskObj.projectName !== taskBody.projectName) {
       taskObj.projectName = taskBody.projectName;
+      const selectedProject = await Project.find({
+        name: taskBody.projectName,
+        userId,
+      });
+
+      taskObj.color = selectedProject?.[0].color;
     }
 
     await taskObj.save();
