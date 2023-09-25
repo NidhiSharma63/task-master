@@ -1,9 +1,9 @@
-import { getUserFirstName } from "src/utils/getUserFirstName";
-import { getCurrentDate } from "src/utils/getCurrentDate";
-import TaskComponent from "src/components/home/components/TaskComponent";
-import { Box, Typography } from "@mui/material";
-import ProjectComponent from "src/components/home/components/ProjectComponent";
-import useHome from "src/hook/home/useHome";
+import { Box, Typography } from '@mui/material';
+import ProjectComponent from 'src/components/home/components/ProjectComponent';
+import TaskComponent from 'src/components/home/components/TaskComponent';
+import useHome from 'src/hook/home/useHome';
+import { getCurrentDate } from 'src/utils/getCurrentDate';
+import { getUserFirstName } from 'src/utils/getUserFirstName';
 
 const HomeComponent = () => {
   const {
@@ -13,22 +13,21 @@ const HomeComponent = () => {
     taskData,
     isTaskLoading,
   } = useHome();
-
   return (
     <Box
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
         // mt: 5,
         gap: 5,
-        height: "calc(100vh - 80px)",
+        height: 'calc(100vh - 80px)',
       }}
     >
       <Box
         sx={{
-          textAlign: "center",
+          textAlign: 'center',
           // mt: 1,
         }}
       >
@@ -41,9 +40,9 @@ const HomeComponent = () => {
       </Box>
       <Box
         sx={{
-          width: "90%",
-          height: "calc(100% - 160px)",
-          display: "flex",
+          width: '90%',
+          height: 'calc(100% - 160px)',
+          display: 'flex',
           gap: 4,
         }}
       >

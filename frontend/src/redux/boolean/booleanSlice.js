@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const booleanSlice = createSlice({
-  name: "boolean",
+  name: 'boolean',
   initialState: {
     is_project_name_modal_open: false,
     is_board_drawer_open: false,
@@ -14,6 +14,7 @@ const booleanSlice = createSlice({
     is_backdrop_loader_displayed_for_Columns: false,
     is_dialog_box_open: false,
     is_back_Drop_loader_displayed_for_page: false,
+    is_backdrop_loader_displayed_for_Task: false,
   },
   reducers: {
     isProjectNameModalOpen: (state, action) => {
@@ -49,6 +50,9 @@ const booleanSlice = createSlice({
     isBackDropLoaderDisplayedForPage: (state, action) => {
       state.is_back_Drop_loader_displayed_for_page = action.payload;
     },
+    isBackdropLoaderDisplayedForTask: (state, action) => {
+      state.is_backdrop_loader_displayed_for_Task = action.payload;
+    },
   },
 });
 
@@ -64,6 +68,7 @@ export const {
   isBackDropLoaderDisplayedForColumns,
   isDialogBoxOpen,
   isBackDropLoaderDisplayedForPage,
+  isBackdropLoaderDisplayedForTask,
 } = booleanSlice.actions;
 export const booleanDataInStore = (state) => state.boolean;
 export default booleanSlice.reducer;

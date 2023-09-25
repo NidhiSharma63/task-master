@@ -1,23 +1,34 @@
-import { useCallback, useEffect, useState } from "react";
-import { usePostColumnQuery, useUpdateColumnName, useGetColumnQuery } from "src/hook/useColumnQuery";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-import { isBackDropLoaderDisplayed, isBackDropLoaderDisplayedForColumns } from "src/redux/boolean/booleanSlice";
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  useGetColumnQuery,
+  usePostColumnQuery,
+  useUpdateColumnName,
+} from 'src/hook/useColumnQuery';
+import {
+  isBackDropLoaderDisplayed,
+  isBackDropLoaderDisplayedForColumns,
+} from 'src/redux/boolean/booleanSlice';
+import { projectDataInStore } from 'src/redux/projects/projectSlice';
 
 /**
  * This function is invoked at two places one 1. Board.jsx (where user can add the column)
  * 2. Task box container (where user can edit the column name)
  */
 
-const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRename, colId, prevColumnName }) => {
-  const [columnValue, setColumnValue] = useState("");
+const useAddColumn = ({
+  setIsAddColBtnClicked,
+  isAddColBtnClicked,
+  isColumnRename,
+  colId,
+  prevColumnName,
+}) => {
+  const [columnValue, setColumnValue] = useState('');
   const { mutate } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
   const { mutate: updateColsname } = useUpdateColumnName();
   const { isFetching } = useGetColumnQuery();
 
-  const { setValue } = useBackDropLoaderContext();
   const dispatch = useDispatch();
 
   const handlecolumnValue = useCallback((event) => {
@@ -39,11 +50,10 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
    */
   useEffect(() => {
     if (!isFetching) {
-      setValue("");
-      setColumnValue("");
+      setColumnValue('');
       setIsAddColBtnClicked(false);
     }
-  }, [isFetching, setValue, setIsAddColBtnClicked]);
+  }, [isFetching, setIsAddColBtnClicked]);
 
   /**
    * fire on when user try to submit the column
@@ -60,7 +70,6 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
         name: columnValue,
         projectName: active_project,
       });
-      setValue("Column creating");
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackDropLoaderDisplayedForColumns(true));
     }
@@ -81,7 +90,6 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
         _id: colId,
         previousColName: prevColumnName,
       });
-      setValue("Column updating");
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackDropLoaderDisplayedForColumns(true));
     }
@@ -95,8 +103,8 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
   useEffect(() => {
     const removeTextArea = (event) => {
       if (
-        event.target.tagName !== "TEXTAREA" &&
-        event.target.tagName !== "BUTTON" &&
+        event.target.tagName !== 'TEXTAREA' &&
+        event.target.tagName !== 'BUTTON' &&
         columnValue?.trim()?.length === 0 &&
         isAddColBtnClicked
       ) {
@@ -104,9 +112,9 @@ const useAddColumn = ({ setIsAddColBtnClicked, isAddColBtnClicked, isColumnRenam
       }
     };
 
-    window.addEventListener("click", removeTextArea);
+    window.addEventListener('click', removeTextArea);
     return () => {
-      window.removeEventListener("click", removeTextArea);
+      window.removeEventListener('click', removeTextArea);
     };
   }, [columnValue, setIsAddColBtnClicked, isAddColBtnClicked]);
 

@@ -1,13 +1,20 @@
-import { useGetProjectQuery } from "../../hook/useProjectQuery";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { useGetTaskAccordingToStatus } from "../../hook/useTaskQuery";
-import { useGetColumnQuery } from "../useColumnQuery";
-import { useDispatch, useSelector } from "react-redux";
-import { totalStatus } from "../../redux/status/statusSlice";
-import { booleanDataInStore, isBackDropLoaderDisplayed, isUpdatingTask } from "../../redux/boolean/booleanSlice";
-import { useUpdateTaskQueryWithStatus, useUpdateTaskQuery } from "../../hook/useTaskQuery";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useGetProjectQuery } from '../../hook/useProjectQuery';
+import {
+  useGetTaskAccordingToStatus,
+  useUpdateTaskQuery,
+  useUpdateTaskQueryWithStatus,
+} from '../../hook/useTaskQuery';
+import {
+  booleanDataInStore,
+  isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForTask,
+  isUpdatingTask,
+} from '../../redux/boolean/booleanSlice';
+import { totalStatus } from '../../redux/status/statusSlice';
+import { useGetColumnQuery } from '../useColumnQuery';
 
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();
@@ -20,15 +27,14 @@ const useBoard = () => {
   const [finalTaskUpdate, setFinalTaskUpdate] = useState([]);
   const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
   const navigate = useNavigate();
-  const { setValue } = useBackDropLoaderContext();
 
   /**
    * navigate the use to /Dashboard when user do not have any project
    */
 
   useEffect(() => {
-    if (projectData?.projects?.length === 0) navigate("/Dashboard");
-  }, [projectData]);
+    if (projectData?.projects?.length === 0) navigate('/Dashboard');
+  }, [projectData, navigate]);
 
   /**
    * return colum data with adding tasks property
@@ -88,13 +94,18 @@ const useBoard = () => {
         if (source.index === destination.index) return;
 
         // check in which column task is moved
-        const activeColumn = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
+        const activeColumn = finalData.find(
+          (item) => item?.name === source?.droppableId,
+        )?.tasks;
 
         // find moved tasks
         let movedTask = activeColumn.find((task) => task?._id === draggableId);
 
         // update the index and also add the currentIndex property to update from backend
-        let updatedTaskForBackend = { ...movedTask, currentIndex: destination?.index };
+        let updatedTaskForBackend = {
+          ...movedTask,
+          currentIndex: destination?.index,
+        };
 
         // update the index value of all the task from moved task
         const updatedColumnsValue = activeColumn?.map((task) => {
@@ -135,15 +146,19 @@ const useBoard = () => {
 
         setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
-        setValue("updating...");
+        dispatch(isBackdropLoaderDisplayedForTask(true));
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
       } else {
         // find the columns from where task is moved
-        const columnFromWhereTaskIsMoved = finalData.find((item) => item?.name === source?.droppableId)?.tasks;
+        const columnFromWhereTaskIsMoved = finalData.find(
+          (item) => item?.name === source?.droppableId,
+        )?.tasks;
 
         // find move task
-        let movedTask = columnFromWhereTaskIsMoved.find((task) => task.index === source.index);
+        let movedTask = columnFromWhereTaskIsMoved.find(
+          (task) => task.index === source.index,
+        );
 
         // task to update frontend
         const updateTaskInFE = {
@@ -174,15 +189,19 @@ const useBoard = () => {
           });
 
         // find the column where task is moved
-        const columnWhereTaskIsMoved = finalData.find((item) => item?.name === destination?.droppableId)?.tasks;
+        const columnWhereTaskIsMoved = finalData.find(
+          (item) => item?.name === destination?.droppableId,
+        )?.tasks;
 
-        const updatedTaskWhereTaskIsMoved = columnWhereTaskIsMoved?.map((task) => {
-          let updateTask = { ...task };
-          if (task.index >= destination.index) {
-            updateTask.index = updateTask.index + 1;
-          }
-          return updateTask;
-        });
+        const updatedTaskWhereTaskIsMoved = columnWhereTaskIsMoved?.map(
+          (task) => {
+            let updateTask = { ...task };
+            if (task.index >= destination.index) {
+              updateTask.index = updateTask.index + 1;
+            }
+            return updateTask;
+          },
+        );
 
         // Then, push the new task into the updated array
         updatedTaskWhereTaskIsMoved.push(updateTaskInFE);
@@ -207,15 +226,14 @@ const useBoard = () => {
 
         setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
-        setValue("updating...");
         dispatch(isUpdatingTask(true));
         updateTaskWithStatus(updateTaskInBE);
+        dispatch(isBackdropLoaderDisplayedForTask(true));
       }
     },
-    [finalState]
+    [finalState, dispatch, updateTaskWithStatus, updateTaskWithIndex],
   );
 
-  // console.log(finalState, ":::::::::column Data::::::::::");
   return {
     finalState,
     isAddColBtnClicked,

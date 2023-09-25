@@ -1,6 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
-import useLogoutQuery from "src/hook/useLogoutQuery";
-import { useGetProjectQuery, useDeleteProjectQuery } from "src/hook/useProjectQuery";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
+import { queryKeyForTask } from 'src/constant/queryKey';
+import { usePagesContext } from 'src/context/PagesContextProvider';
+import useLogoutQuery from 'src/hook/useLogoutQuery';
+import { useDeletePage, useGetPages } from 'src/hook/usePagesQuery';
+import {
+  useDeleteProjectQuery,
+  useGetProjectQuery,
+} from 'src/hook/useProjectQuery';
+import { queryClient } from 'src/index';
 import {
   isBackDropLoaderDisplayed,
   isBackDropLoaderDisplayedForPage,
@@ -8,18 +18,13 @@ import {
   isDialogBoxOpen,
   isProjectNameModalOpen,
   isUpdatingTask,
-} from "src/redux/boolean/booleanSlice";
-import { activeProject, projectDataInStore, projectRename } from "src/redux/projects/projectSlice";
-import { setValueToLs } from "src/utils/localstorage";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
-import { queryKeyForTask } from "src/constant/queryKey";
-import { queryClient } from "src/index";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useBackDropLoaderContext } from "src/context/BackDropLoaderContext";
-import { useGetPages } from "src/hook/usePagesQuery";
-import { usePagesContext } from "src/context/PagesContextProvider";
-import { useDeletePage } from "src/hook/usePagesQuery";
+} from 'src/redux/boolean/booleanSlice';
+import {
+  activeProject,
+  projectDataInStore,
+  projectRename,
+} from 'src/redux/projects/projectSlice';
+import { setValueToLs } from 'src/utils/localstorage';
 
 const useLayout = () => {
   const navigate = useNavigate();
@@ -41,18 +46,17 @@ const useLayout = () => {
   const projectItemId = useRef();
 
   const { data, isLoading } = useGetProjectQuery();
-  const { mutate: deleteProject, isLoading: deleteInProgress } = useDeleteProjectQuery();
+  const { mutate: deleteProject, isLoading: deleteInProgress } =
+    useDeleteProjectQuery();
   const { data: pagesData, isLoading: pagesLoading } = useGetPages();
   const { mutate } = useLogoutQuery();
 
-  const { setValue } = useBackDropLoaderContext();
   const { setPageData } = usePagesContext();
 
   // // navigate the user to /todo directly
   useEffect(() => {
-    navigate("Dashboard");
+    navigate('Dashboard');
     dispatch(isBackDropLoaderDisplayed(false));
-    setValue("");
   }, []);
 
   // if only single present or first time project is created then make that as active project\
@@ -68,10 +72,9 @@ const useLayout = () => {
   useEffect(() => {
     if (deleteInProgress) {
       dispatch(isBackDropLoaderDisplayed(true));
-      setValue("Deleting project");
       dispatch(isBackdropLoaderDisplayedForProjects(true));
     }
-  }, [deleteInProgress, setValue, dispatch]);
+  }, [deleteInProgress, dispatch]);
 
   useEffect(() => {
     setAllProjects(data?.projects);
@@ -84,7 +87,6 @@ const useLayout = () => {
   const handleLogout = () => {
     mutate();
     dispatch(isBackDropLoaderDisplayed(true));
-    setValue("Please wait");
   };
 
   const handleClose = () => {
@@ -98,7 +100,7 @@ const useLayout = () => {
   };
 
   const handleClickOnHome = () => {
-    navigate("/Home");
+    navigate('/Home');
   };
   /**
    * Insights
@@ -113,7 +115,7 @@ const useLayout = () => {
   const handleOpenProjectModal = () => {
     dispatch(projectRename({}));
     dispatch(isProjectNameModalOpen(true));
-    navigate("/Dashboard");
+    navigate('/Dashboard');
   };
 
   const handleDelete = () => {
@@ -127,7 +129,7 @@ const useLayout = () => {
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
     dispatch(isUpdatingTask(false));
-    navigate("/Dashboard");
+    navigate('/Dashboard');
   };
 
   const handleClickOnThreeDots = (event) => {
@@ -145,14 +147,16 @@ const useLayout = () => {
 
   const handleClickOnRename = () => {
     if (!projectItemId.current) return;
-    const projectToUpdate = allProjects.find((item) => item._id === projectItemId.current);
+    const projectToUpdate = allProjects.find(
+      (item) => item._id === projectItemId.current,
+    );
 
     dispatch(
       projectRename({
         projectName: projectToUpdate?.name,
         projectId: projectToUpdate?._id,
         color: projectToUpdate?.color,
-      })
+      }),
     );
     dispatch(isProjectNameModalOpen(true));
     handleCloseOfProjectsIcons();
@@ -205,7 +209,9 @@ const useLayout = () => {
    */
 
   const handleClickOnPageRename = () => {
-    const updatedPage = pagesData?.data?.find((item) => item._id === pageItemId.current);
+    const updatedPage = pagesData?.data?.find(
+      (item) => item._id === pageItemId.current,
+    );
     dispatch(isDialogBoxOpen(true));
     setPageData(updatedPage);
     setAnchorElementForPages(null);
@@ -222,7 +228,6 @@ const useLayout = () => {
     setIsPageIconsOpen(false);
     dispatch(isBackDropLoaderDisplayedForPage(true));
     dispatch(isBackDropLoaderDisplayed(true));
-    setValue("deleting...");
   };
 
   return {

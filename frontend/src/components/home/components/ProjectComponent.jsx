@@ -1,13 +1,13 @@
-import { Box, Typography, Divider, Button } from "@mui/material";
-import { ClipLoader } from "react-spinners";
-import { useDispatch } from "react-redux";
-import colors from "src/theme/variables";
-import { isProjectNameModalOpen } from "src/redux/boolean/booleanSlice";
-import ProjectNameModal from "src/components/Layout/components/ProjectNameModal";
-import { useNavigate } from "react-router-dom";
-import { activeProject } from "src/redux/projects/projectSlice";
-import { KEY_FOR_STORING_ACTIVE_PROJECT } from "src/constant/Misc";
-import { setValueToLs } from "src/utils/localstorage";
+import { Box, Button, Divider, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { FadeLoader } from 'react-spinners';
+import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
+import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
+import { isProjectNameModalOpen } from 'src/redux/boolean/booleanSlice';
+import { activeProject } from 'src/redux/projects/projectSlice';
+import colors from 'src/theme/variables';
+import { setValueToLs } from 'src/utils/localstorage';
 
 const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   };
 
   const handleNavigationToProject = (name) => {
-    navigate("/Dashboard");
+    navigate('/Dashboard');
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
   };
@@ -26,18 +26,20 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   return (
     <Box
       sx={{
-        width: "50%",
-        border: "1px solid",
+        width: '50%',
+        border: '1px solid',
         borderColor: (theme) => theme.palette.grey[400],
-        borderRadius: "0.3rem",
-        height: "100%",
-      }}>
+        borderRadius: '0.3rem',
+        height: '100%',
+      }}
+    >
       <Box
         sx={{
-          padding: " 0.8rem",
-          display: "flex",
-          justifyContent: "space-between",
-        }}>
+          padding: ' 0.8rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <Typography variant="h5" sx={{ fontWeight: 700 }}>
           Projects
         </Typography>
@@ -48,29 +50,31 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
       <Divider />
       <Box
         sx={{
-          padding: "0.4rem",
-          height: "calc(100% - 60px)",
-          overflowY: "auto",
-          "&::-webkit-scrollbar": {
-            width: "4px",
-            height: "5px",
+          padding: '0.4rem',
+          height: 'calc(100% - 60px)',
+          overflowY: 'auto',
+          '&::-webkit-scrollbar': {
+            width: '4px',
+            height: '5px',
           },
-          "&::-webkit-scrollbar-track": {
+          '&::-webkit-scrollbar-track': {
             background: `${colors.primaryColor}`,
           },
           // "&::-webkit-scrollbar-thumb": {
           //   background: `${colors.secondaryTextColor}`,
           //   borderRadius: "4px",
           // },
-        }}>
+        }}
+      >
         {isLoading ? (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-            <ClipLoader color="#571159" />
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FadeLoader />
           </Box>
         ) : (
           projectData?.projects?.map((item, i) => {
@@ -78,24 +82,29 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
               <Box
                 key={i}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  border: "1px solid",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  border: '1px solid',
                   borderColor: (theme) => theme.palette.grey[400],
-                  cursor: "pointer",
-                  borderRadius: ".4rem",
+                  cursor: 'pointer',
+                  borderRadius: '.4rem',
                   mb: 1,
                 }}
-                onClick={() => handleNavigationToProject(item.name)}>
+                onClick={() => handleNavigationToProject(item.name)}
+              >
                 <Box
                   sx={{
-                    width: "100%",
-                    padding: "0.5rem",
+                    width: '100%',
+                    padding: '0.5rem',
                     backgroundColor: backgroundColors[i],
-                    borderRadius: "0.3rem",
-                  }}>
-                  <Typography sx={{ fontWeight: 500, color: "white" }}> {item.name}</Typography>
+                    borderRadius: '0.3rem',
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 500, color: 'white' }}>
+                    {' '}
+                    {item.name}
+                  </Typography>
                 </Box>
               </Box>
             );
