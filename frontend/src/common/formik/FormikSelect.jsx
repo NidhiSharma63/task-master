@@ -1,5 +1,5 @@
-import { Field } from "formik";
-import { Box, Select, Typography, MenuItem } from "@mui/material";
+import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { Field } from 'formik';
 
 const FormikSelect = (props) => {
   const { name, values, mt } = props;
@@ -14,7 +14,7 @@ const FormikSelect = (props) => {
               mt: mt,
             }}
           >
-            <Typography sx={{ fontWeight: 700, mb: 1, width: "100%" }}>
+            <Typography sx={{ fontWeight: 700, mb: 1, width: '100%' }}>
               {name}
             </Typography>
             <Select
@@ -23,12 +23,12 @@ const FormikSelect = (props) => {
                 setFieldValue(name, event.target.value);
               }}
               sx={{
-                minWidth: "240px",
+                minWidth: '240px',
               }}
             >
               {values.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
+                <MenuItem key={item.name} value={item.name}>
+                  {item.name}
                 </MenuItem>
               ))}
             </Select>

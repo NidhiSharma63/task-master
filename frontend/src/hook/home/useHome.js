@@ -12,6 +12,12 @@ const useHome = () => {
   const dispatch = useDispatch();
   const { total_status } = useSelector(statusDataInStore);
   /**
+   * task data
+   */
+
+  const { data: taskData, isLoading: isTaskLoading } =
+    useGetAllTaskAccordingToStatusForEachProject();
+  /**
    *
    */
   const { data: columnData } = useGetColumnQuery();
@@ -37,13 +43,6 @@ const useHome = () => {
     });
     setBackgroundColors(bgColors);
   }, [projectData]);
-
-  /**
-   * task data
-   */
-
-  const { data: taskData, isLoading: isTaskLoading } =
-    useGetAllTaskAccordingToStatusForEachProject();
 
   return {
     projectData,
