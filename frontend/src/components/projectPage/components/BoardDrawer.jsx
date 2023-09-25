@@ -46,6 +46,8 @@ const BoardDrawer = () => {
     label: active_task?.label ?? '',
     labelColor: active_task?.labelColor ?? '#e33529',
     originalDate: '',
+    color: active_task?.color,
+    projectName: active_task.projectName,
   };
 
   const handleSubmit = (values) => {
