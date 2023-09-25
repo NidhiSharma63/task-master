@@ -10,6 +10,7 @@ import {
 import {
   booleanDataInStore,
   isBackDropLoaderDisplayed,
+  isBackdropLoaderDisplayedForTask,
   isUpdatingTask,
 } from '../../redux/boolean/booleanSlice';
 import { totalStatus } from '../../redux/status/statusSlice';
@@ -145,6 +146,7 @@ const useBoard = () => {
 
         setFinalTaskUpdate(completeUpdatedTask);
         dispatch(isBackDropLoaderDisplayed(true));
+        dispatch(isBackdropLoaderDisplayedForTask(true));
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
       } else {
@@ -226,12 +228,12 @@ const useBoard = () => {
         dispatch(isBackDropLoaderDisplayed(true));
         dispatch(isUpdatingTask(true));
         updateTaskWithStatus(updateTaskInBE);
+        dispatch(isBackdropLoaderDisplayedForTask(true));
       }
     },
     [finalState, dispatch, updateTaskWithStatus, updateTaskWithIndex],
   );
 
-  // console.log(finalState, ":::::::::column Data::::::::::");
   return {
     finalState,
     isAddColBtnClicked,
