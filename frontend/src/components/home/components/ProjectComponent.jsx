@@ -103,7 +103,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
                 >
                   <Typography sx={{ fontWeight: 500, color: 'white' }}>
                     {' '}
-                    {item.name}
+                    {item?.name}
                   </Typography>
                 </Box>
               </Box>
