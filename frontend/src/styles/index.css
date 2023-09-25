@@ -20,7 +20,7 @@
 }
 .textArea:focus {
   outline: none;
-  border: 1px solid rgb(166,159,243);
+  border: 1px solid rgb(166, 159, 243);
 }
 .board-drawer-textarea {
   resize: none;
@@ -36,20 +36,81 @@
 
 .board-drawer-textarea:focus {
   outline: none;
-  border: 2px solid rgb(166,159,243);
+  border: 2px solid rgb(166, 159, 243);
 }
 
 .textarea-col {
   resize: none;
   padding: 0.1rem;
   background-color: transparent;
-  color:white
+  color: white;
 }
 
-
-.editable-content{
+.editable-content {
   width: 100%;
   height: 100%;
   outline: none;
   margin-left: -3rem;
+}
+.black {
+  background-color: black !important;
+}
+/* toolbar */
+.mce-toolbar-grp {
+  background-color: #000 !important; /* uses !important or override .mce-panel background-color/image */
+  background-image: none !important;
+}
+
+/* text color */
+#tinymce {
+  color: #dd9900;
+}
+
+/* button text color */
+.mce-ico {
+  color: #dd9900;
+}
+
+/* button background color */
+.mce-btn button {
+  background-color: #000000;
+}
+
+.mce-content-body {
+  background: #474f52;
+}
+
+.tox-toolbar {
+  background-color: black !important;
+}
+.tox:not(.tox-tinymce-inline) .tox-editor-header {
+  background-color: black !important;
+}
+.tox .tox-toolbar-overlord {
+  background-color: black !important;
+}
+.tox .tox-toolbar,
+.tox .tox-toolbar__overflow,
+.tox .tox-toolbar__primary {
+  background-color: black !important;
+}
+.tox .tox-tbtn svg {
+  color: white !important;
+  fill: #f7f7f7 !important;
+}
+.tox-tinymce {
+  border: none !important;
+  position: relative;
+}
+
+.tox-collection__item-label h1,
+.tox-collection__item-label h2,
+.tox-collection__item-label h3,
+.tox-collection__item-label h4,
+.tox-collection__item-label h5,
+.tox-collection__item-label h6,
+.tox-collection__item-label pre,
+.tox-collection__item-label p {
+  background-color: white !important;
+  color: black !important;
 }
