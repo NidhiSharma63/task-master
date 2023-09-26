@@ -50,6 +50,7 @@ const useGetColumnQuery = () => {
         projectName: active_project,
       });
     },
+    enabled: Boolean(active_project),
     onSettled: () => {
       if (is_backdrop_loader_displayed_for_Columns) {
         dispatch(isBackDropLoaderDisplayed(false));

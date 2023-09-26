@@ -32,7 +32,7 @@ const PageComponent = () => {
         Save
       </Button>
       <Editor
-        apiKey="your-api-key"
+        apiKey={process.env.REACT_APP_TINY_MCE_KEY}
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={innerHTML}
         init={{
