@@ -76,6 +76,10 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           >
             <FadeLoader />
           </Box>
+        ) : projectData?.projects?.length === 0 ? (
+          <Typography sx={{ textAlign: 'center' }} variant="h5">
+            You don't have Project
+          </Typography>
         ) : (
           projectData?.projects?.map((item, i) => {
             return (

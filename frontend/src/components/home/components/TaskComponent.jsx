@@ -130,6 +130,10 @@ const TaskComponent = ({
           >
             <FadeLoader />
           </Box>
+        ) : data?.length === 0 ? (
+          <Typography sx={{ textAlign: 'center' }} variant="h5">
+            You don't have Task
+          </Typography>
         ) : (
           data?.map((item, i) => {
             return (
