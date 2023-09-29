@@ -65,18 +65,12 @@ const useGetTaskAccordingToStatus = () => {
           return data;
         },
         onSettled: () => {
-          // setTimeout(() => {
-          console.log('i run', is_backdrop_loader_displayed_for_Task);
-
           if (is_backdrop_loader_displayed_for_Task) {
-            console.log('i run');
             dispatch(isBackDropLoaderDisplayed(false));
             dispatch(isBackdropLoaderDisplayedForTask(false));
           }
           dispatch(isTaskDisplayed(true));
           dispatch(showLoaderForTask(false));
-          dispatch(isUpdatingTask(false));
-          // }, 300);
         },
       };
     }),

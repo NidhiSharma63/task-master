@@ -1,5 +1,5 @@
+import { DragDropContext } from '@hello-pangea/dnd';
 import { Box, Button } from '@mui/material';
-import { DragDropContext } from 'react-beautiful-dnd';
 import { FadeLoader } from 'react-spinners';
 import BoardDrawer from 'src/components/projectPage/components/BoardDrawer';
 import useAddColumn from 'src/hook/board/useAddColumn';
@@ -20,6 +20,8 @@ const Board = () => {
     isAddColBtnClicked,
     setIsAddColBtnClicked,
   });
+
+  console.log(finalState);
 
   return (
     <Box

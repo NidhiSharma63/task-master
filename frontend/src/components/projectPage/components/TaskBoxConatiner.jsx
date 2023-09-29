@@ -10,8 +10,8 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { Droppable } from 'react-beautiful-dnd';
 import { FadeLoader } from 'react-spinners';
+import { StrictModeDroppable } from 'src/common/DnD';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useDeleteColumn from 'src/hook/board/useDeleteColumn';
 import useTaskBoxContainer from 'src/hook/board/useTaskBoxContainer';
@@ -126,7 +126,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           </Menu>
         </Box>
       </Box>
-      <Droppable droppableId={name}>
+      <StrictModeDroppable droppableId={name}>
         {(provided) => {
           return (
             <Box
@@ -226,7 +226,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
             </Box>
           );
         }}
-      </Droppable>
+      </StrictModeDroppable>
     </Box>
   );
 };

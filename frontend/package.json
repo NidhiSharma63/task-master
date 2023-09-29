@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@hello-pangea/dnd": "^16.3.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.0",
     "@mui/x-date-pickers": "^6.10.1",
@@ -20,7 +21,6 @@
     "date-fns": "^2.30.0",
     "formik": "^2.4.2",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.2.0",
     "react-contenteditable": "^3.3.7",
     "react-dom": "^18.2.0",
