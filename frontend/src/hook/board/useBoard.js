@@ -9,8 +9,6 @@ import {
 } from '../../hook/useTaskQuery';
 import {
   booleanDataInStore,
-  isBackDropLoaderDisplayed,
-  isBackdropLoaderDisplayedForTask,
   isUpdatingTask,
 } from '../../redux/boolean/booleanSlice';
 import { totalStatus } from '../../redux/status/statusSlice';
@@ -84,6 +82,7 @@ const useBoard = () => {
     (result) => {
       if (!result) return;
       const { destination, source, draggableId } = result;
+      if (!destination || !source) return;
       let finalData = finalState;
 
       // if user moved the task into same column
@@ -145,8 +144,8 @@ const useBoard = () => {
         });
 
         setFinalTaskUpdate(completeUpdatedTask);
-        dispatch(isBackDropLoaderDisplayed(true));
-        dispatch(isBackdropLoaderDisplayedForTask(true));
+        // dispatch(isBackDropLoaderDisplayed(true));
+        // dispatch(isBackdropLoaderDisplayedForTask(true));
         dispatch(isUpdatingTask(true));
         updateTaskWithIndex(updatedTaskForBackend);
       } else {
@@ -225,10 +224,10 @@ const useBoard = () => {
         });
 
         setFinalTaskUpdate(completeUpdatedTask);
-        dispatch(isBackDropLoaderDisplayed(true));
+        // dispatch(isBackDropLoaderDisplayed(true));
         dispatch(isUpdatingTask(true));
         updateTaskWithStatus(updateTaskInBE);
-        dispatch(isBackdropLoaderDisplayedForTask(true));
+        // dispatch(isBackdropLoaderDisplayedForTask(true));
       }
     },
     [finalState, dispatch, updateTaskWithStatus, updateTaskWithIndex],
