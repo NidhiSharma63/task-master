@@ -21,8 +21,6 @@ const Board = () => {
     setIsAddColBtnClicked,
   });
 
-  console.log(finalState);
-
   return (
     <Box
       container={'true'}

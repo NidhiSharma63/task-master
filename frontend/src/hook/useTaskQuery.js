@@ -8,7 +8,6 @@ import {
   isBackDropLoaderDisplayed,
   isBackdropLoaderDisplayedForTask,
   isTaskDisplayed,
-  isUpdatingTask,
   showLoaderForTask,
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
@@ -93,7 +92,6 @@ const useGetTaskAccordingToStatus = () => {
 
 const useUpdateTaskQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
-  const dispatch = useDispatch();
   const [state, setState] = useState('');
 
   return useMutation({
@@ -105,11 +103,6 @@ const useUpdateTaskQuery = () => {
     onSuccess: () => {
       queryClient.invalidateQueries([state, active_project]);
       queryClient.invalidateQueries([state, 'All-task']);
-    },
-    onSettled: () => {
-      setTimeout(() => {
-        dispatch(isUpdatingTask(false));
-      }, 500);
     },
     onError: (error) => {
       toast.error('something went wrong!');
@@ -123,7 +116,6 @@ const useUpdateTaskQuery = () => {
  */
 
 const useUpdateTaskQueryWithStatus = () => {
-  const dispatch = useDispatch();
   const { active_project } = useSelector(projectDataInStore);
   const [state, setState] = useState({
     previousStatusOfTask: '',
@@ -150,11 +142,6 @@ const useUpdateTaskQueryWithStatus = () => {
       ]);
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries([state, 'All-task']);
-    },
-    onSettled: () => {
-      setTimeout(() => {
-        dispatch(isUpdatingTask(false));
-      }, 1000);
     },
     onError: () => {
       toast.error('something went wrong!');
