@@ -64,13 +64,12 @@ const useBoard = () => {
       return finalTaskUpdate;
     }
     if (!is_updating_task) {
-      console.log('i run', is_updating_task);
       return columnDataWithTaskProperty?.map((column) => ({
         ...column,
         tasks: data.flat().filter((task) => task?.status === column.name),
       }));
     }
-  }, [columnDataWithTaskProperty, data, is_updating_task]);
+  }, [columnDataWithTaskProperty, data, is_updating_task, finalTaskUpdate]);
 
   /**
    * handle dispaly column button
