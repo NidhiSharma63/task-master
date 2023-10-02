@@ -146,3 +146,12 @@
 .cdx-checklist__item-text{
   line-break: anywhere;
 }
+.ce-toolbar__plus svg, .ce-toolbar__settings-btn svg {
+  color: white;
+}
+.ce-toolbar__plus:hover  {
+background-color: black;
+}
+.ce-toolbar__content {
+  max-width: 100% !important;
+}

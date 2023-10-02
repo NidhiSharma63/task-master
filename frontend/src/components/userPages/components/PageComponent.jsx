@@ -9,9 +9,10 @@ const PageComponent = () => {
     <Box
       sx={{
         // display: 'flex',
-        width: 'calc(100vw - 200px)',
+        width: 'calc(100vw - 400px)',
         marginLeft: '1rem',
         // top: '4rem',
+        margin: 'auto',
         position: 'relative',
         height: '100vh',
         // alignItems: 'center',
