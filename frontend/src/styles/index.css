@@ -125,6 +125,8 @@
 }
 .ce-block__content .image-tool {
   max-width: 650px !important;
+  margin: auto;
+  
 }
 
 .ce-block__content .image-tool--stretched.image-tool {
