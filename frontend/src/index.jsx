@@ -24,30 +24,30 @@ export const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <PagesContextComp>
-      <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <ToastContainer
-              position="top-center"
-              autoClose={2000}
-              hideProgressBar
-              newestOnTop
-              closeOnClick
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover={true}
-              theme="dark"
-              color="pink"
-              closeButton={true}
-              className="toast-container"
-            />
-            <App />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </Provider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </PagesContextComp>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <PagesContextComp>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={true}
+            theme="dark"
+            color="pink"
+            closeButton={true}
+            className="toast-container"
+          />
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Provider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  </PagesContextComp>,
+  // </React.StrictMode>,
 );
