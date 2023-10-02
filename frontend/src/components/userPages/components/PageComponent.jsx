@@ -17,7 +17,7 @@ const PageComponent = () => {
         // alignItems: 'center',
         // justifyContent: 'center',
         fontSize: '1.3rem',
-        border: '1px solid red',
+        // border: '1px solid red',
       }}
     >
       <Editor />

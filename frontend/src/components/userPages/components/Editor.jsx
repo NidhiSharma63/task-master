@@ -38,14 +38,7 @@ const Editor = () => {
       },
       tools: tools,
     });
-
-    // Return a cleanup function to destroy the editor when the component unmounts
-    // return () => {
-    //   if (editor) {
-    //     editor?.destroy();
-    //   }
-    // };
-  }, []); // Only run this effect once on mount
+  }, [data, id, mutate]); // Only run this effect once on mount
 
   return <Box sx={{ minWidth: '100%' }} ref={editorRef} />;
 };
