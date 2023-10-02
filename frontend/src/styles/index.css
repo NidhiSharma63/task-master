@@ -114,3 +114,20 @@
   background-color: white !important;
   color: black !important;
 }
+/* EDITOR.JS */
+.ce-block__content{
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.ce-block__content div img{
+  width: 100% !important;
+}
+.ce-block__content .image-tool {
+  max-width: 650px !important;
+}
+
+.ce-block__content .image-tool--stretched.image-tool {
+  width: 100% !important;
+  max-width: 100% !important;
+}

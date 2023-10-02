@@ -47,7 +47,7 @@ const Editor = () => {
     // };
   }, []); // Only run this effect once on mount
 
-  return <Box ref={editorRef} />;
+  return <Box sx={{ minWidth: '100%' }} ref={editorRef} />;
 };
 
 export default Editor;

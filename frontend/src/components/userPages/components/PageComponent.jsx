@@ -8,13 +8,16 @@ const PageComponent = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        width: '98%',
+        // display: 'flex',
+        width: 'calc(100vw - 200px)',
         marginLeft: '1rem',
-        height: 'calc(100vh - 70px)',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        // top: '4rem',
+        position: 'relative',
+        height: '100vh',
+        // alignItems: 'center',
+        // justifyContent: 'center',
         fontSize: '1.3rem',
+        border: '1px solid red',
       }}
     >
       <Editor />
