@@ -162,8 +162,25 @@ background-color: black;
   color: white;
   background: #0046AF !important;
 }
-
+.tc-popover {
+  --color-border: black;
+  --color-background: black;
+  --color-background-hover: black;
+  --color-background-confirm: #e24a4a;
+  --color-background-confirm-hover: #d54040;
+  --color-text-confirm: black;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 3px 15px -3px rgba(13,20,33,.13);
+  border-radius: 6px;
+  padding: 6px;
+  /* display: none; */
+  will-change: opacity,transform;
+}
 ::selection {
   color: white;
   background: #0046AF !important;
+}
+.cdx-block.ce-code textarea{
+  background-color: #32383A !important;
 }
