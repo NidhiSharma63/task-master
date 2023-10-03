@@ -42,7 +42,7 @@ const Editor = () => {
       },
       tools: tools,
     });
-  }, [data, id, mutate]); // Only run this effect once on mount
+  }, []); // Only run this effect once on mount
 
   return <Box sx={{ minWidth: '100%' }} ref={editorRef} />;
 };
