@@ -155,7 +155,9 @@ background-color: black;
 .ce-toolbar__content {
   max-width: 100% !important;
 }
-
+.codex-editor--narrow .ce-toolbar__actions {
+  right: none !important;
+}
 ::-moz-selection { /* Code for Firefox */
   color: white;
   background: #0046AF !important;
