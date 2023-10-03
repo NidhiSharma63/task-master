@@ -10,7 +10,6 @@ import { tools } from './EditorTool';
 const Editor = () => {
   const editorRef = useRef(null);
   const { id } = useParams();
-  console.log(id, '::::d');
   const { mutate } = useUpdatePage();
   const queryClient = useQueryClient();
   const { data } = queryClient.getQueryData(['pages']) ?? {};
