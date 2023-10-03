@@ -14,9 +14,8 @@ const Editor = () => {
   const { mutate } = useUpdatePage();
   const queryClient = useQueryClient();
   const { data } = queryClient.getQueryData(['pages']) ?? {};
-  const { debounceFunc: Df } = useDebounce();
   const debounceFunc = useDebounce();
-  console.log(debounceFunc);
+
   useEffect(() => {
     const currentPage = data?.find((item) => item._id === id);
     // Initialize the editor once when the component mounts

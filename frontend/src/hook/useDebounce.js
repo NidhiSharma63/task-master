@@ -4,7 +4,6 @@ const useDebounce = () => {
     return function () {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        console.log('i run');
         fn();
       }, delay);
     };
