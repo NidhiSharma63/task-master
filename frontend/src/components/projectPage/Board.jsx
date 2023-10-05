@@ -1,4 +1,3 @@
-import { DragDropContext } from '@hello-pangea/dnd';
 import { Box, Button } from '@mui/material';
 import { FadeLoader } from 'react-spinners';
 import BoardDrawer from 'src/components/projectPage/components/BoardDrawer';
@@ -12,7 +11,8 @@ const Board = () => {
     isAddColBtnClicked,
     handleClickOnAddColsBtn,
     setIsAddColBtnClicked,
-    handleDragEnd,
+    // handleDragEnd,
+    onDrop,
     isLoading,
   } = useBoard();
 
@@ -35,20 +35,18 @@ const Board = () => {
         alignItems: 'center',
       }}
     >
-      <DragDropContext onDragEnd={handleDragEnd}>
-        {finalState?.map((item) => {
-          return (
-            <TaskBoxConatiner
-              key={item._id}
-              colId={item._id}
-              name={item.name}
-              data={item.tasks}
-            />
-          );
-        })}
-        <BoardDrawer />
-      </DragDropContext>
-
+      {finalState?.map((item) => {
+        return (
+          <TaskBoxConatiner
+            key={item._id}
+            colId={item._id}
+            name={item.name}
+            data={item}
+            onDrop={onDrop}
+          />
+        );
+      })}
+      <BoardDrawer />
       {isLoading ? (
         <Box
           sx={{

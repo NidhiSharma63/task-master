@@ -1,12 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-// import { KEY_FOR_STORING_USER_DETAILS } from "constant/Misc";
-import { KEY_FOR_STORING_USER_DETAILS } from "../../constant/Misc";
-import { getValueFromLS } from "../../utils/localstorage";
+import { createSlice } from '@reduxjs/toolkit';
+import { KEY_FOR_STORING_USER_DETAILS } from 'src/constant/Misc';
+import { getValueFromLS } from 'src/utils/localstorage';
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
-    user_email: getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?.email ?? "",
+    user_email: getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?.email ?? '',
   },
   reducers: {
     userEmail: (state, action) => {
