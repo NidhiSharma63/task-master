@@ -147,9 +147,14 @@ const useBoard = () => {
               return taskToUpdate;
             },
           );
-
-          draggedTask.index = id;
-          updateTheIndexOfTask.push(draggedTask);
+          /**
+           * update the index of dragged task
+           */
+          const updatedDraggedTaskIndex = {
+            ...draggedTask,
+            index: id,
+          };
+          updateTheIndexOfTask.push(updatedDraggedTaskIndex);
 
           const finalUpdate = finalState.map((item) => {
             if (item.name === dragged_task_status) {
@@ -192,11 +197,14 @@ const useBoard = () => {
               return item;
             },
           );
-          /*
+          /**
            * update the index of dragged task
            */
-          draggedTask.index = id - 1;
-          updateTheIndexOfTask.push(draggedTask);
+          const updatedDraggedTaskIndex = {
+            ...draggedTask,
+            index: id - 1,
+          };
+          updateTheIndexOfTask.push(updatedDraggedTaskIndex);
           /**
            * update the state
            */
@@ -249,9 +257,16 @@ const useBoard = () => {
             }
             return task;
           });
-        draggedTask.index = id;
-        draggedTask.status = statusInWhichTaskMoved;
-        updatedColumInWhichTaskIsMoved.push(draggedTask);
+
+        /**
+         * update the index and status of dragged task
+         */
+        const updatedDraggedTaskIndex = {
+          ...draggedTask,
+          index: id,
+          status: statusInWhichTaskMoved,
+        };
+        updatedColumInWhichTaskIsMoved.push(updatedDraggedTaskIndex);
 
         /**
          * remove the task from it's original column and reduce the index-1 and filter the

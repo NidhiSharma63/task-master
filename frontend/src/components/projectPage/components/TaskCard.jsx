@@ -45,6 +45,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
         // marginBottom: '1rem',
         cursor: 'grab',
         backgroundColor: isDraggable ? 'black' : 'none',
+        viewTransitionName: item._id,
       }}
       onClick={() => handleClickOnTask(item)}
       onDragEnd={handleDragEnd}
