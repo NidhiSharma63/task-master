@@ -132,7 +132,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
         sx={{
           width: '100%',
           mt: 1,
-          height: 'calc(100% - 30px)',
+          height: '100%',
           borderRadius: '.6rem',
           boxShadow: '0px 0px 4px 1px #00000014',
           display: 'flex',
@@ -211,7 +211,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
             )}
           </>
         ))}
-        {data?.length > 0 ? (
+        {data.tasks?.length > 0 ? (
           <Button
             variant="contained"
             disabled={show_loader_for_task}

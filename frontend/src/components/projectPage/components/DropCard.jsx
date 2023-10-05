@@ -42,15 +42,15 @@ const DropCard = ({ onDrop, index }) => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       sx={{
-        height: '1rem',
+        minHeight: '1rem',
         width: '100%',
         opacity: displayDropCard ? 1 : 0,
         border: '.1rem',
-        borderColor: 'green',
         borderStyle: 'dashed',
         transition: 'opacity .3s ease, padding .3s ease',
         padding: displayDropCard ? '2rem 0' : '0',
         borderRadius: '.4rem',
+        borderColor: 'rgb(166, 159, 243)',
       }}
     />
   );

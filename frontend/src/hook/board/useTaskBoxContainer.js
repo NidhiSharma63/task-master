@@ -32,16 +32,16 @@ const useTaskBoxContainer = ({ data, name }) => {
     setTextAreaValuesTop((prevValues) => ['', ...prevValues]);
     isTaskAddedFromBottom.current = false;
     dispatch(isTaskDisplayed(false));
-  }, []);
+  }, [dispatch]);
 
   /*
    * add task from bottom
    */
-  const handleClickForAddingTaskFromBottom = () => {
+  const handleClickForAddingTaskFromBottom = useCallback(() => {
     isTaskAddedFromBottom.current = true;
     setTextAreaValuesBottom((prevValues) => [...prevValues, '']);
     dispatch(isTaskDisplayed(false));
-  };
+  }, [dispatch]);
 
   /**
    * handle change task
@@ -68,7 +68,7 @@ const useTaskBoxContainer = ({ data, name }) => {
 
   const handleBlur = async (event, index) => {
     let valueOfTextField = '';
-    let lastIndexOfCurrentTask = data?.[data.length - 1]?.index;
+    let lastIndexOfCurrentTask = data.tasks?.[data.tasks.length - 1]?.index;
 
     if (!isTaskAddedFromBottom.current) {
       if (textAreaValuesTop[index].trim().length === 0) {
