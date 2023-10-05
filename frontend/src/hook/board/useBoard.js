@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useGetProjectQuery } from '../../hook/useProjectQuery';
+import { useGetColumnQuery } from 'src/hook/useColumnQuery';
+import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import {
   useGetTaskAccordingToStatus,
   useUpdateTaskQuery,
   useUpdateTaskQueryWithStatus,
-} from '../../hook/useTaskQuery';
+} from 'src/hook/useTaskQuery';
 import {
   booleanDataInStore,
   isUpdatingTask,
-} from '../../redux/boolean/booleanSlice';
-import { totalStatus } from '../../redux/status/statusSlice';
-import { useGetColumnQuery } from '../useColumnQuery';
+} from 'src/redux/boolean/booleanSlice';
+import { totalStatus } from 'src/redux/status/statusSlice';
+import { taskDataInStore } from 'src/redux/task/taskSlice';
 
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();
@@ -24,6 +25,8 @@ const useBoard = () => {
   const { is_updating_task } = useSelector(booleanDataInStore);
   const [finalTaskUpdate, setFinalTaskUpdate] = useState([]);
   const { mutate: updateTaskWithIndex } = useUpdateTaskQuery();
+  const { dragged_task_id, dragged_task_index, dragged_task_status } =
+    useSelector(taskDataInStore);
   const navigate = useNavigate();
 
   /**
@@ -78,159 +81,245 @@ const useBoard = () => {
     setIsAddColBtnClicked(true);
   };
 
-  const handleDragEnd = useCallback(
-    (result) => {
-      if (!result) return;
-      const { destination, source, draggableId } = result;
-      if (!destination || !source) return;
-      let finalData = finalState;
+  const onDrop = useCallback(
+    (statusInWhichTaskMoved, id) => {
+      if (id === undefined || !statusInWhichTaskMoved) return;
 
-      // if user moved the task into same column
+      /* find the task from where task is moved  */
+      const columnFromTaskIsDragged = finalState.find(
+        (item) => item.name === dragged_task_status,
+      );
 
-      if (destination.droppableId === source.droppableId) {
-        // if source.index is equal to destination.index means task at same postition then do nothing
+      const draggedTask = columnFromTaskIsDragged.tasks?.find(
+        (item) => item._id === dragged_task_id,
+      );
 
-        if (source.index === destination.index) return;
+      /* if task is moved into same column */
+      if (columnFromTaskIsDragged.name === statusInWhichTaskMoved) {
+        /** dragged Task Value for backend */
+        let draggedTaskValueForBackend = {};
+        /**
+         * if initial task is moved up and down
+         */
+        if (
+          id === draggedTask.index ||
+          (id === 1 && draggedTask.index === 0) ||
+          dragged_task_index + 1 === id
+        )
+          return;
 
-        // check in which column task is moved
-        const activeColumn = finalData.find(
-          (item) => item?.name === source?.droppableId,
-        )?.tasks;
-
-        // find moved tasks
-        let movedTask = activeColumn.find((task) => task?._id === draggableId);
-
-        // update the index and also add the currentIndex property to update from backend
-        let updatedTaskForBackend = {
-          ...movedTask,
-          currentIndex: destination?.index,
-        };
-
-        // update the index value of all the task from moved task
-        const updatedColumnsValue = activeColumn?.map((task) => {
-          const updatedTask = { ...task };
+        /**
+         * if task is moved to upside
+         */
+        if (id < dragged_task_index) {
+          /**
+           * setting the value for backend update
+           */
+          draggedTaskValueForBackend = {
+            ...draggedTask,
+            currentIndex: id,
+          };
+          /**
+           * filter the task which id is not same as dragged task id
+           */
+          const filterTheTaskWhichIsDragged =
+            columnFromTaskIsDragged.tasks?.filter(
+              (item) => item._id !== dragged_task_id,
+            );
 
           /**
-           * If destination.index is greater than source.index, it means the task is moved down,
-           * so deduct -1 from all the task indexes that are next to the moved task
+           * increase the index+1 because task is moved to up side so we need to make the space for
+           * dragged task but but only increase the index of task which index is less the index of
+           * drgged task
+           * ex- let's say we have four task A,B,C,D
+           * now c is moved to 0th index then increase the index+1 of only A and B
            */
-          if (task.index === source.index) {
-            updatedTask.index = destination.index;
-          }
-          if (destination.index > source.index) {
-            if (task.index > source.index && task.index <= destination.index) {
-              updatedTask.index = task.index - 1;
+
+          const updateTheIndexOfTask = filterTheTaskWhichIsDragged?.map(
+            (item) => {
+              const taskToUpdate = item;
+              if (
+                taskToUpdate.index < dragged_task_index &&
+                taskToUpdate.index >= id
+              ) {
+                taskToUpdate.index = taskToUpdate.index + 1;
+              }
+              return taskToUpdate;
+            },
+          );
+          /**
+           * update the index of dragged task
+           */
+          const updatedDraggedTaskIndex = {
+            ...draggedTask,
+            index: id,
+          };
+          updateTheIndexOfTask.push(updatedDraggedTaskIndex);
+
+          const finalUpdate = finalState.map((item) => {
+            if (item.name === dragged_task_status) {
+              return {
+                ...item,
+                tasks: updateTheIndexOfTask.sort((a, b) => a.index - b.index),
+              };
             }
-          } else {
-            if (task.index >= destination.index && task.index < source.index) {
-              updatedTask.index = task.index + 1;
-            }
-          }
-          // }
-          return updatedTask;
-        });
-
-        let completeUpdatedTask = finalData.map((item) => {
-          if (item.name === source.droppableId) {
-            // Update the tasks property with activeColumn
-            const updatedItem = { ...item, tasks: updatedColumnsValue };
-
-            // Sort the tasks array within updatedItem based on the 'index' property
-            updatedItem.tasks.sort((a, b) => a.index - b.index);
-
-            return updatedItem;
-          }
-          return item; // Return the item as is for other columns
-        });
-
-        setFinalTaskUpdate(completeUpdatedTask);
-        // dispatch(isBackDropLoaderDisplayed(true));
-        // dispatch(isBackdropLoaderDisplayedForTask(true));
-        dispatch(isUpdatingTask(true));
-        updateTaskWithIndex(updatedTaskForBackend);
-      } else {
-        // find the columns from where task is moved
-        const columnFromWhereTaskIsMoved = finalData.find(
-          (item) => item?.name === source?.droppableId,
-        )?.tasks;
-
-        // find move task
-        let movedTask = columnFromWhereTaskIsMoved.find(
-          (task) => task.index === source.index,
-        );
-
-        // task to update frontend
-        const updateTaskInFE = {
-          ...movedTask,
-          index: destination.index,
-          status: destination.droppableId,
-        };
-
-        // update task in Backend
-        const updateTaskInBE = {
-          ...movedTask,
-          status: destination.droppableId,
-          currentIndex: destination.index,
-          prevStatus: source.droppableId,
-          prevIndex: source.index,
-        };
-
-        // now decrease -1 from all the tasks that are next to moved task
-        const updatedTaskColumnFromWhereTaskIsMoved = columnFromWhereTaskIsMoved
-          .filter((task) => task.index !== source.index)
-          .map((task) => {
-            //Shallow copy of task (potential immutability issue if nested objects/arrays exist)
-            const taskToUpdate = { ...task };
-            if (task.index > source.index) {
-              taskToUpdate.index = task.index - 1;
-            }
-            return taskToUpdate;
+            return item;
           });
 
-        // find the column where task is moved
-        const columnWhereTaskIsMoved = finalData.find(
-          (item) => item?.name === destination?.droppableId,
-        )?.tasks;
+          setFinalTaskUpdate(finalUpdate);
+        }
+        if (id > dragged_task_index) {
+          /**
+           * setting the value for backend update
+           */
+          draggedTaskValueForBackend = {
+            ...draggedTask,
+            currentIndex: id - 1,
+          };
+          /**
+           * filter the task which id is not same as dragged task id
+           */
 
-        const updatedTaskWhereTaskIsMoved = columnWhereTaskIsMoved?.map(
-          (task) => {
-            let updateTask = { ...task };
-            if (task.index >= destination.index) {
-              updateTask.index = updateTask.index + 1;
+          const filterTheTaskWhichIsDragged =
+            columnFromTaskIsDragged.tasks?.filter(
+              (item) => item._id !== dragged_task_id,
+            );
+
+          /**
+           * reduce the index by -1 because task is moved to downside..means let's assume we have A,B,C,D
+           * and A task is moved to C place then reduce the index -1 of B AND C so that B can take C's position
+           */
+          const updateTheIndexOfTask = filterTheTaskWhichIsDragged.map(
+            (item) => {
+              if (item.index <= id - 1 && item.index > dragged_task_index) {
+                return { ...item, index: item.index - 1 };
+              }
+              return item;
+            },
+          );
+          /**
+           * update the index of dragged task
+           */
+          const updatedDraggedTaskIndex = {
+            ...draggedTask,
+            index: id - 1,
+          };
+          updateTheIndexOfTask.push(updatedDraggedTaskIndex);
+          /**
+           * update the state
+           */
+          const finalUpdate = finalState.map((item) => {
+            if (item.name === dragged_task_status) {
+              return {
+                ...item,
+                tasks: updateTheIndexOfTask.sort((a, b) => a.index - b.index),
+              };
+            } else {
+              return item;
             }
-            return updateTask;
-          },
-        );
+          });
 
-        // Then, push the new task into the updated array
-        updatedTaskWhereTaskIsMoved.push(updateTaskInFE);
+          setFinalTaskUpdate(finalUpdate);
+        }
 
-        let completeUpdatedTask = finalData.map((item) => {
-          let updateTaskColumn = { ...item };
-
-          if (updateTaskColumn.name === source.droppableId) {
-            updateTaskColumn.tasks = updatedTaskColumnFromWhereTaskIsMoved;
-            // Sort the tasks array within updateTaskColumn based on the 'index' property
-            updateTaskColumn.tasks.sort((a, b) => a.index - b.index);
-          }
-
-          if (updateTaskColumn.name === destination.droppableId) {
-            updateTaskColumn.tasks = updatedTaskWhereTaskIsMoved;
-            // Sort the tasks array within updateTaskColumn based on the 'index' property
-            updateTaskColumn.tasks.sort((a, b) => a.index - b.index);
-          }
-
-          return updateTaskColumn;
-        });
-
-        setFinalTaskUpdate(completeUpdatedTask);
-        // dispatch(isBackDropLoaderDisplayed(true));
-        dispatch(isUpdatingTask(true));
-        updateTaskWithStatus(updateTaskInBE);
-        // dispatch(isBackdropLoaderDisplayedForTask(true));
+        /**
+         * calling the mutate function
+         */
+        updateTaskWithIndex(draggedTaskValueForBackend);
       }
+      /* if task is moved into another column */
+      if (columnFromTaskIsDragged.name !== statusInWhichTaskMoved) {
+        /**
+         * update task for backend
+         */
+        // update task in Backend
+        const updateTaskInBE = {
+          ...draggedTask,
+          status: statusInWhichTaskMoved,
+          currentIndex: id,
+          prevStatus: columnFromTaskIsDragged.name,
+          prevIndex: dragged_task_index,
+        };
+        /**
+         * find where task is move
+         */
+        const columnInWhichTaskIsMoved = finalState?.find(
+          (item) => item.name === statusInWhichTaskMoved,
+        );
+        /**
+         * increase the index by +1 all the tasks that are present next to id
+         */
+
+        const updatedColumInWhichTaskIsMoved =
+          columnInWhichTaskIsMoved.tasks?.map((task) => {
+            if (task.index >= id) {
+              return { ...task, index: task.index + 1 };
+            }
+            return task;
+          });
+
+        /**
+         * update the index and status of dragged task
+         */
+        const updatedDraggedTaskIndex = {
+          ...draggedTask,
+          index: id,
+          status: statusInWhichTaskMoved,
+        };
+        updatedColumInWhichTaskIsMoved.push(updatedDraggedTaskIndex);
+
+        /**
+         * remove the task from it's original column and reduce the index-1 and filter the
+         * null task at the end
+         */
+        const removeDraggedTaskFromItsColumn = columnFromTaskIsDragged.tasks
+          ?.map((task) => {
+            if (task._id === dragged_task_id) {
+              return null;
+            }
+            if (task.index > dragged_task_index) {
+              return { ...task, index: task.index - 1 };
+            }
+            return task;
+          })
+          .filter((item) => item !== null);
+
+        /**
+         * update the state
+         */
+        const finalUpdate = finalState.map((item) => {
+          if (item.name === statusInWhichTaskMoved) {
+            return {
+              ...item,
+              tasks: updatedColumInWhichTaskIsMoved.sort(
+                (a, b) => a.index - b.index,
+              ),
+            };
+          }
+          if (item.name === dragged_task_status) {
+            return {
+              ...item,
+              tasks: removeDraggedTaskFromItsColumn.sort(
+                (a, b) => a.index - b.index,
+              ),
+            };
+          }
+          return item;
+        });
+        setFinalTaskUpdate(finalUpdate);
+        updateTaskWithStatus(updateTaskInBE);
+      }
+      dispatch(isUpdatingTask(true));
     },
-    [finalState, dispatch, updateTaskWithStatus, updateTaskWithIndex],
+    [
+      dispatch,
+      dragged_task_id,
+      dragged_task_index,
+      dragged_task_status,
+      finalState,
+      updateTaskWithIndex,
+      updateTaskWithStatus,
+    ],
   );
 
   return {
@@ -238,7 +327,7 @@ const useBoard = () => {
     isAddColBtnClicked,
     handleClickOnAddColsBtn,
     setIsAddColBtnClicked,
-    handleDragEnd,
+    onDrop,
     isLoading,
   };
 };

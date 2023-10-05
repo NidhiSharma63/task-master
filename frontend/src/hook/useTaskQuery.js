@@ -8,6 +8,7 @@ import {
   isBackDropLoaderDisplayed,
   isBackdropLoaderDisplayedForTask,
   isTaskDisplayed,
+  isUpdatingTask,
   showLoaderForTask,
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
@@ -70,6 +71,9 @@ const useGetTaskAccordingToStatus = () => {
           }
           dispatch(isTaskDisplayed(true));
           dispatch(showLoaderForTask(false));
+        },
+        onError: () => {
+          dispatch(isUpdatingTask(false));
         },
       };
     }),

@@ -10,15 +10,16 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
+import React from 'react';
 import { FadeLoader } from 'react-spinners';
-import { StrictModeDroppable } from 'src/common/DnD';
+import DropCard from 'src/components/projectPage/components/DropCard';
+import TaskCard from 'src/components/projectPage/components/TaskCard';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useDeleteColumn from 'src/hook/board/useDeleteColumn';
 import useTaskBoxContainer from 'src/hook/board/useTaskBoxContainer';
 import colors from 'src/theme/variables';
-import TaskCard from './TaskCard';
 
-const TaskBoxContainer = ({ name, data, colId }) => {
+const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
   const {
     handleClickOnTask,
     handleInput,
@@ -52,7 +53,7 @@ const TaskBoxContainer = ({ name, data, colId }) => {
   });
 
   return (
-    <Box sx={{ height: '100%', minWidth: '250px' }}>
+    <Box sx={{ height: '100%', minWidth: '260px' }}>
       <Box
         sx={{
           padding: '0 .7rem',
@@ -126,107 +127,100 @@ const TaskBoxContainer = ({ name, data, colId }) => {
           </Menu>
         </Box>
       </Box>
-      <StrictModeDroppable droppableId={name}>
-        {(provided) => {
-          return (
-            <Box
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              key={name}
-              sx={{
-                width: '100%',
-                mt: 1,
-                height: 'calc(100% - 30px)',
-                borderRadius: '.6rem',
-                boxShadow: '0px 0px 4px 1px #00000014',
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'flex-start',
-                flexDirection: 'column',
-                overflowY: 'auto',
-                p: 1,
-              }}
-              className="box"
-            >
-              {textAreaValuesTop?.map((value, index) => (
-                <>
-                  <textarea
-                    key={index}
-                    value={value}
-                    data-id={name}
-                    onChange={(event) =>
-                      handleChange(event, index, event.target.value)
-                    }
-                    onBlur={(event) => handleBlur(event, index)}
-                    onInput={handleInput}
-                    className="textArea"
-                  />
-                  {show_loader_for_task && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                        mt: -1,
-                      }}
-                    >
-                      <FadeLoader sx={{ mt: -2 }} />
-                    </Box>
-                  )}
-                </>
-              ))}
-              {data?.map((item, i) => {
-                return (
-                  <TaskCard
-                    key={item._id}
-                    item={item}
-                    handleClickOnTask={handleClickOnTask}
-                  />
-                );
-              })}
-              {provided.placeholder}
-              {textAreaValuesBottom?.map((value, index) => (
-                <>
-                  <textarea
-                    key={index}
-                    value={value}
-                    data-id={name}
-                    onChange={(event) =>
-                      handleChange(event, index, event.target.value)
-                    }
-                    onBlur={(event) => handleBlur(event, index)}
-                    onInput={handleInput}
-                    className="textArea"
-                  />
-                  {show_loader_for_task && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                        mt: -1,
-                      }}
-                    >
-                      <FadeLoader sx={{ mt: -2 }} />
-                    </Box>
-                  )}
-                </>
-              ))}
-              {data?.length > 0 ? (
-                <Button
-                  variant="contained"
-                  disabled={show_loader_for_task}
-                  onClick={handleClickForAddingTaskFromBottom}
-                >
-                  Add Task
-                </Button>
-              ) : null}
-            </Box>
-          );
+      <Box
+        key={name}
+        sx={{
+          width: '100%',
+          mt: 1,
+          height: '100%',
+          borderRadius: '.6rem',
+          boxShadow: '0px 0px 4px 1px #00000014',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          flexDirection: 'column',
+          overflowY: 'auto',
+          p: '0 .7rem .7rem .7rem',
         }}
-      </StrictModeDroppable>
+        className="box"
+      >
+        {textAreaValuesTop?.map((value, index) => (
+          <>
+            <textarea
+              key={index}
+              value={value}
+              data-id={name}
+              onChange={(event) =>
+                handleChange(event, index, event.target.value)
+              }
+              onBlur={(event) => handleBlur(event, index)}
+              onInput={handleInput}
+              className="textArea"
+            />
+            {show_loader_for_task && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                  mt: -1,
+                }}
+              >
+                <FadeLoader sx={{ mt: -2 }} />
+              </Box>
+            )}
+          </>
+        ))}
+        {/* {console.log(data.column, 'Data.column', data)} */}
+        <DropCard onDrop={() => onDrop(data.name, 0)} index={0} />
+        {data.tasks?.map((item, i) => {
+          return (
+            <React.Fragment key={item._id}>
+              <TaskCard item={item} handleClickOnTask={handleClickOnTask} />
+              <DropCard onDrop={() => onDrop(item.status, i + 1)} />
+            </React.Fragment>
+          );
+        })}
+        {/* {provided.placeholder} */}
+        {textAreaValuesBottom?.map((value, index) => (
+          <>
+            <textarea
+              key={index}
+              value={value}
+              data-id={name}
+              onChange={(event) =>
+                handleChange(event, index, event.target.value)
+              }
+              onBlur={(event) => handleBlur(event, index)}
+              onInput={handleInput}
+              className="textArea"
+            />
+            {show_loader_for_task && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                  mt: -1,
+                }}
+              >
+                <FadeLoader sx={{ mt: -2 }} />
+              </Box>
+            )}
+          </>
+        ))}
+        {data.tasks?.length > 0 ? (
+          <Button
+            variant="contained"
+            disabled={show_loader_for_task}
+            onClick={handleClickForAddingTaskFromBottom}
+          >
+            Add Task
+          </Button>
+        ) : null}
+      </Box>
     </Box>
   );
 };
