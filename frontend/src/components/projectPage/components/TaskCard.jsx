@@ -44,7 +44,7 @@ const TaskCard = ({ item, handleClickOnTask }) => {
         borderRadius: '0.4rem',
         // marginBottom: '1rem',
         cursor: 'grab',
-        backgroundColor: isDraggable ? 'black' : 'none',
+        backgroundColor: isDraggable ? 'rgb(25,25,25)' : 'none',
         viewTransitionName: item._id,
       }}
       onClick={() => handleClickOnTask(item)}
