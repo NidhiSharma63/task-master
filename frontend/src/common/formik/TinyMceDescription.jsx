@@ -31,6 +31,7 @@ const TinyMceDescription = (props) => {
               init={{
                 content_css: 'dark',
                 entity_encoding: 'raw',
+                button_tile_map: true,
                 height: '100%',
                 width: '100%',
                 menubar: false,
