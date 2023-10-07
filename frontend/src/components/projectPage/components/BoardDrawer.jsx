@@ -1,10 +1,12 @@
 import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import sanitize from 'sanitize-html';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
+import { storage } from 'src/firebase/config';
 import {
   useDeleteTask,
   useUpdateTaskQueryWithDetails,
@@ -18,6 +20,7 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
+import { v4 } from 'uuid';
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -55,10 +58,61 @@ const BoardDrawer = () => {
     originalDate: '',
     color: active_task?.color,
     projectName: active_task.projectName,
+    attachments: active_task.attachments ?? [],
   };
 
-  const handleSubmit = (values) => {
-    mutate(values);
+  const handleSubmit = async (values) => {
+    console.log(values);
+    const { attachments } = values;
+    /**
+     * declaring the variable here to store the urls
+     */
+    const urlsForAttachments = [];
+
+    /**
+     * first put the urls that are stored in firebase
+     */
+    for (let i = 0; i < attachments.length; i++) {
+      if (
+        typeof attachments[i] === 'string' &&
+        attachments[i].includes('firebasestorage.googleapis')
+      ) {
+        console.log(attachments[i], 'That was pushed into array before');
+        urlsForAttachments.push(attachments[i]);
+      }
+    }
+
+    /**
+     * make a request call for firebase to store the url for attachments that are not present in firebase
+     */
+    await Promise.all(
+      attachments?.map(async (attachment) => {
+        try {
+          if (
+            typeof attachment === 'string' &&
+            attachment.includes('firebasestorage.googleapis')
+          )
+            return;
+          console.log(attachment, 'For which firebase trigger');
+          const imageRef = ref(storage, `/images/${attachment.name}-${v4()}`);
+          const snapshot = await uploadBytes(imageRef, attachment);
+          const url = await getDownloadURL(snapshot.ref);
+          urlsForAttachments.push(url);
+        } catch (error) {
+          console.error('Error uploading attachment:', error);
+        }
+      }),
+    );
+
+    /**
+     * updating the attachements field from the firebse urls
+     */
+    const updatedValuesWithAttachmentsUrls = {
+      ...values,
+      attachments: urlsForAttachments,
+    };
+    console.log(urlsForAttachments, 'urlsForAttachments');
+    mutate(updatedValuesWithAttachmentsUrls);
   };
 
   const handleDelete = () => {
@@ -84,7 +138,6 @@ const BoardDrawer = () => {
     setToggleEditModeForDescription((prev) => !prev);
   };
 
-  console.log(sanitize(active_task.description), 'sanitize');
   return (
     <Drawer
       anchor={'right'}
@@ -168,7 +221,7 @@ const BoardDrawer = () => {
                 )}
 
                 <FormikControls control="formikInputArray" name="subTasks" />
-
+                <FormikControls control="attachments" name="attachments" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography>Created At : &nbsp;</Typography>
                   <Typography

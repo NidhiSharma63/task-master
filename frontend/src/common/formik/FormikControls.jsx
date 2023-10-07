@@ -6,6 +6,7 @@ import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikSelect from 'src/common/formik/FormikSelect';
 import FormikTextArea from 'src/common/formik/FormikTextArea';
 import TinyMceDescription from 'src/common/formik/TinyMceDescription';
+import FormikImage from 'src/common/formik/formikImage';
 
 const FormikControls = (props) => {
   const { control, ...rest } = props;
@@ -30,6 +31,9 @@ const FormikControls = (props) => {
 
     case 'tinyMceDescription':
       return <TinyMceDescription {...rest} />;
+
+    case 'attachments':
+      return <FormikImage {...rest} />;
     default:
       return null;
   }

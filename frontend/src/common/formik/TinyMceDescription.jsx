@@ -40,7 +40,6 @@ const TinyMceDescription = (props) => {
                   'autolink',
                   'lists',
                   'link',
-                  'image',
                   'charmap',
                   'preview',
                   'anchor',
@@ -53,7 +52,7 @@ const TinyMceDescription = (props) => {
                   'code',
                 ],
                 toolbar:
-                  'undo redo | blocks | ' +
+                  'undo redo | blocks |  code' +
                   'bold italic forecolor | alignleft aligncenter ' +
                   'alignright alignjustify | bullist numlist outdent indent | ',
                 content_style: `body { font-family:'Quicksand', sans-serif; font-size:16px; background-color: #353535;color:white}
