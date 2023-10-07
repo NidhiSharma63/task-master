@@ -32,7 +32,7 @@ const FormikControls = (props) => {
     case 'tinyMceDescription':
       return <TinyMceDescription {...rest} />;
 
-    case 'attachments':
+    case 'images':
       return <FormikImage {...rest} />;
     default:
       return null;

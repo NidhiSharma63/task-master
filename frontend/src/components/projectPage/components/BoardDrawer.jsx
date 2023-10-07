@@ -64,7 +64,7 @@ const BoardDrawer = () => {
     originalDate: '',
     color: active_task?.color,
     projectName: active_task.projectName,
-    attachments: active_task.attachments ?? [],
+    images: active_task.images ?? [],
   };
 
   const handleSubmit = async (values) => {
@@ -179,8 +179,8 @@ const BoardDrawer = () => {
 
                 <FormikControls control="formikInputArray" name="subTasks" />
                 <FormikControls
-                  control="attachments"
-                  name="attachments"
+                  control="images"
+                  name="images"
                   handleSubmit={handleSubmit}
                 />
                 <Box sx={{ mt: 2, display: 'flex' }}>
