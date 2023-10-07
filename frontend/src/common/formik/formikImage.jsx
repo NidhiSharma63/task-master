@@ -1,6 +1,6 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ImageIcon from '@mui/icons-material/Image';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import {
   deleteObject,
   getDownloadURL,
@@ -12,6 +12,7 @@ import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
+import TitleCase from 'src/utils/TextTransformer';
 import { v4 } from 'uuid';
 
 const keyframes = {
@@ -110,6 +111,8 @@ const FormikImage = (props) => {
         gap: 2,
       }}
     >
+      {values[name].length > 0 && <Typography>{TitleCase(name)}</Typography>}
+
       <FieldArray
         name={name}
         render={(arrayHelpers) => {
