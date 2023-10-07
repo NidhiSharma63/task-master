@@ -1,31 +1,35 @@
-import React from "react";
-import FormikInput from "src/common/formik/FormikInput";
-import FormikDatePicker from "src/common/formik/FormikDatePicker";
-import FormikTextArea from "src/common/formik/FormikTextArea";
-import FormikSelect from "src/common/formik/FormikSelect";
-import FormikInputArray from "src/common/formik/FormikInputArray";
-import FormikInputForLabel from "src/common/formik/FormikInputForLabel";
+import React from 'react';
+import FormikDatePicker from 'src/common/formik/FormikDatePicker';
+import FormikInput from 'src/common/formik/FormikInput';
+import FormikInputArray from 'src/common/formik/FormikInputArray';
+import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
+import FormikSelect from 'src/common/formik/FormikSelect';
+import FormikTextArea from 'src/common/formik/FormikTextArea';
+import TinyMceDescription from 'src/common/formik/TinyMceDescription';
 
 const FormikControls = (props) => {
   const { control, ...rest } = props;
   switch (control) {
-    case "formikInput":
+    case 'formikInput':
       return <FormikInput {...rest} />;
 
-    case "formikDatePicker":
+    case 'formikDatePicker':
       return <FormikDatePicker {...rest} />;
 
-    case "formikTextArea":
+    case 'formikTextArea':
       return <FormikTextArea {...rest} />;
 
-    case "formikSelect":
+    case 'formikSelect':
       return <FormikSelect {...rest} />;
 
-    case "formikInputArray":
+    case 'formikInputArray':
       return <FormikInputArray {...rest} />;
 
-    case "formikInputForLable":
+    case 'formikInputForLable':
       return <FormikInputForLabel {...rest} />;
+
+    case 'tinyMceDescription':
+      return <TinyMceDescription {...rest} />;
     default:
       return null;
   }

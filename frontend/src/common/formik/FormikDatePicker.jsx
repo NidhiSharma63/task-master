@@ -1,9 +1,9 @@
-import React from "react";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Typography, TextField } from "@mui/material";
-import TitleCase from "src/utils/TextTransformer";
-import { Field } from "formik";
+import { TextField, Typography } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { Field } from 'formik';
+import React from 'react';
+import TitleCase from 'src/utils/TextTransformer';
 // date-fns
 
 const FormikDatePicker = (props) => {
@@ -16,15 +16,13 @@ const FormikDatePicker = (props) => {
 
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Typography sx={{ fontWeight: 600, mb: 1 }}>
-              {TitleCase(name)}
-            </Typography>
+            <Typography sx={{ mb: 1 }}>{TitleCase(name)}</Typography>
             <DatePicker
               name={name}
               value={value}
               inputFormat="MM/dd/yyyy"
               sx={{
-                outline: "none",
+                outline: 'none',
               }}
               onChange={(date) => {
                 const dates = new Date(date);
@@ -35,7 +33,7 @@ const FormikDatePicker = (props) => {
                   new Date().getHours(),
                   0,
                   0,
-                  0
+                  0,
                 );
                 // console.log(dateWithNumbers, "Dates with numbers");
                 if (date) {
@@ -51,7 +49,7 @@ const FormikDatePicker = (props) => {
                   {...params}
                   inputProps={{
                     style: {
-                      border: "none", // Set the desired color for the outline in error state
+                      border: 'none', // Set the desired color for the outline in error state
                     },
                   }}
                 />

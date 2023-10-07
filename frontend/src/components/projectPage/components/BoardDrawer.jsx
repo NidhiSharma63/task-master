@@ -2,6 +2,7 @@ import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import sanitize from 'sanitize-html';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import {
@@ -25,14 +26,20 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const [toggleEditModeForDescription, setToggleEditModeForDescription] =
+    useState(false);
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
   }, [is_board_drawer_open]);
 
+  /**
+   * handle close of drawer
+   */
   const handleClose = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
+    setToggleEditModeForDescription(false);
   };
 
   const initialValues = {
@@ -69,6 +76,15 @@ const BoardDrawer = () => {
     dispatch(isBackDropLoaderDisplayed(true));
   };
 
+  /**
+   * handleToggleModeForDescription
+   */
+
+  const handleToggleModeForDescription = () => {
+    setToggleEditModeForDescription((prev) => !prev);
+  };
+
+  console.log(sanitize(active_task.description), 'sanitize');
   return (
     <Drawer
       anchor={'right'}
@@ -76,7 +92,7 @@ const BoardDrawer = () => {
       onClose={handleClose}
       sx={{
         '& .MuiDrawer-paper': {
-          width: 600,
+          width: 900,
         },
       }}
     >
@@ -110,7 +126,7 @@ const BoardDrawer = () => {
             <Form>
               <Box
                 sx={{
-                  width: '30rem',
+                  width: '90%',
                   height: 'auto',
                 }}
               >
@@ -121,7 +137,36 @@ const BoardDrawer = () => {
                   colorName="labelColor"
                 />
                 <FormikControls control="formikDatePicker" name="dueDate" />
-                <FormikControls control="formikTextArea" name="description" />
+
+                <Typography sx={{ mt: 2, mb: -2 }}>Description</Typography>
+                {toggleEditModeForDescription || !active_task.description ? (
+                  <FormikControls
+                    control="tinyMceDescription"
+                    name="description"
+                    setToggleEditModeForDescription={
+                      setToggleEditModeForDescription
+                    }
+                    active_task={active_task}
+                  />
+                ) : (
+                  <Box
+                    onClick={handleToggleModeForDescription}
+                    sx={{
+                      height: 'fit-content',
+                      width: '100%',
+                      border: '1px solid red',
+                      borderRadius: '.4rem',
+                      mt: 3,
+                      p: 2,
+                      paddingLeft: 3,
+                      borderColor: (theme) => theme.palette.grey[500],
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitize(active_task.description),
+                    }}
+                  ></Box>
+                )}
+
                 <FormikControls control="formikInputArray" name="subTasks" />
 
                 <Box sx={{ mt: 2, display: 'flex' }}>
