@@ -30,6 +30,7 @@ const TinyMceDescription = (props) => {
               initialValue={value}
               init={{
                 content_css: 'dark',
+                entity_encoding: 'raw',
                 height: '100%',
                 width: '100%',
                 menubar: false,
