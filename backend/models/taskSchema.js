@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema({
   createdAt: {
     type: Date, // Change type to Date for storing date values
@@ -44,8 +44,9 @@ const taskSchema = new mongoose.Schema({
     type: String,
   },
   subTasks: [],
+  images: [],
 });
 
-const Task = new mongoose.model("Task", taskSchema);
+const Task = new mongoose.model('Task', taskSchema);
 
 module.exports = Task;
