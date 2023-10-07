@@ -176,13 +176,12 @@ const BoardDrawer = () => {
                     }}
                   />
                 )}
-
-                <FormikControls control="formikInputArray" name="subTasks" />
                 <FormikControls
                   control="images"
                   name="images"
                   handleSubmit={handleSubmit}
                 />
+                <FormikControls control="formikInputArray" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography>Created At : &nbsp;</Typography>
                   <Typography

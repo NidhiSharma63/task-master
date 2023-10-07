@@ -1,4 +1,5 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ImageIcon from '@mui/icons-material/Image';
 import { Box, Button } from '@mui/material';
 import {
   deleteObject,
@@ -185,7 +186,13 @@ const FormikImage = (props) => {
           />
         </Box>
       )}
-      <Button type="button" variant="contained" onClick={handleClick}>
+      <Button
+        type="button"
+        variant="contained"
+        onClick={handleClick}
+        sx={{ display: 'flex', gap: 1 }}
+      >
+        <ImageIcon />
         Add images
       </Button>
       <input
