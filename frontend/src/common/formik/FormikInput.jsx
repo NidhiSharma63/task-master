@@ -1,7 +1,7 @@
-import { Field } from "formik";
-import React from "react";
-import { TextField, Typography, Box } from "@mui/material";
-import TitleCase from "src/utils/TextTransformer";
+import { Box, TextField, Typography } from '@mui/material';
+import { Field } from 'formik';
+import React from 'react';
+import TitleCase from 'src/utils/TextTransformer';
 
 /**
  * Function that returns custom input component
@@ -18,22 +18,22 @@ function FormikInput(props) {
         return (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
               mb: 2,
-              width: "100%",
-              flexDirection: "column",
+              width: '100%',
+              flexDirection: 'column',
             }}
           >
             <Typography
               sx={{
-                maxWidth: "13rem",
+                maxWidth: '13rem',
                 mb: 1,
-                color: "white",
+                color: 'white',
               }}
             >
-              {name === "email" ? TitleCase("e-mail") : TitleCase(name)}
+              {name === 'email' ? TitleCase('e-mail') : TitleCase(name)}
             </Typography>
             <TextField
               id={name}
@@ -41,14 +41,14 @@ function FormikInput(props) {
               {...rest}
               {...field}
               sx={{
-                width: "100%",
+                width: '100%',
                 padding: 0,
                 borderColor: (theme) => theme.palette.grey[50],
-                "&:focus": {
-                  outline: "none", // Change this to the desired border color on focus.
-                  boxShadow: "0 0 2px 2px rgba(0, 0, 255, 0.2)", // Optional: Add a box-shadow for visual emphasis.
+                '&:focus': {
+                  outline: 'none', // Change this to the desired border color on focus.
+                  boxShadow: '0 0 2px 2px rgba(0, 0, 255, 0.2)', // Optional: Add a box-shadow for visual emphasis.
                 },
-                borderRadius: ".3rem",
+                borderRadius: '.3rem',
               }}
               outline="none"
               helperText={

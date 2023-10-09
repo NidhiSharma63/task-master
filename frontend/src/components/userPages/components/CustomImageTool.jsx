@@ -7,7 +7,6 @@ class CustomImage extends Image {
   removed() {
     // access the image block's file data that deleted
     const data = this._data.file.url;
-    console.log(data, 'removde');
 
     // check if the data includes firebasestorage.googleapis
     if (data.includes('firebasestorage.googleapis')) {

@@ -155,6 +155,7 @@ const updateTaskWithDetail = async (req, res, next) => {
     taskObj.dueDate = taskBody.dueDate;
     taskObj.description = taskBody.description;
     taskObj.subTasks = taskBody.subTasks;
+    taskObj.images = taskBody.images;
     taskObj.label = taskBody.label;
     taskObj.labelColor = taskBody.labelColor;
 

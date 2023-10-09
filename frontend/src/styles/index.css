@@ -54,27 +54,36 @@
   margin-left: -3rem;
 }
 .black {
-  background-color: black !important;
+  background-color: #353535 !important;
 }
+
+/**
+TINY MCE
+**/
 /* toolbar */
 .mce-toolbar-grp {
-  background-color: #000 !important; /* uses !important or override .mce-panel background-color/image */
+  background-color: #353535 !important; /* uses !important or override .mce-panel background-color/image */
   background-image: none !important;
 }
 
-/* text color */
-#tinymce {
-  color: #dd9900;
+/*
+  background color tiny MCE
+*/
+.mce-content-body, #tinymce{
+  background-color: red !important;
 }
 
-/* button text color */
-.mce-ico {
-  color: #dd9900;
+/* Adding border over tiny mce*/
+.tox-editor-container{
+  border: 1px solid #424244 !important;
+  border-radius: .3rem;
+  margin-top: 1.5rem !important;
+  height: 20rem !important; /* to remove the footer of tinyMCE */
 }
 
 /* button background color */
 .mce-btn button {
-  background-color: #000000;
+  background-color: #353535;
 }
 
 .mce-content-body {
@@ -82,18 +91,18 @@
 }
 
 .tox-toolbar {
-  background-color: black !important;
+  background-color: #353535 !important;
 }
 .tox:not(.tox-tinymce-inline) .tox-editor-header {
-  background-color: black !important;
+  background-color: #353535 !important;
 }
 .tox .tox-toolbar-overlord {
-  background-color: black !important;
+  background-color: #353535 !important;
 }
 .tox .tox-toolbar,
 .tox .tox-toolbar__overflow,
 .tox .tox-toolbar__primary {
-  background-color: black !important;
+  background-color: #353535 !important;
 }
 .tox .tox-tbtn svg {
   color: white !important;
@@ -113,8 +122,9 @@
 .tox-collection__item-label pre,
 .tox-collection__item-label p {
   background-color: white !important;
-  color: black !important;
+  color: #353535 !important;
 }
+
 /* EDITOR.JS */
 .ce-block__content {
   max-width: none !important;

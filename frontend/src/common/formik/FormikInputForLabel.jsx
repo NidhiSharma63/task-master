@@ -1,22 +1,29 @@
-import { Box, Accordion, AccordionSummary, AccordionDetails, Typography, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { COLORS_FOR_PROJECTS } from "src/constant/colors";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import { Field } from "formik";
-import TitleCase from "src/utils/TextTransformer";
-import colors from "src/theme/variables";
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Field } from 'formik';
+import React, { useState } from 'react';
+import { COLORS_FOR_PROJECTS } from 'src/constant/colors';
+import colors from 'src/theme/variables';
+import TitleCase from 'src/utils/TextTransformer';
 
 const FormikInputForLabel = (props) => {
   const [isAccordianOpen, setIsAccodianOpen] = useState(false);
   const { colorName, name } = props;
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState('');
 
-  const hanldeAccordianOpen = () => {
+  const handleAccordian = () => {
     setIsAccodianOpen((prev) => !prev);
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", mb: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', mb: 3 }}>
       <Field name={name}>
         {({ field, form }) => {
           const { setFieldValue } = form;
@@ -24,29 +31,30 @@ const FormikInputForLabel = (props) => {
           return (
             <Box
               sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
                 mb: 2,
-                width: "100%",
-                flexDirection: "column",
-              }}>
+                width: '100%',
+                flexDirection: 'column',
+              }}
+            >
               <Typography
                 sx={{
-                  fontWeight: "700",
-                  maxWidth: "13rem",
+                  maxWidth: '13rem',
                   mb: 1,
-                }}>
+                }}
+              >
                 {TitleCase(name)}
               </Typography>
               <TextField
                 {...field}
                 value={textValue.length > 0 ? textValue : value}
                 sx={{
-                  width: "100%",
+                  width: '100%',
                   padding: 0,
                   borderColor: (theme) => theme.palette.grey[50],
-                  borderRadius: ".3rem",
+                  borderRadius: '.3rem',
                 }}
                 onChange={(event) => {
                   setTextValue(event.target.value);
@@ -66,65 +74,75 @@ const FormikInputForLabel = (props) => {
           const { value } = field;
           return (
             <>
-              <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
+              <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
                 {textValue.length > 0 && (
                   <Typography
                     sx={{
-                      padding: ".4rem .7rem",
+                      padding: '.4rem .7rem',
                       background: value,
-                      color: "white",
-                      width: "fit-content",
-                      borderRadius: "1rem",
-                      fontSize: ".8rem",
-                    }}>
+                      color: 'white',
+                      width: 'fit-content',
+                      borderRadius: '1rem',
+                      fontSize: '.8rem',
+                    }}
+                  >
                     {textValue}
                   </Typography>
                 )}
 
                 <Accordion
                   sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: `${isAccordianOpen ? "30rem" : "5rem"}`,
-                    background: "transparent",
-                    boxShadow: "none",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: `${isAccordianOpen ? '30rem' : '5rem'}`,
+                    background: 'transparent',
+                    boxShadow: 'none',
                     border: `1px solid ${colors.lightGrey}`,
-                    borderRadius: ".3rem",
-                  }}>
-                  <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />} onClick={hanldeAccordianOpen}>
+                    borderRadius: '.3rem',
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ArrowForwardIosSharpIcon />}
+                    onClick={handleAccordian}
+                  >
                     <Box
                       sx={{
-                        width: "2rem",
-                        height: "2rem",
-                        borderRadius: "50%",
+                        width: '2rem',
+                        height: '2rem',
+                        borderRadius: '50%',
                         backgroundColor: value,
-                        cursor: "pointer",
-                      }}></Box>
+                        cursor: 'pointer',
+                      }}
+                    ></Box>
                   </AccordionSummary>
                   <AccordionDetails
                     sx={{
-                      display: "flex",
-                      flexDirection: "row", // Display children horizontally
-                      justifyContent: "flex-start", // Align children to the start
-                      gap: "8px",
-                      alignItems: "center",
+                      display: 'flex',
+                      flexDirection: 'row', // Display children horizontally
+                      justifyContent: 'flex-start', // Align children to the start
+                      gap: '8px',
+                      alignItems: 'center',
                       mt: 1.5,
-                    }}>
+                    }}
+                  >
                     {COLORS_FOR_PROJECTS.map((color) => {
                       return (
                         <Box
                           key={color}
                           sx={{
-                            width: "2rem",
-                            height: "2rem",
-                            borderRadius: "50%",
+                            width: '2rem',
+                            height: '2rem',
+                            borderRadius: '50%',
                             backgroundColor: color,
-                            cursor: "pointer",
-                            border: `${color === value ? "3px solid black" : "none"}`,
+                            cursor: 'pointer',
+                            border: `${
+                              color === value ? '3px solid black' : 'none'
+                            }`,
                           }}
                           onClick={() => {
                             setFieldValue(colorName, color);
-                          }}></Box>
+                          }}
+                        ></Box>
                       );
                     })}
                   </AccordionDetails>

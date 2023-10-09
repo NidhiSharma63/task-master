@@ -1,9 +1,13 @@
 import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import sanitize from 'sanitize-html';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
+import { storage } from 'src/firebase/config';
 import {
   useDeleteTask,
   useUpdateTaskQueryWithDetails,
@@ -25,14 +29,29 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const [toggleEditModeForDescription, setToggleEditModeForDescription] =
+    useState(false);
+  const [isTaskSavedAfterUpdating, setIsTaskSavedAfterUpdating] =
+    useState(false);
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
   }, [is_board_drawer_open]);
 
+  /**
+   * handle close of drawer
+   */
   const handleClose = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
+    setToggleEditModeForDescription(false);
+
+    /**
+     * check if user added the image and that image stored in firebase but user didn't
+     * click on the save button
+     */
+    if (!isTaskSavedAfterUpdating) {
+    }
   };
 
   const initialValues = {
@@ -48,10 +67,12 @@ const BoardDrawer = () => {
     originalDate: '',
     color: active_task?.color,
     projectName: active_task.projectName,
+    images: active_task.images ?? [],
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     mutate(values);
+    setIsTaskSavedAfterUpdating(true);
   };
 
   const handleDelete = () => {
@@ -67,6 +88,26 @@ const BoardDrawer = () => {
     dispatch(isUpdatingTask(false));
     dispatch(isBackdropLoaderDisplayedForTask(true));
     dispatch(isBackDropLoaderDisplayed(true));
+
+    /**
+     * also delete the image from firebase
+     */
+    const images = active_task.images;
+    images.forEach((img) => {
+      const storageRef = ref(storage, img);
+      deleteObject(storageRef).catch(() => {
+        toast.error("couldn't delete the image");
+        console.log('something went wrong while deleting the file');
+      });
+    });
+  };
+
+  /**
+   * handleToggleModeForDescription
+   */
+
+  const handleToggleModeForDescription = () => {
+    setToggleEditModeForDescription((prev) => !prev);
   };
 
   return (
@@ -76,7 +117,7 @@ const BoardDrawer = () => {
       onClose={handleClose}
       sx={{
         '& .MuiDrawer-paper': {
-          width: 600,
+          width: 900,
         },
       }}
     >
@@ -110,7 +151,7 @@ const BoardDrawer = () => {
             <Form>
               <Box
                 sx={{
-                  width: '30rem',
+                  width: '90%',
                   height: 'auto',
                 }}
               >
@@ -121,9 +162,41 @@ const BoardDrawer = () => {
                   colorName="labelColor"
                 />
                 <FormikControls control="formikDatePicker" name="dueDate" />
-                <FormikControls control="formikTextArea" name="description" />
-                <FormikControls control="formikInputArray" name="subTasks" />
 
+                <Typography sx={{ mt: 2, mb: -2 }}>Description</Typography>
+                {toggleEditModeForDescription || !active_task.description ? (
+                  <FormikControls
+                    control="tinyMceDescription"
+                    name="description"
+                    setToggleEditModeForDescription={
+                      setToggleEditModeForDescription
+                    }
+                    active_task={active_task}
+                  />
+                ) : (
+                  <Box
+                    onClick={handleToggleModeForDescription}
+                    sx={{
+                      height: 'fit-content',
+                      width: '100%',
+                      border: '1px solid red',
+                      borderRadius: '.4rem',
+                      mt: 3,
+                      p: 2,
+                      paddingLeft: 3,
+                      borderColor: (theme) => theme.palette.grey[500],
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitize(active_task.description),
+                    }}
+                  />
+                )}
+                <FormikControls
+                  control="images"
+                  name="images"
+                  handleSubmit={handleSubmit}
+                />
+                <FormikControls control="formikInputArray" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography>Created At : &nbsp;</Typography>
                   <Typography
