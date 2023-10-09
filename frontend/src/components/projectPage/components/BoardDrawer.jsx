@@ -1,10 +1,13 @@
 import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import sanitize from 'sanitize-html';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
+import { storage } from 'src/firebase/config';
 import {
   useDeleteTask,
   useUpdateTaskQueryWithDetails,
@@ -85,6 +88,18 @@ const BoardDrawer = () => {
     dispatch(isUpdatingTask(false));
     dispatch(isBackdropLoaderDisplayedForTask(true));
     dispatch(isBackDropLoaderDisplayed(true));
+
+    /**
+     * also delete the image from firebase
+     */
+    const images = active_task.images;
+    images.forEach((img) => {
+      const storageRef = ref(storage, img);
+      deleteObject(storageRef).catch(() => {
+        toast.error("couldn't delete the image");
+        console.log('something went wrong while deleting the file');
+      });
+    });
   };
 
   /**
