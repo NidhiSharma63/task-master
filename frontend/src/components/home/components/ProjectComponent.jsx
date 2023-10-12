@@ -28,7 +28,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
       sx={{
         width: '50%',
         border: '1px solid',
-        borderColor: (theme) => theme.palette.grey[400],
+        // borderColor: (theme) => theme.palette.grey[400],
         borderRadius: '0.3rem',
         height: '100%',
       }}

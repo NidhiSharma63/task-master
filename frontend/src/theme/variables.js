@@ -25,6 +25,10 @@ const colors = {
   lightGrey: '#424244',
   subTaskButtonColor: 'rgb(241,189,108)',
   secondaryTextColor: '#807E81', // had to change because of mui date picker days name
+
+  offWhite: '#FAF8F8',
+  lineColor: '#E2DFDF',
+  textColor: '#3E3A3A',
 };
 
 export default colors;

@@ -1,12 +1,10 @@
-import { Box, Typography, Divider } from "@mui/material";
-import { useSelector } from "react-redux";
-import { projectDataInStore } from "src/redux/projects/projectSlice";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import colors from "src/theme/variables";
-import projectImage from "src/assets/icons/Project.png";
+import { Box, Divider, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import projectImage from 'src/assets/icons/Project.png';
+import { projectDataInStore } from 'src/redux/projects/projectSlice';
+import colors from 'src/theme/variables';
 
 const Headers = () => {
   const { active_project } = useSelector(projectDataInStore);
@@ -14,7 +12,10 @@ const Headers = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/Dashboard" || location.pathname.includes("/Dashboard/activeProject/board")) {
+    if (
+      location.pathname === '/Dashboard' ||
+      location.pathname.includes('/Dashboard/activeProject/board')
+    ) {
       navigate(`/Dashboard/activeProject/board/${active_project}`);
       // queryClient.invalidateQueries("projects"); invalidate all the query
     }
@@ -23,39 +24,42 @@ const Headers = () => {
   return (
     <Box
       sx={{
-        position: "fixed",
-        width: "100%",
-        top: "4.5rem",
-      }}>
+        position: 'fixed',
+        width: '100%',
+        top: '4.5rem',
+      }}
+    >
       <Box>
-        <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-          <img src={projectImage} alt="project" style={{ width: "40px" }} />
+        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+          <img src={projectImage} alt="project" style={{ width: '40px' }} />
           <Typography
             variant="h5"
             sx={{
-              textTransform: "capitalize",
+              textTransform: 'capitalize',
               pl: 2,
-              color: colors.primaryColor,
-              fontWeight: "bold",
-            }}>
+              color: colors.textColor,
+              fontWeight: 'bold',
+            }}
+          >
             {active_project}
           </Typography>
         </Box>
-        <Box>
+        <Box sx={{ ml: 6.5 }}>
           <NavLink
             style={({ isActive }) => ({
-              color: "white",
+              color: colors.textColor,
               fontWeight: isActive ? 600 : 100,
-              textDecoration: "none",
-              marginLeft: "1.2rem",
-              borderBottom: isActive ? `1px solid ${colors.secondaryColor}` : "",
+              textDecoration: 'none',
+              marginLeft: '1.2rem',
+              borderBottom: isActive ? `1px solid ${colors.textColor}` : '',
             })}
-            to={`activeProject/board/${active_project}`}>
+            to={`activeProject/board/${active_project}`}
+          >
             Board
           </NavLink>
         </Box>
       </Box>
-      <Divider />
+      <Divider sx={{ borderColor: colors.lineColor }} />
     </Box>
   );
 };
