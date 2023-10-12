@@ -150,9 +150,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
             border: `1px solid ${colors.lineColor}`,
           },
         }}
-        // className="box"
       >
-        {console.log(data, 'Data')}
         {textAreaValuesTop?.map((value, index) => (
           <>
             <textarea

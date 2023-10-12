@@ -118,7 +118,7 @@ export const Layout = () => {
               width: drawerWidth,
               boxSizing: 'border-box',
               background: colors.offWhite,
-              border: 'none',
+              borderRight: '1px solid white',
             },
             // backgroundColor: "red",
           }}

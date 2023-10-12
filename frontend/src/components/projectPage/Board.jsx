@@ -67,7 +67,7 @@ const Board = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <textarea
                 value={columnValue}
-                className="textarea-col"
+                className="textarea-column"
                 onChange={handlecolumnValue}
               ></textarea>
               <Button

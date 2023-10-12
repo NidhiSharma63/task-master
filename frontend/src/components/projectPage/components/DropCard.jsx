@@ -45,7 +45,7 @@ const DropCard = ({ onDrop, index }) => {
         minHeight: '1rem',
         width: '100%',
         opacity: displayDropCard ? 1 : 0,
-        border: '.1rem',
+        border: '.2rem',
         borderStyle: 'dashed',
         transition: 'opacity .3s ease, padding .3s ease',
         padding: displayDropCard ? '2rem 0' : '0',

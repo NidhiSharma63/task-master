@@ -38,14 +38,14 @@ const TaskCard = ({ item, handleClickOnTask }) => {
       draggable={true}
       onDragStart={handleDragStart}
       sx={{
-        border: `1px solid ${colors.lightGrey}`,
+        border: `1px solid ${colors.lineColor}`,
         width: '100%',
         padding: 2,
         borderRadius: '0.4rem',
-        // marginBottom: '1rem',
         cursor: 'grab',
-        backgroundColor: isDraggable ? 'rgb(25,25,25)' : 'none',
+        backgroundColor: isDraggable ? colors.offWhite : 'white',
         viewTransitionName: item._id,
+        boxShadow: '0px 0px 1px 0px #0000001e',
       }}
       onClick={() => handleClickOnTask(item)}
       onDragEnd={handleDragEnd}
@@ -58,7 +58,9 @@ const TaskCard = ({ item, handleClickOnTask }) => {
           flexDirection: 'column',
         }}
       >
-        <Typography>{item?.task}</Typography>
+        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+          {item?.task}
+        </Typography>
         {item?.label && (
           <Typography
             sx={{

@@ -12,17 +12,12 @@
   overflow-y: hidden;
   min-height: 4rem;
   background-color: transparent;
-  color: white;
+  color: #3E3A3A;
   margin-top: 10px;
+  border: 1px solid #E2DFDF;
+  outline: none;
 }
 
-.box {
-  background: linear-gradient(180deg, #2a2b2d, rgba(42, 43, 45, 0) 100%);
-}
-.textArea:focus {
-  outline: none;
-  border: 1px solid rgb(166, 159, 243);
-}
 .board-drawer-textarea {
   resize: none;
   width: 80%;
@@ -40,11 +35,11 @@
   border: 2px solid rgb(166, 159, 243);
 }
 
-.textarea-col {
+.textarea-column {
   resize: none;
   padding: 0.1rem;
   background-color: transparent;
-  color: white;
+  color: #3E3A3A;
 }
 
 .editable-content {
@@ -196,3 +191,7 @@ background-color: black;
   background-color: #32383A !important;
   color: white!important;
 }
+
+/* .box-shadow{
+  box-shadow: 0px 0px 1px 0px #0000001e;
+} */
