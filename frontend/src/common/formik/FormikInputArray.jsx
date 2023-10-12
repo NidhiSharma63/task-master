@@ -1,9 +1,9 @@
-import { Field, FieldArray } from "formik";
-import { Box, Button, TextField } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import useFormikInput from "src/hook/boardDrawer/useFormikInput";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import colors from "src/theme/variables";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { Box, Button, TextField } from '@mui/material';
+import { Field, FieldArray } from 'formik';
+import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
+import colors from 'src/theme/variables';
 
 const FormikInputArray = (props) => {
   const { name } = props;
@@ -20,13 +20,14 @@ const FormikInputArray = (props) => {
   };
   return (
     <Box
-      mt={2}
       sx={{
-        display: "flex",
-        alignItems: "flex-start",
-        flexDirection: "column",
+        mt: 2,
+        display: 'flex',
+        alignItems: 'flex-start',
+        flexDirection: 'column',
         gap: 2,
-      }}>
+      }}
+    >
       <FieldArray
         name={name}
         render={(arrayHelpers) => (
@@ -38,15 +39,16 @@ const FormikInputArray = (props) => {
                       return (
                         <Box
                           sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             // border: "1px solid red",
-                            width: "100%",
+                            width: '100%',
                             gap: 2,
-                          }}>
+                          }}
+                        >
                           <TextField
-                            sx={{ width: "100%" }}
+                            sx={{ width: '100%', backgroundColor: 'white' }}
                             {...field}
                             value={task.value}
                             className="not-remove-input"
@@ -54,15 +56,17 @@ const FormikInputArray = (props) => {
                           />
                           <TaskAltIcon
                             sx={{
-                              cursor: "pointer",
-                              color: `${task.isCompleted ? "#045c08" : undefined}`,
+                              cursor: 'pointer',
+                              color: `${
+                                task.isCompleted ? '#045c08' : undefined
+                              }`,
                             }}
                             onClick={() => toggleTaskCompletion(index)}
                           />
                           {/* #045c08 */}
                           <DeleteOutlineIcon
                             sx={{
-                              cursor: "pointer",
+                              cursor: 'pointer',
                               color: (theme) => theme.palette.primary.main,
                             }}
                             className="not-remove-input"
@@ -79,13 +83,15 @@ const FormikInputArray = (props) => {
               variant="contained"
               className="not-remove-input"
               sx={{
-                mt: 2,
                 background: colors.subTaskButtonColor,
-                "&:hover": {
+                '&:hover': {
                   backgroundColor: colors.subTaskButtonColor,
                 },
               }}
-              onClick={() => arrayHelpers.push({ value: "", isCompleted: false })}>
+              onClick={() =>
+                arrayHelpers.push({ value: '', isCompleted: false })
+              }
+            >
               Sub task
             </Button>
           </>

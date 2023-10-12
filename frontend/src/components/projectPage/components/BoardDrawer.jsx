@@ -124,14 +124,17 @@ const BoardDrawer = () => {
       <Box
         sx={{
           position: 'relative',
-          top: '5rem',
+          top: '4.2rem',
+          backgroundColor: colors.offWhite,
+          padding: 1,
+          paddingTop: 2,
         }}
       >
         <Box>
           <Typography sx={{ pl: 2, textTransform: 'capitalize' }} variant="h5">
             {active_task.task}
           </Typography>
-          <Divider sx={{ mt: 2 }} />
+          <Divider sx={{ mt: 2, borderColor: colors.lineColor }} />
         </Box>
         <Box
           sx={{
@@ -141,6 +144,7 @@ const BoardDrawer = () => {
             gap: '1rem',
             mt: 1,
             mb: 2,
+            width: '90%',
           }}
         >
           <Formik
@@ -153,6 +157,9 @@ const BoardDrawer = () => {
                 sx={{
                   width: '90%',
                   height: 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 1,
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
@@ -163,7 +170,9 @@ const BoardDrawer = () => {
                 />
                 <FormikControls control="formikDatePicker" name="dueDate" />
 
-                <Typography sx={{ mt: 2, mb: -2 }}>Description</Typography>
+                <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
+                  Description
+                </Typography>
                 {toggleEditModeForDescription || !active_task.description ? (
                   <FormikControls
                     control="tinyMceDescription"
@@ -184,6 +193,7 @@ const BoardDrawer = () => {
                       mt: 3,
                       p: 2,
                       paddingLeft: 3,
+                      color: colors.textColor,
                       borderColor: (theme) => theme.palette.grey[500],
                     }}
                     dangerouslySetInnerHTML={{
@@ -198,38 +208,47 @@ const BoardDrawer = () => {
                 />
                 <FormikControls control="formikInputArray" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
-                  <Typography>Created At : &nbsp;</Typography>
+                  <Typography variant="h6">Created At : &nbsp;</Typography>
                   <Typography
                     sx={{
-                      color: (theme) => theme.palette.secondary.main,
+                      color: colors.textColor,
                     }}
+                    variant="h6"
                   >
-                    {new Date(active_task.createdAt).toUTCString()}
+                    {new Date(active_task.createdAt)
+                      .toUTCString()
+                      .substring(0, 17)}
                   </Typography>
                 </Box>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={{
-                    mt: 2,
-                  }}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleDelete}
-                  sx={{
-                    mt: 2,
-                    ml: 2,
-                    backgroundColor: colors.bannerColor,
-                    '&:hover': {
-                      backgroundColor: colors.bannerColor,
-                    },
-                  }}
-                >
-                  Delete
-                </Button>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      mt: 2,
+                      backgroundColor: colors.primaryColor,
+                      '&:hover': {
+                        backgroundColor: colors.primaryColor,
+                      },
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={handleDelete}
+                    sx={{
+                      mt: 2,
+                      ml: 2,
+                      backgroundColor: '#6C6C6D',
+                      '&:hover': {
+                        backgroundColor: '#6C6C6D',
+                      },
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </Box>
             </Form>
           </Formik>

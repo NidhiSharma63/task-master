@@ -1,6 +1,7 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { Field } from 'formik';
 import React from 'react';
+import colors from 'src/theme/variables';
 import TitleCase from 'src/utils/TextTransformer';
 
 /**
@@ -30,8 +31,8 @@ function FormikInput(props) {
               sx={{
                 maxWidth: '13rem',
                 mb: 1,
-                color: 'white',
               }}
+              variant="h6"
             >
               {name === 'email' ? TitleCase('e-mail') : TitleCase(name)}
             </Typography>
@@ -45,15 +46,22 @@ function FormikInput(props) {
                 padding: 0,
                 borderColor: (theme) => theme.palette.grey[50],
                 '&:focus': {
-                  outline: 'none', // Change this to the desired border color on focus.
+                  // borderColor: (theme) => theme.palette.grey[50],
+                  // outline: 'none', // Change this to the desired border color on focus.
                   boxShadow: '0 0 2px 2px rgba(0, 0, 255, 0.2)', // Optional: Add a box-shadow for visual emphasis.
                 },
                 borderRadius: '.3rem',
+                backgroundColor: 'white',
+                fontSize: '1.2rem',
+                '.MuiFormHelperText-root': {
+                  m: '0 !important',
+                  backgroundColor: colors.offWhite,
+                },
               }}
               outline="none"
               helperText={
                 meta.touched && meta.error ? (
-                  <Typography>{meta.error}</Typography>
+                  <Typography sx={{}}>{meta.error}</Typography>
                 ) : null
               }
             />

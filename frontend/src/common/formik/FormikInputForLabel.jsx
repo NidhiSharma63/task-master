@@ -44,6 +44,7 @@ const FormikInputForLabel = (props) => {
                   maxWidth: '13rem',
                   mb: 1,
                 }}
+                variant="h6"
               >
                 {TitleCase(name)}
               </Typography>
@@ -55,12 +56,12 @@ const FormikInputForLabel = (props) => {
                   padding: 0,
                   borderColor: (theme) => theme.palette.grey[50],
                   borderRadius: '.3rem',
+                  backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                   setTextValue(event.target.value);
                   setFieldValue(name, event.target.value);
                 }}
-                // onBlur={(event) => {}}
                 outline="none"
               />
             </Box>
@@ -94,11 +95,13 @@ const FormikInputForLabel = (props) => {
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: `${isAccordianOpen ? '30rem' : '5rem'}`,
+                    width: `${isAccordianOpen ? '20rem' : '4rem'}`,
                     background: 'transparent',
                     boxShadow: 'none',
-                    border: `1px solid ${colors.lightGrey}`,
+                    border: `1px solid ${colors.lineColor}`,
                     borderRadius: '.3rem',
+                    // height: '1rem',
+                    backgroundColor: 'white',
                   }}
                 >
                   <AccordionSummary
@@ -107,8 +110,8 @@ const FormikInputForLabel = (props) => {
                   >
                     <Box
                       sx={{
-                        width: '2rem',
-                        height: '2rem',
+                        width: '1.2rem',
+                        height: '1.2rem',
                         borderRadius: '50%',
                         backgroundColor: value,
                         cursor: 'pointer',
@@ -130,13 +133,15 @@ const FormikInputForLabel = (props) => {
                         <Box
                           key={color}
                           sx={{
-                            width: '2rem',
-                            height: '2rem',
+                            width: '1.2rem',
+                            height: '1.2rem',
                             borderRadius: '50%',
                             backgroundColor: color,
                             cursor: 'pointer',
                             border: `${
-                              color === value ? '3px solid black' : 'none'
+                              color === value
+                                ? `3px solid ${colors.lineColor}`
+                                : 'none'
                             }`,
                           }}
                           onClick={() => {

@@ -53,9 +53,9 @@ const TaskCard = ({ item, handleClickOnTask }) => {
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'fles-start',
           justifyContent: 'space-between',
           flexDirection: 'column',
+          alignItems: 'baseline',
         }}
       >
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
@@ -94,15 +94,16 @@ const TaskCard = ({ item, handleClickOnTask }) => {
               gap: 1,
               alignItems: 'center',
               justifyContent: 'center',
+              ml: 1,
             }}
           >
             <FormatListBulletedIcon
               sx={{
-                color: (theme) => theme.palette.primary.main,
-                fontSize: '1.6rem',
+                color: colors.textColor,
+                fontSize: '1.2rem',
               }}
             />
-            <Typography sx={{ fontSize: '1.2rem' }}>
+            <Typography sx={{ fontSize: '1rem' }}>
               {item?.subTasks?.length}
             </Typography>
           </Box>

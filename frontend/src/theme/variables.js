@@ -16,7 +16,7 @@ const colors = {
 
   // // hover color
   // primaryHoverColor: "rgb(60, 9, 61)",
-  primaryColor: 'rgb(166,159,243)', // sky blue
+  // primaryColor: 'rgb(166,159,243)', // sky blue
   userLogoColor: 'rgb(241,189,108)', // yellowish
   bannerColor: 'rgb(240,106,106)', // redish
   navigationColor: '#191919', // blackish
@@ -29,6 +29,7 @@ const colors = {
   offWhite: '#FAF8F8',
   lineColor: '#E2DFDF',
   textColor: '#3E3A3A',
+  primaryColor: '#756EC6',
 };
 
 export default colors;

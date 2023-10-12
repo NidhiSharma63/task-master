@@ -48,77 +48,23 @@
   outline: none;
   margin-left: -3rem;
 }
-.black {
+/* .black {
   background-color: #353535 !important;
-}
+} */
 
 /**
 TINY MCE
 **/
 /* toolbar */
-.mce-toolbar-grp {
-  background-color: #353535 !important; /* uses !important or override .mce-panel background-color/image */
-  background-image: none !important;
-}
-
-/*
-  background color tiny MCE
-*/
-.mce-content-body, #tinymce{
-  background-color: red !important;
-}
 
 /* Adding border over tiny mce*/
 .tox-editor-container{
-  border: 1px solid #424244 !important;
+  /* border: 1px solid #424244 !important; */
+  margin-bottom: -1rem;
   border-radius: .3rem;
-  margin-top: 1.5rem !important;
   height: 20rem !important; /* to remove the footer of tinyMCE */
 }
 
-/* button background color */
-.mce-btn button {
-  background-color: #353535;
-}
-
-.mce-content-body {
-  background: #474f52;
-}
-
-.tox-toolbar {
-  background-color: #353535 !important;
-}
-.tox:not(.tox-tinymce-inline) .tox-editor-header {
-  background-color: #353535 !important;
-}
-.tox .tox-toolbar-overlord {
-  background-color: #353535 !important;
-}
-.tox .tox-toolbar,
-.tox .tox-toolbar__overflow,
-.tox .tox-toolbar__primary {
-  background-color: #353535 !important;
-}
-.tox .tox-tbtn svg {
-  color: white !important;
-  fill: #f7f7f7 !important;
-}
-.tox-tinymce {
-  border: none !important;
-  position: relative;
-}
-
-.tox-collection__item-label h1,
-.tox-collection__item-label h2,
-.tox-collection__item-label h3,
-.tox-collection__item-label h4,
-.tox-collection__item-label h5,
-.tox-collection__item-label h6,
-.tox-collection__item-label pre,
-.tox-collection__item-label p {
-  background-color: white !important;
-  color: #353535 !important;
-}
 
 /* EDITOR.JS */
 .ce-block__content {

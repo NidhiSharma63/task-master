@@ -25,6 +25,13 @@ const theme = createTheme({
     fontSize: 12,
   },
   components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: 'green',
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {

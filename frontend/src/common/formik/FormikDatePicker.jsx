@@ -16,13 +16,16 @@ const FormikDatePicker = (props) => {
 
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Typography sx={{ mb: 1 }}>{TitleCase(name)}</Typography>
+            <Typography sx={{ mb: 1 }} variant="h6">
+              {TitleCase(name)}
+            </Typography>
             <DatePicker
               name={name}
               value={value}
               inputFormat="MM/dd/yyyy"
               sx={{
                 outline: 'none',
+                backgroundColor: 'white',
               }}
               onChange={(date) => {
                 const dates = new Date(date);
