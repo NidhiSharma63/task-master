@@ -20,7 +20,7 @@ const usePostColumnQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: { name: string, projectName: string }) => {
       return customAxiosRequestForPost('/column', 'post', payload);
     },
     onSettled: () => {
@@ -71,7 +71,11 @@ const useGetColumnQuery = () => {
 const useUpdateColumnName = () => {
   const { active_project } = useSelector(projectDataInStore);
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: {
+      name: string,
+      _id: string,
+      previousColName: string,
+    }) => {
       return customAxiosRequestForPost('/column', 'put', payload);
     },
     onSettled: () => {

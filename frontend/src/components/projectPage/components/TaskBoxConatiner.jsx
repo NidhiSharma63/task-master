@@ -132,7 +132,8 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
         sx={{
           width: '100%',
           mt: 1,
-          height: '100%',
+          height: 'calc(100% - 40px)',
+
           borderRadius: '.6rem',
           // boxShadow: '0px 0px 4px 1px #00000014',
           display: 'flex',

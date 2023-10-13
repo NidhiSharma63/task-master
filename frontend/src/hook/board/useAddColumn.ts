@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   useGetColumnQuery,
@@ -11,6 +11,14 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
 
+interface IProps {
+  isAddColBtnClicked: boolean;
+  setIsAddColBtnClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  isColumnRename?: boolean;
+  colId?: string;
+  prevColumnName?: string;
+}
+
 /**
  * This function is invoked at two places one 1. Board.jsx (where user can add the column)
  * 2. Task box container (where user can edit the column name)
@@ -22,7 +30,7 @@ const useAddColumn = ({
   isColumnRename,
   colId,
   prevColumnName,
-}) => {
+}: IProps) => {
   const [columnValue, setColumnValue] = useState('');
   const { mutate } = usePostColumnQuery();
   const { active_project } = useSelector(projectDataInStore);
@@ -31,16 +39,19 @@ const useAddColumn = ({
 
   const dispatch = useDispatch();
 
-  const handlecolumnValue = useCallback((event) => {
-    setColumnValue(event.target.value);
-  }, []);
+  const handlecolumnValue = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      setColumnValue(event.target.value);
+    },
+    [],
+  );
 
   /**
    * useEffect that fire when user tries to rename columns value to set the columnValue to previous column name
    */
 
   useEffect(() => {
-    if (isColumnRename) {
+    if (isColumnRename && prevColumnName === 'string') {
       setColumnValue(prevColumnName);
     }
   }, [isColumnRename, prevColumnName]);
@@ -77,7 +88,7 @@ const useAddColumn = ({
      * update cols value
      */
 
-    if (isColumnRename) {
+    if (isColumnRename && colId === 'sting' && prevColumnName === 'string') {
       /**
        * if column value is same as previous one then do nothing
        */
@@ -101,10 +112,19 @@ const useAddColumn = ({
    */
 
   useEffect(() => {
-    const removeTextArea = (event) => {
+    /**
+     * on window we can only add the mouse event that's why we have to define
+     * it as a mouse event not the HTML element event
+     */
+    const removeTextArea = (event: MouseEvent) => {
+      /**
+       * if target is a HTML element then it can access the tag name
+       * so firt check and only get the element as a HTML element
+       */
+      const target = event.target as HTMLElement;
       if (
-        event.target.tagName !== 'TEXTAREA' &&
-        event.target.tagName !== 'BUTTON' &&
+        target.tagName !== 'TEXTAREA' &&
+        target.tagName !== 'BUTTON' &&
         columnValue?.trim()?.length === 0 &&
         isAddColBtnClicked
       ) {

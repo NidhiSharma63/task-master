@@ -12,7 +12,6 @@ const Board = () => {
     isAddColBtnClicked,
     handleClickOnAddColsBtn,
     setIsAddColBtnClicked,
-    // handleDragEnd,
     onDrop,
     isLoading,
   } = useBoard();
@@ -24,11 +23,12 @@ const Board = () => {
 
   return (
     <Box
-      container={'true'}
-      gap={2}
+      // container={true}
+      // component={Grid}
       sx={{
         position: 'relative',
-        height: 'calc(100vh - 200px)',
+        height: 'calc(100vh - 180px)',
+        // height: '100vh',
         marginTop: 7.2,
         pl: 3,
         pt: 1,
@@ -36,9 +36,10 @@ const Board = () => {
         alignItems: 'center',
         width: '100%',
         backgroundColor: colors.offWhite,
+        gap: 2,
       }}
     >
-      {finalState?.map((item) => {
+      {finalState?.map((item: any) => {
         return (
           <TaskBoxConatiner
             key={item._id}
@@ -62,7 +63,11 @@ const Board = () => {
           <FadeLoader color="#3E3A3A" />
         </Box>
       ) : (
-        <Box item={'true'} sx={{ height: '100%', minWidth: '250px' }}>
+        <Box
+          // item={true}
+          // component={Grid}
+          sx={{ height: '100%', minWidth: '250px' }}
+        >
           {isAddColBtnClicked ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <textarea
