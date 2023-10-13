@@ -22,7 +22,7 @@ const CommonLoader = ({ value }) => {
       >
         {value}
       </Typography>
-      <FadeLoader color="white" />
+      <FadeLoader color="#3E3A3A" />
     </Box>
   );
 };

@@ -19,16 +19,13 @@ const InsightsCharts = ({ status }) => {
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           mr: 5,
           justifyContent: 'center',
           height: '100%',
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
-          {' '}
-          You have no task!
-        </Typography>
+        <Typography variant="h4"> You have no task!</Typography>
       </Box>
     );
   }
@@ -44,7 +41,7 @@ const InsightsCharts = ({ status }) => {
           height: '100%',
         }}
       >
-        <FadeLoader color="white" />
+        <FadeLoader color="#3E3A3A" />
       </Box>
     );
   }
@@ -62,6 +59,8 @@ const InsightsCharts = ({ status }) => {
         sx={{
           width: { xs: '18rem', md: '25rem' },
           height: { md: '100%', xs: 'auto' },
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <Doughnut data={chartData} />
@@ -74,8 +73,8 @@ const InsightsCharts = ({ status }) => {
           position: 'relative',
           padding: '2rem',
           borderRadius: '.3rem',
-          backgroundColor: (theme) => theme.palette.primary.main,
-          boxShadow: '0px 0px 32px -4px #00000054',
+          backgroundColor: colors.offWhite,
+          boxShadow: '0px 0px 10px 0px #0000001c',
           height: { md: 'calc(100vh - 200px)', xs: '200px' },
           // overflowY: "scroll",
           maxWidth: '40rem',
@@ -88,9 +87,7 @@ const InsightsCharts = ({ status }) => {
             maxWidth: '40rem',
           }}
         >
-          <Typography sx={{ color: 'white' }} variant="h5">
-            Project List
-          </Typography>
+          <Typography variant="h6">Project List - Task contains</Typography>
         </Box>
         <Box
           sx={{
@@ -126,7 +123,7 @@ const InsightsCharts = ({ status }) => {
                   minWidth: '15rem',
                   padding: '0.5rem',
                   borderRadius: '.3rem',
-                  border: `1px solid ${colors.lightGrey}`,
+                  border: `1px solid ${colors.lineColor}`,
                 }}
               >
                 <Box

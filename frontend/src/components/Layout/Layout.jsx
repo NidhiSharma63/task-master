@@ -177,7 +177,7 @@ export const Layout = () => {
               {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <FadeLoader color="white" />
+                    <FadeLoader color="#3E3A3A" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
@@ -242,7 +242,7 @@ export const Layout = () => {
               {pagesLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <FadeLoader color="white" />
+                    <FadeLoader color="#3E3A3A" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
