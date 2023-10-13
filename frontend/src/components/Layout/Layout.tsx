@@ -18,9 +18,10 @@ import {
 } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
-import image from 'src/assets/icons/Logo.png';
+// import image from 'src/assets/icons/Logo.png';
 import UserName from 'src/common/UserName';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
+import { IItems } from 'src/components/Layout/Interface/InterFace';
 import PagesModal from 'src/components/userPages/components/PagesModal';
 import {
   BOTTOM,
@@ -72,12 +73,12 @@ export const Layout = () => {
         <CssBaseline />
         <AppBar
           position="fixed"
-          display="flex"
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
             // background: "#121212",
             background: colors.offWhite,
             boxShadow: 'none',
+            display: 'flex',
           }}
         >
           <Toolbar
@@ -88,7 +89,7 @@ export const Layout = () => {
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <img src={image} alt="logo" style={{ width: '40px' }} />
+              {/* <img src={image} alt="logo" style={{ width: '40px' }} /> */}
               <Typography
                 variant="h6"
                 noWrap
@@ -181,7 +182,7 @@ export const Layout = () => {
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
-                allProjects?.map((item) => {
+                allProjects?.map((item: IItems) => {
                   return (
                     <ListItemButton key={item._id}>
                       <ListItemText
@@ -224,21 +225,21 @@ export const Layout = () => {
               )}
             </List>
             <List>
-              {BOTTOM.map((i) => {
-                return Object.entries(i).map(([key, value]) => {
+              {BOTTOM.map((i) =>
+                Object.entries(i).map(([key, value]) => {
                   return (
-                    <ListItemButton key={key}>
+                    <ListItemButton
+                      key={key}
+                      onClick={handleClickOnPageAddIcon}
+                    >
                       <ListItemText primary={key} />
-                      <ListItemIcon
-                        sx={{ color: colors.textColor }}
-                        onClick={handleClickOnPageAddIcon}
-                      >
+                      <ListItemIcon sx={{ color: colors.textColor }}>
                         {value}
                       </ListItemIcon>
                     </ListItemButton>
                   );
-                });
-              })}
+                }),
+              )}
               {pagesLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
@@ -246,7 +247,7 @@ export const Layout = () => {
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
-                pagesData?.data?.map((item) => {
+                pagesData?.data?.map((item: IItems) => {
                   return (
                     <ListItemButton key={item._id} sx={{ p: '.5 0' }}>
                       <ListItemText

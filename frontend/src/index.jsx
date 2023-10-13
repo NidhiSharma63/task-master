@@ -31,17 +31,18 @@ root.render(
         <Provider store={store}>
           <ToastContainer
             position="top-center"
-            autoClose={2000}
+            // autoClose={2000}
             hideProgressBar
             newestOnTop
             closeOnClick
             pauseOnFocusLoss
             draggable
             pauseOnHover={true}
-            theme="dark"
+            theme="light"
             color="pink"
             closeButton={true}
             className="toast-container"
+            toastStyle={{ backgroundColor: '#756EC6', color: 'white' }}
           />
           <App />
           <ReactQueryDevtools initialIsOpen={false} />
