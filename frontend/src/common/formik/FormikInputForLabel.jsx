@@ -95,7 +95,7 @@ const FormikInputForLabel = (props) => {
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: `${isAccordianOpen ? '20rem' : '4rem'}`,
+                    width: `${isAccordianOpen ? '22rem' : '4rem'}`,
                     background: 'transparent',
                     boxShadow: 'none',
                     border: `1px solid ${colors.lineColor}`,
