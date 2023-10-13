@@ -119,6 +119,7 @@ const BoardDrawer = () => {
         '& .MuiDrawer-paper': {
           width: 900,
         },
+        backgroundColor: 'transparent',
       }}
     >
       <Box

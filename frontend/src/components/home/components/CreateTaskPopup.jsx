@@ -91,87 +91,97 @@ const CreateTaskPopup = ({ status, projectData }) => {
 
   return (
     <Dialog open={is_create_task_modal_open} onClose={handleClose}>
-      <DialogTitle>Add Task</DialogTitle>
-      <Divider />
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationForUpdatingTask}
-      >
-        <Form>
-          <DialogContent>
-            <Box
-              sx={{
-                width: '30rem',
-                height: '25rem',
-              }}
-            >
-              <FormikControls control="formikInput" name="task" />
-              <FormikControls
-                control="formikInputForLable"
-                name="label"
-                colorName="labelColor"
-              />
-              <FormikControls control="formikDatePicker" name="dueDate" />
-              <FormikControls control="formikTextArea" name="description" />
-              <FormikControls
-                control="formikSelect"
-                name="projectName"
-                values={projectName ?? []}
-                mt={2}
-              />
-              <FormikControls control="formikInputArray" name="subTasks" />
-              <Box sx={{ mt: 2, display: 'flex' }}>
-                <Typography sx={{ fontWeight: 600 }}>
-                  Created At : &nbsp;
-                </Typography>
-                <Typography
+      <Box sx={{ backgroundColor: colors.offWhite }}>
+        <DialogTitle>Add Task</DialogTitle>
+        <Divider sx={{ borderColor: colors.lineColor }} />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationForUpdatingTask}
+        >
+          <Form>
+            <DialogContent>
+              <Box
+                sx={{
+                  width: '30rem',
+                  height: '25rem',
+                }}
+              >
+                <FormikControls control="formikInput" name="task" />
+                <FormikControls
+                  control="formikInputForLable"
+                  name="label"
+                  colorName="labelColor"
+                />
+                <FormikControls control="formikDatePicker" name="dueDate" />
+                <FormikControls control="formikTextArea" name="description" />
+                <FormikControls
+                  control="formikSelect"
+                  name="projectName"
+                  values={projectName ?? []}
+                  mt={2}
+                />
+                <FormikControls control="formikInputArray" name="subTasks" />
+                <Box sx={{ mt: 2, display: 'flex' }}>
+                  <Typography sx={{ fontWeight: 600 }}>
+                    Created At : &nbsp;
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      color: colors.textColor,
+                    }}
+                  >
+                    {active_task.createdAt
+                      ? new Date(active_task.createdAt ?? ' ').toUTCString()
+                      : new Date().toUTCString()}
+                  </Typography>
+                </Box>
+              </Box>
+            </DialogContent>
+            <Divider />
+            <DialogActions sx={{}}>
+              {active_task.task ? (
+                <Button
+                  variant="contained"
                   sx={{
-                    fontWeight: 600,
-                    color: (theme) => theme.palette.primary.main,
+                    backgroundColor: '#6C6C6D',
+                    '&:hover': {
+                      background: '#6C6C6D',
+                    },
+                  }}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleClose}
+                  sx={{
+                    backgroundColor: '#6C6C6D',
+                    '&:hover': {
+                      background: '#6C6C6D',
+                    },
                   }}
                 >
-                  {active_task.createdAt
-                    ? new Date(active_task.createdAt ?? ' ').toUTCString()
-                    : new Date().toUTCString()}
-                </Typography>
-              </Box>
-            </Box>
-          </DialogContent>
-          <Divider />
-          <DialogActions sx={{}}>
-            {active_task.task ? (
+                  Cancel
+                </Button>
+              )}
               <Button
                 variant="contained"
+                type="submit"
                 sx={{
-                  backgroundColor: colors.bannerColor,
                   '&:hover': {
-                    background: colors.bannerColor,
-                  },
-                }}
-                onClick={handleDelete}
-              >
-                Delete
-              </Button>
-            ) : (
-              <Button
-                onClick={handleClose}
-                sx={{
-                  backgroundColor: colors.bannerColor,
-                  '&:hover': {
-                    background: colors.bannerColor,
+                    background: colors.primaryColor,
                   },
                 }}
               >
-                Cancel
+                Save
               </Button>
-            )}
-            <Button variant="contained" type="submit">
-              Save
-            </Button>
-          </DialogActions>
-        </Form>
-      </Formik>
+            </DialogActions>
+          </Form>
+        </Formik>
+      </Box>
     </Dialog>
   );
 };

@@ -30,6 +30,7 @@ const colors = {
   lineColor: '#E2DFDF',
   textColor: '#3E3A3A',
   primaryColor: '#756EC6',
+  scrollbarColor: '#D9D9D9',
 };
 
 export default colors;

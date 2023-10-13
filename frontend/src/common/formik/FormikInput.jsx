@@ -44,11 +44,10 @@ function FormikInput(props) {
               sx={{
                 width: '100%',
                 padding: 0,
-                borderColor: (theme) => theme.palette.grey[50],
+                borderColor: 'white',
                 '&:focus': {
-                  // borderColor: (theme) => theme.palette.grey[50],
-                  // outline: 'none', // Change this to the desired border color on focus.
-                  boxShadow: '0 0 2px 2px rgba(0, 0, 255, 0.2)', // Optional: Add a box-shadow for visual emphasis.
+                  boxShadow: '0 0 2px 2px rgba(0, 0, 255, 0.2)',
+                  borderColor: 'red',
                 },
                 borderRadius: '.3rem',
                 backgroundColor: 'white',
@@ -58,7 +57,7 @@ function FormikInput(props) {
                   backgroundColor: colors.offWhite,
                 },
               }}
-              outline="none"
+              // outline="none"
               helperText={
                 meta.touched && meta.error ? (
                   <Typography sx={{}}>{meta.error}</Typography>
