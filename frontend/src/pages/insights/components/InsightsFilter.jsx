@@ -15,7 +15,13 @@ const InsightsFilter = ({ setActiveStatue, activeStatus }) => {
   const valuesOfStatus = ['All', ...total_status];
 
   return (
-    <Box display="flex" alignItems="center">
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        mr: 1,
+      }}
+    >
       Status
       <MuiSelect onChange={handleChange} value={activeStatus}>
         {valuesOfStatus?.map((status) => {

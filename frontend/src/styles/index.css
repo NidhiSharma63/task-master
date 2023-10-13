@@ -85,57 +85,14 @@ TINY MCE
   max-width: 100% !important;
 }
 
-.ce-inline-toolbar__dropdown-content svg,
-.ce-inline-tool svg,
-.ce-inline-toolbar__dropdown-arrow svg {
-  color: black !important;
-}
-
-.ce-conversion-tool, .ce-conversion-tool--focused,.ce-conversion-tool{
-  color: black;
-}
-
 .cdx-checklist__item-text{
   line-break: anywhere;
-}
-.ce-toolbar__plus svg, .ce-toolbar__settings-btn svg {
-  color: white;
-}
-.ce-toolbar__plus:hover  {
-background-color: black;
 }
 .ce-toolbar__content {
   max-width: 100% !important;
 }
 .codex-editor--narrow .ce-toolbar__actions {
   right: none !important;
-}
-::-moz-selection { /* Code for Firefox */
-  color: white;
-  background: #0046AF !important;
-}
-.tc-popover {
-  --color-border: black;
-  --color-background: black;
-  --color-background-hover: black;
-  --color-background-confirm: #e24a4a;
-  --color-background-confirm-hover: #d54040;
-  --color-text-confirm: black;
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  box-shadow: 0 3px 15px -3px rgba(13,20,33,.13);
-  border-radius: 6px;
-  padding: 6px;
-  /* display: none; */
-  will-change: opacity,transform;
-}
-::selection {
-  color: white;
-  background: #0046AF !important;
-}
-.cdx-block.ce-code textarea{
-  background-color: #32383A !important;
-  color: white!important;
 }
 
 /* .box-shadow{
