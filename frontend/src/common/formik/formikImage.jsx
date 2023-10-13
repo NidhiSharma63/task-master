@@ -12,6 +12,7 @@ import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
+import colors from 'src/theme/variables';
 import TitleCase from 'src/utils/TextTransformer';
 import { v4 } from 'uuid';
 
@@ -103,7 +104,6 @@ const FormikImage = (props) => {
 
   return (
     <Box
-      mt={2}
       sx={{
         display: 'flex',
         alignItems: 'flex-start',
@@ -122,7 +122,6 @@ const FormikImage = (props) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
-                // border: "1px solid red",
                 width: '100%',
                 flexWrap: 'wrap',
                 gap: 2,
@@ -151,7 +150,7 @@ const FormikImage = (props) => {
                               type="button"
                               sx={{
                                 cursor: 'pointer',
-                                color: (theme) => theme.palette.primary.main,
+                                color: colors.textColor,
                               }}
                               className="not-remove-input"
                               onClick={() => {

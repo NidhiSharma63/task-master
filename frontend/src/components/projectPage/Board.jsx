@@ -3,6 +3,7 @@ import { FadeLoader } from 'react-spinners';
 import BoardDrawer from 'src/components/projectPage/components/BoardDrawer';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useBoard from 'src/hook/board/useBoard';
+import colors from 'src/theme/variables';
 import TaskBoxConatiner from './components/TaskBoxConatiner';
 
 const Board = () => {
@@ -27,12 +28,14 @@ const Board = () => {
       gap={2}
       sx={{
         position: 'relative',
-        height: 'calc(100vh - 180px)',
-        marginTop: 8,
-        width: '1115px',
+        height: 'calc(100vh - 200px)',
+        marginTop: 7.2,
         pl: 3,
+        pt: 1,
         display: 'flex',
         alignItems: 'center',
+        width: '100%',
+        backgroundColor: colors.offWhite,
       }}
     >
       {finalState?.map((item) => {
@@ -56,7 +59,7 @@ const Board = () => {
             width: '100%',
           }}
         >
-          <FadeLoader color="white" />
+          <FadeLoader color="#3E3A3A" />
         </Box>
       ) : (
         <Box item={'true'} sx={{ height: '100%', minWidth: '250px' }}>
@@ -64,7 +67,7 @@ const Board = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <textarea
                 value={columnValue}
-                className="textarea-col"
+                className="textarea-column"
                 onChange={handlecolumnValue}
               ></textarea>
               <Button
@@ -95,15 +98,19 @@ const Board = () => {
               mt: 1,
               height: 'calc(100% - 30px)',
               borderRadius: '.6rem',
-              boxShadow: '0px 0px 4px 1px #00000014',
+              // boxShadow: '0px 0px 4px 1px #00000014',
               display: 'flex',
               alignItems: 'flex-start',
               justifyContent: 'flex-start',
               flexDirection: 'column',
               overflowY: 'auto',
               p: 1,
+              border: `1px solid transparent`,
+              transition: 'border .3s ease',
+              '&:hover': {
+                border: `1px solid ${colors.lineColor}`,
+              },
             }}
-            className="box"
           ></Box>
         </Box>
       )}

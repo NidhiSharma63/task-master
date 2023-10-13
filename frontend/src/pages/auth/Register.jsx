@@ -38,7 +38,7 @@ const Register = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          background: colors.mainColor,
+          background: colors.offWhite,
         }}
       >
         <Box
@@ -54,9 +54,7 @@ const Register = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <img src={logoImage} alt="project" style={{ width: '40px' }} />
 
-            <Typography sx={{ color: 'white', fontWeight: 'bold' }}>
-              Task Master
-            </Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>Task Master</Typography>
           </Box>
         </Box>
         <Divider />
@@ -75,7 +73,6 @@ const Register = () => {
             <Typography
               sx={{
                 fontSize: '1.7rem',
-                color: 'white',
               }}
             >
               Register
@@ -84,7 +81,6 @@ const Register = () => {
               sx={{
                 marginTop: 3,
                 fontWeight: '500',
-                color: (theme) => theme.palette.text.primary,
               }}
             >
               Welcome to Task Master. Manage your task with task master and make
@@ -163,6 +159,9 @@ const Register = () => {
                       onClick={handleSubmit}
                       sx={{
                         backgroundColor: colors.primaryColor,
+                        '&:hover': {
+                          backgroundColor: colors.primaryColor,
+                        },
                       }}
                     >
                       register
@@ -180,9 +179,9 @@ const Register = () => {
               mt: 2,
             }}
           >
-            <Typography sx={{ color: 'white' }}>
+            <Typography>
               Already have account{' '}
-              <a style={{ fontWeight: '700', color: 'white' }} href="/login">
+              <a style={{ fontWeight: '700' }} href="/login">
                 login
               </a>
             </Typography>

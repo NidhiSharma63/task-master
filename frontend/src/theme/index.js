@@ -1,20 +1,20 @@
-import { createTheme } from "@mui/material";
-import colors from "src/theme/variables";
+import { createTheme } from '@mui/material';
+import colors from 'src/theme/variables';
 
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'light',
     primary: {
-      main: colors.primaryColor,
+      main: colors.offWhite,
     },
     secondary: {
-      main: colors.secondaryColor,
+      main: colors.offWhite,
     },
-    grey: {
-      50: colors.lightGrey,
-    },
+    // grey: {
+    //   50: colors.lightGrey,
+    // },
     text: {
-      // primary: colors.secondaryColor,
+      primary: colors.textColor,
       // secondary: colors.secondaryTextColor,
     },
 
@@ -25,10 +25,17 @@ const theme = createTheme({
     fontSize: 12,
   },
   components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: 'green',
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          padding: ".5 0",
+          padding: '.5 0',
         },
       },
     },
@@ -42,8 +49,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: "rgb(166,159,243)",
-          color: "white",
+          backgroundColor: '#756EC6',
+          color: 'white',
         },
       },
     },

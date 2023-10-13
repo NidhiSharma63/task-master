@@ -31,19 +31,18 @@ const HomeComponent = () => {
           // mt: 1,
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: 600 }}>
-          {getCurrentDate()}
-        </Typography>
-        <Typography variant="h4" sx={{ fontWeight: 600, mt: 1 }}>
+        <Typography variant="h5">{getCurrentDate()}</Typography>
+        <Typography variant="h4" sx={{ mt: 1 }}>
           Hello, {getUserFirstName()}
         </Typography>
       </Box>
       <Box
         sx={{
-          width: '90%',
+          width: '80%',
           height: 'calc(100% - 160px)',
           display: 'flex',
-          gap: 4,
+          // gap: 4,
+          justifyContent: 'space-between',
         }}
       >
         <TaskComponent

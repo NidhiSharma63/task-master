@@ -12,17 +12,12 @@
   overflow-y: hidden;
   min-height: 4rem;
   background-color: transparent;
-  color: white;
+  color: #3E3A3A;
   margin-top: 10px;
+  border: 1px solid #E2DFDF;
+  outline: none;
 }
 
-.box {
-  background: linear-gradient(180deg, #2a2b2d, rgba(42, 43, 45, 0) 100%);
-}
-.textArea:focus {
-  outline: none;
-  border: 1px solid rgb(166, 159, 243);
-}
 .board-drawer-textarea {
   resize: none;
   width: 80%;
@@ -40,11 +35,11 @@
   border: 2px solid rgb(166, 159, 243);
 }
 
-.textarea-col {
+.textarea-column {
   resize: none;
   padding: 0.1rem;
   background-color: transparent;
-  color: white;
+  color: #3E3A3A;
 }
 
 .editable-content {
@@ -53,77 +48,23 @@
   outline: none;
   margin-left: -3rem;
 }
-.black {
+/* .black {
   background-color: #353535 !important;
-}
+} */
 
 /**
 TINY MCE
 **/
 /* toolbar */
-.mce-toolbar-grp {
-  background-color: #353535 !important; /* uses !important or override .mce-panel background-color/image */
-  background-image: none !important;
-}
-
-/*
-  background color tiny MCE
-*/
-.mce-content-body, #tinymce{
-  background-color: red !important;
-}
 
 /* Adding border over tiny mce*/
 .tox-editor-container{
-  border: 1px solid #424244 !important;
+  /* border: 1px solid #424244 !important; */
+  margin-bottom: -1rem;
   border-radius: .3rem;
-  margin-top: 1.5rem !important;
   height: 20rem !important; /* to remove the footer of tinyMCE */
 }
 
-/* button background color */
-.mce-btn button {
-  background-color: #353535;
-}
-
-.mce-content-body {
-  background: #474f52;
-}
-
-.tox-toolbar {
-  background-color: #353535 !important;
-}
-.tox:not(.tox-tinymce-inline) .tox-editor-header {
-  background-color: #353535 !important;
-}
-.tox .tox-toolbar-overlord {
-  background-color: #353535 !important;
-}
-.tox .tox-toolbar,
-.tox .tox-toolbar__overflow,
-.tox .tox-toolbar__primary {
-  background-color: #353535 !important;
-}
-.tox .tox-tbtn svg {
-  color: white !important;
-  fill: #f7f7f7 !important;
-}
-.tox-tinymce {
-  border: none !important;
-  position: relative;
-}
-
-.tox-collection__item-label h1,
-.tox-collection__item-label h2,
-.tox-collection__item-label h3,
-.tox-collection__item-label h4,
-.tox-collection__item-label h5,
-.tox-collection__item-label h6,
-.tox-collection__item-label pre,
-.tox-collection__item-label p {
-  background-color: white !important;
-  color: #353535 !important;
-}
 
 /* EDITOR.JS */
 .ce-block__content {
@@ -144,24 +85,8 @@ TINY MCE
   max-width: 100% !important;
 }
 
-.ce-inline-toolbar__dropdown-content svg,
-.ce-inline-tool svg,
-.ce-inline-toolbar__dropdown-arrow svg {
-  color: black !important;
-}
-
-.ce-conversion-tool, .ce-conversion-tool--focused,.ce-conversion-tool{
-  color: black;
-}
-
 .cdx-checklist__item-text{
   line-break: anywhere;
-}
-.ce-toolbar__plus svg, .ce-toolbar__settings-btn svg {
-  color: white;
-}
-.ce-toolbar__plus:hover  {
-background-color: black;
 }
 .ce-toolbar__content {
   max-width: 100% !important;
@@ -169,30 +94,7 @@ background-color: black;
 .codex-editor--narrow .ce-toolbar__actions {
   right: none !important;
 }
-::-moz-selection { /* Code for Firefox */
-  color: white;
-  background: #0046AF !important;
-}
-.tc-popover {
-  --color-border: black;
-  --color-background: black;
-  --color-background-hover: black;
-  --color-background-confirm: #e24a4a;
-  --color-background-confirm-hover: #d54040;
-  --color-text-confirm: black;
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  box-shadow: 0 3px 15px -3px rgba(13,20,33,.13);
-  border-radius: 6px;
-  padding: 6px;
-  /* display: none; */
-  will-change: opacity,transform;
-}
-::selection {
-  color: white;
-  background: #0046AF !important;
-}
-.cdx-block.ce-code textarea{
-  background-color: #32383A !important;
-  color: white!important;
-}
+
+/* .box-shadow{
+  box-shadow: 0px 0px 1px 0px #0000001e;
+} */

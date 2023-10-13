@@ -1,6 +1,6 @@
-import { Box, TextField, Typography } from "@mui/material";
-import { Field } from "formik";
-import TitleCase from "src/utils/TextTransformer";
+import { Box, TextField, Typography } from '@mui/material';
+import { Field } from 'formik';
+import TitleCase from 'src/utils/TextTransformer';
 
 const FormikTextArea = (props) => {
   const { name, ...rest } = props;
@@ -13,7 +13,7 @@ const FormikTextArea = (props) => {
               mt: 2,
             }}
           >
-            <Typography sx={{ fontWeight: 700, mb: 1 }}>
+            <Typography sx={{ fontWeight: 700, mb: 1 }} variant="h6">
               {TitleCase(name)}
             </Typography>
             <TextField
@@ -22,7 +22,7 @@ const FormikTextArea = (props) => {
               {...rest}
               rows={5}
               sx={{
-                width: "100%",
+                width: '100%',
               }}
             />
           </Box>

@@ -38,7 +38,7 @@ const Login = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          background: colors.mainColor,
+          background: colors.offWhite,
         }}
       >
         <Box
@@ -54,9 +54,7 @@ const Login = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <img src={logoImage} alt="project" style={{ width: '40px' }} />
 
-            <Typography sx={{ color: 'white', fontWeight: 'bold' }}>
-              Task Master
-            </Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>Task Master</Typography>
           </Box>
         </Box>
         <Divider />
@@ -75,7 +73,6 @@ const Login = () => {
             <Typography
               sx={{
                 fontSize: '1.7rem',
-                color: 'white',
               }}
             >
               Login
@@ -83,7 +80,6 @@ const Login = () => {
             <Typography
               sx={{
                 marginTop: 3,
-                color: (theme) => theme.palette.text.primary,
               }}
             >
               Welcome to Task Master. Manage your task with task master and make
@@ -132,9 +128,11 @@ const Login = () => {
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button
                       type="submit"
-                      variant="outlined"
+                      variant="contained"
                       sx={{
-                        backgroundColor: 'primary.main',
+                        '&:hover': {
+                          backgroundColor: colors.primaryColor,
+                        },
                       }}
                     >
                       login
@@ -152,9 +150,9 @@ const Login = () => {
               mt: 4,
             }}
           >
-            <Typography sx={{ color: 'white' }}>
+            <Typography>
               Don't have account{' '}
-              <a style={{ fontWeight: '700', color: 'white' }} href="/register">
+              <a style={{ fontWeight: '700' }} href="/register">
                 sign up
               </a>
             </Typography>

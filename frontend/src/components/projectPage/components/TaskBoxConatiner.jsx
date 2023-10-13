@@ -134,15 +134,22 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
           mt: 1,
           height: '100%',
           borderRadius: '.6rem',
-          boxShadow: '0px 0px 4px 1px #00000014',
+          // boxShadow: '0px 0px 4px 1px #00000014',
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
           flexDirection: 'column',
           overflowY: 'auto',
           p: '0 .7rem .7rem .7rem',
+          border:
+            data.tasks?.length > 0
+              ? `1px solid transparent`
+              : `1px solid ${colors.lineColor}`,
+          transition: 'border .3s ease',
+          '&:hover': {
+            border: `1px solid ${colors.lineColor}`,
+          },
         }}
-        className="box"
       >
         {textAreaValuesTop?.map((value, index) => (
           <>

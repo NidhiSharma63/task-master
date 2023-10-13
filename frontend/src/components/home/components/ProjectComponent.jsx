@@ -1,7 +1,8 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
+import { plusIcon } from 'src/assets/assets';
 import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
 import { isProjectNameModalOpen } from 'src/redux/boolean/booleanSlice';
@@ -26,11 +27,10 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
   return (
     <Box
       sx={{
-        width: '50%',
-        border: '1px solid',
-        borderColor: (theme) => theme.palette.grey[400],
+        width: '500px',
         borderRadius: '0.3rem',
         height: '100%',
+        backgroundColor: colors.offWhite,
       }}
     >
       <Box
@@ -40,14 +40,23 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          Projects
-        </Typography>
-        <Button variant="contained" onClick={handleClickOnAddProject}>
-          Add Project
-        </Button>
+        <Typography variant="h6">Projects</Typography>
+
+        <IconButton
+          sx={{
+            mb: 1,
+            backgroundColor: colors.primaryColor,
+            '&:hover': {
+              backgroundColor: colors.primaryColor,
+            },
+          }}
+          onClick={handleClickOnAddProject}
+          aria-label="Add"
+        >
+          <img src={plusIcon} alt="Add Task" width={'15px'} />
+        </IconButton>
       </Box>
-      <Divider />
+      <Divider sx={{ borderColor: colors.lineColor }} />
       <Box
         sx={{
           padding: '0.4rem',
@@ -58,12 +67,12 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
             height: '5px',
           },
           '&::-webkit-scrollbar-track': {
-            background: `${colors.primaryColor}`,
+            background: `transparent`,
           },
-          // "&::-webkit-scrollbar-thumb": {
-          //   background: `${colors.secondaryTextColor}`,
-          //   borderRadius: "4px",
-          // },
+          '&::-webkit-scrollbar-thumb': {
+            background: `${colors.scrollbarColor}`,
+            borderRadius: '4px',
+          },
         }}
       >
         {isLoading ? (
@@ -89,11 +98,10 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  border: '1px solid',
-                  borderColor: (theme) => theme.palette.grey[400],
+                  boxShadow: '0px 0px 4px 0px #0000001a',
                   cursor: 'pointer',
                   borderRadius: '.4rem',
-                  mb: 1,
+                  m: 1,
                 }}
                 onClick={() => handleNavigationToProject(item.name)}
               >

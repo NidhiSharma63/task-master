@@ -76,7 +76,7 @@ export const Layout = () => {
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
             // background: "#121212",
-            background: colors.navigationColor,
+            background: colors.offWhite,
             boxShadow: 'none',
           }}
         >
@@ -93,7 +93,7 @@ export const Layout = () => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ color: `${colors.secondaryColor}` }}
+                sx={{ color: `${colors.textColor}` }}
               >
                 Task Master
               </Typography>
@@ -108,7 +108,6 @@ export const Layout = () => {
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Toolbar>
-          <Divider />
         </AppBar>
         <Drawer
           variant="permanent"
@@ -118,12 +117,14 @@ export const Layout = () => {
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
               boxSizing: 'border-box',
-              background: colors.navigationColor,
+              background: colors.offWhite,
+              borderRight: '1px solid white',
             },
             // backgroundColor: "red",
           }}
         >
           <Toolbar />
+          <Divider sx={{ borderColor: 'white' }} />
           <Box
             sx={{
               overflow: 'auto',
@@ -135,7 +136,7 @@ export const Layout = () => {
                   return (
                     <ListItemButton key={key} onClick={handleClickOnHome}>
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                      <ListItemIcon sx={{ color: colors.textColor }}>
                         {value}
                       </ListItemIcon>
                     </ListItemButton>
@@ -143,7 +144,6 @@ export const Layout = () => {
                 });
               })}
             </List>
-            <Divider />
             <List>
               {INSIGHTS.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
@@ -153,7 +153,7 @@ export const Layout = () => {
                       onClick={() => handleClickOnInsights(key)}
                     >
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                      <ListItemIcon sx={{ color: colors.textColor }}>
                         {value}
                       </ListItemIcon>
                     </ListItemButton>
@@ -161,14 +161,13 @@ export const Layout = () => {
                 });
               })}
             </List>
-            <Divider />
             <List>
               {LOWER_PART.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
                   return (
                     <ListItemButton key={key} onClick={handleOpenProjectModal}>
                       <ListItemText primary={key} />
-                      <ListItemIcon sx={{ color: colors.secondaryTextColor }}>
+                      <ListItemIcon sx={{ color: colors.textColor }}>
                         {value}
                       </ListItemIcon>
                     </ListItemButton>
@@ -178,7 +177,7 @@ export const Layout = () => {
               {isLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <FadeLoader color="white" />
+                    <FadeLoader color="#3E3A3A" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
@@ -191,7 +190,7 @@ export const Layout = () => {
                       />
                       <ListItemIcon data-id={item._id}>
                         <MoreVertIcon
-                          sx={{ color: colors.secondaryTextColor }}
+                          sx={{ color: colors.textColor }}
                           onClick={handleClickOnThreeDots}
                           data-id={item._id}
                         />
@@ -203,7 +202,7 @@ export const Layout = () => {
                         >
                           <MenuItem
                             sx={{
-                              color: colors.secondaryTextColor,
+                              color: colors.textColor,
                             }}
                             onClick={handleClickOnRename}
                           >
@@ -211,7 +210,7 @@ export const Layout = () => {
                           </MenuItem>
                           <MenuItem
                             sx={{
-                              color: colors.secondaryTextColor,
+                              color: colors.textColor,
                             }}
                             onClick={handleDelete}
                           >
@@ -224,7 +223,6 @@ export const Layout = () => {
                 })
               )}
             </List>
-            <Divider />
             <List>
               {BOTTOM.map((i) => {
                 return Object.entries(i).map(([key, value]) => {
@@ -232,7 +230,7 @@ export const Layout = () => {
                     <ListItemButton key={key}>
                       <ListItemText primary={key} />
                       <ListItemIcon
-                        sx={{ color: colors.secondaryTextColor }}
+                        sx={{ color: colors.textColor }}
                         onClick={handleClickOnPageAddIcon}
                       >
                         {value}
@@ -244,7 +242,7 @@ export const Layout = () => {
               {pagesLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
-                    <FadeLoader color="white" />
+                    <FadeLoader color="#3E3A3A" />
                   </ListItemIcon>
                 </ListItemButton>
               ) : (
@@ -258,7 +256,7 @@ export const Layout = () => {
                       />
                       <ListItemIcon data-id={item._id} sx={{ minWidth: 0 }}>
                         <MoreVertIcon
-                          sx={{ color: colors.secondaryTextColor }}
+                          sx={{ color: colors.textColor }}
                           onClick={handleClickOnThreeDotsPages}
                           data-id={item._id}
                         />
@@ -270,7 +268,7 @@ export const Layout = () => {
                         >
                           <MenuItem
                             sx={{
-                              color: colors.secondaryTextColor,
+                              color: colors.textColor,
                             }}
                             onClick={handleClickOnPageRename}
                           >
@@ -278,7 +276,7 @@ export const Layout = () => {
                           </MenuItem>
                           <MenuItem
                             sx={{
-                              color: colors.secondaryTextColor,
+                              color: colors.textColor,
                             }}
                             onClick={handlePageDelete}
                           >

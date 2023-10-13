@@ -55,12 +55,12 @@ const TinyMceDescription = (props) => {
                   'undo redo | blocks |  code' +
                   'bold italic forecolor | alignleft aligncenter ' +
                   'alignright alignjustify | bullist numlist outdent indent | ',
-                content_style: `body { font-family:'Quicksand', sans-serif; font-size:16px; background-color: #353535;color:white}
+                content_style: `body { font-family:'Quicksand', sans-serif; font-size:16px; background-color: white;color:#3E3A3A}
                  .tox:not(.tox-tinymce-inline) `,
               }}
             />
-            <Box sx={{ display: 'flex', alignItem: 'center', gap: 2, mt: 2 }}>
-              {active_task.description && (
+            {active_task.description && (
+              <Box sx={{ display: 'flex', alignItem: 'center', gap: 2, mt: 2 }}>
                 <Button
                   sx={{
                     background: 'none',
@@ -70,8 +70,8 @@ const TinyMceDescription = (props) => {
                 >
                   Cancel
                 </Button>
-              )}
-            </Box>
+              </Box>
+            )}
           </>
         );
       }}

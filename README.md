@@ -23,7 +23,7 @@ Task Manager is built using a modern tech stack:
 - ![Nodemailer](https://img.icons8.com/color/16/000000/email.png) Nodemailer: A module for Node.js applications that enables easy email sending.
 - ![Brevo](https://img.icons8.com/color/16/000000/email.png) Brevo: An email service for sending notifications and updates.
 - ![Node Schedule](https://img.icons8.com/?size=20&id=13526&format=png) Node Schedule: A module for scheduling tasks in Node.js applications.
-- <img src="image-2.png" alt="Alt text" style="width: 20px; height: auto;"> Firebase: for storing images.
+- <img src="./frontend/src/assets/icons/firebase.png" alt="Alt text" style="width: 20px; height: auto;"> Firebase: for storing images.
 
 
 ## Key Features

@@ -1,5 +1,6 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { FadeLoader } from 'react-spinners';
+import { plusIcon } from 'src/assets/assets';
 import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
 import useTaskComponent from 'src/hook/home/useTaskComponent';
 import colors from 'src/theme/variables';
@@ -29,27 +30,27 @@ const TaskComponent = ({
     <Box
       sx={{
         width: '500px',
-        border: '1px solid',
-        borderColor: (theme) => theme.palette.grey[400],
+        backgroundColor: colors.offWhite,
         borderRadius: '0.3rem',
         height: '100%',
       }}
     >
       <Box sx={{ padding: ' 0.8rem', width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            My Tasks
-          </Typography>
-          <Button
-            variant="contained"
+          <Typography variant="h6">My Tasks</Typography>
+          <IconButton
             sx={{
               mb: 1,
-              display: 'flex',
+              backgroundColor: colors.primaryColor,
+              '&:hover': {
+                backgroundColor: colors.primaryColor,
+              },
             }}
             onClick={handleClickOnAddTask}
+            aria-label="Add"
           >
-            Add Task
-          </Button>
+            <img src={plusIcon} alt="Add Task" width={'15px'} />
+          </IconButton>
         </Box>
         <Box
           mt={1}
@@ -62,10 +63,10 @@ const TaskComponent = ({
               height: '5px',
             },
             '&::-webkit-scrollbar-track': {
-              background: `${colors.primaryColor}`,
+              backgroundColor: 'transparent',
             },
             '&::-webkit-scrollbar-thumb': {
-              background: `${colors.secondaryTextColor}`,
+              background: colors.scrollbarColor,
               borderRadius: '4px',
             },
           }}
@@ -83,9 +84,15 @@ const TaskComponent = ({
                   gap: 1,
                   mb: 1,
                   backgroundColor:
-                    active_link === item ? colors.mainColor : 'none',
+                    active_link === `${item.taskName}`
+                      ? colors.primaryColor
+                      : 'none',
+                  color:
+                    active_link === `${item.taskName}`
+                      ? 'white'
+                      : colors.textColor,
                   '&:hover': {
-                    backgroundColor: colors.mainColor, // Change border on hover
+                    backgroundColor: colors.primaryColor, // Change border on hover
                   },
                   transition: '0.3s ease',
                   ml: i === 0 ? '0rem' : '2rem',
@@ -112,12 +119,23 @@ const TaskComponent = ({
           })}
         </Box>
       </Box>
-      <Divider />
+      <Divider sx={{ borderColor: colors.lineColor }} />
       <Box
         sx={{
           padding: '0.4rem',
           height: 'calc(100% - 120px)',
           overflowY: 'scroll',
+          '&::-webkit-scrollbar': {
+            width: '8px',
+            height: '5px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: colors.scrollbarColor,
+            borderRadius: '4px',
+          },
         }}
       >
         {isLoading ? (
@@ -143,12 +161,13 @@ const TaskComponent = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  border: '1px solid',
-                  borderColor: (theme) => theme.palette.grey[400],
+                  boxShadow: '0px 0px 4px 0px #0000001a',
+                  backgroundColor: 'white',
                   padding: '0.5rem',
                   borderRadius: '.4rem',
                   mb: 1,
                   cursor: 'pointer',
+                  ml: 1,
                 }}
                 onClick={() => handleClickOnTask(item)}
               >
