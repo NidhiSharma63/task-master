@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ITaskItem } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import {
@@ -14,6 +15,32 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { totalStatus } from 'src/redux/status/statusSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
+/**
+ * column interface
+ */
+interface IColumnItem {
+  index: string;
+  name: string;
+  projectName: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
+/**
+ * updated column interface
+ */
+interface IUpdatedColumnItem {
+  name: string;
+  _id: string;
+  tasks: ITaskItem[];
+}
+/**
+ * Extended the values of Task interface for backend task
+ */
+interface IExtendedItem extends ITaskItem {
+  currentIndex: number;
+}
 
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();
@@ -41,7 +68,7 @@ const useBoard = () => {
    * return colum data with adding tasks property
    */
   let columnDataWithTaskProperty = useMemo(() => {
-    return columnData?.data?.map((item) => ({
+    return columnData?.data?.map((item: IColumnItem) => ({
       name: item.name,
       _id: item._id,
       tasks: [],
@@ -52,7 +79,7 @@ const useBoard = () => {
    * dispatch the action to save all the status(columns) in redux
    */
   useEffect(() => {
-    const onlyColumns = columnData?.data?.map((item) => item.name);
+    const onlyColumns = columnData?.data?.map((item: IColumnItem) => item.name);
     if (onlyColumns) {
       dispatch(totalStatus(onlyColumns));
     }
@@ -67,7 +94,8 @@ const useBoard = () => {
       return finalTaskUpdate;
     }
     if (!is_updating_task) {
-      return columnDataWithTaskProperty?.map((column) => ({
+      console.log(columnDataWithTaskProperty, 'column');
+      return columnDataWithTaskProperty?.map((column: IUpdatedColumnItem) => ({
         ...column,
         tasks: data.flat().filter((task) => task?.status === column.name),
       }));
@@ -82,22 +110,20 @@ const useBoard = () => {
   };
 
   const onDrop = useCallback(
-    (statusInWhichTaskMoved, id) => {
+    (statusInWhichTaskMoved: string, id: number) => {
       if (id === undefined || !statusInWhichTaskMoved) return;
 
       /* find the task from where task is moved  */
       const columnFromTaskIsDragged = finalState.find(
-        (item) => item.name === dragged_task_status,
+        (item: IUpdatedColumnItem) => item.name === dragged_task_status,
       );
 
       const draggedTask = columnFromTaskIsDragged.tasks?.find(
-        (item) => item._id === dragged_task_id,
+        (item: ITaskItem) => item._id === dragged_task_id,
       );
 
       /* if task is moved into same column */
       if (columnFromTaskIsDragged.name === statusInWhichTaskMoved) {
-        /** dragged Task Value for backend */
-        let draggedTaskValueForBackend = {};
         /**
          * if initial task is moved up and down
          */
@@ -115,7 +141,7 @@ const useBoard = () => {
           /**
            * setting the value for backend update
            */
-          draggedTaskValueForBackend = {
+          let draggedTaskValueForBackend: IExtendedItem = {
             ...draggedTask,
             currentIndex: id,
           };
@@ -124,7 +150,7 @@ const useBoard = () => {
            */
           const filterTheTaskWhichIsDragged =
             columnFromTaskIsDragged.tasks?.filter(
-              (item) => item._id !== dragged_task_id,
+              (item: ITaskItem) => item._id !== dragged_task_id,
             );
 
           /**
@@ -136,7 +162,7 @@ const useBoard = () => {
            */
 
           const updateTheIndexOfTask = filterTheTaskWhichIsDragged?.map(
-            (item) => {
+            (item: ITaskItem) => {
               const taskToUpdate = item;
               if (
                 taskToUpdate.index < dragged_task_index &&
@@ -156,23 +182,30 @@ const useBoard = () => {
           };
           updateTheIndexOfTask.push(updatedDraggedTaskIndex);
 
-          const finalUpdate = finalState.map((item) => {
+          const finalUpdate = finalState.map((item: IUpdatedColumnItem) => {
             if (item.name === dragged_task_status) {
               return {
                 ...item,
-                tasks: updateTheIndexOfTask.sort((a, b) => a.index - b.index),
+                tasks: updateTheIndexOfTask.sort(
+                  (a: ITaskItem, b: ITaskItem) => a.index - b.index,
+                ),
               };
             }
             return item;
           });
 
           setFinalTaskUpdate(finalUpdate);
+
+          /**
+           * calling the mutate function
+           */
+          updateTaskWithIndex(draggedTaskValueForBackend);
         }
         if (id > dragged_task_index) {
           /**
            * setting the value for backend update
            */
-          draggedTaskValueForBackend = {
+          let draggedTaskValueForBackend: IExtendedItem = {
             ...draggedTask,
             currentIndex: id - 1,
           };
@@ -182,7 +215,7 @@ const useBoard = () => {
 
           const filterTheTaskWhichIsDragged =
             columnFromTaskIsDragged.tasks?.filter(
-              (item) => item._id !== dragged_task_id,
+              (item: IUpdatedColumnItem) => item._id !== dragged_task_id,
             );
 
           /**
@@ -190,7 +223,7 @@ const useBoard = () => {
            * and A task is moved to C place then reduce the index -1 of B AND C so that B can take C's position
            */
           const updateTheIndexOfTask = filterTheTaskWhichIsDragged.map(
-            (item) => {
+            (item: ITaskItem) => {
               if (item.index <= id - 1 && item.index > dragged_task_index) {
                 return { ...item, index: item.index - 1 };
               }
@@ -208,11 +241,13 @@ const useBoard = () => {
           /**
            * update the state
            */
-          const finalUpdate = finalState.map((item) => {
+          const finalUpdate = finalState.map((item: IUpdatedColumnItem) => {
             if (item.name === dragged_task_status) {
               return {
                 ...item,
-                tasks: updateTheIndexOfTask.sort((a, b) => a.index - b.index),
+                tasks: updateTheIndexOfTask.sort(
+                  (a: ITaskItem, b: ITaskItem) => a.index - b.index,
+                ),
               };
             } else {
               return item;
@@ -220,12 +255,12 @@ const useBoard = () => {
           });
 
           setFinalTaskUpdate(finalUpdate);
-        }
 
-        /**
-         * calling the mutate function
-         */
-        updateTaskWithIndex(draggedTaskValueForBackend);
+          /**
+           * calling the mutate function
+           */
+          updateTaskWithIndex(draggedTaskValueForBackend);
+        }
       }
       /* if task is moved into another column */
       if (columnFromTaskIsDragged.name !== statusInWhichTaskMoved) {
@@ -244,14 +279,14 @@ const useBoard = () => {
          * find where task is move
          */
         const columnInWhichTaskIsMoved = finalState?.find(
-          (item) => item.name === statusInWhichTaskMoved,
+          (item: IUpdatedColumnItem) => item.name === statusInWhichTaskMoved,
         );
         /**
          * increase the index by +1 all the tasks that are present next to id
          */
 
         const updatedColumInWhichTaskIsMoved =
-          columnInWhichTaskIsMoved.tasks?.map((task) => {
+          columnInWhichTaskIsMoved.tasks?.map((task: ITaskItem) => {
             if (task.index >= id) {
               return { ...task, index: task.index + 1 };
             }
@@ -273,7 +308,7 @@ const useBoard = () => {
          * null task at the end
          */
         const removeDraggedTaskFromItsColumn = columnFromTaskIsDragged.tasks
-          ?.map((task) => {
+          ?.map((task: ITaskItem) => {
             if (task._id === dragged_task_id) {
               return null;
             }
@@ -282,17 +317,17 @@ const useBoard = () => {
             }
             return task;
           })
-          .filter((item) => item !== null);
+          .filter((item: ITaskItem | null) => item !== null);
 
         /**
          * update the state
          */
-        const finalUpdate = finalState.map((item) => {
+        const finalUpdate = finalState.map((item: IUpdatedColumnItem) => {
           if (item.name === statusInWhichTaskMoved) {
             return {
               ...item,
               tasks: updatedColumInWhichTaskIsMoved.sort(
-                (a, b) => a.index - b.index,
+                (a: ITaskItem, b: ITaskItem) => a.index - b.index,
               ),
             };
           }
@@ -300,7 +335,7 @@ const useBoard = () => {
             return {
               ...item,
               tasks: removeDraggedTaskFromItsColumn.sort(
-                (a, b) => a.index - b.index,
+                (a: ITaskItem, b: ITaskItem) => a.index - b.index,
               ),
             };
           }

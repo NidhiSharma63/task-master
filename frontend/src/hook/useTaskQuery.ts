@@ -2,6 +2,7 @@ import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { ITaskItem } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -17,6 +18,7 @@ import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
 } from 'src/utils/axiosRequest';
+
 /**
  *
  * @returns Post request for adding task with status
@@ -25,7 +27,7 @@ const useAddTaskQuery = () => {
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload:) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task', 'post', payload);
@@ -94,12 +96,20 @@ const useGetTaskAccordingToStatus = () => {
  * @returns Update task status when task moved to same column up or down
  */
 
+/**
+ *
+ * @returns interface for backend payload
+ */
+
+interface IExtendedItem extends ITaskItem {
+  currentIndex: number;
+}
 const useUpdateTaskQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: IExtendedItem) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task', 'put', payload);
@@ -249,5 +259,6 @@ export {
   useGetTaskAccordingToStatus,
   useUpdateTaskQuery,
   useUpdateTaskQueryWithDetails,
-  useUpdateTaskQueryWithStatus,
+  useUpdateTaskQueryWithStatus
 };
+

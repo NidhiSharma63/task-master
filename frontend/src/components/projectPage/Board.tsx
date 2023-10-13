@@ -23,8 +23,6 @@ const Board = () => {
 
   return (
     <Box
-      // container={true}
-      // component={Grid}
       sx={{
         position: 'relative',
         height: 'calc(100vh - 180px)',
@@ -63,11 +61,7 @@ const Board = () => {
           <FadeLoader color="#3E3A3A" />
         </Box>
       ) : (
-        <Box
-          // item={true}
-          // component={Grid}
-          sx={{ height: '100%', minWidth: '250px' }}
-        >
+        <Box sx={{ height: '100%', minWidth: '250px' }}>
           {isAddColBtnClicked ? (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <textarea
