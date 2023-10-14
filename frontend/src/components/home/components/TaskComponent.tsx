@@ -1,6 +1,7 @@
 import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { FadeLoader } from 'react-spinners';
 import { plusIcon } from 'src/assets/assets';
+import { IForTaskDisplaying, IProjects } from 'src/common/Interface/Interface';
 import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
 import useTaskComponent from 'src/hook/home/useTaskComponent';
 import colors from 'src/theme/variables';
@@ -11,8 +12,10 @@ import colors from 'src/theme/variables';
 
 interface ITaskComponent {
   backgroundColors: string[];
-  projectData: any;
-  taskData: any;
+  projectData: {
+    projects: IProjects[];
+  };
+  taskData: IForTaskDisplaying[][];
   isLoading: boolean;
 }
 
@@ -31,7 +34,6 @@ const TaskComponent = ({
     active_link,
   } = useTaskComponent({
     backgroundColors,
-    projectData,
     taskData,
   });
 
@@ -120,7 +122,7 @@ const TaskComponent = ({
                     borderRadius: '50%',
                     padding: '0rem .5rem',
                     color: 'white',
-                    background: colors.bannerColor,
+                    background: colors.redColor,
                   }}
                 >
                   {item?.count ?? 0}

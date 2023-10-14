@@ -62,7 +62,6 @@ const useTaskComponent = ({
       });
     });
 
-    console.log(taskWithCount, ':::taskWithCount');
     setAllTask(taskData.flat());
     setTotalTask(taskWithCount);
   }, [taskData, backgroundColors, total_status]);
