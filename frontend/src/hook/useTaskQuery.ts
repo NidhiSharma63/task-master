@@ -1,4 +1,4 @@
-import { useMutation, useQueries } from '@tanstack/react-query';
+import { UseQueryResult, useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -42,10 +42,19 @@ const useAddTaskQuery = () => {
       queryClient.invalidateQueries([state]);
     },
     onError: (error) => {
-      toast.error(error?.response?.data);
+      toast.error('An error occured');
     },
   });
 };
+
+/**
+ * interface for getting task
+ */
+// interface ITask {
+//   id: string;
+//   name: string;
+//   // other task properties...
+// }
 
 /**
  *
@@ -67,9 +76,6 @@ const useGetTaskAccordingToStatus = () => {
             status,
             projectName: active_project,
           }),
-        onSuccess: ({ data }) => {
-          return data;
-        },
         onSettled: () => {
           if (is_backdrop_loader_displayed_for_Task) {
             dispatch(isBackDropLoaderDisplayed(false));
@@ -86,11 +92,13 @@ const useGetTaskAccordingToStatus = () => {
   });
 
   const data = useMemo(
-    () => userQueries?.map((item) => item?.data?.data),
+    () =>
+      userQueries?.map((item: UseQueryResult<unknown, unknown>) => {
+        console.log(item, 'this is item');
+        return item?.data?.data;
+      }),
     [userQueries],
   );
-  // const isLoading = userQueries?.[0]?.isLoading;
-  // const status = userQueries?.map((item) => item?.data?.status);
 
   return { data };
 };
@@ -125,7 +133,7 @@ const useUpdateTaskQuery = () => {
       queryClient.invalidateQueries([state, active_project]);
       queryClient.invalidateQueries([state, 'All-task']);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('something went wrong!');
     },
   });
@@ -245,9 +253,6 @@ const useGetAllTaskAccordingToStatusForEachProject = () => {
           customAxiosRequestForGet('/project/status/alltasks', {
             status,
           }),
-        onSuccess: ({ data }) => {
-          return data;
-        },
         onSettled: () => {
           if (is_backdrop_loader_displayed_for_Task) {
             dispatch(isBackDropLoaderDisplayed(false));
@@ -264,7 +269,6 @@ const useGetAllTaskAccordingToStatusForEachProject = () => {
 
   return { data, status, isLoading };
 };
-
 export {
   useAddTaskQuery,
   useDeleteTask,
