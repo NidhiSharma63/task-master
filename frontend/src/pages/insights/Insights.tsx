@@ -1,12 +1,12 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useState } from 'react';
-import InsightsLogo from 'src/assets/icons/Insights.png';
+import { InsightsLogo } from 'src/assets/assets';
 import InsightsCharts from 'src/components/insights/InsightsCharts';
 import colors from 'src/theme/variables';
 import InsightsFilter from './components/InsightsFilter';
 
 const Insights = () => {
-  const [activeStatus, setActiveStatue] = useState('All');
+  const [activeStatus, setActiveStatue] = useState<string>('All');
   return (
     <Box
       sx={{
