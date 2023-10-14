@@ -48,15 +48,6 @@ const useAddTaskQuery = () => {
 };
 
 /**
- * interface for getting task
- */
-// interface ITask {
-//   id: string;
-//   name: string;
-//   // other task properties...
-// }
-
-/**
  *
  * @returns Getting all task
  */
@@ -103,19 +94,6 @@ const useGetTaskAccordingToStatus = () => {
   return { data };
 };
 
-/**
- *
- * @returns Update task status when task moved to same column up or down
- */
-
-/**
- *
- * @returns interface for backend payload
- */
-
-/**
- * interface with extra currentindex value
- */
 interface IExtendedItemWithIndex extends ITaskItem {
   currentIndex: number;
 }
@@ -200,7 +178,7 @@ const useUpdateTaskQueryWithDetails = () => {
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries([state, 'All-task']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });

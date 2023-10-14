@@ -23,15 +23,24 @@ export interface ITaskItem {
 
 /**
  * task interface for updating the task from drawer
+ * making this is _id optional because we are using this interface
+ * for updating the task in `useUpdateTaskQueryWithDetails` so at the same time we
+ * can update the task from home but in home we are using same initialvalues for creating
+ * task first time and updating that task so if we create task first time from home
+ * then we don't have _id so we have to make it optional
  */
 
 export interface IFormikValuesForUpdatingTask
-  extends Omit<ITaskItem, 'isNotified' | 'createdAt' | 'index' | '__v'> {
+  extends Omit<
+    ITaskItem,
+    'isNotified' | 'createdAt' | 'index' | '__v' | 'userId' | '_id'
+  > {
   description: string;
   label: string;
   dueDate: Date | null;
   labelColor: string;
   color: string;
+  _id?: string;
 }
 
 /**
@@ -43,7 +52,6 @@ export interface IAddTask {
   projectName: string;
   status: string;
   task: string;
-  userId: string;
 }
 
 /**
@@ -69,18 +77,6 @@ export interface IUpdatedColumnItem {
 }
 
 /**
- * interface for projects
- */
-
-export interface IProjects {
-  color: string;
-  name: string;
-  userId: string;
-  __v: number;
-  _id: string;
-}
-
-/**
  * column interface
  */
 
@@ -91,16 +87,6 @@ export interface IColumnItem {
   userId: string;
   __v: number;
   _id: string;
-}
-
-/**
- * login interface
- */
-
-export interface ILogin {
-  email: string;
-  password: string;
-  timeZone: string;
 }
 
 /**

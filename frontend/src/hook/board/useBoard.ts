@@ -19,17 +19,7 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { totalStatus } from 'src/redux/status/statusSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
-/**
- * column interface
- */
 
-/**
- * updated column interface
- */
-
-/**
- * Extended the values of Task interface for backend task
- */
 interface IExtendedItem extends ITaskItem {
   currentIndex: number;
 }

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import {
@@ -23,11 +24,21 @@ import {
   isBackdropLoaderDisplayedForTask,
   isCreateTaskModalOpen,
 } from 'src/redux/boolean/booleanSlice';
+import { activeTask, taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
 
-import { activeTask, taskDataInStore } from 'src/redux/task/taskSlice';
+/**
+ * interface
+ */
 
-const CreateTaskPopup = ({ status, projectData }) => {
+interface ICreateTaskPopup {
+  status: string;
+  projectData: {
+    projects: IProjects[];
+  };
+}
+
+const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const projectName = projectData?.projects?.map((item) => ({
@@ -46,7 +57,7 @@ const CreateTaskPopup = ({ status, projectData }) => {
     dispatch(activeTask(''));
   };
 
-  const initialValues = {
+  const initialValues: IFormValues = {
     task: active_task?.task ?? '',
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
@@ -57,15 +68,15 @@ const CreateTaskPopup = ({ status, projectData }) => {
     index: active_task?.index ?? 0,
     subTasks: active_task?.subTasks ?? '',
     color: active_task?.color ?? projectName?.[0]?.color,
+    images: active_task.images ?? [],
   };
 
   // active task is present
   if (active_task.task) {
     initialValues._id = active_task._id;
-    initialValues.userId = active_task.userId;
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: IFormValues) => {
     if (active_task.task) {
       updateTask(values);
       dispatch(isCreateTaskModalOpen(false));

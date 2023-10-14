@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ILogin } from 'src/common/Interface/Interface';
+import { ILogin } from 'src/common/Interface/auth/Interface';
 import {
   KEY_FOR_STORING_TOKEN,
   KEY_FOR_STORING_USER_DETAILS,

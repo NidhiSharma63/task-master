@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ILogin } from 'src/common/Interface/Interface';
+import { ILogin } from 'src/common/Interface/auth/Interface';
 import useRegisterQuery from 'src/hook/useRegsiterQuery';
 
 /**

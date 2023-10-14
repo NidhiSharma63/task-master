@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ILogin } from 'src/common/Interface/Interface';
+import { ILogin } from 'src/common/Interface/auth/Interface';
 import { KEY_FOR_STORING_TOKEN } from 'src/constant/Misc';
 import { loginSchema } from 'src/constant/validation';
 import useLoginQuery from 'src/hook/useLoginQuery';
