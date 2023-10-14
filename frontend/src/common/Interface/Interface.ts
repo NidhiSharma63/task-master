@@ -47,6 +47,19 @@ export interface IAddTask {
 }
 
 /**
+ * interface for task displaying
+ * as we are displaying task for two times first one when user created task then task have interface
+ * of ITaskItem and after updating task. task has inteface of formikValues
+ */
+
+export interface IForTaskDisplaying extends ITaskItem {
+  description?: string;
+  dueDate?: string;
+  label?: string;
+  labelColor?: string;
+}
+
+/**
  * interface for column
  */
 export interface IUpdatedColumnItem {

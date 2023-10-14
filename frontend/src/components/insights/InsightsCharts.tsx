@@ -8,7 +8,10 @@ import { capitalizeFirstLetter } from 'src/utils/TextTransformer';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const InsightsCharts = ({ status }) => {
+interface IInsightsCharts {
+  status: string;
+}
+const InsightsCharts = ({ status }: IInsightsCharts) => {
   const { data, isLoading, chartData, allProjects, allTask, bgColors } =
     useInsight({
       status,
@@ -105,7 +108,7 @@ const InsightsCharts = ({ status }) => {
               background: 'transparent',
             },
             '&::-webkit-scrollbar-thumb': {
-              background: `${colors.mainColor}`,
+              background: `${colors.scrollbarColor}`,
               borderRadius: '4px',
             },
           }}

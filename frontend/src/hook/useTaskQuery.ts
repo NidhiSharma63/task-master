@@ -94,7 +94,7 @@ const useGetTaskAccordingToStatus = () => {
   const data = useMemo(
     () =>
       userQueries?.map((item: UseQueryResult<unknown, unknown>) => {
-        console.log(item, 'this is item');
+        // console.log(item, 'this is item');
         return item?.data?.data;
       }),
     [userQueries],

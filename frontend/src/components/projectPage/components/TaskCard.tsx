@@ -2,7 +2,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Box, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ITaskItem } from 'src/common/Interface/Interface';
+import { IForTaskDisplaying, ITaskItem } from 'src/common/Interface/Interface';
 import UserName from 'src/common/UserName';
 import {
   draggedTaskId,
@@ -10,19 +10,6 @@ import {
   drggedTaskIndex,
 } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
-
-/**
- * interface for task displaying
- * as we are displaying task for two times first one when user created task then task have interface
- * of ITaskItem and after updating task. task has inteface of formikValues
- */
-
-interface IForTaskDisplaying extends ITaskItem {
-  description?: string;
-  dueDate?: string;
-  label?: string;
-  labelColor?: string;
-}
 
 interface ITaskCard {
   item: IForTaskDisplaying;
