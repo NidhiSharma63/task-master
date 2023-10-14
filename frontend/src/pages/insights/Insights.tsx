@@ -6,7 +6,7 @@ import colors from 'src/theme/variables';
 import InsightsFilter from './components/InsightsFilter';
 
 const Insights = () => {
-  const [activeStatus, setActiveStatue] = useState<string>('All');
+  const [activeStatus, setActiveStatus] = useState<string>('All');
   return (
     <Box
       sx={{
@@ -38,7 +38,7 @@ const Insights = () => {
             </Typography>
           </Box>
           <InsightsFilter
-            setActiveStatue={setActiveStatue}
+            setActiveStatus={setActiveStatus}
             activeStatus={activeStatus}
           />
         </Box>
