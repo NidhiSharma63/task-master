@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import sanitize from 'sanitize-html';
+import { ITaskItem } from 'src/common/Interface/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import { storage } from 'src/firebase/config';
@@ -21,6 +22,18 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
+/**
+ * interface
+ */
+
+interface FormikValues
+  extends Omit<ITaskItem, 'isNotified' | 'createdAt' | 'index' | '__v'> {
+  description: string;
+  label: string;
+  dueDate: Date | null;
+  labelColor: string;
+  color: string;
+}
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -54,7 +67,7 @@ const BoardDrawer = () => {
     }
   };
 
-  const initialValues = {
+  const initialValues: FormikValues = {
     task: active_task.task,
     _id: active_task._id,
     dueDate: new Date(active_task?.dueDate) ?? null,
@@ -64,13 +77,12 @@ const BoardDrawer = () => {
     subTasks: active_task?.subTasks ?? '',
     label: active_task?.label ?? '',
     labelColor: active_task?.labelColor ?? '#e33529',
-    originalDate: '',
     color: active_task?.color,
     projectName: active_task.projectName,
     images: active_task.images ?? [],
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: FormikValues) => {
     mutate(values);
     setIsTaskSavedAfterUpdating(true);
   };
@@ -93,7 +105,7 @@ const BoardDrawer = () => {
      * also delete the image from firebase
      */
     const images = active_task.images;
-    images.forEach((img) => {
+    images.forEach((img: string) => {
       const storageRef = ref(storage, img);
       deleteObject(storageRef).catch(() => {
         toast.error("couldn't delete the image");

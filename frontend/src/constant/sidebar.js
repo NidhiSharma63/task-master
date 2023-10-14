@@ -1,6 +1,6 @@
-import HomeIcon from "@mui/icons-material/Home";
-import InsightsIcon from "@mui/icons-material/Insights";
-import AddIcon from "@mui/icons-material/Add";
+import AddIcon from '@mui/icons-material/Add';
+import HomeIcon from '@mui/icons-material/Home';
+import InsightsIcon from '@mui/icons-material/Insights';
 
 export const UPPER_SIDE_BAR = [
   {

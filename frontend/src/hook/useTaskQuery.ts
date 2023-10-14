@@ -2,7 +2,11 @@ import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { ITaskItem } from 'src/common/Interface/Interface';
+import {
+  IAddTask,
+  IExtendedItem,
+  ITaskItem,
+} from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -27,7 +31,7 @@ const useAddTaskQuery = () => {
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload:) => {
+    mutationFn: (payload: IAddTask) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task', 'post', payload);
@@ -55,7 +59,7 @@ const useGetTaskAccordingToStatus = () => {
   const dispatch = useDispatch();
 
   const userQueries = useQueries({
-    queries: total_status?.map((status) => {
+    queries: total_status?.map((status: string) => {
       return {
         queryKey: [status, active_project],
         queryFn: () =>
@@ -101,7 +105,10 @@ const useGetTaskAccordingToStatus = () => {
  * @returns interface for backend payload
  */
 
-interface IExtendedItem extends ITaskItem {
+/**
+ * interface with extra currentindex value
+ */
+interface IExtendedItemWithIndex extends ITaskItem {
   currentIndex: number;
 }
 const useUpdateTaskQuery = () => {
@@ -109,7 +116,7 @@ const useUpdateTaskQuery = () => {
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload: IExtendedItem) => {
+    mutationFn: (payload: IExtendedItemWithIndex) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task', 'put', payload);
@@ -173,7 +180,7 @@ const useUpdateTaskQueryWithDetails = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: IExtendedItem) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task/details', 'put', payload);
@@ -196,10 +203,16 @@ const useUpdateTaskQueryWithDetails = () => {
  * @returns Delete Task
  */
 
-const useDeleteTask = (status) => {
+const useDeleteTask = (status: string) => {
   const { active_project } = useSelector(projectDataInStore);
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: {
+      _id: string;
+      status: string;
+      userId: string;
+      index: number;
+      projectName: string;
+    }) => {
       return customAxiosRequestForPost('/task', 'delete', payload);
     },
     onSuccess: () => {
@@ -225,7 +238,7 @@ const useGetAllTaskAccordingToStatusForEachProject = () => {
   const dispatch = useDispatch();
 
   const userQueries = useQueries({
-    queries: total_status.map((status) => {
+    queries: total_status.map((status: string) => {
       return {
         queryKey: [status, 'All-task'],
         queryFn: () =>
@@ -259,6 +272,5 @@ export {
   useGetTaskAccordingToStatus,
   useUpdateTaskQuery,
   useUpdateTaskQueryWithDetails,
-  useUpdateTaskQueryWithStatus
+  useUpdateTaskQueryWithStatus,
 };
-

@@ -73,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@types/sanitize-html": "^2.9.2",
     "sass": "^1.63.6"
   }
 }
