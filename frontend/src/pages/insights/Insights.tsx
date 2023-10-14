@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useState } from 'react';
-import { InsightsLogo } from 'src/assets/assets';
+import { insightsImage } from 'src/assets/assets';
 import InsightsCharts from 'src/components/insights/InsightsCharts';
 import colors from 'src/theme/variables';
 import InsightsFilter from './components/InsightsFilter';
@@ -26,7 +26,7 @@ const Insights = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2, gap: 1 }}>
-            <img src={InsightsLogo} alt="logo" style={{ width: '50px' }} />
+            <img src={insightsImage} alt="logo" style={{ width: '50px' }} />
             <Typography
               variant="h5"
               sx={{
