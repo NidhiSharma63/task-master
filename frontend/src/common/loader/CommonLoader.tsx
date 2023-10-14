@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { FadeLoader } from 'react-spinners';
 import { booleanDataInStore } from 'src/redux/boolean/booleanSlice';
 
-const CommonLoader = ({ value }) => {
+const CommonLoader = ({ value }: { value: string }) => {
   return (
     <Box
       sx={{
