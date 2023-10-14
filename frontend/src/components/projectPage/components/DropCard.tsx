@@ -1,9 +1,18 @@
 import { Box } from '@mui/material';
 import React, { useCallback, useState } from 'react';
+
+/**
+ * interface
+ */
+
+interface IDropCard {
+  onDrop: () => void;
+  index: number;
+}
 /**
  * this component add the placeholder for dropping the text
  */
-const DropCard = ({ onDrop, index }) => {
+const DropCard = ({ onDrop, index }: IDropCard) => {
   const [displayDropCard, setDisplayDropCard] = useState(false);
 
   /**
@@ -16,7 +25,7 @@ const DropCard = ({ onDrop, index }) => {
   /**
    * prevent default
    */
-  const handleDragOver = useCallback((e) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
   }, []);
 
