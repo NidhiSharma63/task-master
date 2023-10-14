@@ -8,3 +8,4 @@ declare module '*.png';
 declare module '*.jpg';
 
 declare module 'src/assets/assets';
+// declare module 'src/hook/auth/useRegister';

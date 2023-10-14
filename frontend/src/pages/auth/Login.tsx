@@ -3,13 +3,13 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Form, Formik } from 'formik';
-import { useDispatch } from 'react-redux';
-import logoImage from 'src/assets/icons/Logo.png';
+import { Logo } from 'src/assets/assets';
 import FormikControls from 'src/common/formik/FormikControls';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
 import InfoPart from 'src/components/auth/components/InfoPart';
 import { loginSchema } from 'src/constant/validation';
 import useLogin from 'src/hook/auth/useLogin';
+import { useAppDispatch } from 'src/hook/redux/hooks';
 import { isBackDropLoaderDisplayed } from 'src/redux/boolean/booleanSlice';
 import colors from 'src/theme/variables';
 
@@ -23,7 +23,7 @@ const Login = () => {
     handleToggle,
   } = useLogin();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (isLoading) {
     dispatch(isBackDropLoaderDisplayed(true));
@@ -52,7 +52,7 @@ const Login = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <img src={logoImage} alt="project" style={{ width: '40px' }} />
+            <img src={Logo} alt="project" style={{ width: '40px' }} />
 
             <Typography sx={{ fontWeight: 'bold' }}>Task Master</Typography>
           </Box>

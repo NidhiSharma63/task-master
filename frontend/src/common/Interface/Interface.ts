@@ -92,3 +92,13 @@ export interface IColumnItem {
   __v: number;
   _id: string;
 }
+
+/**
+ * login interface
+ */
+
+export interface ILogin {
+  email: string;
+  password: string;
+  timeZone: string;
+}

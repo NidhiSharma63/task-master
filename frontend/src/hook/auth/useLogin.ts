@@ -1,15 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { getValueFromLS } from "src/utils/localstorage";
-import useLoginQuery from "src/hook/useLoginQuery";
-import { KEY_FOR_STORING_TOKEN } from "src/constant/Misc";
-import { useState, useEffect } from "react";
-import { loginSchema } from "src/constant/validation";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ILogin } from 'src/common/Interface/Interface';
+import { KEY_FOR_STORING_TOKEN } from 'src/constant/Misc';
+import { loginSchema } from 'src/constant/validation';
+import useLoginQuery from 'src/hook/useLoginQuery';
+import { getValueFromLS } from 'src/utils/localstorage';
 
 const useLogin = () => {
   const navigate = useNavigate();
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
   const { mutate, isLoading } = useLoginQuery();
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState<ILogin>({} as ILogin);
   const [toggle, setToggle] = useState(false);
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -20,20 +21,20 @@ const useLogin = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate('/');
     }
-  }, [token]);
+  }, [token, navigate]);
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     timeZone,
   };
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
+    const handleKeyPress = (event: KeyboardEvent) => {
       if (!formValues) return;
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         event.preventDefault(); // Prevent form default submission behavior
 
         // Validate the values using the schema
@@ -47,15 +48,15 @@ const useLogin = () => {
     };
 
     // Attach the event listener
-    window.addEventListener("keydown", handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
 
     // Detach the event listener when the component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener('keydown', handleKeyPress);
     };
   }, [formValues]);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: ILogin) => {
     mutate(values);
   };
 

@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material';
-import React from 'react';
-import logoImage from 'src/assets/icons/Logo.png';
+import { Logo } from 'src/assets/assets';
 import colors from 'src/theme/variables';
 
 const InfoPart = () => {
@@ -18,7 +17,7 @@ const InfoPart = () => {
         height: 'unset',
       }}
     >
-      <img src={logoImage} alt="logo" style={{ width: '10s0px' }} />
+      <img src={Logo} alt="logo" style={{ width: '10s0px' }} />
 
       <Box
         sx={{
@@ -61,7 +60,6 @@ const InfoPart = () => {
               height: 10,
               borderRadius: '50%',
             }}
-            variant="circular"
           />
           <Typography
             sx={{
@@ -90,7 +88,6 @@ const InfoPart = () => {
               height: 10,
               borderRadius: '50%',
             }}
-            variant="circular"
           />
           <Typography
             sx={{
@@ -119,7 +116,6 @@ const InfoPart = () => {
               height: 10,
               borderRadius: '50%',
             }}
-            variant="circular"
           />
           <Typography
             sx={{
