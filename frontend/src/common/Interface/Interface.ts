@@ -102,3 +102,12 @@ export interface ILogin {
   password: string;
   timeZone: string;
 }
+
+/**
+ * interface for page modal
+ */
+
+export interface IPage {
+  name: string;
+  content: string;
+}

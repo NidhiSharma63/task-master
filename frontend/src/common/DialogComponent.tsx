@@ -9,12 +9,26 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEventHandler, ReactElement } from 'react';
+import { useAppDispatch, useAppSelector } from 'src/hook/redux/hooks';
 import {
   booleanDataInStore,
   isDialogBoxOpen,
 } from 'src/redux/boolean/booleanSlice';
 import colors from 'src/theme/variables';
+
+/**
+ * interface
+ */
+
+interface IDialogComponent {
+  title: string;
+  subTitle: string;
+  handleSaveButtonClicked: () => void;
+  children?: ReactElement;
+  value: string;
+  handleChangeInput: ChangeEventHandler<HTMLInputElement>;
+}
 
 const DialogComponent = ({
   title,
@@ -23,9 +37,10 @@ const DialogComponent = ({
   children,
   value,
   handleChangeInput,
-}) => {
-  const dispatch = useDispatch();
-  const { is_dialog_box_open } = useSelector(booleanDataInStore);
+}: IDialogComponent) => {
+  const dispatch = useAppDispatch();
+  const { is_dialog_box_open } = useAppSelector(booleanDataInStore);
+
   const handleClose = () => {
     dispatch(isDialogBoxOpen(false));
   };

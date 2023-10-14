@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import DialogComponent from 'src/common/DialogComponent';
 import { usePagesContext } from 'src/context/PagesContextProvider';
@@ -11,7 +11,7 @@ import {
 
 const PagesModal = () => {
   const { pageData } = usePagesContext();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
   const { mutate } = usePostPage();
   const { mutate: updatePage } = useUpdatePage();
 
@@ -47,7 +47,9 @@ const PagesModal = () => {
     dispatch(isBackDropLoaderDisplayed(true));
   };
 
-  const handleChangeInput = (event) => {
+  const handleChangeInput: ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ): void => {
     setValue(event.target.value);
   };
 
