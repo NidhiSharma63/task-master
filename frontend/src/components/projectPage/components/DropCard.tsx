@@ -7,12 +7,11 @@ import React, { useCallback, useState } from 'react';
 
 interface IDropCard {
   onDrop: () => void;
-  index: number;
 }
 /**
  * this component add the placeholder for dropping the text
  */
-const DropCard = ({ onDrop, index }: IDropCard) => {
+const DropCard = ({ onDrop }: IDropCard) => {
   const [displayDropCard, setDisplayDropCard] = useState(false);
 
   /**

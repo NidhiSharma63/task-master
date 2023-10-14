@@ -12,14 +12,26 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { FadeLoader } from 'react-spinners';
+import { IUpdatedColumnItem } from 'src/common/Interface/Interface';
 import DropCard from 'src/components/projectPage/components/DropCard';
 import TaskCard from 'src/components/projectPage/components/TaskCard';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useDeleteColumn from 'src/hook/board/useDeleteColumn';
 import useTaskBoxContainer from 'src/hook/board/useTaskBoxContainer';
 import colors from 'src/theme/variables';
+/**
+ * interface
+ */
 
-const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
+interface ITaskBoxContainer {
+  name: string;
+  colId: string;
+  onDrop: (id: string, i: number) => void;
+  data: IUpdatedColumnItem;
+}
+
+const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
+  console.log(data, 'data');
   const {
     handleClickOnTask,
     handleInput,
@@ -92,12 +104,11 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
                 <AddIcon
                   sx={{
                     cursor: 'pointer',
-                    color: colors.secondaryTextColor,
                   }}
                 />
               </IconButton>
               <MoreVertIcon
-                sx={{ cursor: 'pointer', color: colors.secondaryTextColor }}
+                sx={{ cursor: 'pointer' }}
                 onClick={handleClickOnThreeDots}
               />
             </>
@@ -108,20 +119,10 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
             open={openColsIcons}
             onClose={handleCloseOfColsIcons}
           >
-            <MenuItem
-              sx={{
-                color: colors.secondaryTextColor,
-              }}
-              onClick={handleClickOnRename}
-            >
+            <MenuItem onClick={handleClickOnRename}>
               <DriveFileRenameOutlineIcon />
             </MenuItem>
-            <MenuItem
-              sx={{
-                color: colors.secondaryTextColor,
-              }}
-              onClick={deleteColumn}
-            >
+            <MenuItem onClick={deleteColumn}>
               <DeleteIcon />
             </MenuItem>
           </Menu>
@@ -175,13 +176,13 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
                   mt: -1,
                 }}
               >
-                <FadeLoader sx={{ mt: -2 }} />
+                <FadeLoader style={{ marginTop: '1.6rem' }} />
               </Box>
             )}
           </>
         ))}
         {/* {console.log(data.column, 'Data.column', data)} */}
-        <DropCard onDrop={() => onDrop(data.name, 0)} index={0} />
+        <DropCard onDrop={() => onDrop(data.name, 0)} />
         {data.tasks?.map((item, i) => {
           return (
             <React.Fragment key={item._id}>
@@ -214,7 +215,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }) => {
                   mt: -1,
                 }}
               >
-                <FadeLoader sx={{ mt: -2 }} />
+                <FadeLoader style={{ marginTop: '1.6rem' }} />
               </Box>
             )}
           </>

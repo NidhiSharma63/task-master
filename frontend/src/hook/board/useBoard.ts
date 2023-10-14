@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ITaskItem } from 'src/common/Interface/Interface';
+import { ITaskItem, IUpdatedColumnItem } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import {
@@ -30,11 +30,7 @@ interface IColumnItem {
 /**
  * updated column interface
  */
-interface IUpdatedColumnItem {
-  name: string;
-  _id: string;
-  tasks: ITaskItem[];
-}
+
 /**
  * Extended the values of Task interface for backend task
  */

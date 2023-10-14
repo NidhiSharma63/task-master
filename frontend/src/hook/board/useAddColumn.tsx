@@ -12,7 +12,7 @@ import {
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
 
 interface IProps {
-  isAddColBtnClicked: boolean;
+  isAddColBtnClicked?: boolean;
   setIsAddColBtnClicked: React.Dispatch<React.SetStateAction<boolean>>;
   isColumnRename?: boolean;
   colId?: string;

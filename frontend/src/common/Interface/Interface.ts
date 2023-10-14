@@ -45,3 +45,12 @@ export interface IAddTask {
   task: string;
   userId: string;
 }
+
+/**
+ * interface for column
+ */
+export interface IUpdatedColumnItem {
+  name: string;
+  _id: string;
+  tasks: ITaskItem[];
+}
