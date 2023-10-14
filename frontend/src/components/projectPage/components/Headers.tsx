@@ -1,13 +1,13 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import projectImage from 'src/assets/icons/Project.png';
+import { projectImage } from 'src/assets/assets';
+import { useAppSelector } from 'src/hook/redux/hooks';
 import { projectDataInStore } from 'src/redux/projects/projectSlice';
 import colors from 'src/theme/variables';
 
 const Headers = () => {
-  const { active_project } = useSelector(projectDataInStore);
+  const { active_project } = useAppSelector(projectDataInStore);
   const navigate = useNavigate();
   const location = useLocation();
 
