@@ -76,7 +76,7 @@ const useAddColumn = ({
     /**
      * add column
      */
-    if (!isColumnRename) {
+    if (!isColumnRename && active_project) {
       mutate({
         name: columnValue,
         projectName: active_project,
