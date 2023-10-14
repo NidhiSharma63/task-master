@@ -4,7 +4,15 @@ import { usersDataInStore } from 'src/redux/auth/userSlice';
 import colors from 'src/theme/variables';
 import { getUserFirstNameFirstLetter } from 'src/utils/getUserFirstName';
 
-const UserName = ({ handleOpen, formTaskComponent = false }) => {
+interface IUserNameProps {
+  handleOpen?: () => void;
+  formTaskComponent?: boolean;
+}
+
+const UserName = ({
+  handleOpen,
+  formTaskComponent = false,
+}: IUserNameProps) => {
   const { user_email } = useSelector(usersDataInStore);
 
   const userName = getUserFirstNameFirstLetter(user_email);
@@ -20,7 +28,7 @@ const UserName = ({ handleOpen, formTaskComponent = false }) => {
         color: 'white',
         fontSize: '.8rem',
       }}
-      variant="circle"
+      variant="circular"
       onClick={handleOpen}
     >
       {userName}

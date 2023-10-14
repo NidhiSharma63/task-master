@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import {
   IAddTask,
-  IExtendedItem,
+  IFormikValuesForUpdatingTask,
   ITaskItem,
 } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
@@ -188,7 +188,7 @@ const useUpdateTaskQueryWithDetails = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload: IExtendedItem) => {
+    mutationFn: (payload: IFormikValuesForUpdatingTask) => {
       const { status } = payload;
       setState(status);
       return customAxiosRequestForPost('/task/details', 'put', payload);

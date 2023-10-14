@@ -94,7 +94,6 @@ const useBoard = () => {
       return finalTaskUpdate;
     }
     if (!is_updating_task) {
-      console.log(columnDataWithTaskProperty, 'column');
       return columnDataWithTaskProperty?.map((column: IUpdatedColumnItem) => ({
         ...column,
         tasks: data.flat().filter((task) => task?.status === column.name),

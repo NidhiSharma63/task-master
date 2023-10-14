@@ -4,7 +4,7 @@ export interface ISubTask {
 }
 
 /**
- * interface for tasks
+ * interface for tasks coming from backend for first time
  */
 export interface ITaskItem {
   _id: string;
@@ -22,10 +22,10 @@ export interface ITaskItem {
 }
 
 /**
- * task interface for updating the task
+ * task interface for updating the task from drawer
  */
 
-export interface IExtendedItem
+export interface IFormikValuesForUpdatingTask
   extends Omit<ITaskItem, 'isNotified' | 'createdAt' | 'index' | '__v'> {
   description: string;
   label: string;

@@ -12,15 +12,25 @@ import {
 import colors from 'src/theme/variables';
 
 /**
- * interface
+ * interface for task displaying
+ * as we are displaying task for two times first one when user created task then task have interface
+ * of ITaskItem and after updating task. task has inteface of formikValues
  */
 
+interface IForTaskDisplaying extends ITaskItem {
+  description?: string;
+  dueDate?: string;
+  label?: string;
+  labelColor?: string;
+}
+
 interface ITaskCard {
-  item: ITaskItem;
+  item: IForTaskDisplaying;
   handleClickOnTask: (item: ITaskItem) => void;
 }
 
 const TaskCard = ({ item, handleClickOnTask }: ITaskCard) => {
+  console.log(item, 'items');
   const [isDraggable, setIsDraggable] = useState(false);
   const dispatch = useDispatch();
   /**

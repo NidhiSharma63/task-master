@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import sanitize from 'sanitize-html';
-import { ITaskItem } from 'src/common/Interface/Interface';
+import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import { storage } from 'src/firebase/config';
@@ -25,15 +25,6 @@ import colors from 'src/theme/variables';
 /**
  * interface
  */
-
-interface FormikValues
-  extends Omit<ITaskItem, 'isNotified' | 'createdAt' | 'index' | '__v'> {
-  description: string;
-  label: string;
-  dueDate: Date | null;
-  labelColor: string;
-  color: string;
-}
 
 const BoardDrawer = () => {
   const { active_task } = useSelector(taskDataInStore);
@@ -67,7 +58,7 @@ const BoardDrawer = () => {
     }
   };
 
-  const initialValues: FormikValues = {
+  const initialValues: IFormikValuesForUpdatingTask = {
     task: active_task.task,
     _id: active_task._id,
     dueDate: new Date(active_task?.dueDate) ?? null,
@@ -82,7 +73,7 @@ const BoardDrawer = () => {
     images: active_task.images ?? [],
   };
 
-  const handleSubmit = async (values: FormikValues) => {
+  const handleSubmit = async (values: IFormikValuesForUpdatingTask) => {
     mutate(values);
     setIsTaskSavedAfterUpdating(true);
   };
