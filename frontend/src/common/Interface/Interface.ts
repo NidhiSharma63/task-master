@@ -67,3 +67,28 @@ export interface IUpdatedColumnItem {
   _id: string;
   tasks: ITaskItem[];
 }
+
+/**
+ * interface for projects
+ */
+
+export interface IProjects {
+  color: string;
+  name: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
+/**
+ * column interface
+ */
+
+export interface IColumnItem {
+  index: string;
+  name: string;
+  projectName: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}

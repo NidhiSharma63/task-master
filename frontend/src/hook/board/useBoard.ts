@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ITaskItem, IUpdatedColumnItem } from 'src/common/Interface/Interface';
+import {
+  IColumnItem,
+  ITaskItem,
+  IUpdatedColumnItem,
+} from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import {
@@ -18,14 +22,6 @@ import { taskDataInStore } from 'src/redux/task/taskSlice';
 /**
  * column interface
  */
-interface IColumnItem {
-  index: string;
-  name: string;
-  projectName: string;
-  userId: string;
-  __v: number;
-  _id: string;
-}
 
 /**
  * updated column interface

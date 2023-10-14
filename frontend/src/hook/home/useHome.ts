@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { IColumnItem, IProjects } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import { useGetAllTaskAccordingToStatusForEachProject } from 'src/hook/useTaskQuery';
 import { statusDataInStore, totalStatus } from 'src/redux/status/statusSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
+/**
+ *
+ * @returns home hook
+ */
 const useHome = () => {
   const { data: projectData, isLoading: projectIsLoading } =
     useGetProjectQuery();
-  const [backgroundColors, setBackgroundColors] = useState([]);
-  const dispatch = useDispatch();
-  const { total_status } = useSelector(statusDataInStore);
+  const [backgroundColors, setBackgroundColors] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const { total_status } = useAppSelector(statusDataInStore);
   /**
    * task data
    */
@@ -26,7 +31,9 @@ const useHome = () => {
    */
   useEffect(() => {
     if (total_status?.length === 0) {
-      const onlyColumns = columnData?.data?.map((item) => item?.name);
+      const onlyColumns = columnData?.data?.map((item: IColumnItem) => {
+        return item?.name;
+      });
       if (onlyColumns) {
         dispatch(totalStatus(onlyColumns));
       }
@@ -37,9 +44,8 @@ const useHome = () => {
    * bg colors
    */
   useEffect(() => {
-    let bgColors = [];
-    projectData?.projects?.map((item) => {
-      bgColors.push(item?.color);
+    const bgColors = projectData?.projects?.map((item: IProjects): string => {
+      return item.color; // Wrap the object in parentheses
     });
     setBackgroundColors(bgColors);
   }, [projectData]);

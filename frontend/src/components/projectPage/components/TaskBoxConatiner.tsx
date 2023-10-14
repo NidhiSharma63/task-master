@@ -31,7 +31,6 @@ interface ITaskBoxContainer {
 }
 
 const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
-  console.log(data, 'data');
   const {
     handleClickOnTask,
     handleInput,

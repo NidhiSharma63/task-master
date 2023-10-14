@@ -5,12 +5,23 @@ import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
 import useTaskComponent from 'src/hook/home/useTaskComponent';
 import colors from 'src/theme/variables';
 
+/**
+ * interface
+ */
+
+interface ITaskComponent {
+  backgroundColors: string[];
+  projectData: any;
+  taskData: any;
+  isLoading: boolean;
+}
+
 const TaskComponent = ({
   backgroundColors,
   projectData,
   taskData,
   isLoading,
-}) => {
+}: ITaskComponent) => {
   const {
     handleClickOnAddTask,
     handleClickOnLink,
