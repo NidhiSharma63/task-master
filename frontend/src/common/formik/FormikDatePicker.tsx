@@ -2,11 +2,18 @@ import { TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Field } from 'formik';
-import React from 'react';
 import TitleCase from 'src/utils/TextTransformer';
 // date-fns
 
-const FormikDatePicker = (props) => {
+/**
+ * interface
+ */
+
+interface IFormikDatePicker {
+  name: string;
+  values?: Date;
+}
+const FormikDatePicker = (props: IFormikDatePicker) => {
   const { name } = props;
   return (
     <Field name={name}>

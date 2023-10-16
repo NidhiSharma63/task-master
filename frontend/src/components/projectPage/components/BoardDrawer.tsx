@@ -2,13 +2,13 @@ import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
 import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import sanitize from 'sanitize-html';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import { storage } from 'src/firebase/config';
+import { useAppDispatch, useAppSelector } from 'src/hook/redux/hooks';
 import {
   useDeleteTask,
   useUpdateTaskQueryWithDetails,
@@ -27,16 +27,16 @@ import colors from 'src/theme/variables';
  */
 
 const BoardDrawer = () => {
-  const { active_task } = useSelector(taskDataInStore);
-  const { is_board_drawer_open } = useSelector(booleanDataInStore);
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(is_board_drawer_open);
+  const { active_task } = useAppSelector(taskDataInStore);
+  const { is_board_drawer_open } = useAppSelector(booleanDataInStore);
+  const dispatch = useAppDispatch();
+  const [open, setOpen] = useState<boolean>(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const [toggleEditModeForDescription, setToggleEditModeForDescription] =
-    useState(false);
+    useState<boolean>(false);
   const [isTaskSavedAfterUpdating, setIsTaskSavedAfterUpdating] =
-    useState(false);
+    useState<boolean>(false);
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -78,13 +78,6 @@ const BoardDrawer = () => {
   };
 
   const handleDelete = () => {
-    deleteTask({
-      _id: active_task._id,
-      status: active_task.status,
-      userId: active_task.userId,
-      index: active_task.index,
-      projectName: active_task.projectName,
-    });
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
     dispatch(isUpdatingTask(false));
@@ -97,11 +90,30 @@ const BoardDrawer = () => {
     const images = active_task.images;
     images.forEach((img: string) => {
       const storageRef = ref(storage, img);
-      deleteObject(storageRef).catch(() => {
-        toast.error("couldn't delete the image");
-        console.log('something went wrong while deleting the file');
-      });
+      deleteObject(storageRef)
+        .then(() => {
+          deleteTask({
+            _id: active_task._id,
+            status: active_task.status,
+            userId: active_task.userId,
+            index: active_task.index,
+            projectName: active_task.projectName,
+          });
+        })
+        .catch(() => {
+          toast.error("couldn't delete the image");
+          console.log('something went wrong while deleting the file');
+        });
     });
+    if (images.length === 0) {
+      deleteTask({
+        _id: active_task._id,
+        status: active_task.status,
+        userId: active_task.userId,
+        index: active_task.index,
+        projectName: active_task.projectName,
+      });
+    }
   };
 
   /**
@@ -183,7 +195,6 @@ const BoardDrawer = () => {
                     setToggleEditModeForDescription={
                       setToggleEditModeForDescription
                     }
-                    active_task={active_task}
                   />
                 ) : (
                   <Box

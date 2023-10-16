@@ -1,4 +1,5 @@
-import React from 'react';
+import { ReactElement } from 'react';
+import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
@@ -8,7 +9,29 @@ import FormikTextArea from 'src/common/formik/FormikTextArea';
 import TinyMceDescription from 'src/common/formik/TinyMceDescription';
 import FormikImage from 'src/common/formik/formikImage';
 
-const FormikControls = (props) => {
+/**
+ * interface
+ */
+interface IObj {
+  name: string;
+  color: string;
+}
+
+interface IFormikControls {
+  control: string;
+  name: string;
+  values?: string | IObj[] | [];
+  colorName?: string /**passing from color */;
+  InputProps?: ReactElement /**passing from login and register */;
+  handleSubmit?: (
+    values: IFormikValuesForUpdatingTask,
+  ) => Promise<void> /**passing from images */;
+  setToggleEditModeForDescription?: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+}
+
+const FormikControls = (props: IFormikControls) => {
   const { control, ...rest } = props;
   switch (control) {
     case 'formikInput':

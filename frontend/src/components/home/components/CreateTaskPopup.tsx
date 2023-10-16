@@ -126,12 +126,14 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                 />
                 <FormikControls control="formikDatePicker" name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
-                <FormikControls
-                  control="formikSelect"
-                  name="projectName"
-                  values={projectName ?? []}
-                  mt={2}
-                />
+
+                <Box mt={2}>
+                  <FormikControls
+                    control="formikSelect"
+                    name="projectName"
+                    values={projectName ?? []}
+                  />
+                </Box>
                 <FormikControls control="formikInputArray" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography sx={{ fontWeight: 600 }}>

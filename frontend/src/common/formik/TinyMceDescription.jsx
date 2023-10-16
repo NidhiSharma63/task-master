@@ -2,10 +2,13 @@ import { Box, Button } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
 import { Field } from 'formik';
 import { useCallback, useRef } from 'react';
+import { useAppSelector } from 'src/hook/redux/hooks';
+import { taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
 
 const TinyMceDescription = (props) => {
-  const { name, setToggleEditModeForDescription, active_task } = props;
+  const { name, setToggleEditModeForDescription } = props;
+  const { active_task } = useAppSelector(taskDataInStore);
   const editorRef = useRef();
   /**
    * on cancel set the toggle to false
