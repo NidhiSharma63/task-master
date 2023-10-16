@@ -14,7 +14,6 @@ import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
 import colors from 'src/theme/variables';
-import TitleCase from 'src/utils/TextTransformer';
 import convertToBlob from 'src/utils/convertToBlob';
 import { v4 } from 'uuid';
 
@@ -46,11 +45,12 @@ interface IFile {
 
 interface IFormikImage {
   name: string;
+  label: string;
   handleSubmit: (values: IFormikValuesForUpdatingTask) => Promise<void>;
 }
 
 const FormikImage = (props: IFormikImage) => {
-  const { name, handleSubmit } = props;
+  const { name, handleSubmit, label } = props;
   const { setFieldValue } = useFormikInput(name);
   const { values } = useFormikInput(name);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -145,7 +145,7 @@ const FormikImage = (props: IFormikImage) => {
         gap: 2,
       }}
     >
-      {values[name].length > 0 && <Typography>{TitleCase(name)}</Typography>}
+      {values[name].length > 0 && <Typography>{label}</Typography>}
 
       <FieldArray
         name={name}
