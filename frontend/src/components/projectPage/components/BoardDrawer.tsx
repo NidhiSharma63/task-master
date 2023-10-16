@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import sanitize from 'sanitize-html';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
+import FormikDatePicker from 'src/common/formik/FormikDatePicker';
+import FormikImage from 'src/common/formik/formikImage';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import { storage } from 'src/firebase/config';
 import { useAppDispatch, useAppSelector } from 'src/hook/redux/hooks';
@@ -183,8 +185,7 @@ const BoardDrawer = () => {
                   name="label"
                   colorName="labelColor"
                 />
-                <FormikControls control="formikDatePicker" name="dueDate" />
-
+                <FormikDatePicker name="dueDate" />
                 <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
                   Description
                 </Typography>
@@ -215,11 +216,7 @@ const BoardDrawer = () => {
                     }}
                   />
                 )}
-                <FormikControls
-                  control="images"
-                  name="images"
-                  handleSubmit={handleSubmit}
-                />
+                <FormikImage name="images" handleSubmit={handleSubmit} />
                 <FormikControls control="formikInputArray" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography variant="h6">Created At : &nbsp;</Typography>

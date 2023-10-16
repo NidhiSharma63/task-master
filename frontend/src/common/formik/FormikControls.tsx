@@ -1,13 +1,11 @@
 import { ReactElement } from 'react';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
-import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikSelect from 'src/common/formik/FormikSelect';
 import FormikTextArea from 'src/common/formik/FormikTextArea';
 import TinyMceDescription from 'src/common/formik/TinyMceDescription';
-import FormikImage from 'src/common/formik/formikImage';
 
 /**
  * interface
@@ -37,9 +35,6 @@ const FormikControls = (props: IFormikControls) => {
     case 'formikInput':
       return <FormikInput {...rest} />;
 
-    case 'formikDatePicker':
-      return <FormikDatePicker {...rest} />;
-
     case 'formikTextArea':
       return <FormikTextArea {...rest} />;
 
@@ -55,8 +50,8 @@ const FormikControls = (props: IFormikControls) => {
     case 'tinyMceDescription':
       return <TinyMceDescription {...rest} />;
 
-    case 'images':
-      return <FormikImage {...rest} />;
+    // case 'images':
+    //   return <FormikImage {...rest} />;
     default:
       return null;
   }

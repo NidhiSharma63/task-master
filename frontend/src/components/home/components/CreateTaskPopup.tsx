@@ -12,6 +12,7 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
+import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import {
   useAddTaskQuery,
@@ -124,7 +125,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                   name="label"
                   colorName="labelColor"
                 />
-                <FormikControls control="formikDatePicker" name="dueDate" />
+                <FormikDatePicker name="dueDate" />
                 <FormikControls control="formikTextArea" name="description" />
 
                 <Box mt={2}>

@@ -9,15 +9,15 @@ import TitleCase from 'src/utils/TextTransformer';
  * interface
  */
 
-interface IFormikDatePicker {
-  name: string;
-  values?: Date;
-}
-const FormikDatePicker = (props: IFormikDatePicker) => {
+// interface IFormikDatePicker {
+//   name: string;
+// }
+const FormikDatePicker = (props) => {
   const { name } = props;
   return (
     <Field name={name}>
       {({ form, field }) => {
+        // console.log(form, 'this is form', field, '::fiedl');
         const { setFieldValue } = form;
         const { value } = field;
 

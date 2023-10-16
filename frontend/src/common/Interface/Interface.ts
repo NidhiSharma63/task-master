@@ -97,3 +97,14 @@ export interface IPage {
   name: string;
   content: string;
 }
+
+/**
+ * interface for formikField
+ */
+
+export interface IField {
+  name: string;
+  onBlur: () => void;
+  onChange: () => void;
+  value: string;
+}

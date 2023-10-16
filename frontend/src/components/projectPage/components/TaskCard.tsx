@@ -17,7 +17,7 @@ interface ITaskCard {
 }
 
 const TaskCard = ({ item, handleClickOnTask }: ITaskCard) => {
-  console.log(item, 'items');
+  // console.log(item, 'items');
   const [isDraggable, setIsDraggable] = useState(false);
   const dispatch = useDispatch();
   /**

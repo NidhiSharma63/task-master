@@ -8,12 +8,14 @@ import {
   uploadBytes,
 } from 'firebase/storage';
 import { Field, FieldArray } from 'formik';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
 import colors from 'src/theme/variables';
 import TitleCase from 'src/utils/TextTransformer';
+import convertToBlob from 'src/utils/convertToBlob';
 import { v4 } from 'uuid';
 
 const keyframes = {
@@ -29,30 +31,57 @@ const keyframes = {
   },
 };
 
-const FormikImage = (props) => {
+/**
+ * interface
+ */
+
+interface IFile {
+  lastModified: number;
+  lastModifiedDate: string;
+  name: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+}
+
+interface IFormikImage {
+  name: string;
+  handleSubmit: (values: IFormikValuesForUpdatingTask) => Promise<void>;
+}
+
+const FormikImage = (props: IFormikImage) => {
   const { name, handleSubmit } = props;
   const { setFieldValue } = useFormikInput(name);
   const { values } = useFormikInput(name);
-  const inputRef = useRef();
-  const [images, setImages] = useState(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [images, setImages] = useState<Blob | null>(null);
 
   /**
    * open the file manager
    */
   const handleClick = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   /**
    * select the file
    */
-  const handleFileSelect = async (event, file) => {
-    const uploadedFile = (event && event.target.files[0]) || file;
+  const handleFileSelect = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    if (!event.target.files) return;
+    const uploadedFile = event && event.target.files[0];
     if (uploadedFile) {
       const modifiedFile = new File([uploadedFile], uploadedFile.name + v4(), {
         type: uploadedFile.type,
       });
-      setImages(modifiedFile);
+      const updatedModifiedFile = {
+        ...modifiedFile,
+        lastModifiedDate: uploadedFile.lastModified.toString(),
+      };
+      // modifiedFile.push({ lastModifiedDate: uploadedFile.lastModified });
+      const blobConverted = await convertToBlob(updatedModifiedFile);
+      setImages(blobConverted);
       try {
         const imageRef = ref(storage, `/images/${modifiedFile.name}-${v4()}`);
         const snapshot = await uploadBytes(imageRef, modifiedFile);
@@ -82,19 +111,24 @@ const FormikImage = (props) => {
       }
     }
   };
+
   /**
    * delete the attachment
    */
 
-  const deleteimages = (url) => {
+  const deleteimages = (url: string) => {
     const storageRef = ref(storage, url);
     deleteObject(storageRef)
       .then(() => {
         const updatedValues = {
           ...values,
-          images: values.images.filter((attachment) => attachment !== url),
+          images: values.images.filter(
+            (attachment: string) => attachment !== url,
+          ),
         };
-        handleSubmit(updatedValues);
+        if (updatedValues !== undefined) {
+          handleSubmit(updatedValues);
+        }
       })
       .catch(() => {
         toast.error("couldn't delete the image");
@@ -128,41 +162,43 @@ const FormikImage = (props) => {
               }}
             >
               {values[name] && values[name].length > 0
-                ? values[name].map((task, index) => (
-                    <Field name={`${name}.${index}.value`} key={index}>
-                      {({ field }) => {
-                        return (
-                          <Box
-                            sx={{ display: 'flex', alignItems: 'flex-start' }}
-                          >
-                            <img
-                              key={v4()}
-                              width={600}
-                              height="auto"
-                              src={
-                                typeof task === 'string'
-                                  ? task
-                                  : URL.createObjectURL(task)
-                              }
-                              alt="attachment"
-                            />
-                            <DeleteOutlineIcon
-                              type="button"
-                              sx={{
-                                cursor: 'pointer',
-                                color: colors.textColor,
-                              }}
-                              className="not-remove-input"
-                              onClick={() => {
-                                arrayHelpers.remove(index);
-                                deleteimages(task);
-                              }}
-                            />
-                          </Box>
-                        );
-                      }}
-                    </Field>
-                  ))
+                ? values[name].map((imgUrl: string, index: number) => {
+                    return (
+                      <Field name={`${name}.${index}.value`} key={index}>
+                        {() => {
+                          return (
+                            <Box
+                              sx={{ display: 'flex', alignItems: 'flex-start' }}
+                            >
+                              <img
+                                key={v4()}
+                                width={600}
+                                height="auto"
+                                src={
+                                  typeof imgUrl === 'string'
+                                    ? imgUrl
+                                    : URL.createObjectURL(imgUrl)
+                                }
+                                alt="attachment"
+                              />
+                              <DeleteOutlineIcon
+                                type="button"
+                                sx={{
+                                  cursor: 'pointer',
+                                  color: colors.textColor,
+                                }}
+                                className="not-remove-input"
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                  deleteimages(imgUrl);
+                                }}
+                              />
+                            </Box>
+                          );
+                        }}
+                      </Field>
+                    );
+                  })
                 : null}
             </Box>
           );
@@ -202,7 +238,9 @@ const FormikImage = (props) => {
         accept="image/*"
         ref={inputRef}
         style={{ display: 'none' }}
-        onChange={handleFileSelect}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          handleFileSelect(event)
+        }
       />
     </Box>
   );
