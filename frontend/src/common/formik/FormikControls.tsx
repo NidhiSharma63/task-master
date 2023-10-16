@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
@@ -20,13 +19,16 @@ interface IFormikControls {
   name: string;
   values?: string | IObj[] | [];
   colorName?: string /**passing from color */;
-  InputProps?: ReactElement /**passing from login and register */;
+  InputProps?: {
+    endAdornment: JSX.Element;
+  } /**passing from login and register */;
   handleSubmit?: (
     values: IFormikValuesForUpdatingTask,
   ) => Promise<void> /**passing from images */;
   setToggleEditModeForDescription?: React.Dispatch<
     React.SetStateAction<boolean>
   >;
+  type?: string;
 }
 
 const FormikControls = (props: IFormikControls) => {
