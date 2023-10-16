@@ -1,24 +1,11 @@
-// @ts-ignore
 import CheckList from '@editorjs/checklist';
-// @ts-ignore
-
 import Code from '@editorjs/code';
-// @ts-ignore
-
 import Delimiter from '@editorjs/delimiter';
-
-// @ts-ignore
 import Embed from '@editorjs/embed';
-
-// @ts-ignore
 import Header from '@editorjs/header';
-// @ts-ignore
 import InlineCode from '@editorjs/inline-code';
-// @ts-ignore
 import List from '@editorjs/list';
-// @ts-ignore
 import Marker from '@editorjs/marker';
-// @ts-ignore
 import Table from '@editorjs/table';
 
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';

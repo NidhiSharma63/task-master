@@ -29,7 +29,8 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "type-definations.d.ts"
   ],
   "exclude": [
     "node_modules",
