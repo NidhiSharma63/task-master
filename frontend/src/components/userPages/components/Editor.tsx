@@ -7,18 +7,25 @@ import useDebounce from 'src/hook/useDebounce';
 import { useUpdatePage } from 'src/hook/usePagesQuery';
 import { tools } from './EditorTool';
 
+/**
+ * interface
+ */
+
+interface IQueryData {
+  data: {
+    data: { _id: string; content: string }[];
+  };
+}
 const Editor = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const { id } = useParams<{ id: string }>();
   const { mutate } = useUpdatePage();
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData<{ _id: string; content: string }[]>([
-    'pages',
-  ]);
+  const pageData = queryClient.getQueryData<IQueryData>(['pages']);
   const debounceFunc = useDebounce();
 
   useEffect(() => {
-    const currentPage = data?.find(
+    const currentPage = pageData?.data?.data?.find(
       (item: { _id: string; content: string }) => item._id === id,
     );
     if (editorRef.current === null) return;
