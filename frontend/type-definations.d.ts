@@ -8,4 +8,6 @@ declare module '*.png';
 declare module '*.jpg';
 
 declare module 'src/assets/assets';
+declare module '@editorjs/header';
+declare module '@editorjs/image';
 // declare module 'src/hook/auth/useRegister';

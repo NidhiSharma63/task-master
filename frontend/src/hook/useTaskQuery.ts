@@ -1,4 +1,4 @@
-import { UseQueryResult, useMutation, useQueries } from '@tanstack/react-query';
+import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -84,7 +84,7 @@ const useGetTaskAccordingToStatus = () => {
 
   const data = useMemo(
     () =>
-      userQueries?.map((item: UseQueryResult<unknown, unknown>) => {
+      userQueries?.map((item: any) => {
         // console.log(item, 'this is item');
         return item?.data?.data;
       }),
@@ -130,7 +130,7 @@ const useUpdateTaskQueryWithStatus = () => {
   });
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: any) => {
       const { status, prevStatus } = payload;
       setState({
         previousStatusOfTask: prevStatus,
@@ -241,9 +241,9 @@ const useGetAllTaskAccordingToStatusForEachProject = () => {
     }),
   });
 
-  const data = userQueries?.map((item) => item?.data?.data);
+  const data = userQueries?.map((item: any) => item?.data?.data);
   const isLoading = userQueries?.[0]?.isLoading;
-  const status = userQueries?.map((item) => item?.data?.status);
+  const status = userQueries?.map((item: any) => item?.data?.status);
 
   return { data, status, isLoading };
 };

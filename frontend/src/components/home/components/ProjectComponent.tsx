@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { plusIcon } from 'src/assets/assets';
+import { IProjects } from 'src/common/Interface/Home/Interface';
 import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
 import { isProjectNameModalOpen } from 'src/redux/boolean/booleanSlice';
@@ -10,7 +11,23 @@ import { activeProject } from 'src/redux/projects/projectSlice';
 import colors from 'src/theme/variables';
 import { setValueToLs } from 'src/utils/localstorage';
 
-const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
+/**
+ * interface
+ */
+
+interface IProjectComponent {
+  backgroundColors: string[];
+  projectData: {
+    projects: IProjects[];
+  };
+  isLoading: boolean;
+}
+
+const ProjectComponent = ({
+  backgroundColors,
+  projectData,
+  isLoading,
+}: IProjectComponent) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,7 +35,7 @@ const ProjectComponent = ({ backgroundColors, projectData, isLoading }) => {
     dispatch(isProjectNameModalOpen(true));
   };
 
-  const handleNavigationToProject = (name) => {
+  const handleNavigationToProject = (name: string) => {
     navigate('/Dashboard');
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);

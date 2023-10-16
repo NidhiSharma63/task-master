@@ -17,8 +17,9 @@ import {
  *  extends the interface for updating page
  */
 
-interface IExtendsPage extends IPage {
+interface IExtendsPage extends Omit<IPage, 'name'> {
   _id: string;
+  name?: string;
 }
 
 const getAllPages = async () => {

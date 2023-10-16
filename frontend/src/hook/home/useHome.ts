@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { IColumnItem, IProjects } from 'src/common/Interface/Interface';
+import { IProjects } from 'src/common/Interface/Home/Interface';
+import { IColumnItem } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import { useGetAllTaskAccordingToStatusForEachProject } from 'src/hook/useTaskQuery';
 import { statusDataInStore, totalStatus } from 'src/redux/status/statusSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-
 /**
  *
  * @returns home hook

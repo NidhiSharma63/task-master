@@ -62,7 +62,6 @@ const BoardDrawer = () => {
     task: active_task.task,
     _id: active_task._id,
     dueDate: new Date(active_task?.dueDate) ?? null,
-    userId: active_task.userId,
     status: active_task.status,
     description: active_task?.description ?? '',
     subTasks: active_task?.subTasks ?? '',
