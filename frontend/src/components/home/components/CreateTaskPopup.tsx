@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Form, Formik } from 'formik';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
 import FormikControls from 'src/common/formik/FormikControls';
@@ -44,6 +45,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
   const { is_create_task_modal_open } = useSelector(booleanDataInStore);
   const dispatch = useDispatch();
   const { active_task } = useSelector(taskDataInStore);
+  const [projectColor, setProjectColor] = useState<string>('');
 
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
   const { mutate } = useAddTaskQuery();
@@ -59,12 +61,12 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
     status: active_task.status ?? status,
     description: active_task?.description ?? '',
-    projectName: active_task?.projectName,
+    projectName: active_task?.projectName ?? '',
     label: active_task?.label ?? '',
     labelColor: active_task?.labelColor ?? '#e33529',
     index: active_task?.index ?? 0,
-    subTasks: active_task?.subTasks ?? '',
-    color: active_task?.color,
+    subTasks: active_task?.subTasks ?? [],
+    color: active_task?.color ?? '',
     images: active_task.images ?? [],
   };
 
@@ -74,11 +76,12 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
   }
 
   const handleSubmit = (values: IFormValues) => {
+    const updatedValues = { ...values, color: projectColor };
     if (active_task.task) {
-      updateTask(values);
+      updateTask(updatedValues);
       dispatch(isCreateTaskModalOpen(false));
     } else {
-      mutate(values);
+      mutate(updatedValues);
       dispatch(isCreateTaskModalOpen(false));
     }
     dispatch(activeTask(''));
@@ -125,7 +128,10 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                 {/* <FormikControls control="formikTextArea" name="description" /> */}
 
                 <Box mt={2}>
-                  <ProjectSelect projectData={projectData} />
+                  <ProjectSelect
+                    projectData={projectData}
+                    setProjectColor={setProjectColor}
+                  />
                   {/* <FormikSelect name="projectName" values={projectName ?? []} /> */}
                 </Box>
                 <FormikControls control="formikInputArray" name="subTasks" />

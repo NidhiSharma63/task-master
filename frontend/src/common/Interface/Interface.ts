@@ -103,8 +103,18 @@ export interface IPage {
  */
 
 export interface IField {
-  name: string;
-  onBlur: () => void;
-  onChange: () => void;
-  value: string;
+  field: {
+    name: string;
+    onBlur: () => void;
+    onChange: () => void;
+    value: string;
+  };
+  meta?: {
+    error: string | undefined;
+    initialError: undefined;
+    initialTouched: boolean;
+    initialValue: string;
+    touched: boolean;
+    value: string;
+  };
 }
