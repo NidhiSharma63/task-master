@@ -12,6 +12,7 @@ import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
+import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import ProjectSelect from 'src/components/home/components/ProjectSelect';
@@ -126,7 +127,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                 />
                 <FormikDatePicker name="dueDate" />
                 {/* <FormikControls control="formikTextArea" name="description" /> */}
-
+                <TinyMceContainer />
                 <Box mt={2}>
                   <ProjectSelect
                     projectData={projectData}
