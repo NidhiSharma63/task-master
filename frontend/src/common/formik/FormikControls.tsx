@@ -1,8 +1,6 @@
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
-import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
-import FormikTextArea from 'src/common/formik/FormikTextArea';
 
 /**
  * interface
@@ -35,8 +33,8 @@ const FormikControls = (props: IFormikControls) => {
     case 'formikInput':
       return <FormikInput {...rest} />;
 
-    case 'formikTextArea':
-      return <FormikTextArea {...rest} />;
+    // case 'formikTextArea':
+    //   return <FormikTextArea {...rest} />;
 
     // case 'formikSelect':
     //   return <FormikSelect {...rest} />;
@@ -44,8 +42,8 @@ const FormikControls = (props: IFormikControls) => {
     case 'formikInputArray':
       return <FormikInputArray {...rest} />;
 
-    case 'formikInputForLable':
-      return <FormikInputForLabel {...rest} />;
+    // case 'formikInputForLable':
+    //   return <FormikInputForLabel {...rest} />;
 
     // case 'tinyMceDescription':
     //   return <TinyMceDescription {...rest} />;

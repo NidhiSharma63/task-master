@@ -8,15 +8,25 @@ import {
   Typography,
 } from '@mui/material';
 import { Field } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { IField } from 'src/common/Interface/Interface';
 import { COLORS_FOR_PROJECTS } from 'src/constant/colors';
 import colors from 'src/theme/variables';
 import TitleCase from 'src/utils/TextTransformer';
 
-const FormikInputForLabel = (props) => {
-  const [isAccordianOpen, setIsAccodianOpen] = useState(false);
+/**
+ * inteface
+ */
+
+interface IFormikInputForLabel {
+  name: string;
+  colorName: string;
+}
+
+const FormikInputForLabel = (props: IFormikInputForLabel) => {
+  const [isAccordianOpen, setIsAccodianOpen] = useState<boolean>(false);
   const { colorName, name } = props;
-  const [textValue, setTextValue] = useState('');
+  const [textValue, setTextValue] = useState<string>('');
 
   const handleAccordian = () => {
     setIsAccodianOpen((prev) => !prev);
@@ -25,7 +35,7 @@ const FormikInputForLabel = (props) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', mb: 3 }}>
       <Field name={name}>
-        {({ field, form }) => {
+        {({ field, form }: IField) => {
           const { setFieldValue } = form;
           const { value } = field;
           return (
@@ -50,7 +60,7 @@ const FormikInputForLabel = (props) => {
               </Typography>
               <TextField
                 {...field}
-                value={textValue.length > 0 ? textValue : value}
+                value={value}
                 sx={{
                   width: '100%',
                   padding: 0,
@@ -58,25 +68,23 @@ const FormikInputForLabel = (props) => {
                   borderRadius: '.3rem',
                   backgroundColor: 'white',
                 }}
-                onChange={(event) => {
-                  setTextValue(event.target.value);
-                  setFieldValue(name, event.target.value);
-                }}
-                outline="none"
+                // onChange={(event) => {
+                //   setTextValue(event.target.value);
+                //   setFieldValue(name, event.target.value);
+                // }}
               />
             </Box>
           );
         }}
       </Field>
       <Field name={colorName}>
-        {({ form, field }) => {
-          //   console.log(form, ":::form", field, ":::field");
-          const { setFieldValue } = form;
+        {({ form, field }: IField) => {
+          const { setFieldValue, values } = form;
           const { value } = field;
           return (
             <>
               <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
-                {textValue.length > 0 && (
+                {values[name].length > 0 && (
                   <Typography
                     sx={{
                       padding: '.4rem .7rem',
@@ -87,10 +95,9 @@ const FormikInputForLabel = (props) => {
                       fontSize: '.8rem',
                     }}
                   >
-                    {textValue}
+                    {values[name]}
                   </Typography>
                 )}
-
                 <Accordion
                   sx={{
                     display: 'flex',
@@ -100,7 +107,6 @@ const FormikInputForLabel = (props) => {
                     boxShadow: 'none',
                     border: `1px solid ${colors.lineColor}`,
                     borderRadius: '.3rem',
-                    // height: '1rem',
                     backgroundColor: 'white',
                   }}
                 >

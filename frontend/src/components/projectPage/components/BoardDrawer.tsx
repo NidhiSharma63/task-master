@@ -7,6 +7,7 @@ import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
+import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikImage from 'src/common/formik/formikImage';
 import { validationForUpdatingTask } from 'src/constant/validation';
 import { storage } from 'src/firebase/config';
@@ -35,8 +36,6 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState<boolean>(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
-  const [toggleEditModeForDescription, setToggleEditModeForDescription] =
-    useState<boolean>(false);
   const [isTaskSavedAfterUpdating, setIsTaskSavedAfterUpdating] =
     useState<boolean>(false);
 
@@ -50,8 +49,6 @@ const BoardDrawer = () => {
   const handleClose = () => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
-    setToggleEditModeForDescription(false);
-
     /**
      * check if user added the image and that image stored in firebase but user didn't
      * click on the save button
@@ -118,14 +115,6 @@ const BoardDrawer = () => {
     }
   };
 
-  /**
-   * handleToggleModeForDescription
-   */
-
-  const handleToggleModeForDescription = () => {
-    setToggleEditModeForDescription((prev) => !prev);
-  };
-
   return (
     <Drawer
       anchor={'right'}
@@ -180,11 +169,7 @@ const BoardDrawer = () => {
                 }}
               >
                 <FormikControls control="formikInput" name="task" />
-                <FormikControls
-                  control="formikInputForLable"
-                  name="label"
-                  colorName="labelColor"
-                />
+                <FormikInputForLabel name="label" colorName="labelColor" />
                 <FormikDatePicker name="dueDate" />
                 <TinyMceContainer />
                 <FormikImage
