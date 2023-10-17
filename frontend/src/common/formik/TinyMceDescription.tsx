@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
-import { Field } from 'formik';
+import { Field, FormikValues, useFormikContext } from 'formik';
 import { useCallback } from 'react';
 import { IField } from 'src/common/Interface/Interface';
 import { useAppSelector } from 'src/hook/redux/hooks';
@@ -22,14 +22,16 @@ interface ITinyMceDescription {
 const TinyMceDescription = (props: ITinyMceDescription) => {
   const { name, setToggleEditModeForDescription } = props;
   const { active_task } = useAppSelector(taskDataInStore);
+  const { setFieldValue, initialValues } = useFormikContext<FormikValues>();
   /**
    * on cancel set the toggle to false
    */
   const handleCancel = useCallback(() => {
     if (setToggleEditModeForDescription !== undefined) {
       setToggleEditModeForDescription(false);
+      setFieldValue(name, initialValues[name]);
     }
-  }, [setToggleEditModeForDescription]);
+  }, [setToggleEditModeForDescription, initialValues, setFieldValue, name]);
 
   return (
     <Field name={name}>

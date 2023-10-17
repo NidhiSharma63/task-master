@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import sanitize from 'sanitize-html';
 import TinyMceDescription from 'src/common/formik/TinyMceDescription';
@@ -21,6 +21,9 @@ const TinyMceContainer = () => {
 
   return (
     <>
+      <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
+        Description
+      </Typography>
       {toggleEditModeForDescription || !active_task.description ? (
         <TinyMceDescription
           name="description"
@@ -35,7 +38,7 @@ const TinyMceContainer = () => {
             width: '100%',
             border: '1px solid red',
             borderRadius: '.4rem',
-            mt: 3,
+            mt: 1,
             p: 2,
             paddingLeft: 3,
             color: colors.textColor,

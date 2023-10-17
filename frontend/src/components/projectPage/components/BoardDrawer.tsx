@@ -186,38 +186,7 @@ const BoardDrawer = () => {
                   colorName="labelColor"
                 />
                 <FormikDatePicker name="dueDate" />
-                <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
-                  Description
-                </Typography>
-                {/* {toggleEditModeForDescription || !active_task.description ? (
-                  <TinyMceDescription
-                    name="description"
-                    label="Description"
-                    setToggleEditModeForDescription={
-                      setToggleEditModeForDescription
-                    }
-                  />
-                ) : (
-                  <Box
-                    onClick={handleToggleModeForDescription}
-                    sx={{
-                      height: 'fit-content',
-                      width: '100%',
-                      border: '1px solid red',
-                      borderRadius: '.4rem',
-                      mt: 3,
-                      p: 2,
-                      paddingLeft: 3,
-                      color: colors.textColor,
-                      borderColor: (theme) => theme.palette.grey[500],
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: sanitize(active_task.description),
-                    }}
-                  />
-                )} */}
                 <TinyMceContainer />
-
                 <FormikImage
                   name="images"
                   label="Images"
