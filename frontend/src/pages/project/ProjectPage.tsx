@@ -1,15 +1,15 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import CommonLoader from 'src/common/loader/CommonLoader';
 import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
 import Headers from 'src/components/projectPage/components/Headers';
+import { useAppDispatch } from 'src/hook/redux/hooks';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import { isProjectNameModalOpen } from 'src/redux/boolean/booleanSlice';
 
 const ProjectPage = () => {
   const { data, isLoading } = useGetProjectQuery();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleOpenProjectModal = () => {
     dispatch(isProjectNameModalOpen(true));
