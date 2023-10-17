@@ -117,4 +117,5 @@ export interface IField {
     touched: boolean;
     value: string;
   };
+  form?: any;
 }

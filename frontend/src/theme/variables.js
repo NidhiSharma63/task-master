@@ -6,6 +6,7 @@ const colors = {
   primaryColor: '#756EC6',
   scrollbarColor: '#D9D9D9',
   redColor: 'rgb(240,106,106)', // redish
+  greyColor: '#6C6C6D',
 };
 
 export default colors;

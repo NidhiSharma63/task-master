@@ -3,7 +3,6 @@ import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikTextArea from 'src/common/formik/FormikTextArea';
-import TinyMceDescription from 'src/common/formik/TinyMceDescription';
 
 /**
  * interface
@@ -48,8 +47,8 @@ const FormikControls = (props: IFormikControls) => {
     case 'formikInputForLable':
       return <FormikInputForLabel {...rest} />;
 
-    case 'tinyMceDescription':
-      return <TinyMceDescription {...rest} />;
+    // case 'tinyMceDescription':
+    //   return <TinyMceDescription {...rest} />;
 
     // case 'images':
     //   return <FormikImage {...rest} />;

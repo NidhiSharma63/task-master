@@ -3,8 +3,8 @@ import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import sanitize from 'sanitize-html';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
+import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikImage from 'src/common/formik/formikImage';
@@ -189,10 +189,10 @@ const BoardDrawer = () => {
                 <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
                   Description
                 </Typography>
-                {toggleEditModeForDescription || !active_task.description ? (
-                  <FormikControls
-                    control="tinyMceDescription"
+                {/* {toggleEditModeForDescription || !active_task.description ? (
+                  <TinyMceDescription
                     name="description"
+                    label="Description"
                     setToggleEditModeForDescription={
                       setToggleEditModeForDescription
                     }
@@ -215,7 +215,8 @@ const BoardDrawer = () => {
                       __html: sanitize(active_task.description),
                     }}
                   />
-                )}
+                )} */}
+                <TinyMceContainer />
 
                 <FormikImage
                   name="images"

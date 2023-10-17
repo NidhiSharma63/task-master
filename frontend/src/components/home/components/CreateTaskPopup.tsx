@@ -171,9 +171,9 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                 <Button
                   onClick={handleClose}
                   sx={{
-                    backgroundColor: '#6C6C6D',
+                    backgroundColor: colors.greyColor,
                     '&:hover': {
-                      background: '#6C6C6D',
+                      background: colors.greyColor,
                     },
                   }}
                 >
