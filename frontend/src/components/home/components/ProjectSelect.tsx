@@ -1,7 +1,6 @@
 import { useFormikContext } from 'formik';
 import { useEffect, useMemo } from 'react';
 import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
-import { ISubTask } from 'src/common/Interface/Interface';
 import FormikSelect from 'src/common/formik/FormikSelect';
 /**
  * interface
@@ -14,19 +13,6 @@ interface ICreateTaskPopup {
   setProjectColor: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface IFo {
-  color: string | undefined;
-  description: string;
-  dueDate: Date | null;
-  images: string[];
-  index: number;
-  label: string;
-  labelColor: string;
-  projectName: string | undefined;
-  status: string;
-  subTasks: ISubTask[];
-  task: string;
-}
 const ProjectSelect = ({ projectData, setProjectColor }: ICreateTaskPopup) => {
   const { values } = useFormikContext<IFormValues>();
 
