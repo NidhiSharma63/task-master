@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { Logo } from 'src/assets/assets';
-import FormikControls from 'src/common/formik/FormikControls';
+import FormikInput from 'src/common/formik/FormikInput';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
 import InfoPart from 'src/components/auth/components/InfoPart';
 import { registerSchema } from 'src/constant/validation';
@@ -88,11 +88,10 @@ const Register = () => {
               onSubmit={handleSubmit}
             >
               <Form>
-                <FormikControls control="formikInput" name="email" />
+                <FormikInput name="email" />
                 <Typography color={'red'}>{}</Typography>
 
-                <FormikControls
-                  control="formikInput"
+                <FormikInput
                   name="password"
                   //InputProps, to avoid some boilerplates or add missing properties
                   InputProps={{
@@ -114,8 +113,7 @@ const Register = () => {
                   type={toggle.password ? 'text' : 'password'}
                 />
 
-                <FormikControls
-                  control="formikInput"
+                <FormikInput
                   name="confirmPassword"
                   InputProps={{
                     endAdornment: (

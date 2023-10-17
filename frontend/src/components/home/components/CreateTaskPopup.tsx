@@ -15,6 +15,7 @@ import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
+import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import ProjectSelect from 'src/components/home/components/ProjectSelect';
 import { validationForUpdatingTask } from 'src/constant/validation';
@@ -120,7 +121,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                   height: '25rem',
                 }}
               >
-                <FormikControls control="formikInput" name="task" />
+                <FormikInput name="task" />
                 <FormikInputForLabel name="label" colorName="labelColor" />
                 <FormikDatePicker name="dueDate" />
                 {/* <FormikControls control="formikTextArea" name="description" /> */}

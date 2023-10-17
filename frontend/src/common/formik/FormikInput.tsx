@@ -1,8 +1,8 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { Field } from 'formik';
-import React from 'react';
 import colors from 'src/theme/variables';
 import TitleCase from 'src/utils/TextTransformer';
+import { IField } from '../Interface/Interface';
 
 /**
  * Function that returns custom input component
@@ -10,12 +10,19 @@ import TitleCase from 'src/utils/TextTransformer';
  * @returns a custom input component for formik to hook into
  */
 
-function FormikInput(props) {
+interface IFormikInput {
+  name: string;
+  InputProps?: {
+    endAdornment: JSX.Element;
+  };
+  type?: string;
+}
+function FormikInput(props: IFormikInput) {
   const { name, ...rest } = props;
 
   return (
     <Field name={name}>
-      {({ field, meta }) => {
+      {({ field, meta }: IField) => {
         return (
           <Box
             sx={{
@@ -38,7 +45,9 @@ function FormikInput(props) {
             </Typography>
             <TextField
               id={name}
-              error={meta.error && meta.touched}
+              error={
+                meta !== undefined && meta.error && meta.touched ? true : false
+              }
               {...rest}
               {...field}
               sx={{
@@ -59,7 +68,7 @@ function FormikInput(props) {
               }}
               // outline="none"
               helperText={
-                meta.touched && meta.error ? (
+                meta !== undefined && meta.touched && meta.error ? (
                   <Typography sx={{}}>{meta.error}</Typography>
                 ) : null
               }

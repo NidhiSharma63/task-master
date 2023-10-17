@@ -4,7 +4,7 @@ import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Form, Formik } from 'formik';
 import { Logo } from 'src/assets/assets';
-import FormikControls from 'src/common/formik/FormikControls';
+import FormikInput from 'src/common/formik/FormikInput';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
 import InfoPart from 'src/components/auth/components/InfoPart';
 import { loginSchema } from 'src/constant/validation';
@@ -98,10 +98,9 @@ const Login = () => {
                     setFormValues(values);
                   }}
                 >
-                  <FormikControls control="formikInput" name="email" />
+                  <FormikInput name="email" />
 
-                  <FormikControls
-                    control="formikInput"
+                  <FormikInput
                     name="password"
                     //InputProps, to avoid some boilerplates or add missing properties
                     InputProps={{

@@ -1,5 +1,4 @@
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
-import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputArray from 'src/common/formik/FormikInputArray';
 
 /**
@@ -30,8 +29,8 @@ interface IFormikControls {
 const FormikControls = (props: IFormikControls) => {
   const { control, ...rest } = props;
   switch (control) {
-    case 'formikInput':
-      return <FormikInput {...rest} />;
+    // case 'formikInput':
+    //   return <FormikInput {...rest} />;
 
     // case 'formikTextArea':
     //   return <FormikTextArea {...rest} />;

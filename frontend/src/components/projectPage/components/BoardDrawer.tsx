@@ -7,6 +7,7 @@ import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
+import FormikInput from 'src/common/formik/FormikInput';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikImage from 'src/common/formik/formikImage';
 import { validationForUpdatingTask } from 'src/constant/validation';
@@ -25,6 +26,7 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
+
 /**
  * interface
  */
@@ -168,7 +170,7 @@ const BoardDrawer = () => {
                   gap: 1,
                 }}
               >
-                <FormikControls control="formikInput" name="task" />
+                <FormikInput name="task" />
                 <FormikInputForLabel name="label" colorName="labelColor" />
                 <FormikDatePicker name="dueDate" />
                 <TinyMceContainer />
