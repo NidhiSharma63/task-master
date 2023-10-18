@@ -1,11 +1,11 @@
 import { Box, Divider, IconButton, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { plusIcon } from 'src/assets/assets';
 import { IProjects } from 'src/common/Interface/Home/Interface';
 import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
+import { useAppDispatch } from 'src/hook/redux/hooks';
 import { isProjectNameModalOpen } from 'src/redux/boolean/booleanSlice';
 import { activeProject } from 'src/redux/projects/projectSlice';
 import colors from 'src/theme/variables';
@@ -29,13 +29,13 @@ const ProjectComponent = ({
   isLoading,
 }: IProjectComponent) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleClickOnAddProject = () => {
+  const handleClickOnAddProject = (): void => {
     dispatch(isProjectNameModalOpen(true));
   };
 
-  const handleNavigationToProject = (name: string) => {
+  const handleNavigationToProject = (name: string): void => {
     navigate('/Dashboard');
     dispatch(activeProject(name));
     setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);

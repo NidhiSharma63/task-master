@@ -20,7 +20,7 @@ const ProjectSelect = ({ projectData, setProjectColor }: ICreateTaskPopup) => {
    * options to display in projects
    */
 
-  const projectOptions = useMemo(() => {
+  const projectOptions = useMemo<{ key: string; value: string }[] | []>(() => {
     if (projectData && projectData.projects) {
       return projectData.projects.map((item) => ({
         key: item.name || '',

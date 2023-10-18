@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from 'src/hook/redux/hooks';
 import { usersDataInStore } from 'src/redux/auth/userSlice';
 import colors from 'src/theme/variables';
 import { getUserFirstNameFirstLetter } from 'src/utils/getUserFirstName';
@@ -13,7 +13,7 @@ const UserName = ({
   handleOpen,
   formTaskComponent = false,
 }: IUserNameProps) => {
-  const { user_email } = useSelector(usersDataInStore);
+  const { user_email } = useAppSelector(usersDataInStore);
 
   const userName = getUserFirstNameFirstLetter(user_email);
 

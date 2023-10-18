@@ -54,7 +54,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
   const { mutate } = useAddTaskQuery();
   const { mutate: updateTask } = useUpdateTaskQueryWithDetails();
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     dispatch(isCreateTaskModalOpen(false));
     dispatch(activeTask(''));
   };
@@ -78,7 +78,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
     initialValues._id = active_task._id;
   }
 
-  const handleSubmit = (values: IFormValues) => {
+  const handleSubmit = (values: IFormValues): void => {
     const updatedValues = { ...values, color: projectColor };
     if (active_task.task) {
       updateTask(updatedValues);
@@ -92,7 +92,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
     dispatch(isBackDropLoaderDisplayed(true));
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     deleteTask({
       _id: active_task._id,
       status: active_task.status,

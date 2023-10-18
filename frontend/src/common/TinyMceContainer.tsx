@@ -15,7 +15,7 @@ const TinyMceContainer = () => {
    * handleToggleModeForDescription
    */
 
-  const handleToggleModeForDescription = () => {
+  const handleToggleModeForDescription = (): void => {
     setToggleEditModeForDescription((prev) => !prev);
   };
 
