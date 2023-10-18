@@ -25,9 +25,7 @@ const FormikDatePicker = (props: IFormikDatePicker) => {
   return (
     <Field name={name}>
       {({ form, field }: IExtendedField) => {
-        // console.log(form, 'this is form', field, '::fiedl');
         const { setFieldValue } = form;
-        // const { value } = field;
 
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -35,10 +33,7 @@ const FormikDatePicker = (props: IFormikDatePicker) => {
               {TitleCase(name)}
             </Typography>
             <DatePicker
-              // name={name}
-              // value={value}
               {...field}
-              // inputFormat="MM/dd/yyyy"
               sx={{
                 backgroundColor: 'white',
               }}
@@ -60,15 +55,7 @@ const FormikDatePicker = (props: IFormikDatePicker) => {
                 }
               }}
             />
-            {/* <TextField
-              error={form.errors[name]}
-              helperText={form.errors[name] ? form.errors[name] : null}
-              inputProps={{
-                style: {
-                  border: 'none', // Set the desired color for the outline in error state
-                },
-              }} */}
-            {/* /> */}
+
             {console.log(form.errors[name], 'Error')}
             {form.errors[name] && (
               <Typography sx={{ color: 'red' }}>{form.errors[name]}</Typography>
