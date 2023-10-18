@@ -41,7 +41,7 @@ const DialogComponent = ({
   const dispatch = useAppDispatch();
   const { is_dialog_box_open } = useAppSelector(booleanDataInStore);
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     dispatch(isDialogBoxOpen(false));
   };
 
