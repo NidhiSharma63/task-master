@@ -119,3 +119,11 @@ export interface IField {
   };
   form?: any;
 }
+
+/**
+ * common interface for payload
+ */
+
+export interface IAxiosPayload {
+  [key: string]: string | number | boolean;
+}

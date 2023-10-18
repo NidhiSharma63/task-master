@@ -11,7 +11,7 @@ import { getValueFromLS } from './localstorage';
  * interface
  */
 interface Params {
-  [key: string]: string | number | boolean;
+  [key: string]: string | number | boolean | null;
 }
 
 // defining axios instance
@@ -38,7 +38,10 @@ async function axiosRequest({ ...options }) {
   }
 }
 
-const customAxiosRequestForGet = async (url: string, params: Params) => {
+const customAxiosRequestForGet = async (
+  url: string,
+  params: Params | undefined,
+) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
   let paramsToPass = {};
   if (!userId) {

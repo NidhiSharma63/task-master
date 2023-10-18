@@ -2,11 +2,7 @@ import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import {
-  IAddTask,
-  IFormikValuesForUpdatingTask,
-  ITaskItem,
-} from 'src/common/Interface/Interface';
+import { IAxiosPayload, ITaskItem } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -28,12 +24,14 @@ import {
  * @returns Post request for adding task with status
  */
 const useAddTaskQuery = () => {
-  const [state, setState] = useState('');
+  const [state, setState] = useState<string>('');
 
   return useMutation({
-    mutationFn: (payload: IAddTask) => {
+    mutationFn: (payload: IAxiosPayload) => {
       const { status } = payload;
-      setState(status);
+      if (typeof status === 'string') {
+        setState(status);
+      }
       return customAxiosRequestForPost('/task', 'post', payload);
     },
     onSuccess: () => {
@@ -102,9 +100,11 @@ const useUpdateTaskQuery = () => {
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload: IExtendedItemWithIndex) => {
+    mutationFn: (payload: IAxiosPayload) => {
       const { status } = payload;
-      setState(status);
+      if (typeof status === 'string') {
+        setState(status);
+      }
       return customAxiosRequestForPost('/task', 'put', payload);
     },
     onSuccess: () => {
@@ -166,9 +166,11 @@ const useUpdateTaskQueryWithDetails = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload: IFormikValuesForUpdatingTask) => {
+    mutationFn: (payload: IAxiosPayload) => {
       const { status } = payload;
-      setState(status);
+      if (typeof status === 'string') {
+        setState(status);
+      }
       return customAxiosRequestForPost('/task/details', 'put', payload);
     },
     onSuccess: () => {

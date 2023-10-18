@@ -3,7 +3,5 @@
  */
 
 export interface ILogin {
-  email: string;
-  password: string;
-  timeZone: string;
+  [key: string]: string | number | boolean;
 }
