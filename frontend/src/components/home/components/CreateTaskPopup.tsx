@@ -13,9 +13,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
-import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
+import FormikInputArray from 'src/common/formik/FormikInputArray';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import ProjectSelect from 'src/components/home/components/ProjectSelect';
 import { validationForUpdatingTask } from 'src/constant/validation';
@@ -133,7 +133,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                   />
                   {/* <FormikSelect name="projectName" values={projectName ?? []} /> */}
                 </Box>
-                <FormikControls control="formikInputArray" name="subTasks" />
+                <FormikInputArray name="subTasks" label="Sub tasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography sx={{ fontWeight: 600 }}>
                     Created At : &nbsp;

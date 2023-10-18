@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
-import FormikControls from 'src/common/formik/FormikControls';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
+import FormikInputArray from 'src/common/formik/FormikInputArray';
 import FormikInputForLabel from 'src/common/formik/FormikInputForLabel';
 import FormikImage from 'src/common/formik/formikImage';
 import { validationForUpdatingTask } from 'src/constant/validation';
@@ -179,7 +179,7 @@ const BoardDrawer = () => {
                   label="Images"
                   handleSubmit={handleSubmit}
                 />
-                <FormikControls control="formikInputArray" name="subTasks" />
+                <FormikInputArray label="Sub tasks" name="subTasks" />
                 <Box sx={{ mt: 2, display: 'flex' }}>
                   <Typography variant="h6">Created At : &nbsp;</Typography>
                   <Typography
