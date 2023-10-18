@@ -1,6 +1,6 @@
 // get value from local storage
 export const getValueFromLS = (key: string) => {
-  const item = localStorage.getItem(key) === 'string';
+  const item = localStorage.getItem(key);
   if (typeof item === 'string') {
     return JSON.parse(item);
   }

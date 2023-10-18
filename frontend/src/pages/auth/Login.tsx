@@ -26,10 +26,6 @@ const Login = () => {
 
   const dispatch = useAppDispatch();
 
-  // if (isLoading) {
-  //   dispatch(isBackDropLoaderDisplayed(true));
-  // }
-
   useEffect(() => {
     if (isLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
