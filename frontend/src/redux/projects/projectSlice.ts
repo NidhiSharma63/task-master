@@ -15,7 +15,8 @@ interface ProjectState {
 }
 
 const initialState: ProjectState = {
-  active_project: getValueFromLS(KEY_FOR_STORING_ACTIVE_PROJECT),
+  active_project: getValueFromLS(KEY_FOR_STORING_ACTIVE_PROJECT)
+    ?.active_project,
   project_rename: {} as IProjectRename,
 };
 

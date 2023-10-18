@@ -127,7 +127,11 @@ const useLayout = () => {
 
   const handleActiveProject = (name) => {
     dispatch(activeProject(name));
-    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
+    // setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
+    setValueToLs(
+      KEY_FOR_STORING_ACTIVE_PROJECT,
+      JSON.stringify({ activeProject: name }),
+    );
     dispatch(isUpdatingTask(false));
     navigate('/Dashboard');
   };
@@ -212,7 +216,6 @@ const useLayout = () => {
     const updatedPage = pagesData?.data?.find(
       (item) => item._id === pageItemId.current,
     );
-    console.log(updatedPage, 'updated page');
     dispatch(isDialogBoxOpen(true));
     setPageData(updatedPage);
     setAnchorElementForPages(null);
