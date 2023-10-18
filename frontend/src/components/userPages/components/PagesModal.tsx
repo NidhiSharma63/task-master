@@ -18,7 +18,7 @@ const PagesModal = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (pageData?.name) {
+    if (pageData && pageData?.name) {
       setValue(pageData.name);
     } else {
       setValue('');

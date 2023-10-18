@@ -212,6 +212,7 @@ const useLayout = () => {
     const updatedPage = pagesData?.data?.find(
       (item) => item._id === pageItemId.current,
     );
+    console.log(updatedPage, 'updated page');
     dispatch(isDialogBoxOpen(true));
     setPageData(updatedPage);
     setAnchorElementForPages(null);

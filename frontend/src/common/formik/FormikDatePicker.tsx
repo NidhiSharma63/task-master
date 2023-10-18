@@ -56,7 +56,6 @@ const FormikDatePicker = (props: IFormikDatePicker) => {
               }}
             />
 
-            {console.log(form.errors[name], 'Error')}
             {form.errors[name] && (
               <Typography sx={{ color: 'red' }}>{form.errors[name]}</Typography>
             )}
