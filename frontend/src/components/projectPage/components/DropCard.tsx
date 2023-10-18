@@ -17,7 +17,7 @@ const DropCard = ({ onDrop }: IDropCard) => {
   /**
    * whenever user enter task in placeholder then show the placeholder
    */
-  const onDragEnter = useCallback(() => {
+  const onDragEnter = useCallback((): void => {
     setDisplayDropCard(true);
   }, []);
 
@@ -31,14 +31,14 @@ const DropCard = ({ onDrop }: IDropCard) => {
   /**
    * whenver user move the task out of placeholder then don't show the placeholder
    */
-  const onDragLeave = useCallback(() => {
+  const onDragLeave = useCallback((): void => {
     setDisplayDropCard(false);
   }, []);
 
   /**
    * on Drop set display also remove the placeholder and call the on drop function
    */
-  const handleDrop = useCallback(() => {
+  const handleDrop = useCallback((): void => {
     setDisplayDropCard(false);
     onDrop();
   }, [setDisplayDropCard, onDrop]);

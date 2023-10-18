@@ -46,7 +46,7 @@ interface IFile {
 interface IFormikImage {
   name: string;
   label: string;
-  handleSubmit: (values: IFormikValuesForUpdatingTask) => Promise<void>;
+  handleSubmit: (values: IFormikValuesForUpdatingTask) => void;
 }
 
 const FormikImage = (props: IFormikImage) => {

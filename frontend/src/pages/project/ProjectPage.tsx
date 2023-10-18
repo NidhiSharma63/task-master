@@ -11,7 +11,7 @@ const ProjectPage = () => {
   const { data, isLoading } = useGetProjectQuery();
   const dispatch = useAppDispatch();
 
-  const handleOpenProjectModal = () => {
+  const handleOpenProjectModal = (): void => {
     dispatch(isProjectNameModalOpen(true));
   };
 

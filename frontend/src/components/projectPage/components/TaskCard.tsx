@@ -23,7 +23,7 @@ const TaskCard = ({ item, handleClickOnTask }: ITaskCard) => {
   /**
    * whenever user drag the task then set the following values
    */
-  const handleDragStart = useCallback(() => {
+  const handleDragStart = useCallback((): void => {
     dispatch(draggedTaskId(item._id));
     dispatch(drggedTaskIndex(item.index));
     dispatch(draggedTaskStatus(item.status));
@@ -33,7 +33,7 @@ const TaskCard = ({ item, handleClickOnTask }: ITaskCard) => {
   /**
    * on drag end reset the values
    */
-  const handleDragEnd = useCallback(() => {
+  const handleDragEnd = useCallback((): void => {
     dispatch(draggedTaskId(null));
     dispatch(drggedTaskIndex(null));
     dispatch(draggedTaskStatus(null));

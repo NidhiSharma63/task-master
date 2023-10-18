@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
 import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
@@ -38,8 +38,6 @@ const BoardDrawer = () => {
   const [open, setOpen] = useState<boolean>(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
   const { mutate: deleteTask } = useDeleteTask(active_task?.status);
-  const [isTaskSavedAfterUpdating, setIsTaskSavedAfterUpdating] =
-    useState<boolean>(false);
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -48,16 +46,10 @@ const BoardDrawer = () => {
   /**
    * handle close of drawer
    */
-  const handleClose = () => {
+  const handleClose = useCallback((): void => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
-    /**
-     * check if user added the image and that image stored in firebase but user didn't
-     * click on the save button
-     */
-    if (!isTaskSavedAfterUpdating) {
-    }
-  };
+  }, [dispatch, setOpen]);
 
   const initialValues: IFormikValuesForUpdatingTask = {
     task: active_task.task,
@@ -73,12 +65,14 @@ const BoardDrawer = () => {
     images: active_task.images ?? [],
   };
 
-  const handleSubmit = async (values: IFormikValuesForUpdatingTask) => {
-    mutate(values);
-    setIsTaskSavedAfterUpdating(true);
-  };
+  const handleSubmit = useCallback(
+    (values: IFormikValuesForUpdatingTask): void => {
+      mutate(values);
+    },
+    [mutate],
+  );
 
-  const handleDelete = () => {
+  const handleDelete = useCallback((): void => {
     setOpen(false);
     dispatch(isBoardDrawerOpen(false));
     dispatch(isUpdatingTask(false));
@@ -115,7 +109,16 @@ const BoardDrawer = () => {
         projectName: active_task.projectName,
       });
     }
-  };
+  }, [
+    active_task._id,
+    active_task.images,
+    active_task.index,
+    active_task.projectName,
+    active_task.status,
+    active_task.userId,
+    deleteTask,
+    dispatch,
+  ]);
 
   return (
     <Drawer

@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import DialogComponent from 'src/common/DialogComponent';
 import { usePagesContext } from 'src/context/PagesContextProvider';
+import { useAppDispatch } from 'src/hook/redux/hooks';
 import { usePostPage, useUpdatePage } from 'src/hook/usePagesQuery';
 import {
   isBackDropLoaderDisplayed,
@@ -15,7 +15,7 @@ const PagesModal = () => {
   const { mutate } = usePostPage();
   const { mutate: updatePage } = useUpdatePage();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (pageData && pageData?.name) {
@@ -25,7 +25,7 @@ const PagesModal = () => {
     }
   }, [pageData]);
 
-  const handleSaveButtonClicked = () => {
+  const handleSaveButtonClicked = (): void => {
     dispatch(isDialogBoxOpen(false));
 
     if (value?.trim()?.length === 0) {

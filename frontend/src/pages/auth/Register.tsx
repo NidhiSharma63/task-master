@@ -3,7 +3,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Form, Formik } from 'formik';
-import { useDispatch } from 'react-redux';
 import { Logo } from 'src/assets/assets';
 import FormikInput from 'src/common/formik/FormikInput';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
@@ -11,13 +10,14 @@ import InfoPart from 'src/components/auth/components/InfoPart';
 import { registerSchema } from 'src/constant/validation';
 // import useRegister from 'src/hook/auth/useRegister';
 import useRegister from 'src/hook/auth/useRegister';
+import { useAppDispatch } from 'src/hook/redux/hooks';
 import { isBackDropLoaderDisplayed } from 'src/redux/boolean/booleanSlice';
 import colors from 'src/theme/variables';
 
 const Register = () => {
   const { handleSubmit, initialValues, isLoading, toggle, handleToggle } =
     useRegister();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (isLoading) {
     dispatch(isBackDropLoaderDisplayed(true));
