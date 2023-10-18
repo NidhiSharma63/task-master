@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { IAxiosPayload } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -20,14 +21,14 @@ const usePostColumnQuery = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload: { name: string, projectName: string }) => {
+    mutationFn: (payload: { name: string; projectName: string }) => {
       return customAxiosRequestForPost('/column', 'post', payload);
     },
     onSettled: () => {
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries(['column', active_project]);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
@@ -58,7 +59,7 @@ const useGetColumnQuery = () => {
       }
     },
 
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
@@ -72,9 +73,9 @@ const useUpdateColumnName = () => {
   const { active_project } = useSelector(projectDataInStore);
   return useMutation({
     mutationFn: (payload: {
-      name: string,
-      _id: string,
-      previousColName: string,
+      name: string;
+      _id: string;
+      previousColName: string;
     }) => {
       return customAxiosRequestForPost('/column', 'put', payload);
     },
@@ -82,7 +83,7 @@ const useUpdateColumnName = () => {
       queryClient.invalidateQueries(['column', active_project]);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
@@ -97,14 +98,14 @@ const useDeleteColumnName = () => {
   // const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: IAxiosPayload) => {
       return customAxiosRequestForPost('/column', 'delete', payload);
     },
     onSettled: () => {
       queryClient.invalidateQueries(['column', active_project]);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
