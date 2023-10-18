@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -22,7 +21,9 @@ export const queryClient = new QueryClient({
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
 root.render(
   // <React.StrictMode>
   <PagesContextComp>
@@ -39,7 +40,6 @@ root.render(
             draggable
             pauseOnHover={true}
             theme="light"
-            color="pink"
             closeButton={true}
             className="toast-container"
             toastStyle={{ backgroundColor: '#756EC6', color: 'white' }}
