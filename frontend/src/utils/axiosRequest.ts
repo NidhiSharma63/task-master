@@ -1,8 +1,18 @@
-import axios from "axios";
-import { AxiosInstanceConfig } from "../constant/axiosInstance";
-import { BASE_URL, KEY_FOR_STORING_TOKEN } from "../constant/Misc";
-import { getValueFromLS } from "../utils/localstorage";
-import { KEY_FOR_STORING_USER_DETAILS } from "../constant/Misc";
+import axios from 'axios';
+import {
+  BASE_URL,
+  KEY_FOR_STORING_TOKEN,
+  KEY_FOR_STORING_USER_DETAILS,
+} from '../constant/Misc';
+import { AxiosInstanceConfig } from '../constant/axiosInstance';
+import { getValueFromLS } from './localstorage';
+
+/**
+ * interface
+ */
+interface Params {
+  [key: string]: string | number | boolean;
+}
 
 // defining axios instance
 const axiosInstance = axios.create({
@@ -23,16 +33,16 @@ async function axiosRequest({ ...options }) {
     const response = await axiosInstance(options);
     return Promise.resolve(response.data);
   } catch (error) {
-    console.log(error, "This is error");
+    console.log(error, 'This is error');
     throw error;
   }
 }
 
-const customAxiosRequestForGet = async (url, params) => {
+const customAxiosRequestForGet = async (url: string, params: Params) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)._id;
   let paramsToPass = {};
   if (!userId) {
-    throw new Error("User id is not present");
+    throw new Error('User id is not present');
   }
 
   if (userId) {
@@ -43,7 +53,7 @@ const customAxiosRequestForGet = async (url, params) => {
   try {
     const response = await axiosRequest({
       url,
-      method: "get",
+      method: 'get',
       params: paramsToPass,
     });
     return response;
@@ -52,7 +62,11 @@ const customAxiosRequestForGet = async (url, params) => {
   }
 };
 
-const customAxiosRequestForPost = async (url, method = "post", payload) => {
+const customAxiosRequestForPost = async (
+  url: string,
+  method = 'post',
+  payload: Params,
+) => {
   const userId = getValueFromLS(KEY_FOR_STORING_USER_DETAILS)?._id;
 
   let updatedPayload = { ...payload };
@@ -73,4 +87,4 @@ const customAxiosRequestForPost = async (url, method = "post", payload) => {
 };
 
 // export default customAxiosRequest;
-export { customAxiosRequestForPost, customAxiosRequestForGet };
+export { customAxiosRequestForGet, customAxiosRequestForPost };
