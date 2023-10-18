@@ -4,7 +4,6 @@ import { Form, Formik } from 'formik';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { IAxiosPayload } from 'src/common/Interface/Interface';
-// import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
@@ -27,14 +26,6 @@ import {
 } from 'src/redux/boolean/booleanSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
 import colors from 'src/theme/variables';
-
-/**
- * interface
- */
-// interface IFormikValuesForUpdatingTask {
-//   // Your existing properties here
-//   [key: string]: string | number | boolean |Dat; // Index signature for string keys
-// }
 
 const BoardDrawer = () => {
   const { active_task } = useAppSelector(taskDataInStore);

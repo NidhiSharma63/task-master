@@ -30,19 +30,6 @@ export interface ITaskItem {
  * then we don't have _id so we have to make it optional
  */
 
-export interface IFormikValuesForUpdatingTask
-  extends Omit<
-    ITaskItem,
-    'isNotified' | 'createdAt' | 'index' | '__v' | 'userId' | '_id'
-  > {
-  description: string;
-  label: string;
-  dueDate: Date | null;
-  labelColor: string;
-  color: string;
-  _id?: string;
-}
-
 /**
  * task interface for adding task
  */

@@ -1,5 +1,5 @@
 import { date, object, ref, string } from 'yup';
-import { passwordRegex, regexToTargetAllBlankSpaces } from '../constant/regex';
+import { passwordRegex, regexToTargetAllBlankSpaces } from './regex';
 
 export const loginSchema = object().shape({
   email: string().required('Enter your email').email('Invalid email format'),
@@ -19,7 +19,7 @@ export const registerSchema = object().shape({
     ),
   confirmPassword: string()
     .required('Confirm password is required')
-    .oneOf([ref('password'), null], 'Passwords must match'),
+    .oneOf([ref('password'), ''], 'Passwords must match'),
 });
 
 export const validationForUpdatingTask = object().shape({

@@ -1,4 +1,4 @@
-export const COLORS_FOR_PROJECTS = [
+export const COLORS_FOR_PROJECTS: string[] = [
   '#971919',
   '#DF3030',
   '#E2DA19',
