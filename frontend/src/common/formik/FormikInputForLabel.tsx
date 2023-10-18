@@ -35,8 +35,7 @@ const FormikInputForLabel = (props: IFormikInputForLabel) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', mb: 3 }}>
       <Field name={name}>
-        {({ field, form }: IField) => {
-          const { setFieldValue } = form;
+        {({ field }: IField) => {
           const { value } = field;
           return (
             <Box
@@ -68,10 +67,6 @@ const FormikInputForLabel = (props: IFormikInputForLabel) => {
                   borderRadius: '.3rem',
                   backgroundColor: 'white',
                 }}
-                // onChange={(event) => {
-                //   setTextValue(event.target.value);
-                //   setFieldValue(name, event.target.value);
-                // }}
               />
             </Box>
           );
