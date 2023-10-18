@@ -1,4 +1,4 @@
-import { object, ref, string } from 'yup';
+import { date, object, ref, string } from 'yup';
 import { passwordRegex, regexToTargetAllBlankSpaces } from '../constant/regex';
 
 export const loginSchema = object().shape({
@@ -25,4 +25,5 @@ export const registerSchema = object().shape({
 export const validationForUpdatingTask = object().shape({
   task: string().required('Enter your task').min(1),
   projectName: string().required('Please select a project'),
+  dueDate: date().typeError('Please enter valid date').nullable(),
 });
