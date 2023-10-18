@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ISubTask } from 'src/common/Interface/Interface';
 import {
   BASE_URL,
   KEY_FOR_STORING_TOKEN,
@@ -11,7 +12,15 @@ import { getValueFromLS } from './localstorage';
  * interface
  */
 interface Params {
-  [key: string]: string | number | boolean | null;
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | undefined
+    | null
+    | Date
+    | string[]
+    | ISubTask[];
 }
 
 // defining axios instance

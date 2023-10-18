@@ -125,5 +125,13 @@ export interface IField {
  */
 
 export interface IAxiosPayload {
-  [key: string]: string | number | boolean;
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | undefined
+    | null
+    | Date
+    | string[]
+    | ISubTask[];
 }

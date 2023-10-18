@@ -10,7 +10,7 @@ import {
 import { Field, FieldArray } from 'formik';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { IFormikValuesForUpdatingTask } from 'src/common/Interface/Interface';
+import { IAxiosPayload } from 'src/common/Interface/Interface';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
 import colors from 'src/theme/variables';
@@ -46,7 +46,7 @@ interface IFile {
 interface IFormikImage {
   name: string;
   label: string;
-  handleSubmit: (values: IFormikValuesForUpdatingTask) => void;
+  handleSubmit: (values: IAxiosPayload) => void;
 }
 
 const FormikImage = (props: IFormikImage) => {

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
+  IAxiosPayload,
   IColumnItem,
   ITaskItem,
   IUpdatedColumnItem,
@@ -122,7 +123,7 @@ const useBoard = () => {
           /**
            * setting the value for backend update
            */
-          let draggedTaskValueForBackend: IExtendedItem = {
+          let draggedTaskValueForBackend: IAxiosPayload = {
             ...draggedTask,
             currentIndex: id,
           };
@@ -186,7 +187,7 @@ const useBoard = () => {
           /**
            * setting the value for backend update
            */
-          let draggedTaskValueForBackend: IExtendedItem = {
+          let draggedTaskValueForBackend: IAxiosPayload = {
             ...draggedTask,
             currentIndex: id - 1,
           };
