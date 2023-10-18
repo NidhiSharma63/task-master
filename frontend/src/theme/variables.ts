@@ -1,4 +1,19 @@
-const colors = {
+/**
+ * interface
+ */
+
+interface IColors {
+  userLogoColor: string;
+  offWhite: string;
+  lineColor: string;
+  textColor: string;
+  primaryColor: string;
+  scrollbarColor: string;
+  redColor: string;
+  greyColor: string;
+}
+
+const colors: IColors = {
   userLogoColor: 'rgb(241,189,108)', // yellowish
   offWhite: '#FAF8F8',
   lineColor: '#E2DFDF',
