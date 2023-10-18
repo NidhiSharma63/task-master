@@ -23,6 +23,7 @@ const RequiredAuth = ({ children }: { children: ReactNode }) => {
   let location = useLocation();
 
   const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+  console.log(token, 'thios is token');
 
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;

@@ -121,9 +121,13 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                   height: '25rem',
                 }}
               >
-                <FormikInput name="task" />
-                <FormikInputForLabel name="label" colorName="labelColor" />
-                <FormikDatePicker name="dueDate" />
+                <FormikInput name="task" label="Task" />
+                <FormikInputForLabel
+                  name="label"
+                  colorName="labelColor"
+                  label="Label"
+                />
+                <FormikDatePicker name="dueDate" label="Due date" />
                 {/* <FormikControls control="formikTextArea" name="description" /> */}
                 <TinyMceContainer />
                 <Box mt={2}>

@@ -1,7 +1,6 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { Field } from 'formik';
 import colors from 'src/theme/variables';
-import TitleCase from 'src/utils/TextTransformer';
 import { IField } from '../Interface/Interface';
 
 /**
@@ -16,9 +15,10 @@ interface IFormikInput {
     endAdornment: JSX.Element;
   };
   type?: string;
+  label: string;
 }
 function FormikInput(props: IFormikInput) {
-  const { name, ...rest } = props;
+  const { name, label, ...rest } = props;
 
   return (
     <Field name={name}>
@@ -41,7 +41,7 @@ function FormikInput(props: IFormikInput) {
               }}
               variant="h6"
             >
-              {name === 'email' ? TitleCase('e-mail') : TitleCase(name)}
+              {label}
             </Typography>
             <TextField
               id={name}

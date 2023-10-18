@@ -2,7 +2,6 @@ import { Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Field } from 'formik';
-import TitleCase from 'src/utils/TextTransformer';
 import { IField } from '../Interface/Interface';
 
 /**
@@ -11,6 +10,7 @@ import { IField } from '../Interface/Interface';
 
 interface IFormikDatePicker {
   name: string;
+  label: string;
 }
 interface IExtendedField extends Omit<IField, 'field'> {
   field: {
@@ -21,7 +21,7 @@ interface IExtendedField extends Omit<IField, 'field'> {
   };
 }
 const FormikDatePicker = (props: IFormikDatePicker) => {
-  const { name } = props;
+  const { name, label } = props;
   return (
     <Field name={name}>
       {({ form, field }: IExtendedField) => {
@@ -30,7 +30,7 @@ const FormikDatePicker = (props: IFormikDatePicker) => {
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Typography sx={{ mb: 1 }} variant="h6">
-              {TitleCase(name)}
+              {label}
             </Typography>
             <DatePicker
               {...field}

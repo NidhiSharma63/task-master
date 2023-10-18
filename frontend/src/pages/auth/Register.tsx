@@ -88,11 +88,12 @@ const Register = () => {
               onSubmit={handleSubmit}
             >
               <Form>
-                <FormikInput name="email" />
+                <FormikInput name="email" label="E-mail" />
                 <Typography color={'red'}>{}</Typography>
 
                 <FormikInput
                   name="password"
+                  label="Password"
                   //InputProps, to avoid some boilerplates or add missing properties
                   InputProps={{
                     endAdornment: (
@@ -115,6 +116,7 @@ const Register = () => {
 
                 <FormikInput
                   name="confirmPassword"
+                  label="Confirm password"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment

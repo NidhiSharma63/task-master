@@ -3,6 +3,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import { Logo } from 'src/assets/assets';
 import FormikInput from 'src/common/formik/FormikInput';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
@@ -25,9 +26,15 @@ const Login = () => {
 
   const dispatch = useAppDispatch();
 
-  if (isLoading) {
-    dispatch(isBackDropLoaderDisplayed(true));
-  }
+  // if (isLoading) {
+  //   dispatch(isBackDropLoaderDisplayed(true));
+  // }
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(isBackDropLoaderDisplayed(true));
+    }
+  }, [isLoading, dispatch]);
 
   return (
     <Grid container sx={{ height: '100vh' }}>
@@ -98,10 +105,11 @@ const Login = () => {
                     setFormValues(values);
                   }}
                 >
-                  <FormikInput name="email" />
+                  <FormikInput name="email" label="E-mail" />
 
                   <FormikInput
                     name="password"
+                    label="Password"
                     //InputProps, to avoid some boilerplates or add missing properties
                     InputProps={{
                       endAdornment: (

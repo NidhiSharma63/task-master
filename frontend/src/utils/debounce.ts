@@ -1,7 +1,7 @@
 /**
  * debouncing
  */
-const debounceFunc = (fn, delay) => {
+const debounceFunc = (fn: () => void, delay: number): (() => void) => {
   return function () {
     let timer;
     clearTimeout(timer);

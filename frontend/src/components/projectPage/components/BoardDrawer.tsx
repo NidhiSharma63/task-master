@@ -173,9 +173,13 @@ const BoardDrawer = () => {
                   gap: 1,
                 }}
               >
-                <FormikInput name="task" />
-                <FormikInputForLabel name="label" colorName="labelColor" />
-                <FormikDatePicker name="dueDate" />
+                <FormikInput name="task" label="Task" />
+                <FormikInputForLabel
+                  name="label"
+                  colorName="labelColor"
+                  label="Label"
+                />
+                <FormikDatePicker name="dueDate" label="Due Date" />
                 <TinyMceContainer />
                 <FormikImage
                   name="images"

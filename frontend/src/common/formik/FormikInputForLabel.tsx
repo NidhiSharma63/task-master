@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { IField } from 'src/common/Interface/Interface';
 import { COLORS_FOR_PROJECTS } from 'src/constant/colors';
 import colors from 'src/theme/variables';
-import TitleCase from 'src/utils/TextTransformer';
 
 /**
  * inteface
@@ -21,12 +20,12 @@ import TitleCase from 'src/utils/TextTransformer';
 interface IFormikInputForLabel {
   name: string;
   colorName: string;
+  label: string;
 }
 
 const FormikInputForLabel = (props: IFormikInputForLabel) => {
   const [isAccordianOpen, setIsAccodianOpen] = useState<boolean>(false);
-  const { colorName, name } = props;
-  const [textValue, setTextValue] = useState<string>('');
+  const { colorName, name, label } = props;
 
   const handleAccordian = () => {
     setIsAccodianOpen((prev) => !prev);
@@ -55,7 +54,7 @@ const FormikInputForLabel = (props: IFormikInputForLabel) => {
                 }}
                 variant="h6"
               >
-                {TitleCase(name)}
+                {label}
               </Typography>
               <TextField
                 {...field}

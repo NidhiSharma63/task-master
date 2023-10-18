@@ -8,7 +8,7 @@ import { getValueFromLS } from 'src/utils/localstorage';
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
+
   const { mutate, isLoading } = useLoginQuery();
   const [formValues, setFormValues] = useState<ILogin>({} as ILogin);
   const [toggle, setToggle] = useState(false);
@@ -20,10 +20,11 @@ const useLogin = () => {
   };
 
   useEffect(() => {
+    const token = getValueFromLS(KEY_FOR_STORING_TOKEN);
     if (token) {
       navigate('/');
     }
-  }, [token, navigate]);
+  }, [navigate]);
 
   const initialValues = {
     email: '',

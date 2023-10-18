@@ -38,7 +38,7 @@ const ProjectComponent = ({
   const handleNavigationToProject = (name: string): void => {
     navigate('/Dashboard');
     dispatch(activeProject(name));
-    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, name);
+    setValueToLs(KEY_FOR_STORING_ACTIVE_PROJECT, JSON.stringify(name));
   };
 
   return (
