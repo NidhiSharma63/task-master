@@ -15,12 +15,12 @@ import {
 // post
 const usePostProjectQuery = () => {
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: { name: string; color: string }) => {
       return customAxiosRequestForPost('/projects', 'post', payload);
     },
     onSuccess: () => {
       // toast.success("Project created successfully!");
-      queryClient.invalidateQueries('projects');
+      queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
     onError: (error: any) => {
@@ -30,7 +30,7 @@ const usePostProjectQuery = () => {
 };
 
 const getAllProjects = async () => {
-  const res = await customAxiosRequestForGet('/projects');
+  const res = await customAxiosRequestForGet('/projects', undefined);
   return res;
 };
 
