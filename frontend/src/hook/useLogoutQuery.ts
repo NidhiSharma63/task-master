@@ -15,7 +15,7 @@ const useLogoutQuery = () => {
   const dispatch = useDispatch();
   return useMutation({
     mutationFn: () => {
-      return customAxiosRequestForPost('/logout', 'post');
+      return customAxiosRequestForPost('/logout', 'post', {});
     },
     onSuccess: () => {
       navigate('/login');
@@ -23,7 +23,7 @@ const useLogoutQuery = () => {
       setValueToLs(KEY_FOR_STORING_USER_DETAILS, null);
       dispatch(isBackDropLoaderDisplayed(false));
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
       dispatch(isBackDropLoaderDisplayed(false));
     },
