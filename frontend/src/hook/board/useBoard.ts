@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  IAxiosPayload,
   IColumnItem,
   ITaskItem,
+  IUniversalInterface,
   IUpdatedColumnItem,
 } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
@@ -123,7 +123,7 @@ const useBoard = () => {
           /**
            * setting the value for backend update
            */
-          let draggedTaskValueForBackend: IAxiosPayload = {
+          let draggedTaskValueForBackend: IUniversalInterface = {
             ...draggedTask,
             currentIndex: id,
           };
@@ -187,7 +187,7 @@ const useBoard = () => {
           /**
            * setting the value for backend update
            */
-          let draggedTaskValueForBackend: IAxiosPayload = {
+          let draggedTaskValueForBackend: IUniversalInterface = {
             ...draggedTask,
             currentIndex: id - 1,
           };

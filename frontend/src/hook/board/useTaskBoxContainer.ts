@@ -1,5 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  IUniversalInterface,
+  IUpdatedColumnItem,
+} from 'src/common/Interface/Interface';
 import {
   booleanDataInStore,
   isBoardDrawerOpen,
@@ -9,19 +22,30 @@ import {
 import { projectDataInStore } from '../../redux/projects/projectSlice';
 import { activeTask } from '../../redux/task/taskSlice';
 import { useAddTaskQuery } from '../useTaskQuery';
+/**
+ * interface
+ */
 
-const useTaskBoxContainer = ({ data, name }) => {
+interface IUseTaskBoxContainer {
+  data: IUpdatedColumnItem;
+  name: string;
+}
+const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   const dispatch = useDispatch();
-  const [textAreaValuesTop, setTextAreaValuesTop] = useState([]);
-  const [textAreaValuesBottom, setTextAreaValuesBottom] = useState([]);
+  const [textAreaValuesTop, setTextAreaValuesTop] = useState<string[]>([]);
+  const [textAreaValuesBottom, setTextAreaValuesBottom] = useState<string[]>(
+    [],
+  );
   const { active_project } = useSelector(projectDataInStore);
   const { is_task_displayed } = useSelector(booleanDataInStore);
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
-    useState(null);
-  const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState(null);
-  const [openColsIcons, setOpenColsIcons] = useState(false);
-  const isTaskAddedFromBottom = useRef(null);
-  const [isColumnRename, setisColumnRename] = useState(false);
+    useState<number | null>(null);
+  const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState<
+    (EventTarget & SVGSVGElement) | ReactNode | null
+  >(null);
+  const [openColsIcons, setOpenColsIcons] = useState<boolean>(false);
+  const isTaskAddedFromBottom = useRef<boolean | null>(null);
+  const [isColumnRename, setisColumnRename] = useState<boolean>(false);
   const { show_loader_for_task } = useSelector(booleanDataInStore);
   const { mutate, isLoading } = useAddTaskQuery();
 
@@ -46,7 +70,11 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * handle change task
    */
-  const handleChange = (event, index, newValue) => {
+  const handleChange = (
+    event: ChangeEvent,
+    index: number,
+    newValue: string,
+  ) => {
     if (!isTaskAddedFromBottom.current) {
       setTextAreaValuesTop((prevValues) => {
         const copyValues = [...prevValues];
@@ -66,7 +94,10 @@ const useTaskBoxContainer = ({ data, name }) => {
    * handle saving task
    */
 
-  const handleBlur = async (event, index) => {
+  const handleBlur = async (
+    event: React.FocusEvent<HTMLTextAreaElement, Element>,
+    index: number,
+  ) => {
     let valueOfTextField = '';
     let lastIndexOfCurrentTask = data.tasks?.[data.tasks.length - 1]?.index;
 
@@ -114,13 +145,17 @@ const useTaskBoxContainer = ({ data, name }) => {
       if (!isTaskAddedFromBottom.current) {
         setTextAreaValuesTop((prevValues) => {
           const copyValues = [...prevValues];
-          copyValues.splice(currentWorkingTestAreaIndex, 1);
+          if (currentWorkingTestAreaIndex !== null) {
+            copyValues.splice(currentWorkingTestAreaIndex, 1);
+          }
           return copyValues;
         });
       } else {
         setTextAreaValuesBottom((prevValues) => {
           const copyValues = [...prevValues];
-          copyValues.splice(currentWorkingTestAreaIndex, 1);
+          if (currentWorkingTestAreaIndex !== null) {
+            copyValues.splice(currentWorkingTestAreaIndex, 1);
+          }
           return copyValues;
         });
       }
@@ -131,12 +166,12 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * for managing style of textarea
    */
-  const handleInput = (event) => {
-    event.target.style.height = 'auto';
-    event.target.style.height = `${event.target.scrollHeight}px`;
+  const handleInput = (event: FormEvent<HTMLTextAreaElement>) => {
+    event.currentTarget.style.height = 'auto';
+    event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
   };
 
-  const handleClickOnTask = (task) => {
+  const handleClickOnTask = (task: IUniversalInterface): void => {
     dispatch(activeTask(task));
     dispatch(isBoardDrawerOpen(true));
   };
@@ -144,15 +179,15 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * handleClickOnThreeDots
    */
-  const handleClickOnThreeDots = (event) => {
-    setAnchorElForColumnIcons(event.target);
+  const handleClickOnThreeDots = (event: MouseEvent<SVGSVGElement>): void => {
+    setAnchorElForColumnIcons(event.currentTarget);
     setOpenColsIcons(true);
   };
 
   /**
    * close three dots icons
    */
-  const handleCloseOfColsIcons = () => {
+  const handleCloseOfColsIcons = (): void => {
     setAnchorElForColumnIcons(null);
     setOpenColsIcons(false);
   };
@@ -160,7 +195,7 @@ const useTaskBoxContainer = ({ data, name }) => {
   /**
    * hanlde column rename
    */
-  const handleClickOnRename = (colId) => {
+  const handleClickOnRename = (): void => {
     setisColumnRename(true);
     handleCloseOfColsIcons();
   };

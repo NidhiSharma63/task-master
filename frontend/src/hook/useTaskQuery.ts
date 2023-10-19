@@ -2,7 +2,7 @@ import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { IAxiosPayload, ITaskItem } from 'src/common/Interface/Interface';
+import { ITaskItem, IUniversalInterface } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -27,7 +27,7 @@ const useAddTaskQuery = () => {
   const [state, setState] = useState<string>('');
 
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       const { status } = payload;
       if (typeof status === 'string') {
         setState(status);
@@ -100,7 +100,7 @@ const useUpdateTaskQuery = () => {
   const [state, setState] = useState('');
 
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       const { status } = payload;
       if (typeof status === 'string') {
         setState(status);
@@ -166,7 +166,7 @@ const useUpdateTaskQueryWithDetails = () => {
   const { active_project } = useSelector(projectDataInStore);
 
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       const { status } = payload;
       if (typeof status === 'string') {
         setState(status);

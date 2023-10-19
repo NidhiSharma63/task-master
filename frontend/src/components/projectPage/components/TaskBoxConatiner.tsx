@@ -161,7 +161,9 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
               onChange={(event) =>
                 handleChange(event, index, event.target.value)
               }
-              onBlur={(event) => handleBlur(event, index)}
+              onBlur={(event: React.FocusEvent<HTMLTextAreaElement, Element>) =>
+                handleBlur(event, index)
+              }
               onInput={handleInput}
               className="textArea"
             />

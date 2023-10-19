@@ -3,7 +3,7 @@ import { deleteObject, ref } from 'firebase/storage';
 import { Form, Formik } from 'formik';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { IAxiosPayload } from 'src/common/Interface/Interface';
+import { IUniversalInterface } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';
@@ -47,7 +47,7 @@ const BoardDrawer = () => {
     dispatch(isBoardDrawerOpen(false));
   }, [dispatch, setOpen]);
 
-  const initialValues: IAxiosPayload = {
+  const initialValues: IUniversalInterface = {
     task: active_task.task,
     _id: active_task._id,
     dueDate: new Date(active_task?.dueDate) ?? null,
@@ -62,7 +62,7 @@ const BoardDrawer = () => {
   };
 
   const handleSubmit = useCallback(
-    (values: IAxiosPayload): void => {
+    (values: IUniversalInterface): void => {
       mutate(values);
     },
     [mutate],

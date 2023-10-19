@@ -111,7 +111,7 @@ export interface IField {
  * common interface for payload
  */
 
-export interface IAxiosPayload {
+export interface IUniversalInterface {
   [key: string]:
     | string
     | number

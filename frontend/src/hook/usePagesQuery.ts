@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { IAxiosPayload } from 'src/common/Interface/Interface';
+import { IUniversalInterface } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -46,7 +46,7 @@ const useGetPages = () => {
  */
 const usePostPage = () => {
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       return customAxiosRequestForPost('/page', 'post', payload);
     },
     onSuccess: () => {
@@ -65,7 +65,7 @@ const usePostPage = () => {
 
 const useUpdatePage = () => {
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       return customAxiosRequestForPost('/page', 'put', payload);
     },
     onSuccess: () => {
@@ -84,7 +84,7 @@ const useUpdatePage = () => {
 
 const useDeletePage = () => {
   return useMutation({
-    mutationFn: (payload: IAxiosPayload) => {
+    mutationFn: (payload: IUniversalInterface) => {
       return customAxiosRequestForPost('/page', 'delete', payload);
     },
     onSuccess: () => {
