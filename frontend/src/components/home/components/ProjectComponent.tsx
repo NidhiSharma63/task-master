@@ -2,7 +2,7 @@ import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
 import { plusIcon } from 'src/assets/assets';
-import { IProjects } from 'src/common/Interface/Home/Interface';
+import { IProjects } from 'src/common/Interface/Interface';
 import ProjectNameModal from 'src/components/Layout/components/ProjectNameModal';
 import { KEY_FOR_STORING_ACTIVE_PROJECT } from 'src/constant/Misc';
 import { useAppDispatch } from 'src/hook/redux/hooks';

@@ -23,7 +23,7 @@ const usePostProjectQuery = () => {
       queryClient.invalidateQueries('projects');
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data?.error);
     },
   });
@@ -48,7 +48,7 @@ const useGetProjectQuery = () => {
       }
       dispatch(isBackdropLoaderDisplayedForProjects(false));
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
@@ -57,7 +57,7 @@ const useGetProjectQuery = () => {
 // delete
 const useDeleteProjectQuery = () => {
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: { id: string }) => {
       return customAxiosRequestForPost('/projects', 'delete', payload);
     },
     onSuccess: () => {
@@ -65,7 +65,7 @@ const useDeleteProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });
@@ -84,7 +84,7 @@ const useUpdateProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error?.response?.data);
     },
   });

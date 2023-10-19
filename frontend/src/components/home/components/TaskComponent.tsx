@@ -1,8 +1,7 @@
 import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { FadeLoader } from 'react-spinners';
 import { plusIcon } from 'src/assets/assets';
-import { IProjects } from 'src/common/Interface/Home/Interface';
-import { IForTaskDisplaying } from 'src/common/Interface/Interface';
+import { IForTaskDisplaying, IProjects } from 'src/common/Interface/Interface';
 import CreateTaskPopup from 'src/components/home/components/CreateTaskPopup';
 import useTaskComponent from 'src/hook/home/useTaskComponent';
 import colors from 'src/theme/variables';

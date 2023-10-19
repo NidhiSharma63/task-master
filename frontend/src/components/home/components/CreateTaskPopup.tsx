@@ -11,7 +11,8 @@ import {
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IFormValues, IProjects } from 'src/common/Interface/Home/Interface';
+import { IFormValues } from 'src/common/Interface/Home/Interface';
+import { IProjects } from 'src/common/Interface/Interface';
 import TinyMceContainer from 'src/common/TinyMceContainer';
 import FormikDatePicker from 'src/common/formik/FormikDatePicker';
 import FormikInput from 'src/common/formik/FormikInput';

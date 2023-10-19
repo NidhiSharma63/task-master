@@ -1,29 +1,22 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
+import { IPage } from 'src/common/Interface/Interface';
 
 interface IPageContextComp {
   children: ReactNode;
 }
 
-interface IPageData {
-  content: string;
-  name: string;
-  userId: string;
-  __v: number;
-  _id: string;
-}
-
 interface IContext {
-  pageData: IPageData;
-  setPageData: React.Dispatch<React.SetStateAction<IPageData>>;
+  pageData: IPage | {};
+  setPageData: React.Dispatch<React.SetStateAction<IPage | {}>>;
 }
 
 const PagesContext = createContext<IContext>({
-  pageData: {} as IPageData,
+  pageData: {},
   setPageData: () => {},
 });
 
 const PagesContextComp = ({ children }: IPageContextComp) => {
-  const [pageData, setPageData] = useState<IPageData>({} as IPageData);
+  const [pageData, setPageData] = useState<IPage | {}>({});
 
   return (
     <PagesContext.Provider value={{ pageData, setPageData }}>

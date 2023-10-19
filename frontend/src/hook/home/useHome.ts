@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IProjects } from 'src/common/Interface/Home/Interface';
-import { IColumnItem } from 'src/common/Interface/Interface';
+import { IColumnItem, IProjects } from 'src/common/Interface/Interface';
 import { useGetColumnQuery } from 'src/hook/useColumnQuery';
 import { useGetProjectQuery } from 'src/hook/useProjectQuery';
 import { useGetAllTaskAccordingToStatusForEachProject } from 'src/hook/useTaskQuery';

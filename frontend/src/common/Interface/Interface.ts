@@ -83,6 +83,9 @@ export interface IColumnItem {
 export interface IPage {
   name: string;
   content: string;
+  _id: string;
+  userId: string;
+  __v: number;
 }
 
 /**
@@ -121,4 +124,16 @@ export interface IUniversalInterface {
     | Date
     | string[]
     | ISubTask[];
+}
+
+/**
+ * project interface
+ */
+
+export interface IProjects {
+  color: string;
+  name: string;
+  userId: string;
+  __v: number;
+  _id: string;
 }

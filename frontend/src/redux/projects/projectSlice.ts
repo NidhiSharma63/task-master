@@ -11,13 +11,13 @@ interface IProjectRename {
 
 interface ProjectState {
   active_project: string | null; // Replace 'any' with the actual type of active_project
-  project_rename: IProjectRename;
+  project_rename: IProjectRename | null;
 }
 
 const initialState: ProjectState = {
   active_project: getValueFromLS(KEY_FOR_STORING_ACTIVE_PROJECT)
     ?.active_project,
-  project_rename: {} as IProjectRename,
+  project_rename: null,
 };
 
 const projectSlice = createSlice({
@@ -27,7 +27,7 @@ const projectSlice = createSlice({
     activeProject: (state, action: PayloadAction<string>) => {
       state.active_project = action.payload;
     },
-    projectRename: (state, action: PayloadAction<IProjectRename>) => {
+    projectRename: (state, action: PayloadAction<IProjectRename | null>) => {
       state.project_rename = action.payload;
     },
   },

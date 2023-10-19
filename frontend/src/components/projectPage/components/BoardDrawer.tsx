@@ -29,10 +29,6 @@ import colors from 'src/theme/variables';
 
 const BoardDrawer = () => {
   const { active_task } = useAppSelector(taskDataInStore);
-  console.log(
-    useAppSelector(taskDataInStore),
-    'useAppSelector(taskDataInStore)',
-  );
   const { is_board_drawer_open } = useAppSelector(booleanDataInStore);
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(is_board_drawer_open);
