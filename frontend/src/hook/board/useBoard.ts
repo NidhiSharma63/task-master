@@ -93,7 +93,12 @@ const useBoard = () => {
 
   const onDrop = useCallback(
     (statusInWhichTaskMoved: string, id: number) => {
-      if (id === undefined || !statusInWhichTaskMoved) return;
+      if (
+        id === undefined ||
+        !statusInWhichTaskMoved ||
+        dragged_task_index === null
+      )
+        return;
 
       /* find the task from where task is moved  */
       const columnFromTaskIsDragged = finalState.find(
@@ -183,7 +188,7 @@ const useBoard = () => {
            */
           updateTaskWithIndex(draggedTaskValueForBackend);
         }
-        if (id > dragged_task_index) {
+        if (dragged_task_index !== null && id > dragged_task_index) {
           /**
            * setting the value for backend update
            */

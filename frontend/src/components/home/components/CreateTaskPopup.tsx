@@ -50,19 +50,21 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
   const { active_task } = useSelector(taskDataInStore);
   const [projectColor, setProjectColor] = useState<string>('');
 
-  const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const { mutate: deleteTask } = useDeleteTask(
+    active_task !== null ? active_task.status : '',
+  );
   const { mutate } = useAddTaskQuery();
   const { mutate: updateTask } = useUpdateTaskQueryWithDetails();
 
   const handleClose = (): void => {
     dispatch(isCreateTaskModalOpen(false));
-    dispatch(activeTask(''));
+    dispatch(activeTask(null));
   };
 
   const initialValues: IFormValues = {
     task: active_task?.task ?? '',
     dueDate: active_task?.dueDate ? new Date(active_task?.dueDate) : null,
-    status: active_task.status ?? status,
+    status: active_task?.status ?? status,
     description: active_task?.description ?? '',
     projectName: active_task?.projectName ?? '',
     label: active_task?.label ?? '',
@@ -70,36 +72,39 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
     index: active_task?.index ?? 0,
     subTasks: active_task?.subTasks ?? [],
     color: active_task?.color ?? '',
-    images: active_task.images ?? [],
+    images: active_task?.images ?? [],
   };
 
   // active task is present
-  if (active_task.task) {
+  if (active_task !== null && active_task.task) {
     initialValues._id = active_task._id;
   }
 
   const handleSubmit = (values: IFormValues): void => {
     const updatedValues = { ...values, color: projectColor };
-    if (active_task.task) {
+    if (active_task !== null && active_task.task) {
       updateTask(updatedValues);
       dispatch(isCreateTaskModalOpen(false));
     } else {
       mutate(updatedValues);
       dispatch(isCreateTaskModalOpen(false));
     }
-    dispatch(activeTask(''));
+    dispatch(activeTask(null));
     dispatch(isBackdropLoaderDisplayedForTask(true));
     dispatch(isBackDropLoaderDisplayed(true));
   };
 
   const handleDelete = (): void => {
-    deleteTask({
-      _id: active_task._id,
-      status: active_task.status,
-      userId: active_task.userId,
-      index: active_task.index,
-      projectName: active_task.projectName,
-    });
+    if (active_task !== null) {
+      deleteTask({
+        _id: active_task._id,
+        status: active_task.status,
+        userId: active_task.userId,
+        index: active_task.index,
+        projectName: active_task.projectName,
+      });
+    }
+
     dispatch(isCreateTaskModalOpen(false));
   };
 
@@ -148,7 +153,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
                       color: colors.textColor,
                     }}
                   >
-                    {active_task.createdAt
+                    {active_task !== null && active_task.createdAt
                       ? new Date(active_task.createdAt ?? ' ').toUTCString()
                       : new Date().toUTCString()}
                   </Typography>
@@ -157,7 +162,7 @@ const CreateTaskPopup = ({ status, projectData }: ICreateTaskPopup) => {
             </DialogContent>
             <Divider sx={{ borderColor: ` ${colors.lineColor}` }} />
             <DialogActions>
-              {active_task.task ? (
+              {active_task !== null && active_task.task ? (
                 <Button
                   variant="contained"
                   sx={{

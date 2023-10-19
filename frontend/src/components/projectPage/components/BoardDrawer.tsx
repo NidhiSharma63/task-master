@@ -29,11 +29,17 @@ import colors from 'src/theme/variables';
 
 const BoardDrawer = () => {
   const { active_task } = useAppSelector(taskDataInStore);
+  console.log(
+    useAppSelector(taskDataInStore),
+    'useAppSelector(taskDataInStore)',
+  );
   const { is_board_drawer_open } = useAppSelector(booleanDataInStore);
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(is_board_drawer_open);
   const { mutate } = useUpdateTaskQueryWithDetails();
-  const { mutate: deleteTask } = useDeleteTask(active_task?.status);
+  const { mutate: deleteTask } = useDeleteTask(
+    active_task !== null ? active_task?.status : '',
+  );
 
   useEffect(() => {
     setOpen(is_board_drawer_open);
@@ -48,17 +54,27 @@ const BoardDrawer = () => {
   }, [dispatch, setOpen]);
 
   const initialValues: IUniversalInterface = {
-    task: active_task.task,
-    _id: active_task._id,
-    dueDate: new Date(active_task?.dueDate) ?? null,
-    status: active_task.status,
-    description: active_task?.description ?? '',
+    task: active_task !== null && active_task.task,
+    _id: active_task !== null && active_task._id,
+    dueDate:
+      active_task !== null && active_task.dueDate !== undefined
+        ? new Date(active_task.dueDate)
+        : null,
+    status: active_task !== null && active_task.status,
+    description:
+      active_task !== null && active_task?.description
+        ? active_task?.description
+        : '',
     subTasks: active_task?.subTasks ?? '',
     label: active_task?.label ?? '',
     labelColor: active_task?.labelColor ?? '#e33529',
     color: active_task?.color,
-    projectName: active_task.projectName,
-    images: active_task.images ?? [],
+    projectName:
+      active_task !== null && active_task.projectName
+        ? active_task.projectName
+        : '',
+    images:
+      active_task !== null && active_task.images ? active_task.images : [],
   };
 
   const handleSubmit = useCallback(
@@ -69,52 +85,45 @@ const BoardDrawer = () => {
   );
 
   const handleDelete = useCallback((): void => {
-    setOpen(false);
-    dispatch(isBoardDrawerOpen(false));
-    dispatch(isUpdatingTask(false));
-    dispatch(isBackdropLoaderDisplayedForTask(true));
-    dispatch(isBackDropLoaderDisplayed(true));
+    if (active_task !== null) {
+      setOpen(false);
+      dispatch(isBoardDrawerOpen(false));
+      dispatch(isUpdatingTask(false));
+      dispatch(isBackdropLoaderDisplayedForTask(true));
+      dispatch(isBackDropLoaderDisplayed(true));
 
-    /**
-     * also delete the image from firebase
-     */
-    const images = active_task.images;
-    images.forEach((img: string) => {
-      const storageRef = ref(storage, img);
-      deleteObject(storageRef)
-        .then(() => {
-          deleteTask({
-            _id: active_task._id,
-            status: active_task.status,
-            userId: active_task.userId,
-            index: active_task.index,
-            projectName: active_task.projectName,
+      /**
+       * also delete the image from firebase
+       */
+      const images = active_task.images;
+      images.forEach((img: string) => {
+        const storageRef = ref(storage, img);
+        deleteObject(storageRef)
+          .then(() => {
+            deleteTask({
+              _id: active_task._id,
+              status: active_task.status,
+              userId: active_task.userId,
+              index: active_task.index,
+              projectName: active_task.projectName,
+            });
+          })
+          .catch(() => {
+            toast.error("couldn't delete the image");
+            console.log('something went wrong while deleting the file');
           });
-        })
-        .catch(() => {
-          toast.error("couldn't delete the image");
-          console.log('something went wrong while deleting the file');
-        });
-    });
-    if (images.length === 0) {
-      deleteTask({
-        _id: active_task._id,
-        status: active_task.status,
-        userId: active_task.userId,
-        index: active_task.index,
-        projectName: active_task.projectName,
       });
+      if (images.length === 0) {
+        deleteTask({
+          _id: active_task._id,
+          status: active_task.status,
+          userId: active_task.userId,
+          index: active_task.index,
+          projectName: active_task.projectName,
+        });
+      }
     }
-  }, [
-    active_task._id,
-    active_task.images,
-    active_task.index,
-    active_task.projectName,
-    active_task.status,
-    active_task.userId,
-    deleteTask,
-    dispatch,
-  ]);
+  }, [deleteTask, dispatch, active_task]);
 
   return (
     <Drawer
@@ -139,7 +148,7 @@ const BoardDrawer = () => {
       >
         <Box>
           <Typography sx={{ pl: 2, textTransform: 'capitalize' }} variant="h5">
-            {active_task.task}
+            {active_task !== null && active_task.task}
           </Typography>
           <Divider sx={{ mt: 2, borderColor: colors.lineColor }} />
         </Box>
@@ -191,9 +200,10 @@ const BoardDrawer = () => {
                     }}
                     variant="h6"
                   >
-                    {new Date(active_task.createdAt)
-                      .toUTCString()
-                      .substring(0, 17)}
+                    {active_task !== null &&
+                      new Date(active_task.createdAt)
+                        .toUTCString()
+                        .substring(0, 17)}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 1 }}>

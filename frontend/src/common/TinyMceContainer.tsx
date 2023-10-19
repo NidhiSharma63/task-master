@@ -24,7 +24,8 @@ const TinyMceContainer = () => {
       <Typography sx={{ mt: 2, mb: 1 }} variant="h6">
         Description
       </Typography>
-      {toggleEditModeForDescription || !active_task.description ? (
+      {toggleEditModeForDescription ||
+      (active_task !== null && !active_task.description) ? (
         <TinyMceDescription
           name="description"
           label="Description"
@@ -45,7 +46,11 @@ const TinyMceContainer = () => {
             borderColor: (theme) => theme.palette.grey[500],
           }}
           dangerouslySetInnerHTML={{
-            __html: sanitize(active_task.description),
+            __html: sanitize(
+              active_task !== null && active_task.description !== undefined
+                ? active_task.description
+                : '',
+            ),
           }}
         />
       )}

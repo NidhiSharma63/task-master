@@ -77,7 +77,7 @@ const TinyMceDescription = (props: ITinyMceDescription) => {
                  .tox:not(.tox-tinymce-inline) `,
               }}
             />
-            {active_task.description && (
+            {active_task !== null && active_task.description && (
               <Box sx={{ display: 'flex', alignItem: 'center', gap: 2, mt: 2 }}>
                 <Button
                   sx={{

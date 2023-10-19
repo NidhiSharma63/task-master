@@ -28,7 +28,7 @@ const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    activeTask: (state, action: PayloadAction<IForTaskDisplaying>) => {
+    activeTask: (state, action: PayloadAction<IForTaskDisplaying | null>) => {
       state.active_task = action.payload;
     },
     activeLink: (state, action: PayloadAction<string>) => {

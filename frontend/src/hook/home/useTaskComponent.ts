@@ -79,7 +79,7 @@ const useTaskComponent = ({
    */
 
   const handleClickOnAddTask = () => {
-    dispatch(activeTask({}));
+    dispatch(activeTask(null));
     dispatch(isCreateTaskModalOpen(true));
   };
 
