@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback } from 'react';
+import { Dispatch, SetStateAction, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   isBackDropLoaderDisplayed,
@@ -12,9 +12,7 @@ import { useDeleteColumnName } from '../useColumnQuery';
 
 interface IUseDeleteColumn {
   colId: string;
-  setAnchorElForColumnIcons: React.Dispatch<
-    React.SetStateAction<null | ReactNode>
-  >;
+  setAnchorElForColumnIcons: Dispatch<SetStateAction<HTMLElement | null>>;
 }
 
 const useDeleteColumn = ({
@@ -25,7 +23,7 @@ const useDeleteColumn = ({
 
   const dispatch = useDispatch();
 
-  const deleteColumn = useCallback(() => {
+  const deleteColumn = useCallback((): void => {
     deleteCols({ _id: colId });
     dispatch(isBackDropLoaderDisplayed(true));
     dispatch(isBackDropLoaderDisplayedForColumns(true));

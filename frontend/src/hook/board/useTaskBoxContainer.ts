@@ -1,8 +1,7 @@
 import {
   ChangeEvent,
   FormEvent,
-  MouseEvent,
-  ReactNode,
+  MouseEventHandler,
   useCallback,
   useEffect,
   useRef,
@@ -44,9 +43,10 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   const { is_task_displayed } = useSelector(booleanDataInStore);
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
     useState<number | null>(null);
-  const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState<
-    (EventTarget & SVGSVGElement) | ReactNode | null
-  >(null);
+
+  const [anchorElForColumnIcons, setAnchorElForColumnIcons] =
+    useState<null | HTMLElement>(null);
+
   const [openColsIcons, setOpenColsIcons] = useState<boolean>(false);
   const isTaskAddedFromBottom = useRef<boolean | null>(null);
   const [isColumnRename, setisColumnRename] = useState<boolean>(false);
@@ -56,7 +56,7 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   /**
    * add task to top
    */
-  const handleAddTask = useCallback(() => {
+  const handleAddTask = useCallback((): void => {
     setTextAreaValuesTop((prevValues) => ['', ...prevValues]);
     isTaskAddedFromBottom.current = false;
     dispatch(isTaskDisplayed(false));
@@ -65,7 +65,7 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   /*
    * add task from bottom
    */
-  const handleClickForAddingTaskFromBottom = useCallback(() => {
+  const handleClickForAddingTaskFromBottom = useCallback((): void => {
     isTaskAddedFromBottom.current = true;
     setTextAreaValuesBottom((prevValues) => [...prevValues, '']);
     dispatch(isTaskDisplayed(false));
@@ -74,72 +74,82 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   /**
    * handle change task
    */
-  const handleChange = (
-    event: ChangeEvent,
-    index: number,
-    newValue: string,
-  ) => {
-    if (!isTaskAddedFromBottom.current) {
-      setTextAreaValuesTop((prevValues) => {
-        const copyValues = [...prevValues];
-        copyValues[index] = newValue;
-        return copyValues;
-      });
-    } else {
-      setTextAreaValuesBottom((prevValues) => {
-        const copyValues = [...prevValues];
-        copyValues[index] = newValue;
-        return copyValues;
-      });
-    }
-  };
+  const handleChange = useCallback(
+    (event: ChangeEvent, index: number, newValue: string): void => {
+      if (!isTaskAddedFromBottom.current) {
+        setTextAreaValuesTop((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues[index] = newValue;
+          return copyValues;
+        });
+      } else {
+        setTextAreaValuesBottom((prevValues) => {
+          const copyValues = [...prevValues];
+          copyValues[index] = newValue;
+          return copyValues;
+        });
+      }
+    },
+    [],
+  );
 
   /**
    * handle saving task
    */
 
-  const handleBlur = async (
-    event: React.FocusEvent<HTMLTextAreaElement, Element>,
-    index: number,
-  ) => {
-    let valueOfTextField = '';
-    let lastIndexOfCurrentTask = data.tasks?.[data.tasks.length - 1]?.index;
+  const handleBlur = useCallback(
+    (
+      event: React.FocusEvent<HTMLTextAreaElement, Element>,
+      index: number,
+    ): void => {
+      let valueOfTextField = '';
+      let lastIndexOfCurrentTask = data.tasks?.[data.tasks.length - 1]?.index;
 
-    if (!isTaskAddedFromBottom.current) {
-      if (textAreaValuesTop[index].trim().length === 0) {
-        setTextAreaValuesTop((prevValues) => {
-          const copyValues = [...prevValues];
-          copyValues.splice(index, 1);
-          return copyValues;
-        });
+      if (!isTaskAddedFromBottom.current) {
+        if (textAreaValuesTop[index].trim().length === 0) {
+          setTextAreaValuesTop((prevValues) => {
+            const copyValues = [...prevValues];
+            copyValues.splice(index, 1);
+            return copyValues;
+          });
+        } else {
+          valueOfTextField = textAreaValuesTop[index].trim();
+        }
       } else {
-        valueOfTextField = textAreaValuesTop[index].trim();
+        if (textAreaValuesBottom[index].trim().length === 0) {
+          setTextAreaValuesBottom((prevValues) => {
+            const copyValues = [...prevValues];
+            copyValues.splice(index, 1);
+            return copyValues;
+          });
+        } else {
+          valueOfTextField = textAreaValuesBottom[index].trim();
+        }
       }
-    } else {
-      if (textAreaValuesBottom[index].trim().length === 0) {
-        setTextAreaValuesBottom((prevValues) => {
-          const copyValues = [...prevValues];
-          copyValues.splice(index, 1);
-          return copyValues;
-        });
-      } else {
-        valueOfTextField = textAreaValuesBottom[index].trim();
-      }
-    }
 
-    if (!valueOfTextField) return;
+      if (!valueOfTextField) return;
 
-    const payloadForTask = {
-      task: valueOfTextField,
-      status: name,
-      projectName: active_project,
-      index: isTaskAddedFromBottom.current ? lastIndexOfCurrentTask + 1 : 0,
-    };
+      const payloadForTask = {
+        task: valueOfTextField,
+        status: name,
+        projectName: active_project,
+        index: isTaskAddedFromBottom.current ? lastIndexOfCurrentTask + 1 : 0,
+      };
 
-    mutate(payloadForTask);
-    dispatch(showLoaderForTask(true));
-    setCurrentWorkingTestAreaIndex(index);
-  };
+      mutate(payloadForTask);
+      dispatch(showLoaderForTask(true));
+      setCurrentWorkingTestAreaIndex(index);
+    },
+    [
+      active_project,
+      mutate,
+      name,
+      dispatch,
+      textAreaValuesBottom,
+      textAreaValuesTop,
+      data.tasks,
+    ],
+  );
 
   /**
    * remove textarea
@@ -170,39 +180,54 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   /**
    * for managing style of textarea
    */
-  const handleInput = (event: FormEvent<HTMLTextAreaElement>) => {
-    event.currentTarget.style.height = 'auto';
-    event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
-  };
+  const handleInput = useCallback(
+    (event: FormEvent<HTMLTextAreaElement>): void => {
+      event.currentTarget.style.height = 'auto';
+      event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+    },
+    [],
+  );
 
-  const handleClickOnTask = (task: IForTaskDisplaying): void => {
-    dispatch(activeTask(task));
-    dispatch(isBoardDrawerOpen(true));
-  };
+  const handleClickOnTask = useCallback(
+    (task: IForTaskDisplaying): void => {
+      dispatch(activeTask(task));
+      dispatch(isBoardDrawerOpen(true));
+    },
+    [dispatch],
+  );
 
   /**
    * handleClickOnThreeDots
    */
-  const handleClickOnThreeDots = (event: MouseEvent<SVGSVGElement>): void => {
-    setAnchorElForColumnIcons(event.currentTarget);
-    setOpenColsIcons(true);
-  };
+  // const handleClickOnThreeDots = (event: MouseEvent<SVGSVGElement>): void => {
+  //   setAnchorElForColumnIcons(event.currentTarget);
+  //   setOpenColsIcons(true);
+  // };
+  const handleClickOnThreeDots: MouseEventHandler<SVGSVGElement> = useCallback(
+    (event): void => {
+      if (event.currentTarget instanceof HTMLElement) {
+        setAnchorElForColumnIcons(event.currentTarget);
+        setOpenColsIcons(true);
+      }
+    },
+    [],
+  );
 
   /**
    * close three dots icons
    */
-  const handleCloseOfColsIcons = (): void => {
+  const handleCloseOfColsIcons = useCallback((): void => {
     setAnchorElForColumnIcons(null);
     setOpenColsIcons(false);
-  };
+  }, []);
 
   /**
    * hanlde column rename
    */
-  const handleClickOnRename = (): void => {
+  const handleClickOnRename = useCallback((): void => {
     setisColumnRename(true);
     handleCloseOfColsIcons();
-  };
+  }, [handleCloseOfColsIcons]);
 
   /**
    * saving cols name
