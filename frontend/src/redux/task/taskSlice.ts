@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IForTaskDisplaying } from 'src/common/Interface/Interface';
 import { RootState } from 'src/store';
 /**
  * interface
@@ -8,15 +9,15 @@ import { RootState } from 'src/store';
  * ACTIVE task obj
  */
 
-interface IActiveTask {
-  [key: string]: string | boolean | null | number;
+interface ITaskCard {
+  active_task: IForTaskDisplaying | null;
+  active_link: string;
+  dragged_task_id: null | string;
+  dragged_task_index: null | number;
+  dragged_task_status: null | string;
 }
-interface IInitialState {
-  [key: string]: string | null | IActiveTask;
-}
-
-const initialState: IInitialState = {
-  active_task: {},
+const initialState: ITaskCard = {
+  active_task: null,
   active_link: 'Todo',
   dragged_task_id: null,
   dragged_task_index: null,
@@ -27,19 +28,19 @@ const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    activeTask: (state, action: PayloadAction<IActiveTask>) => {
+    activeTask: (state, action: PayloadAction<IForTaskDisplaying>) => {
       state.active_task = action.payload;
     },
     activeLink: (state, action: PayloadAction<string>) => {
       state.active_link = action.payload;
     },
-    draggedTaskId: (state, action: PayloadAction<string>) => {
+    draggedTaskId: (state, action: PayloadAction<string | null>) => {
       state.dragged_task_id = action.payload;
     },
-    drggedTaskIndex: (state, action: PayloadAction<string>) => {
+    drggedTaskIndex: (state, action: PayloadAction<number | null>) => {
       state.dragged_task_index = action.payload;
     },
-    draggedTaskStatus: (state, action: PayloadAction<string>) => {
+    draggedTaskStatus: (state, action: PayloadAction<string | null>) => {
       state.dragged_task_status = action.payload;
     },
   },

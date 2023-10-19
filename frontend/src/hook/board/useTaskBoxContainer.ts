@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  IUniversalInterface,
+  IForTaskDisplaying,
   IUpdatedColumnItem,
 } from 'src/common/Interface/Interface';
 import {
@@ -29,6 +29,10 @@ import { useAddTaskQuery } from '../useTaskQuery';
 interface IUseTaskBoxContainer {
   data: IUpdatedColumnItem;
   name: string;
+}
+interface ITaskCard {
+  item: IForTaskDisplaying;
+  handleClickOnTask: (item: ITaskCard) => void;
 }
 const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   const dispatch = useDispatch();
@@ -171,7 +175,7 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
     event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
   };
 
-  const handleClickOnTask = (task: IUniversalInterface): void => {
+  const handleClickOnTask = (task: IForTaskDisplaying): void => {
     dispatch(activeTask(task));
     dispatch(isBoardDrawerOpen(true));
   };

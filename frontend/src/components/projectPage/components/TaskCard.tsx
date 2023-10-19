@@ -2,10 +2,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Box, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  IForTaskDisplaying,
-  IUniversalInterface,
-} from 'src/common/Interface/Interface';
+import { IForTaskDisplaying } from 'src/common/Interface/Interface';
 import UserName from 'src/common/UserName';
 import {
   draggedTaskId,
@@ -16,7 +13,7 @@ import colors from 'src/theme/variables';
 
 interface ITaskCard {
   item: IForTaskDisplaying;
-  handleClickOnTask: (item: IUniversalInterface) => void;
+  handleClickOnTask: (item: IForTaskDisplaying) => void;
 }
 
 const TaskCard = ({ item, handleClickOnTask }: ITaskCard) => {
