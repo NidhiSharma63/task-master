@@ -5,7 +5,7 @@ import colors from 'src/theme/variables';
 import { getUserFirstNameFirstLetter } from 'src/utils/getUserFirstName';
 
 interface IUserNameProps {
-  handleOpen?: () => void;
+  handleOpen?: (event: React.MouseEvent<HTMLDivElement>) => void;
   formTaskComponent?: boolean;
 }
 

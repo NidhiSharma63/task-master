@@ -39,14 +39,14 @@ const useProjectNameModal = () => {
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackdropLoaderDisplayedForProjects(true));
     }
-  }, [isLoading]);
+  }, [isLoading, dispatch]);
 
   useEffect(() => {
     if (projectUpdateIsLoading) {
       dispatch(isBackDropLoaderDisplayed(true));
       dispatch(isBackdropLoaderDisplayedForProjects(true));
     }
-  }, [projectUpdateIsLoading]);
+  }, [projectUpdateIsLoading, dispatch]);
 
   useEffect(() => {
     if (project_rename) {

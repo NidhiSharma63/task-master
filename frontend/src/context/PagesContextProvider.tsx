@@ -6,17 +6,17 @@ interface IPageContextComp {
 }
 
 interface IContext {
-  pageData: IPage | {};
-  setPageData: React.Dispatch<React.SetStateAction<IPage | {}>>;
+  pageData: IPage | null;
+  setPageData: React.Dispatch<React.SetStateAction<IPage | null>>;
 }
 
 const PagesContext = createContext<IContext>({
-  pageData: {},
+  pageData: null,
   setPageData: () => {},
 });
 
 const PagesContextComp = ({ children }: IPageContextComp) => {
-  const [pageData, setPageData] = useState<IPage | {}>({});
+  const [pageData, setPageData] = useState<IPage | null>(null);
 
   return (
     <PagesContext.Provider value={{ pageData, setPageData }}>

@@ -209,7 +209,7 @@ const useLayout = () => {
    * Add page icon
    */
   const handleClickOnPageAddIcon = useCallback((): void => {
-    setPageData({});
+    setPageData(null);
     dispatch(isDialogBoxOpen(true));
   }, [dispatch, setPageData]);
 
@@ -217,7 +217,7 @@ const useLayout = () => {
    * show page icons
    */
 
-  const handleClickOnThreeDotsPages: React.MouseEventHandler<HTMLDivElement> =
+  const handleClickOnThreeDotsPages: MouseEventHandler<SVGSVGElement> =
     useCallback((event): void => {
       // console.log()
       if (event.currentTarget instanceof HTMLElement) {
@@ -237,7 +237,7 @@ const useLayout = () => {
     setAnchorElementForPages(null);
     dispatch(isDialogBoxOpen(false));
     setIsPageIconsOpen(false);
-    setPageData({});
+    setPageData(null);
   }, [dispatch, setPageData]);
 
   /**

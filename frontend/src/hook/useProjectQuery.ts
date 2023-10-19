@@ -76,7 +76,7 @@ const useDeleteProjectQuery = () => {
  */
 const useUpdateProjectQuery = () => {
   return useMutation({
-    mutationFn: (payload) => {
+    mutationFn: (payload: any) => {
       return customAxiosRequestForPost('/projects', 'put', payload);
     },
     onSuccess: () => {
