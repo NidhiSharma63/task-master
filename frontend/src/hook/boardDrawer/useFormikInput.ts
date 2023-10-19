@@ -1,8 +1,8 @@
-import { useFormikContext } from 'formik';
+import { FormikValues, useFormikContext } from 'formik';
 import { useCallback, useEffect } from 'react';
 
-const useFormikInput = (name) => {
-  const { values, setFieldValue } = useFormikContext();
+const useFormikInput = (name: string) => {
+  const { values, setFieldValue } = useFormikContext<FormikValues>();
 
   const removeAllEmptyField = useCallback(() => {
     if (name) {
@@ -10,7 +10,8 @@ const useFormikInput = (name) => {
       if (allValuesOfSubtasks?.length > 0) {
         // filterOut All the values that are no empty
         const allNonEmptyValues = allValuesOfSubtasks?.filter(
-          (item) => item.value?.trim() !== '',
+          (item: { value: string; isCompleted: boolean }) =>
+            item.value?.trim() !== '',
         );
         setFieldValue(name, allNonEmptyValues);
       }
@@ -18,11 +19,12 @@ const useFormikInput = (name) => {
   }, [values, setFieldValue, name]);
 
   useEffect(() => {
-    const windowEvent = (e) => {
+    const windowEvent = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
       if (
-        e.target?.classList?.contains('not-remove-input') ||
-        e.target?.child?.classList?.contains('not-remove-input') ||
-        e.target.tagName === 'INPUT'
+        target?.classList?.contains('not-remove-input') ||
+        target?.childElementCount > 0 ||
+        target.tagName === 'INPUT'
       ) {
         return;
       }
