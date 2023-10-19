@@ -1,19 +1,19 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useUpdatePage } from 'src/hook/usePagesQuery';
 import {
   isBackDropLoaderDisplayed,
   isBackDropLoaderDisplayedForPage,
 } from 'src/redux/boolean/booleanSlice';
+import { useAppDispatch } from '../redux/hooks';
 
 const usePage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { data } = queryClient.getQueryData(['pages']) ?? {};
+  const data = queryClient.getQueryData(['pages']);
   const { mutate } = useUpdatePage();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [innerHTML, setInnerHTML] = useState('');
   const editorRef = useRef();
@@ -22,7 +22,7 @@ const usePage = () => {
    * only initial render set the inner html
    */
   useEffect(() => {
-    const currentPage = data?.find((item) => item._id === id);
+    const currentPage = data?.data?.find((item) => item._id === id);
     const value =
       currentPage?.content.length > 0
         ? currentPage?.content
