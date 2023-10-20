@@ -1,5 +1,5 @@
-// export const BASE_URL = process.env.REACT_APP_BASE_URL;
-export const BASE_URL: string = 'http://localhost:3000/api/v1';
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
+// export const BASE_URL: string = 'http://localhost:3000/api/v1';
 export const KEY_FOR_STORING_TOKEN: string = 'token_for_todo';
 export const KEY_FOR_STORING_USER_DETAILS: string = 'user_details_for_todo';
 export const KEY_FOR_STORING_ACTIVE_PROJECT: string =
