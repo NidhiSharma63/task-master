@@ -81,7 +81,7 @@ const FormikInputArray = (props: IFormikInputArray) => {
                             <DeleteOutlineIcon
                               sx={{
                                 cursor: 'pointer',
-                                color: (theme) => theme.palette.primary.main,
+                                color: 'red',
                               }}
                               className="not-remove-input"
                               onClick={() => arrayHelpers.remove(index)}
