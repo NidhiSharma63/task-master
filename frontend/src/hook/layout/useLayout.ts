@@ -38,8 +38,9 @@ const useLayout = () => {
   const [anchorElForProjectIcons, setAnchorElForProjectIcons] =
     useState<null | HTMLElement>(null);
 
-  const [anchorElementForPages, setAnchorElementForPages] =
-    useState<null | HTMLElement>(null);
+  const [anchorElementForPages, setAnchorElementForPages] = useState<
+    (EventTarget & SVGSVGElement) | null
+  >(null);
   const [isProjectIconsOpen, setIsProjectIconsOpen] = useState<boolean>(false);
   const [isPageIconsOpen, setIsPageIconsOpen] = useState<boolean>(false);
   const { mutate: deletePage } = useDeletePage();
@@ -218,14 +219,11 @@ const useLayout = () => {
 
   const handleClickOnThreeDotsPages: MouseEventHandler<SVGSVGElement> =
     useCallback((event): void => {
-      // console.log()
-      if (event.currentTarget instanceof HTMLElement) {
-        const id = event.currentTarget.dataset.id;
-        if (!id) return;
-        setAnchorElementForPages(event.currentTarget);
-        setIsPageIconsOpen(true);
-        pageItemId.current = id;
-      }
+      const id = event.currentTarget.dataset.id;
+      if (!id) return;
+      setAnchorElementForPages(event.currentTarget);
+      setIsPageIconsOpen(true);
+      pageItemId.current = id;
     }, []);
 
   /**

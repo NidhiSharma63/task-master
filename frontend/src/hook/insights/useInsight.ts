@@ -55,14 +55,6 @@ const useInsight = ({ status }: IuseInsight) => {
       colorsForEachProjects.push(item.color);
     });
 
-    console.log(
-      allProjects,
-      'allProjects',
-      allTaskOfEachProjects,
-      'allTaskOfEachProjects',
-      colorsForEachProjects,
-      'colorsForEachProjects',
-    );
     setAllProjects(allProjects);
     setAllTasks(allTaskOfEachProjects);
     setBgColors(colorsForEachProjects);

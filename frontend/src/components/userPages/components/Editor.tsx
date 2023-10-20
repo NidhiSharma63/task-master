@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useDebounce from 'src/hook/useDebounce';
 import { useUpdatePage } from 'src/hook/usePagesQuery';
 import { tools } from './EditorTool';
@@ -47,6 +48,7 @@ const Editor = () => {
           })
           .catch((error) => {
             console.log('Saving failed: ', error);
+            toast.error('Something went wrong');
           });
       },
       // @ts-ignore
