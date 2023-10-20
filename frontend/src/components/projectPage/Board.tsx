@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { FadeLoader } from 'react-spinners';
+import { IUpdatedColumnItem } from 'src/common/Interface/Interface';
 import BoardDrawer from 'src/components/projectPage/components/BoardDrawer';
 import useAddColumn from 'src/hook/board/useAddColumn';
 import useBoard from 'src/hook/board/useBoard';
@@ -38,7 +39,7 @@ const Board = () => {
         gap: 2,
       }}
     >
-      {finalState?.map((item: any) => {
+      {finalState?.map((item: IUpdatedColumnItem) => {
         return (
           <TaskBoxConatiner
             key={item._id}

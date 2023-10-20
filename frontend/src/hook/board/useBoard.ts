@@ -21,10 +21,6 @@ import {
 import { totalStatus } from 'src/redux/status/statusSlice';
 import { taskDataInStore } from 'src/redux/task/taskSlice';
 
-interface IExtendedItem extends ITaskItem {
-  currentIndex: number;
-}
-
 const useBoard = () => {
   const { data: columnData, isLoading } = useGetColumnQuery();
   const { data } = useGetTaskAccordingToStatus();
