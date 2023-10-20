@@ -38,10 +38,10 @@ const HomeComponent = () => {
       </Box>
       <Box
         sx={{
-          width: '80%',
+          width: '90%',
           height: 'calc(100% - 160px)',
           display: 'flex',
-          // gap: 4,
+          gap: 4,
           justifyContent: 'space-between',
         }}
       >
