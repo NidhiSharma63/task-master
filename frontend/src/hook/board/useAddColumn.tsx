@@ -51,7 +51,7 @@ const useAddColumn = ({
    */
 
   useEffect(() => {
-    if (isColumnRename && prevColumnName === 'string') {
+    if (isColumnRename && prevColumnName) {
       setColumnValue(prevColumnName);
     }
   }, [isColumnRename, prevColumnName]);
@@ -88,7 +88,7 @@ const useAddColumn = ({
      * update cols value
      */
 
-    if (isColumnRename && colId === 'sting' && prevColumnName === 'string') {
+    if (isColumnRename && colId && prevColumnName) {
       /**
        * if column value is same as previous one then do nothing
        */

@@ -91,7 +91,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
               variant="contained"
               sx={{ ml: 1 }}
             >
-              Add
+              Save
             </Button>
           ) : (
             <>
