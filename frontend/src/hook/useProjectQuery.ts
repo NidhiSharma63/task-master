@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { IUniversalInterface } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -76,7 +77,7 @@ const useDeleteProjectQuery = () => {
  */
 const useUpdateProjectQuery = () => {
   return useMutation({
-    mutationFn: (payload: any) => {
+    mutationFn: (payload: IUniversalInterface) => {
       return customAxiosRequestForPost('/projects', 'put', payload);
     },
     onSuccess: () => {
