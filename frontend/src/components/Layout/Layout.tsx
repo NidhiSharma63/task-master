@@ -214,7 +214,11 @@ export const Layout = () => {
                       }}
                     >
                       <ListItemText
-                        primary={item.name}
+                        primary={
+                          item.name.length > 9
+                            ? `${item.name.substring(0, 8)}...`
+                            : item.name
+                        }
                         onClick={() => handleActiveProject(item.name)}
                       />
                       <ListItemIcon data-id={item._id}>
@@ -291,7 +295,11 @@ export const Layout = () => {
                       }}
                     >
                       <ListItemText
-                        primary={item.name}
+                        primary={
+                          item.name.length > 9
+                            ? `${item.name.substring(0, 8)}...`
+                            : item.name
+                        }
                         onClick={() => handleClickOnPages(item._id, item.name)}
                         sx={{ wordBreak: 'break-all' }}
                       />
