@@ -14,7 +14,6 @@ import { IUniversalInterface } from 'src/common/Interface/Interface';
 import { storage } from 'src/firebase/config';
 import useFormikInput from 'src/hook/boardDrawer/useFormikInput';
 import colors from 'src/theme/variables';
-import convertToBlob from 'src/utils/convertToBlob';
 import { v4 } from 'uuid';
 
 const keyframes = {
@@ -66,48 +65,48 @@ const FormikImage = (props: IFormikImage) => {
   /**
    * select the file
    */
+
   const handleFileSelect = async (
     event: React.ChangeEvent<HTMLInputElement>,
-  ): Promise<void> => {
-    if (!event.target.files) return;
-    const uploadedFile = event && event.target.files[0];
-    if (uploadedFile) {
-      const modifiedFile = new File([uploadedFile], uploadedFile.name + v4(), {
-        type: uploadedFile.type,
-      });
-      const updatedModifiedFile = {
-        ...modifiedFile,
-        lastModifiedDate: uploadedFile.lastModified.toString(),
-      };
-      // modifiedFile.push({ lastModifiedDate: uploadedFile.lastModified });
-      const blobConverted = await convertToBlob(updatedModifiedFile);
-      setImages(blobConverted);
-      try {
-        const imageRef = ref(storage, `/images/${modifiedFile.name}-${v4()}`);
-        const snapshot = await uploadBytes(imageRef, modifiedFile);
-        const url = await getDownloadURL(snapshot.ref);
+  ) => {
+    if (event.target.files !== null) {
+      const uploadedFile = event && event.target.files[0];
+      if (uploadedFile) {
+        const modifiedFile = new File(
+          [uploadedFile],
+          uploadedFile.name + v4(),
+          {
+            type: uploadedFile.type,
+          },
+        );
+        setImages(modifiedFile);
+        try {
+          const imageRef = ref(storage, `/images/${modifiedFile.name}-${v4()}`);
+          const snapshot = await uploadBytes(imageRef, modifiedFile);
+          const url = await getDownloadURL(snapshot.ref);
 
-        /* first make a copy of all the values after that update the images field because
-         * when we update the value using setFieldValue then we are not able to get the updated
-         * value at same time so we are manually updating the object and calling the handleSubmit
-         * function. but we need to update the setFieldValue[name] because in local we are not
-         * updating the task when task is opened so to display the image we need to update the
-         * setFieldValue
-         */
-        const updatedValues = {
-          ...values,
-          images: [...values.images, url],
-        };
+          /* first make a copy of all the values after that update the images field because
+           * when we update the value using setFieldValue then we are not able to get the updated
+           * value at same time so we are manually updating the object and calling the handleSubmit
+           * function. but we need to update the setFieldValue[name] because in local we are not
+           * updating the task when task is opened so to display the image we need to update the
+           * setFieldValue
+           */
+          const updatedValues = {
+            ...values,
+            images: [...values.images, url],
+          };
 
-        // update the field for images to show the image in local
-        setFieldValue(name, [...values[name], url]);
+          // update the field for images to show the image in local
+          setFieldValue(name, [...values[name], url]);
 
-        // set images null to remove the loading state
-        setImages(null);
-        handleSubmit(updatedValues); // Call handleSubmit with updated values
-      } catch (error) {
-        toast.error("Couldn't upload the attachment");
-        console.error('Error uploading attachment:', error);
+          // set images null to remove the loading state
+          setImages(null);
+          handleSubmit(updatedValues); // Call handleSubmit with updated values
+        } catch (error) {
+          toast.error("Couldn't upload the attachment");
+          console.error('Error uploading attachment:', error);
+        }
       }
     }
   };
