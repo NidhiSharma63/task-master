@@ -39,13 +39,10 @@ const Editor = () => {
           .save()
           .then((outputData) => {
             if (id === 'string') {
-              debounceFunc(
-                mutate({
-                  _id: id,
-                  content: JSON.stringify(outputData),
-                }),
-                2000,
-              );
+              function saveData() {
+                mutate({ _id: id, content: JSON.stringify(outputData) });
+              }
+              debounceFunc(saveData, 2000);
             }
           })
           .catch((error) => {
