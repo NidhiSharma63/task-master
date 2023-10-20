@@ -23,19 +23,14 @@ import {
   isProjectNameModalOpen,
   isUpdatingTask,
 } from 'src/redux/boolean/booleanSlice';
-import {
-  activeProject,
-  projectDataInStore,
-  projectRename,
-} from 'src/redux/projects/projectSlice';
+import { activeProject, projectRename } from 'src/redux/projects/projectSlice';
 import { setValueToLs } from 'src/utils/localstorage';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch } from '../redux/hooks';
 
 const useLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const { active_project } = useAppSelector(projectDataInStore);
+  const [activeLink, setAcitveLink] = useState<string>('');
 
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -90,8 +85,7 @@ const useLayout = () => {
   // useEffect(() => {
   //   queryKeyForTask.map((status: string) =>
   //     queryClient.invalidateQueries(status),
-  //   );
-  // }, [active_project]);
+  // const [activeLink, setAcitveLink] = useState<string>(''); //   );
 
   const handleLogout = useCallback(() => {
     mutate();
@@ -113,6 +107,7 @@ const useLayout = () => {
 
   const handleClickOnHome = useCallback((): void => {
     navigate('/Home');
+    setAcitveLink('Home');
   }, [navigate]);
   /**
    * Insights
@@ -120,6 +115,7 @@ const useLayout = () => {
   const handleClickOnInsights = useCallback(
     (name: string): void => {
       navigate(`Charts/${name}`);
+      setAcitveLink('Insights');
     },
     [navigate],
   );
@@ -131,6 +127,7 @@ const useLayout = () => {
     dispatch(projectRename(null));
     dispatch(isProjectNameModalOpen(true));
     navigate('/Dashboard');
+    setAcitveLink('Projects');
   }, [dispatch, navigate]);
 
   const handleDelete = useCallback(() => {
@@ -150,6 +147,7 @@ const useLayout = () => {
       );
       dispatch(isUpdatingTask(false));
       navigate('/Dashboard');
+      setAcitveLink(name);
     },
     [dispatch, navigate],
   );
@@ -199,8 +197,9 @@ const useLayout = () => {
    */
 
   const handleClickOnPages = useCallback(
-    (val: string): void => {
+    (val: string, name: string): void => {
       navigate(`/pages/${val}`);
+      setAcitveLink(name);
     },
     [navigate],
   );
@@ -296,6 +295,7 @@ const useLayout = () => {
     isProjectIconsOpen,
     isPageIconsOpen,
     // userName,
+    activeLink,
   };
 };
 

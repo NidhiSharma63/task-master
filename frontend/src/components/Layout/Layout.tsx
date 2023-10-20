@@ -64,6 +64,7 @@ export const Layout = () => {
     pagesLoading,
     isProjectIconsOpen,
     isPageIconsOpen,
+    activeLink,
     // userName,
   } = useLayout();
 
@@ -135,7 +136,13 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   const IconComponent = value;
                   return (
-                    <ListItemButton key={key} onClick={handleClickOnHome}>
+                    <ListItemButton
+                      key={key}
+                      onClick={handleClickOnHome}
+                      sx={{
+                        backgroundColor: activeLink === key ? 'white' : 'none',
+                      }}
+                    >
                       <ListItemText primary={key} />
                       <ListItemIcon sx={{ color: colors.textColor }}>
                         <IconComponent />
@@ -151,6 +158,9 @@ export const Layout = () => {
                   const IconComponent = value;
                   return (
                     <ListItemButton
+                      sx={{
+                        backgroundColor: activeLink === key ? 'white' : 'none',
+                      }}
                       key={key}
                       onClick={() => handleClickOnInsights(key)}
                     >
@@ -168,7 +178,13 @@ export const Layout = () => {
                 return Object.entries(i).map(([key, value]) => {
                   const IconComponent = value;
                   return (
-                    <ListItemButton key={key} onClick={handleOpenProjectModal}>
+                    <ListItemButton
+                      key={key}
+                      onClick={handleOpenProjectModal}
+                      sx={{
+                        backgroundColor: activeLink === key ? 'white' : 'none',
+                      }}
+                    >
                       <ListItemText primary={key} />
                       <ListItemIcon sx={{ color: colors.textColor }}>
                         <IconComponent />
@@ -186,7 +202,13 @@ export const Layout = () => {
               ) : (
                 allProjects?.map((item: IItems) => {
                   return (
-                    <ListItemButton key={item._id}>
+                    <ListItemButton
+                      key={item._id}
+                      sx={{
+                        backgroundColor:
+                          activeLink === item.name ? 'white' : 'none',
+                      }}
+                    >
                       <ListItemText
                         primary={item.name}
                         onClick={() => handleActiveProject(item.name)}
@@ -232,6 +254,9 @@ export const Layout = () => {
                   const IconComponent = value;
                   return (
                     <ListItemButton
+                      sx={{
+                        backgroundColor: activeLink === key ? 'white' : 'none',
+                      }}
                       key={key}
                       onClick={handleClickOnPageAddIcon}
                     >
@@ -252,10 +277,17 @@ export const Layout = () => {
               ) : (
                 pagesData?.data?.map((item: IItems) => {
                   return (
-                    <ListItemButton key={item._id} sx={{ p: '.5 0' }}>
+                    <ListItemButton
+                      key={item._id}
+                      sx={{
+                        backgroundColor:
+                          activeLink === item.name ? 'white' : 'none',
+                        p: '.5 0',
+                      }}
+                    >
                       <ListItemText
                         primary={item.name}
-                        onClick={() => handleClickOnPages(item._id)}
+                        onClick={() => handleClickOnPages(item._id, item.name)}
                         sx={{ wordBreak: 'break-all' }}
                       />
                       <ListItemIcon data-id={item._id} sx={{ minWidth: 0 }}>
