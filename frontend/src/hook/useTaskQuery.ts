@@ -2,7 +2,7 @@ import { useMutation, useQueries } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { ITaskItem, IUniversalInterface } from 'src/common/Interface/Interface';
+import { IUniversalInterface } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
 import {
   booleanDataInStore,
@@ -18,6 +18,7 @@ import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
 } from 'src/utils/axiosRequest';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
 /**
  *
@@ -92,11 +93,9 @@ const useGetTaskAccordingToStatus = () => {
   return { data };
 };
 
-interface IExtendedItemWithIndex extends ITaskItem {
-  currentIndex: number;
-}
 const useUpdateTaskQuery = () => {
-  const { active_project } = useSelector(projectDataInStore);
+  const { active_project } = useAppSelector(projectDataInStore);
+  const dispatch = useAppDispatch();
   const [state, setState] = useState('');
 
   return useMutation({
@@ -112,6 +111,7 @@ const useUpdateTaskQuery = () => {
       queryClient.invalidateQueries([state, 'All-task']);
     },
     onError: () => {
+      dispatch(isUpdatingTask(false));
       toast.error('something went wrong!');
     },
   });
@@ -128,6 +128,7 @@ const useUpdateTaskQueryWithStatus = () => {
     previousStatusOfTask: '',
     currentStatusOfTask: '',
   });
+  const dispatch = useAppDispatch();
 
   return useMutation({
     mutationFn: (payload: any) => {
@@ -151,6 +152,7 @@ const useUpdateTaskQueryWithStatus = () => {
       queryClient.invalidateQueries([state, 'All-task']);
     },
     onError: () => {
+      dispatch(isUpdatingTask(false));
       toast.error('something went wrong!');
     },
   });

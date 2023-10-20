@@ -126,7 +126,7 @@ const useBoard = () => {
            */
           let draggedTaskValueForBackend: IUniversalInterface = {
             ...draggedTask,
-            currentIndex: id,
+            // currentIndex: id,
           };
           /**
            * filter the task which id is not same as dragged task id
