@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { FadeLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 import { IUpdatedColumnItem } from 'src/common/Interface/Interface';
 import DropCard from 'src/components/projectPage/components/DropCard';
 import TaskCard from 'src/components/projectPage/components/TaskCard';
@@ -177,7 +177,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
                   mt: -1,
                 }}
               >
-                <FadeLoader style={{ marginTop: '1.6rem' }} />
+                <BeatLoader style={{ marginTop: '1.6rem', color: '#756EC6' }} />
               </Box>
             )}
           </>
@@ -216,7 +216,7 @@ const TaskBoxContainer = ({ name, data, colId, onDrop }: ITaskBoxContainer) => {
                   mt: -1,
                 }}
               >
-                <FadeLoader style={{ marginTop: '1.6rem' }} />
+                <BeatLoader style={{ marginTop: '1.6rem', color: '#756EC6' }} />
               </Box>
             )}
           </>
