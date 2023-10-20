@@ -25,8 +25,9 @@ const Board = () => {
     <Box
       sx={{
         position: 'relative',
-        height: 'calc(100vh - 180px)',
+        height: 'calc(100vh - 150px)',
         // height: '100vh',
+        overflowY: 'hidden',
         marginTop: 7.2,
         pl: 3,
         pt: 1,
@@ -106,6 +107,7 @@ const Board = () => {
               p: 1,
               border: `1px solid transparent`,
               transition: 'border .3s ease',
+
               '&:hover': {
                 border: `1px solid ${colors.lineColor}`,
               },
