@@ -35,8 +35,8 @@ const useGetPages = () => {
         dispatch(isBackDropLoaderDisplayed(false));
       }
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: () => {
+      toast.error('Something went wrong');
     },
   });
 };
@@ -91,8 +91,8 @@ const useDeletePage = () => {
       // toast.success("Project deleted successfully!");
       queryClient.invalidateQueries(['pages']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error) => {
+      toast.error('Something went wrong');
     },
   });
 };

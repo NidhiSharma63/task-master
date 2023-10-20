@@ -8,8 +8,8 @@ const useAllTaskAccordingToSatusQuery = (status: string) => {
       queryKey: ['charts-data', status],
       queryFn: () =>
         customAxiosRequestForGet('/project/status/alltasks', { status }),
-      onError: (error: any) => {
-        toast.error(error?.response?.data?.error);
+      onError: () => {
+        toast.error('something went wrong');
       },
     });
   };

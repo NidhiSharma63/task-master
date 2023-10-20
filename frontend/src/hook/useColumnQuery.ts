@@ -59,8 +59,8 @@ const useGetColumnQuery = () => {
       }
     },
 
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: () => {
+      toast.error('Something went wrong');
     },
   });
 };

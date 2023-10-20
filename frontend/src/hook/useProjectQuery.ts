@@ -49,8 +49,8 @@ const useGetProjectQuery = () => {
       }
       dispatch(isBackdropLoaderDisplayedForProjects(false));
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error) => {
+      toast.error('Something went wrong');
     },
   });
 };
@@ -66,8 +66,8 @@ const useDeleteProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error) => {
+      toast.error('Something went wrong');
     },
   });
 };

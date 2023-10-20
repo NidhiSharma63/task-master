@@ -40,7 +40,7 @@ const useAddTaskQuery = () => {
       queryClient.invalidateQueries([state, 'All-task']);
       queryClient.invalidateQueries([state]);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('An error occured');
     },
   });
