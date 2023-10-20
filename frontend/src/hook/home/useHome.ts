@@ -30,11 +30,11 @@ const useHome = () => {
    */
   useEffect(() => {
     if (total_status?.length === 0) {
-      const onlyColumns = columnData?.data?.map((item: IColumnItem) => {
+      const onlyColumnsData = columnData?.data?.map((item: IColumnItem) => {
         return item?.name;
       });
-      if (onlyColumns) {
-        dispatch(totalStatus(onlyColumns));
+      if (onlyColumnsData) {
+        dispatch(totalStatus(onlyColumnsData));
       }
     }
   }, [columnData, dispatch, total_status]);

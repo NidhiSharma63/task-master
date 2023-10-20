@@ -129,7 +129,7 @@ const ProjectComponent = ({
                   sx={{
                     width: '100%',
                     padding: '0.5rem',
-                    backgroundColor: backgroundColors[i],
+                    backgroundColor: backgroundColors?.[i],
                     borderRadius: '0.3rem',
                   }}
                 >

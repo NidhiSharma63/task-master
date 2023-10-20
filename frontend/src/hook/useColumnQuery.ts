@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { IUniversalInterface } from 'src/common/Interface/Interface';
 import { queryClient } from 'src/index';
@@ -13,6 +13,7 @@ import {
   customAxiosRequestForGet,
   customAxiosRequestForPost,
 } from 'src/utils/axiosRequest';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
 /**
  * use post column query
@@ -39,11 +40,10 @@ const usePostColumnQuery = () => {
  */
 
 const useGetColumnQuery = () => {
-  const { active_project } = useSelector(projectDataInStore);
-  const dispatch = useDispatch();
+  const { active_project } = useAppSelector(projectDataInStore);
+  const dispatch = useAppDispatch();
   const { is_backdrop_loader_displayed_for_Columns } =
     useSelector(booleanDataInStore);
-
   return useQuery({
     queryKey: ['column', active_project],
     queryFn: () => {
