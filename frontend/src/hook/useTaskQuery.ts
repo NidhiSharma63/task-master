@@ -1,4 +1,5 @@
 import { useMutation, useQueries } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -19,7 +20,6 @@ import {
   customAxiosRequestForPost,
 } from 'src/utils/axiosRequest';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-
 /**
  *
  * @returns Post request for adding task with status
@@ -182,8 +182,8 @@ const useUpdateTaskQueryWithDetails = () => {
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries([state, 'All-task']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -224,7 +224,7 @@ const useDeleteTask = (status: string) => {
 const useGetAllTaskAccordingToStatusForEachProject = () => {
   const { total_status } = useSelector(statusDataInStore);
   const { is_backdrop_loader_displayed_for_Task } =
-    useSelector(booleanDataInStore);
+    useAppSelector(booleanDataInStore);
   const dispatch = useDispatch();
 
   const userQueries = useQueries({

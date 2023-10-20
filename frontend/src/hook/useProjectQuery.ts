@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { IUniversalInterface } from 'src/common/Interface/Interface';
@@ -24,8 +25,8 @@ const usePostProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.error);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -49,7 +50,7 @@ const useGetProjectQuery = () => {
       }
       dispatch(isBackdropLoaderDisplayedForProjects(false));
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Something went wrong');
     },
   });
@@ -66,7 +67,7 @@ const useDeleteProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Something went wrong');
     },
   });
@@ -85,8 +86,8 @@ const useUpdateProjectQuery = () => {
       queryClient.invalidateQueries(['projects']);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };

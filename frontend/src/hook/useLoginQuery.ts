@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -24,8 +25,9 @@ const useLoginQuery = () => {
       setValueToLs(KEY_FOR_STORING_TOKEN, JSON.stringify(token));
       setValueToLs(KEY_FOR_STORING_USER_DETAILS, JSON.stringify(user));
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
+
       dispatch(isBackDropLoaderDisplayed(false));
     },
   });

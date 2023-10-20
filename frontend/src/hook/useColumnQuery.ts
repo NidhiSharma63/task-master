@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { IUniversalInterface } from 'src/common/Interface/Interface';
@@ -14,7 +15,6 @@ import {
   customAxiosRequestForPost,
 } from 'src/utils/axiosRequest';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-
 /**
  * use post column query
  */
@@ -29,8 +29,8 @@ const usePostColumnQuery = () => {
       queryClient.invalidateQueries(['charts-data']);
       queryClient.invalidateQueries(['column', active_project]);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -83,8 +83,8 @@ const useUpdateColumnName = () => {
       queryClient.invalidateQueries(['column', active_project]);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -105,8 +105,8 @@ const useDeleteColumnName = () => {
       queryClient.invalidateQueries(['column', active_project]);
       queryClient.invalidateQueries(['charts-data']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };

@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -33,8 +34,8 @@ const useRegisterQuery = () => {
       setValueToLs(KEY_FOR_STORING_USER_DETAILS, user);
       dispatch(userEmail(user.email));
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
       dispatch(isBackDropLoaderDisplayed(false));
     },
   });

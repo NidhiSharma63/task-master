@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { IUniversalInterface } from 'src/common/Interface/Interface';
@@ -53,8 +54,8 @@ const usePostPage = () => {
       // toast.success("Project created successfully!");
       queryClient.invalidateQueries(['pages']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -72,8 +73,8 @@ const useUpdatePage = () => {
       // toast.success("Project name updated successfully!");
       queryClient.invalidateQueries(['pages']);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data);
+    onError: (error: AxiosError) => {
+      toast.error(error?.response?.data?.toString());
     },
   });
 };
@@ -91,7 +92,7 @@ const useDeletePage = () => {
       // toast.success("Project deleted successfully!");
       queryClient.invalidateQueries(['pages']);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Something went wrong');
     },
   });
