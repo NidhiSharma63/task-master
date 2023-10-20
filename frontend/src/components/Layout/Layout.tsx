@@ -129,6 +129,7 @@ export const Layout = () => {
           <Box
             sx={{
               overflow: 'auto',
+              padding: '0 .4rem',
             }}
           >
             <List>
@@ -141,6 +142,7 @@ export const Layout = () => {
                       onClick={handleClickOnHome}
                       sx={{
                         backgroundColor: activeLink === key ? 'white' : 'none',
+                        borderRadius: '.4rem',
                       }}
                     >
                       <ListItemText primary={key} />
@@ -160,6 +162,7 @@ export const Layout = () => {
                     <ListItemButton
                       sx={{
                         backgroundColor: activeLink === key ? 'white' : 'none',
+                        borderRadius: '.4rem',
                       }}
                       key={key}
                       onClick={() => handleClickOnInsights(key)}
@@ -183,6 +186,7 @@ export const Layout = () => {
                       onClick={handleOpenProjectModal}
                       sx={{
                         backgroundColor: activeLink === key ? 'white' : 'none',
+                        borderRadius: '.4rem',
                       }}
                     >
                       <ListItemText primary={key} />
@@ -256,6 +260,7 @@ export const Layout = () => {
                     <ListItemButton
                       sx={{
                         backgroundColor: activeLink === key ? 'white' : 'none',
+                        borderRadius: '.4rem',
                       }}
                       key={key}
                       onClick={handleClickOnPageAddIcon}
