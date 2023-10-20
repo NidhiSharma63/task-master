@@ -95,6 +95,11 @@ TINY MCE
   right: none !important;
 }
 
-/* .box-shadow{
-  box-shadow: 0px 0px 1px 0px #0000001e;
+/**
+toast container
+**/
+
+
+/* .Toastify_toast-theme-light,.Toastify__toast-theme-light{
+  background-color: #756EC6;
 } */
