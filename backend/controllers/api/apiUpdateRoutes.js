@@ -256,7 +256,7 @@ const updatePagesApi = async (req, res, next) => {
       { _id },
       { $set: { content, name } },
     );
-    res.send(200).json({ data: updatedPage });
+    res.status(200).json({ data: updatedPage });
   } catch (error) {
     next(error);
   }
