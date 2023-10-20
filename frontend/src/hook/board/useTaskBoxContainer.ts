@@ -44,8 +44,9 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   const [currentWorkingTestAreaIndex, setCurrentWorkingTestAreaIndex] =
     useState<number | null>(null);
 
-  const [anchorElForColumnIcons, setAnchorElForColumnIcons] =
-    useState<null | HTMLElement>(null);
+  const [anchorElForColumnIcons, setAnchorElForColumnIcons] = useState<
+    null | (EventTarget & SVGSVGElement)
+  >(null);
 
   const [openColsIcons, setOpenColsIcons] = useState<boolean>(false);
   const isTaskAddedFromBottom = useRef<boolean | null>(null);
@@ -205,10 +206,10 @@ const useTaskBoxContainer = ({ data, name }: IUseTaskBoxContainer) => {
   // };
   const handleClickOnThreeDots: MouseEventHandler<SVGSVGElement> = useCallback(
     (event): void => {
-      if (event.currentTarget instanceof HTMLElement) {
-        setAnchorElForColumnIcons(event.currentTarget);
-        setOpenColsIcons(true);
-      }
+      // if (event.currentTarget instanceof HTMLElement) {
+      setAnchorElForColumnIcons(event.currentTarget);
+      setOpenColsIcons(true);
+      // }
     },
     [],
   );

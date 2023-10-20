@@ -12,7 +12,9 @@ import { useDeleteColumnName } from '../useColumnQuery';
 
 interface IUseDeleteColumn {
   colId: string;
-  setAnchorElForColumnIcons: Dispatch<SetStateAction<HTMLElement | null>>;
+  setAnchorElForColumnIcons: Dispatch<
+    SetStateAction<null | (EventTarget & SVGSVGElement)>
+  >;
 }
 
 const useDeleteColumn = ({
