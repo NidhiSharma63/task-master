@@ -4,7 +4,6 @@ import { Doughnut } from 'react-chartjs-2';
 import { FadeLoader } from 'react-spinners';
 import useInsight from 'src/hook/insights/useInsight';
 import colors from 'src/theme/variables';
-import { capitalizeFirstLetter } from 'src/utils/TextTransformer';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -78,28 +77,19 @@ const InsightsCharts = ({ status }: IInsightsCharts) => {
           borderRadius: '.3rem',
           backgroundColor: colors.offWhite,
           boxShadow: '0px 0px 10px 0px #0000001c',
-          height: { md: 'calc(100vh - 200px)', xs: '200px' },
+          height: { md: 'calc(100vh - 200px)', xs: '300px' },
           // overflowY: "scroll",
           maxWidth: '40rem',
         }}
       >
-        <Box
-          sx={{
-            // border: "1px solid red",
-            position: 'fixed',
-            maxWidth: '40rem',
-          }}
-        >
-          <Typography variant="h6">Project List - Task contains</Typography>
-        </Box>
+        <Typography variant="h6">Project List - Task contains</Typography>
+        {/* </Box> */}
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
             height: '100%',
-            // border: "1px solid green",
-            mt: 7,
             overflowY: 'auto',
             '&::-webkit-scrollbar': {
               width: '10px',
@@ -147,7 +137,10 @@ const InsightsCharts = ({ status }: IInsightsCharts) => {
                     padding: '0rem .4rem',
                   }}
                 >
-                  <Typography>{capitalizeFirstLetter(item)}</Typography>
+                  <Typography>
+                    {item.length > 20 ? `${item.substring(0, 20)}...` : item}
+                  </Typography>
+                  {/* <Typography>{capitalizeFirstLetter(item)}</Typography> */}
                   <Typography>{allTask[i]}</Typography>
                 </Box>
               </Box>

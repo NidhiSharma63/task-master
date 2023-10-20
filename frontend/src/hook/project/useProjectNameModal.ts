@@ -56,10 +56,7 @@ const useProjectNameModal = () => {
   }, [project_rename]);
 
   const handleSave = useCallback((): void => {
-    /**
-     * if project name is null retunr
-     */
-    if (project_rename === null) return;
+    console.log(project_rename, 'prject rename');
     /**
      * if project name have no value then return
      */
@@ -72,7 +69,7 @@ const useProjectNameModal = () => {
       /**
        * if project rename obj is present that's mean user is trying to update the project name
        */
-      if (project_rename.projectId) {
+      if (project_rename !== null && project_rename.projectId) {
         updateProject({
           name: projectName.trim(),
           _id: project_rename.projectId,

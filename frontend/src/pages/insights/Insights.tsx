@@ -14,7 +14,7 @@ const Insights = () => {
         margin: 'auto',
         mt: '.2rem',
         height: '100%',
-        mr: '29rem',
+        // mr: '29rem',
       }}
     >
       <Box>

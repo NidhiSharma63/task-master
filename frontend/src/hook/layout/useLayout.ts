@@ -35,8 +35,9 @@ const useLayout = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [allProjects, setAllProjects] = useState<IProjects[] | []>([]);
-  const [anchorElForProjectIcons, setAnchorElForProjectIcons] =
-    useState<null | HTMLElement>(null);
+  const [anchorElForProjectIcons, setAnchorElForProjectIcons] = useState<
+    (EventTarget & SVGSVGElement) | null
+  >(null);
 
   const [anchorElementForPages, setAnchorElementForPages] = useState<
     (EventTarget & SVGSVGElement) | null
@@ -155,12 +156,12 @@ const useLayout = () => {
 
   const handleClickOnThreeDots: MouseEventHandler<SVGSVGElement> = useCallback(
     (event): void => {
-      if (event.currentTarget instanceof HTMLElement) {
-        if (!event.currentTarget.dataset.id) return;
-        setAnchorElForProjectIcons(event.currentTarget);
-        setIsProjectIconsOpen(true);
-        projectItemId.current = event.currentTarget.dataset.id;
-      }
+      // if (event.currentTarget instanceof HTMLElement) {
+      if (!event.currentTarget.dataset.id) return;
+      setAnchorElForProjectIcons(event.currentTarget);
+      setIsProjectIconsOpen(true);
+      projectItemId.current = event.currentTarget.dataset.id;
+      // }
     },
     [],
   );
