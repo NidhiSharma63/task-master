@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 import {
   booleanDataInStore,
   isBackDropLoaderDisplayed,
@@ -11,28 +10,29 @@ import {
   projectDataInStore,
   projectRename,
 } from 'src/redux/projects/projectSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { usePostProjectQuery, useUpdateProjectQuery } from '../useProjectQuery';
 
 const useProjectNameModal = () => {
-  const { is_project_name_modal_open } = useSelector(booleanDataInStore);
-  const { project_rename } = useSelector(projectDataInStore);
-  const [open, setOpen] = useState(is_project_name_modal_open);
+  const { is_project_name_modal_open } = useAppSelector(booleanDataInStore);
+  const { project_rename } = useAppSelector(projectDataInStore);
+  const [open, setOpen] = useState<boolean>(is_project_name_modal_open);
   const [projectName, setProjectName] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { mutate, isLoading } = usePostProjectQuery();
   const { mutate: updateProject, isLoading: projectUpdateIsLoading } =
     useUpdateProjectQuery();
 
-  const [colorName, setColorName] = useState('');
+  const [colorName, setColorName] = useState<string>('');
 
   useEffect(() => {
     setOpen(is_project_name_modal_open);
   }, [is_project_name_modal_open]);
 
-  const handleClose = () => {
+  const handleClose = useCallback((): void => {
     dispatch(isProjectNameModalOpen(false));
     setOpen(false);
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (isLoading) {
@@ -55,7 +55,11 @@ const useProjectNameModal = () => {
     }
   }, [project_rename]);
 
-  const handleSave = () => {
+  const handleSave = useCallback((): void => {
+    /**
+     * if project name is null retunr
+     */
+    if (project_rename === null) return;
     /**
      * if project name have no value then return
      */
@@ -76,7 +80,7 @@ const useProjectNameModal = () => {
           color: colorName,
         });
         setProjectName('');
-        dispatch(projectRename({}));
+        dispatch(projectRename(null));
       } else {
         /**
          * create new project
@@ -86,11 +90,22 @@ const useProjectNameModal = () => {
       }
       handleClose();
     }
-  };
+  }, [
+    colorName,
+    dispatch,
+    handleClose,
+    mutate,
+    projectName,
+    project_rename,
+    updateProject,
+  ]);
 
-  const handleChangeInput = (event) => {
-    setProjectName(event.target.value);
-  };
+  const handleChangeInput = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setProjectName(event.target.value);
+    },
+    [],
+  );
 
   return {
     handleChangeInput,
