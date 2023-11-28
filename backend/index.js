@@ -8,12 +8,8 @@ const errorHandle = require('./middleware/errorHanlde');
 const rescheduleReminders = require('./utils/setSchedule');
 
 // use cors
-server.use(
-  cors({
-    origin: 'http://localhost:3001/',
-    credentials: true, // enable passing cookies from the frontend
-  }),
-);
+server.use(cors());
+
 // for accessing the cookie that we have saved user site which is token(in form of cookie)
 server.use(cookieParser());
 // for parsing the req.body for postman
