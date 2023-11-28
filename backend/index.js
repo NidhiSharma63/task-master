@@ -1,14 +1,19 @@
-require("dotenv").config();
-const cookieParser = require("cookie-parser");
-const express = require("express");
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const express = require('express');
 const server = express();
-const cors = require("cors");
-const router = require("./routes/router");
-const errorHandle = require("./middleware/errorHanlde");
-const rescheduleReminders = require("./utils/setSchedule");
+const cors = require('cors');
+const router = require('./routes/router');
+const errorHandle = require('./middleware/errorHanlde');
+const rescheduleReminders = require('./utils/setSchedule');
 
 // use cors
-server.use(cors());
+server.use(
+  cors({
+    origin: 'http://localhost:3001/',
+    credentials: true, // enable passing cookies from the frontend
+  }),
+);
 // for accessing the cookie that we have saved user site which is token(in form of cookie)
 server.use(cookieParser());
 // for parsing the req.body for postman
@@ -17,10 +22,10 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
 // middleware for routes
-server.use("/api/v1", router);
+server.use('/api/v1', router);
 
 // require connectDB from db/connect
-const connectDB = require("./db/connect");
+const connectDB = require('./db/connect');
 
 // handle error
 server.use(errorHandle);
@@ -31,11 +36,11 @@ const start = async () => {
     await connectDB(process.env.MONGOOSE_URI);
     server.listen(
       process.env.PORT ?? 3000,
-      console.log("running at port", process.env.PORT ?? 3000)
+      console.log('running at port', process.env.PORT ?? 3000),
     );
     rescheduleReminders();
   } catch (error) {
-    console.log("::error::", error);
+    console.log('::error::', error);
   }
 };
 start();
