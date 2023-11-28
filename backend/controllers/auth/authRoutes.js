@@ -1,10 +1,7 @@
 // const cookieParser = require("cookie-parser");
 
-const express = require("express");
-const server = express();
-// server.use(cookieParser());
-const bcrypt = require("bcrypt");
-const User = require("../../models/userSchema");
+const bcrypt = require('bcrypt');
+const User = require('../../models/userSchema');
 
 // register
 const registerUser = async (req, res, next) => {
@@ -13,12 +10,12 @@ const registerUser = async (req, res, next) => {
 
     // check if any field is missing or not
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      throw new Error("Missing email or password");
+      throw new Error('Missing email or password');
     }
 
     // check if user have enterd the correct password or not
     if (password !== confirmPassword) {
-      throw new Error("Password and confirm password does not match");
+      throw new Error('Password and confirm password does not match');
     }
 
     /**
@@ -27,7 +24,7 @@ const registerUser = async (req, res, next) => {
 
     const isAlreadyPresentEmail = await User.find({ email });
     if (isAlreadyPresentEmail.email) {
-      throw new Error("Email is already exists");
+      throw new Error('Email is already exists');
     }
 
     // generate hash password with round 10
@@ -49,8 +46,8 @@ const registerUser = async (req, res, next) => {
     await user.save();
     res.status(200).json({ user, token });
   } catch (error) {
-    if (error.message.includes("email already exists.")) {
-      error.message = "Email already exists";
+    if (error.message.includes('email already exists.')) {
+      error.message = 'Email already exists';
     }
 
     next(error);
@@ -65,7 +62,7 @@ const loginUser = async (req, res, next) => {
     // check if user already register or not because only register user can log in
     const user = await User.findOne({ email });
     if (!user) {
-      throw new Error("Invalid login detail");
+      throw new Error('Invalid login detail');
     }
     // check if provided password by user is same as stored in data
     const getPassword = user.password;
@@ -74,7 +71,7 @@ const loginUser = async (req, res, next) => {
     const verifyPassword = await bcrypt.compare(password, getPassword);
 
     if (!verifyPassword) {
-      throw new Error("Invalid login detail");
+      throw new Error('Invalid login detail');
     }
 
     // generate token once user have correct credentials
@@ -98,11 +95,11 @@ const logout = async (req, res, next) => {
     const userId = req?.body?.userId;
     const getUserFromDB = await User.findOne({ _id: userId });
     // updating token
-    getUserFromDB.token = "";
+    getUserFromDB.token = '';
 
     // saving user to database after updatig the token
     await getUserFromDB.save();
-    res.status(202).json({ message: "successfully logged out" });
+    res.status(202).json({ message: 'successfully logged out' });
   } catch (error) {
     next(error);
   }
