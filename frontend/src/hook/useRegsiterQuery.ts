@@ -31,7 +31,7 @@ const useRegisterQuery = () => {
     onSuccess: ({ token, user }) => {
       navigate('/'); // Navigate to the home page
       setValueToLs(KEY_FOR_STORING_TOKEN, token);
-      setValueToLs(KEY_FOR_STORING_USER_DETAILS, user);
+      setValueToLs(KEY_FOR_STORING_USER_DETAILS, JSON.stringify(user));
       dispatch(userEmail(user.email));
     },
     onError: (error: AxiosError) => {

@@ -1,6 +1,9 @@
+import { KEY_FOR_STORING_TOKEN } from 'src/constant/Misc';
+
 // get value from local storage
 export const getValueFromLS = (key: string) => {
   const item = localStorage.getItem(key);
+  if (key === KEY_FOR_STORING_TOKEN) return item;
   if (typeof item === 'string') {
     return JSON.parse(item);
   }
