@@ -80,6 +80,7 @@ const useBoard = () => {
     }
   }, [columnDataWithTaskProperty, data, is_updating_task, finalTaskUpdate]);
 
+  console.log({ finalState, data, is_updating_task });
   /**
    * handle dispaly column button
    */
