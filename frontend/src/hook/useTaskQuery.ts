@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
  */
 const useAddTaskQuery = () => {
   const [state, setState] = useState<string>('');
+  const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (payload: IUniversalInterface) => {
@@ -42,6 +43,9 @@ const useAddTaskQuery = () => {
     },
     onError: () => {
       toast.error('An error occured');
+    },
+    onSettled: () => {
+      dispatch(isUpdatingTask(false));
     },
   });
 };
