@@ -23,12 +23,7 @@ import UserName from 'src/common/UserName';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
 import { IItems } from 'src/components/Layout/Interface/InterFace';
 import PagesModal from 'src/components/userPages/components/PagesModal';
-import {
-  BOTTOM,
-  INSIGHTS,
-  LOWER_PART,
-  UPPER_SIDE_BAR,
-} from 'src/constant/sidebar';
+import { INSIGHTS, LOWER_PART, UPPER_SIDE_BAR } from 'src/constant/sidebar';
 import useLayout from 'src/hook/layout/useLayout';
 import colors from 'src/theme/variables';
 
@@ -257,7 +252,7 @@ export const Layout = () => {
               )}
             </List>
             <List>
-              {BOTTOM.map((i) =>
+              {/* {BOTTOM.map((i) =>
                 Object.entries(i).map(([key, value]) => {
                   const IconComponent = value;
                   return (
@@ -276,8 +271,8 @@ export const Layout = () => {
                     </ListItemButton>
                   );
                 }),
-              )}
-              {pagesLoading ? (
+              )} */}
+              {/* {pagesLoading ? (
                 <ListItemButton>
                   <ListItemIcon>
                     <FadeLoader color="#3E3A3A" />
@@ -336,7 +331,7 @@ export const Layout = () => {
                     </ListItemButton>
                   );
                 })
-              )}
+              )} */}
             </List>
           </Box>
         </Drawer>

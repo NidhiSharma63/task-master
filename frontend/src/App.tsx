@@ -11,7 +11,6 @@ import Register from 'src/pages/auth/Register';
 import { ReactNode } from 'react';
 import { CommonLoaderWithBackDrop } from 'src/common/loader/CommonLoader';
 import Board from 'src/components/projectPage/Board';
-import PageComponent from 'src/components/userPages/components/PageComponent';
 import { KEY_FOR_STORING_TOKEN } from 'src/constant/Misc';
 import NotFound from 'src/pages/error/NotFound';
 import Home from 'src/pages/home/Home';
@@ -74,16 +73,16 @@ let router = createBrowserRouter([
         path: '/Home',
         element: <Home />,
       },
-      {
-        path: '/pages/',
-        element: <PageComponent />,
-        children: [
-          {
-            path: ':id',
-            element: <PageComponent />,
-          },
-        ],
-      },
+      // {
+      //   path: '/pages/',
+      //   element: <PageComponent />,
+      //   children: [
+      //     {
+      //       path: ':id',
+      //       element: <PageComponent />,
+      //     },
+      //   ],
+      // },
     ],
   },
   {

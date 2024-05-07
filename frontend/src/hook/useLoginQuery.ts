@@ -22,7 +22,7 @@ const useLoginQuery = () => {
     },
     onSuccess: ({ token, user }) => {
       navigate('/');
-      setValueToLs(KEY_FOR_STORING_TOKEN, JSON.stringify(token));
+      setValueToLs(KEY_FOR_STORING_TOKEN, token);
       setValueToLs(KEY_FOR_STORING_USER_DETAILS, JSON.stringify(user));
     },
     onError: (error: AxiosError) => {
